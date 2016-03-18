@@ -310,10 +310,19 @@ sub writeToDB {
 
 # process command line options
 
-getopts ("p:", \%options);
+getopts ("p:f:", \%options);
 if (!defined $options{p}) {
     print "Path to target chroot missing. Exiting.\n";
     exit;
+}
+
+if (defined $options{f}) {
+    if (-e $options{f}) {
+	$cfg_path = $options{f};
+    } else {
+	printf "Configuration file not found at $options{f}. Exiting.\n";
+	exit;
+    }
 }
 
 #if the test directory doesn't exist create it
