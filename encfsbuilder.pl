@@ -310,7 +310,16 @@ sub writeToDB {
 
 # process command line options
 
-getopts ("p:f:", \%options);
+getopts ("p:f:h", \%options);
+if (defined $options{h}) {
+    print "encfbuilder usage\n";
+    print "\tencfbuilder.pl -p [-f] [-h]\n";
+    print "\t-p absolute path to target directory. NO RELATIVE PATHS!\n";
+    print "\t-f path to configuration file. Defaults to /usr/local/etc/encfsbuilder.cfg\n";
+    print "\t-h this help text\n";
+    exit;
+}
+
 if (!defined $options{p}) {
     print "Path to target chroot missing. Exiting.\n";
     exit;
@@ -324,6 +333,9 @@ if (defined $options{f}) {
 	exit;
     }
 }
+
+
+
 
 #if the test directory doesn't exist create it
 # but if it does make sure it's entirely empty
