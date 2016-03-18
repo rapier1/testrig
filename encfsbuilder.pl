@@ -47,6 +47,7 @@ use Getopt::Std;
 use Bytes::Random::Secure::Tiny;
 use File::Copy;
 use File::Copy::Recursive qw(dircopy);
+use File::Path qw(remove_tree make_path);
 
 #globals
 my $config = Config::Tiny->new;
@@ -108,6 +109,15 @@ sub validateConfig {
 	print "Missing path for UUID destination in config file. Exiting.\n";
 	exit;
     }
+    if (! defined $config->{paths}->{master_chroot}) {
+	print "Missing path to master chroot directory. Exiting\n";
+	exit;
+    } else {
+	if (! -e $config->{paths}->{master_chroot}) {
+	    print "Master chroot directory not found at $config->{paths}->{master_chroot}\n";
+	    exit;
+	}
+    }
     if (! defined $config->{paths}->{encfs}) {
 	print "Missing path to encfs binaries in config file. Exiting.\n";
 	exit;
@@ -167,7 +177,7 @@ sub decryptKnownText {
 
 sub generateUUID {
     my $uuid_obj = Data::UUID->new;
-    my $uuid = $uuid_obj->create_from_name_str(NameSpace_URL, "www.psc.edu/testrig2");
+    my $uuid = $uuid_obj->create_str();
     print "Generated UUID\n";
     return ($uuid);
 }
@@ -182,24 +192,27 @@ sub mountENCFS {
     my $enc_dir = $options{p} . "/" . $config->{paths}->{enc_destination};
     my $pub_dir = $options{p} . "/" . $config->{paths}->{pub_destination};
 
-    print "$enc_dir and $pub_dir\n";
+    print "Encrypted directory: $enc_dir\n";
+    print "Public directory: $pub_dir\n";
     # make the directories in advance so encfs doesn't ask for input
     # from the keyboard. Be sure to clear any existing directories. 
     if (-e $enc_dir) {
-	system ("rm -r $enc_dir");
+	remove_tree ($enc_dir, {keep_root => 1});
     }
-    mkdir $enc_dir;
     if (! -w $enc_dir) {
-	print "Failed to create encrypted encfs directory in target chroot. $! Exiting.\n";
-	exit;
+	if (! make_path($enc_dir)) {
+	    print "Failed to create encrypted encfs directory in target chroot. $! Exiting.\n";
+	    exit;
+	}
     }	
     if (-e $pub_dir) {
-	system ("rm -r $pub_dir");
+	remove_tree ($pub_dir, {keep_root => 1});
     }
-    mkdir $pub_dir;
     if (! -w $pub_dir) {
-	print "Failed to create public encfs directory in target chroot. $! Exiting.\n";
-	exit;
+	if (! make_path($pub_dir)) {
+	    print "Failed to create public encfs directory in target chroot. $! Exiting.\n";
+	    exit;
+	}
     }	
 
     system ("$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir");
@@ -214,7 +227,7 @@ sub mountENCFS {
 sub copyFiles {
     my $source = $config->{paths}->{source};
     my $destination = $options{p} . "/" . $config->{paths}->{pub_destination};
-    print "$source and $destination\n";
+    print "copying from $source to $destination\n";
     return(dircopy($source, $destination));
 }
 
@@ -232,21 +245,38 @@ sub unmountENCFS {
 sub writeConfigToChroot {
     my $uuid = shift @_;
     my $known_enc = shift @_;
-    my $confdir =$options{p} . "/" .  $config->{paths}->{config_directory};
-    print "$confdir\n";
-    open (my $FH, ">", "$confdir/UUID");
+    my $conf_dir =$options{p} . "/" .  $config->{paths}->{config_directory};
+    if (-e $conf_dir) {
+	remove_tree ($conf_dir, {keep_root => 1});
+    }
+    if (! -w $conf_dir) {
+	if (! make_path($conf_dir)) {
+	    print "Failed to create configuration directory in target chroot. $! Exiting.\n";
+	    exit;
+	}
+    }
+    print "Configuration directory: $conf_dir\n";
+    open (my $FH, ">", "$conf_dir/UUID") or die 
+	"Cannot open $conf_dir/UUID for writing.\n";
     print $FH "$uuid\n";
     close ($FH);
-    open ($FH, ">", "$confdir/challenge");
+    open ($FH, ">", "$conf_dir/challenge") or die
+	"Cannot open $conf_dir/challenge for writing.\n";
     print $FH "$known_enc\n";
     close ($FH);
-    if (! -e "$confdir/UUID" ) {
+    if (! -e "$conf_dir/UUID" ) {
 	return -1;
     }
-    if (! -e "$confdir/challenge" ) {
+    if (! -e "$conf_dir/challenge" ) {
 	return -1;
     }
     return 1;
+}
+
+sub copyMaster {
+    my $masterpath = $config->{paths}->{master_chroot};
+    print "Copying master chroot to target\n";
+    return(dircopy($masterpath, $options{p}));
 }
 
 sub writeToDB {
@@ -286,9 +316,18 @@ if (!defined $options{p}) {
     exit;
 }
 
+#if the test directory doesn't exist create it
+# but if it does make sure it's entirely empty
 if (! -w $options{p}) {
-    print "TestRig destination directory missing or unwriteable. Exiting.\n";
-    exit;
+    if (! mkdir $options{p}) {
+	print "TestRig destination directory could not be created $_\n";
+	exit;
+    }
+} else {
+    if (! remove_tree ($options{p}, {keep_root => 1})) {
+	print "Could not empty target diretcory. $_.\n";
+	exit;
+    }
 }
 
 # get configuration from file
@@ -341,13 +380,21 @@ print "Generating UUID\n";
 
 my $uuid = generateUUID();
 
-print $uuid;
+print "UUID: $uuid\n";
+
+# copy the master chroot directory to temporary chroot
+
+if (! copyMaster()) {
+    printf "Failed to copy master chroot directory\n";
+    exit;
+}
+
 
 # we now have all of the necessaries. 
 # time to create the encfs directory space
 
 if (mountENCFS($encfs_password) != 1) {
-    print ("Failed to create and/or mount encfs filespace. Exiting.\n");
+    print "Failed to create and/or mount encfs filespace. Exiting.\n";
     exit;
 }
 
@@ -376,8 +423,10 @@ if (writeConfigToChroot($uuid, $known_text_enc, ) != 1) {
 
 # now we have to write everything to the correct table in the database
 
+print "Writing TestRig data to database.\n";
 if (writeToDB($uuid, $public_key, $private_key, $encfs_password, $known_text_clear) == 0) {
     print "Failed to write data to database. Exiting.\n";
     exit;
 }
+print "TestRig target ISO generation process completed.\n";
 
