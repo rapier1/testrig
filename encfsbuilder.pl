@@ -118,6 +118,15 @@ sub validateConfig {
 	    exit;
 	}
     }
+    if (! defined $config->{paths}->{target_chroot}) {
+	print "Missing path to target chroot directory. Exiting\n";
+	exit;
+    } else { #make sure it exists
+	if (! -e $config->{paths}->{target_chroot}) {
+	    print "Target chroot directory not found at $config->{paths}->{target_chroot}\n";
+	    exit;
+	}
+    }
     if (! defined $config->{paths}->{encfs}) {
 	print "Missing path to encfs binaries in config file. Exiting.\n";
 	exit;
@@ -136,19 +145,31 @@ sub validateConfig {
 	    exit;
 	}
     }
-    if (! defined $config->{paths}->{workingChrootPath}) 
-     { #is the working chroot path detailed in the config file?
-        print "Missing path to working chroot directory in config file. Exiting.\n";
+    if (! defined $config->{paths}->{iso_path}) 
+    { #is the image path detailed in the config file?
+        print "Missing path to iso image output direcdtory in config file. Exiting.\n";
 	exit;
-     } else 
-         { #does the directory actually exist?!
-           if (! -e $config->{paths}->{workingChrootPath}) 
-            {
-              print "Absolute path to working chroot directory is incorrect. Exiting.\n";
-	      exit;
-	    }
-         }
+    }
+    if (! defined $config->{paths}->{isolinux}) {
+	print "Missing path to isolinux binary in config file. Exiting.\n";
+	exit;
+    } else { # make sure we can find it
+	if (! -e $config->{paths}->{isolinux}) {
+	    print "isolinux.bin not found at location specified in config. Exiting.\n";
+	    exit;
+	}
+    }
+    if (! defined $config->{paths}->{memtest}) {
+	print "Missing path to memtest binary in config file. Exiting.\n";
+	exit;
+    } else { # make sure we can find it
+	if (! -e $config->{paths}->{memtest}) {
+	    print "memtest not found at location specified in config. Exiting.\n";
+	    exit;
+	}
+    }
 
+    
 }
 
 # create a new pem key set
@@ -222,8 +243,8 @@ sub mountENCFS {
     print "Mounting ENCFS\n";
     my $password = shift @_;
     my $encfs = $config->{paths}->{encfs};
-    my $enc_dir = $options{p} . "/" . $config->{paths}->{enc_destination};
-    my $pub_dir = $options{p} . "/" . $config->{paths}->{pub_destination};
+    my $enc_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{enc_destination};
+    my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
 
     print "Encrypted directory: $enc_dir\n";
     print "Public directory: $pub_dir\n";
@@ -264,14 +285,14 @@ sub mountENCFS {
 # copy the testrig operational files to the encyrpted directory
 sub copyFiles {
     my $source = $config->{paths}->{source};
-    my $destination = $options{p} . "/" . $config->{paths}->{pub_destination};
+    my $destination =  $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
     print "copying from $source to $destination\n";
     return(dircopy($source, $destination));
 }
 
 # unmount the encfs directory
 sub unmountENCFS {
-    my $pub_dir = $options{p} . "/" . $config->{paths}->{pub_destination};
+    my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
     my $fuser = $config->{paths}->{fusermount};
     system ("$fuser -q -u $pub_dir");
     if ($? == -1) {
@@ -286,7 +307,7 @@ sub unmountENCFS {
 sub writeConfigToChroot {
     my $uuid = shift @_;
     my $known_enc = shift @_;
-    my $conf_dir =$options{p} . "/" .  $config->{paths}->{config_directory};
+    my $conf_dir = $config->{paths}->{target_chroot} . "/" .  $config->{paths}->{config_directory};
     if (-e $conf_dir) {
 	remove_tree ($conf_dir, {keep_root => 1});
     }
@@ -318,9 +339,8 @@ sub writeConfigToChroot {
 
 #copy the master chroot to the target chroot
 sub copyMaster {
-    my $masterpath = $config->{paths}->{master_chroot};
     print "Copying master chroot to target\n";
-    return(dircopy($masterpath, $options{p}));
+    return(dircopy($config->{paths}->{master_chroot}, $config->{paths}->{target_chroot}));
 }
 
 #TODO: Need to get NOC configuaration options from the
@@ -356,20 +376,25 @@ sub writeToDB {
 
 
 sub generateISO {
+    # we use the UUID to make sure that all directories are unique
+    my $uuid = shift @_;
 
-##Path Variables
-my $workingChrootPath=$config->{paths}->{workingChrootPath}; #NEED TO MAKE THIS A PARAM
-my $chrootPath="$workingChrootPath/chroot"; #path to working chroot
-my $imagePath="$workingChrootPath/image"; #where all generated files will go
-my $isolinuxPath="/usr/lib/syslinux"; #we need isolinux from host machine
-
-#var for holding string of commands to pass to system
-my $cmd;
-
-
-#Boring, big static text prompts needed for 
-#buliding the ISO
-my $bootPrompt = <<'END_PROMPT';
+    ##Path Variables
+    my $workingChrootPath = $config->{paths}->{target_chroot}; #NEED TO MAKE THIS A PARAM
+    my $chrootPath = $workingChrootPath; #path to working chroot
+    my $imagePath = $config->{paths}->{iso_path} . "/" . $uuid;
+    my $isolinuxPath = $config->{paths}->{isolinux}; #we need isolinux.bin
+    my $memtestPath = $config->{paths}->{memtest};
+    
+    #var for holding string of commands to pass to system
+    my $cmd;
+    
+    #easier to use var for the kernel version
+    my $kernel = $config->{kernel}->{kernel_version};
+    
+    #Boring, big static text prompts needed for 
+    #buliding the ISO
+    my $bootPrompt = <<'END_PROMPT';
 ********************************
 
 Welcome to TestRig 2.0!
@@ -378,8 +403,8 @@ Type 'live' to begin
 
 ********************************
 END_PROMPT
-
-my $isolinuxCfg = <<'END_SYSPROMPT';
+    
+    my $isolinuxCfg = <<'END_SYSPROMPT';
 LABEL live
   menu label ^Start or install TestRig
   kernel /casper/vmlinuz
@@ -401,7 +426,7 @@ TIMEOUT 300
 PROMPT 1
 END_SYSPROMPT
 
-my $diskDefines = <<'END_DISKDEFINES';
+    my $diskDefines = <<'END_DISKDEFINES';
 #define DISKNAME TestRig2.0
 #define TYPE  binary
 #define TYPEbinary  1
@@ -416,99 +441,104 @@ END_DISKDEFINES
 
 
 
-#create directories for liveCD creation
-# mkdir -p don't work here, durrrrrr
-$cmd="mkdir $imagePath";
-system($cmd);
-$cmd="mkdir $imagePath/casper";
-system($cmd);
-$cmd="mkdir $imagePath/isolinux";
-system($cmd);
-$cmd="mkdir $imagePath/install";
-system($cmd);
-
-
-#copy Web10G Kernel from chroot 
-$cmd="cp $chrootPath/boot/vmlinuz-4.1.0.web10g+ $imagePath/casper/vmlinuz";
-system($cmd);
-
-#copy Web10G initrd from chroot
-$cmd="cp $chrootPath/boot/initrd.img-4.1.0.web10g+ $imagePath/casper/initrd.lz";
-system($cmd);
-
-#copy Isolinux from host machine
-if (! -e $isolinuxPath/isolinux.bin) #does it exist on this machine?
- {
-   print "Unable to locate isolinux.bin at $isolinuxPath/. Make sure it is installed. Exiting.\n";
-   exit;
- }else { 
-    $cmd="cp $isolinuxPath/isolinux.bin $imagePath/isolinux/";
+    #create directories for liveCD creation
+    # mkdir -p don't work here, durrrrrr
+    $cmd="mkdir $imagePath";
     system($cmd);
-  }
-#copy Memtest from host machine
-if (! -e /boot/memtest86\+.bin) #is memtest on this machine? 
- { print "Unable to locate memtest86+.bin in /boot/. Make sure it is installed. Exiting.\n";
-   exit;
- } else { 
-     $cmd="cp /boot/memtest86+.bin $imagePath/install/memtest";
-     system($cmd);
- }
-#build manifest of packages installed
-$cmd="chroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
-system($cmd);
-
-#make a copy of it, named for desktop OSes(?)
-$cmd="cp -v $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
-system($cmd);
-
-#list of packages not to include in manifest
-my @removeFromManifest = qw(ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4);
-
-#remove the above list from the manifest
-foreach my $i (@removeFromManifest) {
-    $cmd="sudo sed -i \"/$i/d\" $imagePath/casper/filesystem.manifest-desktop";
+    $cmd="mkdir $imagePath/casper";
     system($cmd);
-   }
+    $cmd="mkdir $imagePath/isolinux";
+    system($cmd);
+    $cmd="mkdir $imagePath/install";
+    system($cmd);
 
-#put isolinux config in place
-my $isolinuxFile = "$imagePath/isolinux/isolinux.cfg";
-open (FILE, ">", "$isolinuxFile") or die $!;
-print FILE $isolinuxCfg;
-close (FILE);
-
-
-#put diskdefines in place
-my $diskDefinesFile = "$imagePath/README.diskdefines";
-open (FILE, ">", "$diskDefinesFile") or die $!;
-print FILE $diskDefines;
-close (FILE);
-
-#put boot prompt in place
-my $bootPromptFile = "$imagePath/isolinux/isolinux.txt";
-open (FILE, ">", "$bootPromptFile") or die $!;
-print FILE $bootPrompt;
-close (FILE);
-
-#create the squashfs file
-$cmd="mksquashfs $chrootPath $imagePath/casper/filesystem.squashfs -e boot";
-system($cmd);
-
-#calc md5sum
-$cmd="cd $imagePath && find . -type f -print0 | xargs -0 md5sum | grep -v \"\./md5sum.txt\" > $imagePath/md5sum.txt";
-system($cmd);
-
-#generate iso image
-#
-# using two cmd variables because genisoimage does NOT
-# like absolute paths for -c and -b options
-$cmd="cd $imagePath";
-my $cmd2="genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $masterPath/TestRig2.0.iso .";
-system("$cmd;$cmd2");
-
+    
+    #copy Web10G Kernel from chroot 
+    $cmd="cp $chrootPath/boot/vmlinuz-$kernel $imagePath/casper/vmlinuz";
+    system($cmd);
+    
+    #copy Web10G initrd from chroot
+    $cmd="cp $chrootPath/boot/initrd.img-$kernel $imagePath/casper/initrd.lz";
+    system($cmd);
+    
+    #copy Isolinux from host machine
+    if (! -e $isolinuxPath) #does it exist on this machine?
+    {
+	print "Unable to locate isolinux.bin at $isolinuxPath. Make sure it is installed. Exiting.\n";
+	exit;
+    }else { 
+	$cmd="cp $isolinuxPath $imagePath/isolinux/";
+	system($cmd);
+    }
+    #copy Memtest from host machine
+    if (! -e $memtestPath) #is memtest on this machine? 
+    { print "Unable to locate memtest86+.bin at $memtestPath. Make sure it is installed. Exiting.\n";
+      exit;
+    } else { 
+	$cmd="cp $memtestPath $imagePath/install/memtest";
+	system($cmd);
+    }
+    #build manifest of packages installed
+    $cmd="chroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
+    system($cmd);
+    
+    #make a copy of it, named for desktop OSes(?)
+    $cmd="cp -v $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
+    system($cmd);
+    
+    #list of packages not to include in manifest
+    my @removeFromManifest = qw(ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4);
+    
+    #remove the above list from the manifest
+    foreach my $i (@removeFromManifest) {
+	$cmd="sudo sed -i \"/$i/d\" $imagePath/casper/filesystem.manifest-desktop";
+	system($cmd);
+    }
+    
+    #put isolinux config in place
+    my $isolinuxFile = "$imagePath/isolinux/isolinux.cfg";
+    open (FILE, ">", "$isolinuxFile") or die $!;
+    print FILE $isolinuxCfg;
+    close (FILE);
+    
+    
+    #put diskdefines in place
+    my $diskDefinesFile = "$imagePath/README.diskdefines";
+    open (FILE, ">", "$diskDefinesFile") or die $!;
+    print FILE $diskDefines;
+    close (FILE);
+    
+    #put boot prompt in place
+    my $bootPromptFile = "$imagePath/isolinux/isolinux.txt";
+    open (FILE, ">", "$bootPromptFile") or die $!;
+    print FILE $bootPrompt;
+    close (FILE);
+    
+    #create the squashfs file
+    $cmd="mksquashfs $chrootPath $imagePath/casper/filesystem.squashfs -e boot";
+    system($cmd);
+    
+    #calc md5sum
+    $cmd="cd $imagePath && find . -type f -print0 | xargs -0 md5sum | grep -v \"\./md5sum.txt\" > $imagePath/md5sum.txt";
+    system($cmd);
+    
+    #generate iso image
+    #
+    # using two cmd variables because genisoimage does NOT
+    # like absolute paths for -c and -b options
+    $cmd="cd $imagePath";
+    my $cmd2="genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
+    system("$cmd;$cmd2");
+    
 } #### END ISO Generation Subroutine ####
 
-
-
+#remove the temporary directories
+sub cleanUp {
+    my $uuid = shift @_;
+    my $temp_image = $config->{paths}->{iso_path} . "/" . $uuid;
+    remove_tree($temp_image);
+    remove_tree($config->{paths}->{target_chroot});
+}
 
 ############
 #   MAIN   #
@@ -516,18 +546,12 @@ system("$cmd;$cmd2");
 
 # process command line options
 
-getopts ("p:f:h", \%options);
+getopts ("f:h", \%options);
 if (defined $options{h}) {
     print "encfbuilder usage\n";
-    print "\tencfbuilder.pl -p [-f] [-h]\n";
-    print "\t-p absolute path to target directory. NO RELATIVE PATHS!\n";
+    print "\tencfbuilder.pl [-f] [-h]\n";
     print "\t-f path to configuration file. Defaults to /usr/local/etc/encfsbuilder.cfg\n";
     print "\t-h this help text\n";
-    exit;
-}
-
-if (!defined $options{p}) {
-    print "Path to target chroot missing. Exiting.\n";
     exit;
 }
 
@@ -536,20 +560,6 @@ if (defined $options{f}) {
 	$cfg_path = $options{f};
     } else {
 	printf "Configuration file not found at $options{f}. Exiting.\n";
-	exit;
-    }
-}
-
-#if the test directory doesn't exist create it
-# but if it does make sure it's entirely empty
-if (! -w $options{p}) {
-    if (! mkdir $options{p}) {
-	print "TestRig destination directory could not be created $_\n";
-	exit;
-    }
-} else {
-    if (! remove_tree ($options{p}, {keep_root => 1})) {
-	print "Could not empty target diretcory. $_.\n";
 	exit;
     }
 }
@@ -574,6 +584,22 @@ if (! defined $DBH) {
     exit;
 }
 
+#generate the UUID
+
+print "Generating UUID\n";
+
+my $uuid = generateUUID();
+
+print "UUID: $uuid\n";
+$config->{paths}->{target_chroot} = "$config->{paths}->{target_chroot}/$uuid";
+
+#create the target chroot directory which is the user defined path plus the uuid
+if (! mkdir $config->{paths}->{target_chroot}) {
+    print "TestRig destination directory could not be created at $config->{paths}->{target_chroot} \n";
+    exit;
+}
+
+
 # generate public private key pairs. 
 
 print "Generating Keys\n";
@@ -597,14 +623,6 @@ print "Encrypting known text\n";
 my $known_text_enc = encryptKnownText($public_key, $known_text_clear);
 
 #my $test = decryptKnownText($private_key, $known_text_enc);
-
-#generate the UUID
-
-print "Generating UUID\n";
-
-my $uuid = generateUUID();
-
-print "UUID: $uuid\n";
 
 # copy the master chroot directory to temporary chroot
 
@@ -652,5 +670,12 @@ if (writeToDB($uuid, $public_key, $private_key, $encfs_password, $known_text_cle
     print "Failed to write data to database. Exiting.\n";
     exit;
 }
+
+#generate the iso
+generateISO($uuid);
+
+#clean up the tempory directories
+cleanUp($uuid);
+
 print "TestRig target ISO generation process completed.\n";
 
