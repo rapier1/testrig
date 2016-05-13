@@ -51,7 +51,7 @@ use File::Path qw(remove_tree make_path);
 
 #globals
 my $config = Config::Tiny->new;
-my $cfg_path = "/usr/local/etc/encfsbuilder.cfg";
+my $cfg_path = "/usr/local/etc/isobuilder.cfg";
 my %options = ();
 my $DBH;
 
