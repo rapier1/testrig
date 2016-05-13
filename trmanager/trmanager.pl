@@ -43,7 +43,8 @@ use warnings;
 use DBI;
 use Config::Tiny;
 use Getopt::Std;
-use Sys::Syslog qw(:standard :macros);
+use Sys::Syslog qw(:standard);
+openlog("TR2Manager", "nowait,pid", "user");
 
 my $config= Config::Tiny->new;
 my $cfg_path = "/usr/local/etc/tr2authmanager.cfg";
@@ -53,13 +54,15 @@ my %options = ();
 # the global config data structure
 sub readConfig {
     if (! -e $cfg_path) {
-	print "Config file not found at $cfg_path. Exiting.\n";
+	print STDERR "Config file not found at $cfg_path. Exiting.\n";
+	syslog ("crit", "Config file not found at $cfg_path. Exiting.");
 	exit;
     } else {
 	$config = Config::Tiny->read($cfg_path);
 	my $error = $config->errstr();
 	if ($error ne "") {
-	    print "Error: $error. Exiting.\n";
+	    print STDERR "Error: $error. Exiting.\n";
+	    syslog("crit", "Error: $error. Exiting.");
 	    exit;
 	}
     }
@@ -70,15 +73,18 @@ sub readConfig {
 sub validateConfig {
 #check db data
     if (! defined $config->{db}->{host}) {
-	print "Missing DB host infomation in config file. Exiting\n";
+	print STDERR "Missing DB host infomation in config file. Exiting.\n";
+	syslog ("crit", "Missing DB host infomation in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{db}->{password}) {
-	print "Missing DB password infomation in config file. Exiting\n";
+	print STDERR "Missing DB password infomation in config file. Exiting.\n";
+	syslog ("crit", "Missing DB password infomation in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{db}->{user}) {
-	print "Missing DB user infomation in config file. Exiting\n";
+	print STDERR "Missing DB user infomation in config file. Exiting.\n";
+	syslog ("crit", "Missing DB user infomation in config file. Exiting.");
 	exit;
     }
 }
@@ -96,7 +102,8 @@ if (defined $options{f}) {
     if (-e $options{f}) {
 	$cfg_path = $options{f};
     } else {
-	printf "Configuration file not found at $options{f}. Exiting.\n";
+	printf STDERR "Configuration file not found at $options{f}. Exiting.\n";
+	syslog ("crit", "Configuration file not found at $options{f}. Exiting.");
 	exit;
     }
 }
@@ -108,18 +115,21 @@ print "Read config\n";
 validateConfig();
 print "Config validated\n";
 
-# open the connection to syslog
-openlog("$$", "pid,nofatal", "local0");
+closelog();
 
 package TRManagerServer;
 use base qw(Net::Server::Fork);
 use Crypt::PK::DSA;
 use CryptX;
 use Date::Calc;
+use Sys::Syslog qw(:standard);
+openlog("TR2Manager", "nowait,pid", "user");
+
+syslog("info", "Starting TR2Manager");
 
 TRManagerServer->run({log_level => 4});
 
-syslog(LOG_INFO, "TR2Manager started and accepting connections");
+# open the connection to syslog
 
 # decrypt our cipher string with the private key
 # the incoming cipher text is unpacked into hex
@@ -277,26 +287,28 @@ sub runSuccess {
 sub parseResponse {
     my $clientdata = shift;
 
+    my $response;
+    
     # we won't always have enough fields to fill each
     # variable here. Only INCTEST will fill all of them
     (my $request, my $uuid, my $data, my $test) = split (':', $clientdata);
     if ($request eq "") {
-	syslog (LOG_INFO, "NOCLIENTDATA: Unknown client passed malformed request.");
+	syslog ("info", "NOCLIENTDATA: Unknown client passed malformed request.");
 	return "NOCLIENTDATA";
     }	
     # requesting authentication success returns encfpass
     if ($request =~ /^AUTH/i) {
 	#this is an auth request
-	my $response = authenticate($uuid, $data);
+	$response = authenticate($uuid, $data);
     }
     # requesting scp key success returns public key
     elsif ($request =~ /^SCPKEY/i) {
 	#this is an scp key request
-	my $response = getSCPKey($uuid, $data);
+	$response = getSCPKey($uuid, $data);
     }
     # run completed successfully. increment run counter by 1 
     elsif ($request =~ /^RUNSUCCESS/i) {
-	my $response = runSuccess ($uuid, $data)
+	$response = runSuccess ($uuid, $data)
 	# we've decided that the run was successful according
 	# to the client so increment testrig.client.numruns
     }
@@ -310,27 +322,27 @@ sub parseResponse {
     }
     # keep the connection alive
     elsif ($request =~ /^KEEPALIVE/i) {
-	my $response = "ALIVE";
+	$response = "ALIVE";
     } else {
-	my $response = "UNKNOWN";
+	$response = "UNKNOWN";
     }
     
     if ($response eq "FAILUTH") {
-	syslog (LOG_INFO, "FAILUTH: Client $uuid failed authentication.");
+	syslog ("info", "FAILUTH: Client $uuid failed authentication.");
 	#they failed authentication
     } elsif ($response eq "BADCHALLENGE") {
-	syslog (LOG_INFO, "BADCHALLENGE: Client $uuid passed a malformed challenge.");
+	syslog ("info", "BADCHALLENGE: Client $uuid passed a malformed challenge.");
 	#the challenge code presented didn't match our
 	#expected byte length
     } elsif ($response eq "NOUUIDMATCH") {
-	syslog (LOG_INFO, "NOUUIDMATCH: Client $uuid not found in DB."); 	
+	syslog ("info", "NOUUIDMATCH: Client $uuid not found in DB."); 	
 	#the UUID didn't match or returned too many matches
     } elsif ($response eq "EXPIREDISO") {
-	syslog (LOG_INFO, "EXPIREDISO: Client $uuid has expired.");
+	syslog ("info", "EXPIREDISO: Client $uuid has expired.");
     } elsif ($response eq "NOMORERUNS") {
-	syslog (LOG_INFO, "NOMORERUNS: Client $uuid has no more available runs.");
+	syslog ("info", "NOMORERUNS: Client $uuid has no more available runs.");
     } elsif ($response eq "NODBH") {
-	syslog(LOG_CRIT, "NODBH: Could not fetch database handle.");
+	syslog("crit", "NODBH: Could not fetch database handle.");
     }
     return ($response);
 }
