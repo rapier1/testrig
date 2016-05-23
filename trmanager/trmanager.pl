@@ -318,7 +318,7 @@ sub parseResponse {
 	# make a note of that in the accounting
 	#TODO we aren't implementing this yet
 	# we need a better idea of what the db structure is
-	# goign to look like first
+	# going to look like first
     }
     # keep the connection alive
     elsif ($request =~ /^KEEPALIVE/i) {
@@ -328,20 +328,24 @@ sub parseResponse {
     }
     
     if ($response eq "FAILUTH") {
+	#they failed authentication. Specifically - the presented
+	# challenge text did not match the known text
 	syslog ("info", "FAILUTH: Client $uuid failed authentication.");
-	#they failed authentication
     } elsif ($response eq "BADCHALLENGE") {
-	syslog ("info", "BADCHALLENGE: Client $uuid passed a malformed challenge.");
 	#the challenge code presented didn't match our
 	#expected byte length
+	syslog ("info", "BADCHALLENGE: Client $uuid passed a malformed challenge.");
     } elsif ($response eq "NOUUIDMATCH") {
-	syslog ("info", "NOUUIDMATCH: Client $uuid not found in DB."); 	
 	#the UUID didn't match or returned too many matches
+	syslog ("info", "NOUUIDMATCH: Client $uuid not found in DB."); 	
     } elsif ($response eq "EXPIREDISO") {
+	# the ISO is older than the use by date
 	syslog ("info", "EXPIREDISO: Client $uuid has expired.");
     } elsif ($response eq "NOMORERUNS") {
+	# the iso has been run more times than allowed
 	syslog ("info", "NOMORERUNS: Client $uuid has no more available runs.");
     } elsif ($response eq "NODBH") {
+	# unable to get a database handle
 	syslog("crit", "NODBH: Could not fetch database handle.");
     }
     return ($response);
@@ -360,7 +364,6 @@ sub process_request () {
 	    if (/quit/i) {
 		last;
 	    }
-	    print "$_\n";
 	    my $response = parseResponse($_);
 	    print $response  . "\n";
 	    alarm($timeout);
