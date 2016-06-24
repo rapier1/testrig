@@ -304,13 +304,8 @@ sub mountENCFS {
     }	
 
     #This allows us to create an encfs mount without userinteraction
-    if ($options{v}) {
-	system ("$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir");
-    } else {
-	($stdout, $stderr, $exit) = capture {
-	    system ("$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir");
-	};
-    }
+    my $cmd = "$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir";
+    runSystem($cmd);
     
     if ($? == -1) {
 	return -1;
@@ -332,10 +327,7 @@ sub copyFiles {
 sub unmountENCFS {
     my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
     my $fuser = $config->{paths}->{fusermount};
-    system ("$fuser -q -u $pub_dir");
-    if ($? == -1) {
-	return -1;
-    }
+    runSystem("$fuser -q -u $pub_dir");
     verbose ("ENCFS unmounted");
     return 1;
 }
@@ -503,6 +495,26 @@ sub writeToDB {
     return $result;
 }
 
+# wrapper for system command that allows us to
+# capture and squelch stdout/err from shell
+# enable option v to see stdout
+sub runSystem {
+    my $cmd = shift @_;
+    my $stdout;
+    my $stderr;
+    my $exit;
+
+    if ($options{v}) {
+	system ($cmd);
+    } else {
+	($stdout, $stderr, $exit) = capture {
+	    system($cmd);
+	};
+    }
+
+    return $exit;
+}
+
 
 sub generateISO {
     # we use the UUID to make sure that all directories are unique
@@ -514,10 +526,6 @@ sub generateISO {
     my $imagePath = $config->{paths}->{iso_path} . "/" . $uuid;
     my $isolinuxPath = $config->{paths}->{isolinux}; #we need isolinux.bin
     my $memtestPath = $config->{paths}->{memtest};
-    my $stdout;
-    my $stderr;
-    my $exit;
-
     
     #var for holding string of commands to pass to system
     my $cmd;
@@ -577,22 +585,22 @@ END_DISKDEFINES
     #create directories for liveCD creation
     # mkdir -p don't work here, durrrrrr
     $cmd="mkdir $imagePath";
-    system($cmd);
+    runSystem($cmd);
     $cmd="mkdir $imagePath/casper";
-    system($cmd);
+    runSystem($cmd);
     $cmd="mkdir $imagePath/isolinux";
-    system($cmd);
+    runSystem($cmd);
     $cmd="mkdir $imagePath/install";
-    system($cmd);
+    runSystem($cmd);
 
     
     #copy Web10G Kernel from chroot 
     $cmd="cp $chrootPath/boot/vmlinuz-$kernel $imagePath/casper/vmlinuz";
-    system($cmd);
+    runSystem($cmd);
     
     #copy Web10G initrd from chroot
     $cmd="cp $chrootPath/boot/initrd.img-$kernel $imagePath/casper/initrd.lz";
-    system($cmd);
+    runSystem($cmd);
     
     #copy Isolinux from host machine
     if (! -e $isolinuxPath) #does it exist on this machine?
@@ -601,7 +609,7 @@ END_DISKDEFINES
 	return -1;
     }else { 
 	$cmd="cp $isolinuxPath $imagePath/isolinux/";
-	system($cmd);
+	runSystem($cmd);
     }
     #copy Memtest from host machine
     if (! -e $memtestPath) #is memtest on this machine? 
@@ -609,17 +617,15 @@ END_DISKDEFINES
       return -1;
     } else { 
 	$cmd="cp $memtestPath $imagePath/install/memtest";
-	system($cmd);
+	runSystem($cmd);
     }
     #build manifest of packages installed
     $cmd="chroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
-    ($stdout, $stderr, $exit) = capture {
-	system($cmd);
-    };
+    runSystem($cmd);
     
     #make a copy of it, named for desktop OSes(?)
     $cmd="cp $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
-    system($cmd);
+    runSystem($cmd);
     
     #list of packages not to include in manifest
     my @removeFromManifest = qw(ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4);
@@ -627,7 +633,7 @@ END_DISKDEFINES
     #remove the above list from the manifest
     foreach my $i (@removeFromManifest) {
 	$cmd="sudo sed -i \"/$i/d\" $imagePath/casper/filesystem.manifest-desktop";
-	system($cmd);
+	runSystem($cmd);
     }
     
     #put isolinux config in place
@@ -651,26 +657,18 @@ END_DISKDEFINES
     
     #create the squashfs file
     $cmd="mksquashfs $chrootPath $imagePath/casper/filesystem.squashfs -e boot";
-    ($stdout, $stderr, $exit) = capture {
-	system($cmd);
-    };
+    runSystem($cmd);
 
     #calc md5sum
     $cmd="cd $imagePath && find . -type f -print0 | xargs -0 md5sum | grep -v \"\./md5sum.txt\" > $imagePath/md5sum.txt";
-    ($stdout, $stderr, $exit) = capture {
-	system($cmd);
-    };
+    runSystem($cmd);
     
     #generate iso image
     #
     # using two cmd variables because genisoimage does NOT
     # like absolute paths for -c and -b options
     $cmd="cd $imagePath && genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
-
-    ($stdout, $stderr, $exit) = capture {
-	system("$cmd");
-    };
-
+    runSystem($cmd);
     
 } #### END ISO Generation Subroutine ####
 
