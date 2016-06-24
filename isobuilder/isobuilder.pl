@@ -48,9 +48,12 @@ use Bytes::Random::Secure::Tiny;
 use File::Copy;
 use File::Copy::Recursive qw(dircopy);
 use File::Path qw(remove_tree make_path);
+use Try::Tiny;
+use Data::Dumper;
 
 #globals
 my $config = Config::Tiny->new;
+my $config_out = Config::Tiny->new;
 my $cfg_path = "/usr/local/etc/isobuilder.cfg";
 my %options = ();
 my $DBH;
@@ -328,14 +331,22 @@ sub writeConfigToChroot {
 	"Cannot open $conf_dir/challenge for writing.\n";
     print $FH "$known_enc\n";
     close ($FH);
+
+    #write the configuration data
+    $config_out->write("$conf_dir/tr2.cfg"); 
+
+    #make sure the files exist
     if (! -e "$conf_dir/UUID" ) {
 	return -1;
     }
     if (! -e "$conf_dir/challenge" ) {
 	return -1;
     }
+    if (! -e "$conf_dir/tr2.cfg") {
+	return -1;
+    }
     return 1;
-    # still need to hgave it write the NOC public key
+    # still need to have it write the NOC public key
     # NOC host, NOC user, test configuration and so forth
 }
 
@@ -350,6 +361,75 @@ sub copyMaster {
 # values for the maximum number of runs, valid to dates, and
 # the public key to write the data back to the NOCs server
 
+sub readConfFromDB {
+    my $uid = shift @_;
+    my $cid = shift @_;
+    my $result = 0;
+    my @data = ();
+    my $customer_query = "SELECT inst_data_host, 
+                                 inst_host_uname,
+                                 tt_system
+                          FROM customer
+                          WHERE cid = ?";
+    my $user_query = "SELECT username,
+                             useremail,
+                             user_tt_id,
+                             validtodate,
+                             maxrun,
+                             requested_tests
+                      FROM user
+                      WHERE uid = ?";
+
+     # get the customer data
+    my $sth = $DBH->prepare($customer_query);
+    $result = $sth->execute($cid);
+    try
+    {
+        @data = $sth->fetchrow_array();
+    }
+    catch
+    {
+	printf "Recieved DBI error: $_\n";
+	exit;
+    };
+    $sth->finish;
+    if ($#data != 2) {
+        print "Missing customer data! CID may not exist. Exiting\n";
+	return -1;
+    }
+    $config_out->{customer}->{data_host} = $data[0];
+    $config_out->{customer}->{data_uname} = $data[1];
+    $config_out->{customer}->{tt_system} = $data[2];
+    
+    #get the user data
+    $sth = $DBH->prepare($user_query);
+    $result = $sth->execute($uid);
+    try
+    {
+	@data = $sth->fetchrow_array();
+    }
+    catch
+    {
+	printf "Recieved DBI error: $_\n";
+	exit;
+    };
+    $sth->finish;  
+    if ($#data != 5) {
+        print "Missing user data! UID may not exist. Exiting\n";
+	return -1;
+    }
+    $config_out->{user}->{username} = $data[0];
+    $config_out->{user}->{email} = $data[1];
+    $config_out->{user}->{tt_id} = $data[2];
+    $config_out->{user}->{validtodate} = $data[3];
+    $config_out->{user}->{maxrun} = $data[4];
+    $config_out->{user}->{tests} = $data[5];
+    print Dumper($config_out);
+
+    return 1;
+}
+
+
 #write the results to the database
 sub writeToDB {
     my $uuid = shift @_;
@@ -363,15 +443,32 @@ sub writeToDB {
                                  numruns, encfspass,
                                  knowntext, authfailures,
                                  clientpubkey, clientprivkey,
-                                 validtodate, userkey)
+                                 validtodate, cid, uid)
                           VALUES
-                                (?, 0,
+                                (?, ?,
                                  0, ?,
                                  ?, 0,
                                  ?, ?,
-                                 0, 0);";
+                                 ?, ?, 
+                                 ?);";
     my $sth = $DBH->prepare($query);
-    $result = $sth->execute($uuid, $encfspassword, $known_text_clear, $public_key, $private_key);
+    try 
+    {
+	$result = $sth->execute($uuid,
+				$config_out->{user}->{maxrun},
+				$encfspassword, 
+				$known_text_clear, 
+				$public_key, 
+				$private_key,
+	                        $config_out->{user}->{validtodate},
+	                        $options{c},
+                                $options{u});
+    }
+    catch
+    {
+	print "Received DBI error: $_\n";
+	exit;
+    };
     $sth->finish;
     return $result;
 }
@@ -548,11 +645,13 @@ sub cleanUp {
 
 # process command line options
 
-getopts ("f:h", \%options);
+getopts ("u:c:f:h", \%options);
 if (defined $options{h}) {
     print "encfbuilder usage\n";
-    print "\tencfbuilder.pl [-f] [-h]\n";
+    print "\tencfbuilder.pl -u -c [-f] [-h]\n";
     print "\t-f path to configuration file. Defaults to /usr/local/etc/encfsbuilder.cfg\n";
+    print "\t-u user id (the recipient of the iso)\n";
+    print "\t-c customer id (the requesting organization)\n";
     print "\t-h this help text\n";
     exit;
 }
@@ -566,6 +665,16 @@ if (defined $options{f}) {
     }
 }
 
+if (!defined $options{u}) {
+    printf "User id must be provided.\n";
+    exit;
+}
+
+if (!defined $options{c}) {
+    printf "Customer id must be provided.\n";
+    exit;
+}
+
 # get configuration from file
 readConfig();
 print "Read config\n";
@@ -573,11 +682,17 @@ print "Read config\n";
 validateConfig();
 print "Config validated\n";
 
-
 # get db handle
 # TODO use SSL for the connection. 
-$DBH = DBI->connect($config->{db}->{host}, $config->{db}->{user},
-		       $config->{db}->{password});
+$DBH = DBI->connect($config->{db}->{host}, 
+		    $config->{db}->{user},
+		    $config->{db}->{password}, 
+		    {        
+			PrintError => 0,
+			PrintWarn  => 1,
+			RaiseError => 1,
+			AutoCommit => 1,
+		    });
 
 print "$config->{db}->{host}, $config->{db}->{user}, $config->{db}->{password}\n";
 
@@ -612,6 +727,14 @@ my ($public_key, $private_key) = generateKeys();
 print "Generating password\n";
 my $encfs_password = generatePassword();
 
+# get configuration data from database
+print "Getting configuration data from database\n";
+if (readConfFromDB($options{u}, $options{c}) == -1) {
+    print "Could not read configuration data from testrig database\n";
+    cleanUp($uuid);
+    exit;
+}
+print "Got configuration data\n";
 
 # generate some known text. This is the same routine as the password
 # but we're using the resulting text differently
@@ -629,6 +752,7 @@ my $test_text = decryptKnownText($private_key, $known_text_enc);
 
 if ($known_text_clear ne $test_text) {
     print "Public key encryption failed!\n";
+    cleanUp($uuid);
     exit;
 }
 
@@ -636,15 +760,16 @@ if ($known_text_clear ne $test_text) {
 
 if (! copyMaster()) {
     printf "Failed to copy master chroot directory\n";
+    cleanUp($uuid);
     exit;
 }
-
 
 # we now have all of the necessaries. 
 # time to create the encfs directory space
 
 if (mountENCFS($encfs_password) != 1) {
     print "Failed to create and/or mount encfs filespace. Exiting.\n";
+    cleanUp($uuid);
     exit;
 }
 
@@ -654,6 +779,7 @@ if (mountENCFS($encfs_password) != 1) {
 
 if (! copyFiles()) {
     print "File copy failed! Exiting.\n";
+    cleanUp($uuid);
     exit;
 }
 
@@ -663,11 +789,13 @@ if (unmountENCFS() != 1) {
     exit;
 }
 
+
 # we need to write the UUID and the known_text_enc to 
 # known location in the chroot. It can be anywhere
 # but I suggest /usr/local/etc/testrig
 if (writeConfigToChroot($uuid, $known_text_enc, ) != 1) {
     print "Problem writing configuration information to target chroot. Exiting.\n";
+    cleanUp($uuid);
     exit;
 }
 
@@ -676,6 +804,7 @@ if (writeConfigToChroot($uuid, $known_text_enc, ) != 1) {
 print "Writing TestRig data to database.\n";
 if (writeToDB($uuid, $public_key, $private_key, $encfs_password, $known_text_clear) == 0) {
     print "Failed to write data to database. Exiting.\n";
+    cleanUp($uuid);
     exit;
 }
 
