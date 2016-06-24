@@ -49,7 +49,10 @@ use File::Copy;
 use File::Copy::Recursive qw(dircopy);
 use File::Path qw(remove_tree make_path);
 use Try::Tiny;
-use Data::Dumper;
+use Sys::Syslog qw(:standard);
+use Capture::Tiny ':all';
+
+#use Data::Dumper;
 
 #globals
 my $config = Config::Tiny->new;
@@ -58,17 +61,38 @@ my $cfg_path = "/usr/local/etc/isobuilder.cfg";
 my %options = ();
 my $DBH;
 
+#initialize the logger
+openlog("TR-isobuilder", "nowait, pid", "user");
+
+sub logger {
+    my $message = shift @_;
+    my $level = shift @_;
+
+    syslog($level, $message);
+    if (!defined $options{q}) {
+	print $message . "\n";
+    }
+    return;
+}
+
+sub verbose {
+    my $message = shift @_;
+    if (defined $options{v}) {
+	print $message . "\n";
+    }
+}
+    
 # read the configuration file and put everything into
 # the global config data structure
 sub readConfig {
     if (! -e $cfg_path) {
-	print "Config file not found at $cfg_path. Exiting.\n";
+	logger ("Config file not found at $cfg_path. Exiting.");
 	exit;
     } else {
 	$config = Config::Tiny->read($cfg_path);
 	my $error = $config->errstr();
 	if ($error ne "") {
-	    print "Error: $error. Exiting.\n";
+	    logger( "crit", "Error: $error. Exiting.");
 	    exit;
 	}
     }
@@ -79,95 +103,95 @@ sub readConfig {
 sub validateConfig {
 #check db data
     if (! defined $config->{db}->{host}) {
-	print "Missing DB host infomation in config file. Exiting\n";
+	logger( "crit", "Missing DB host infomation in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{db}->{password}) {
-	print "Missing DB password infomation in config file. Exiting\n";
+	logger( "crit", "Missing DB password infomation in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{db}->{user}) {
-	print "Missing DB user infomation in config file. Exiting\n";
+	logger( "crit", "Missing DB user infomation in config file. Exiting.");
 	exit;
     }
 #check path information
     if (! defined $config->{paths}->{source}) {
-	print "Missing path for TestRig source files in config file. Exiting.\n";
+	logger( "crit", "Missing path for TestRig source files in config file. Exiting.");
 	exit;
     } else {
 	if (! -r $config->{paths}->{source}) {
-	    print "TestRig source files missing or unreadable. Exiting.\n";
+	    logger( "crit", "TestRig source files missing or unreadable. Exiting.");
 	    exit;
 	}
     }
     if (! defined $config->{paths}->{enc_destination}) {
-	print "Missing path for TestRig destination in config file. Exiting.\n";
+	logger( "crit", "Missing path for TestRig destination in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{paths}->{pub_destination}) {
-	print "Missing path for TestRig destination in config file. Exiting.\n";
+	logger( "crit", "Missing path for TestRig destination in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{paths}->{config_directory}) {
-	print "Missing path for UUID destination in config file. Exiting.\n";
+	logger( "crit", "Missing path for UUID destination in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{paths}->{master_chroot}) {
-	print "Missing path to master chroot directory. Exiting\n";
+	logger( "crit", "Missing path to master chroot directory. Exiting");
 	exit;
     } else { #make sure it exists
 	if (! -e $config->{paths}->{master_chroot}) {
-	    print "Master chroot directory not found at $config->{paths}->{master_chroot}\n";
+	    logger( "crit", "Master chroot directory not found at $config->{paths}->{master_chroot}");
 	    exit;
 	}
     }
     if (! defined $config->{paths}->{target_chroot}) {
-	print "Missing path to target chroot directory. Exiting\n";
+	logger( "crit", "Missing path to target chroot directory. Exiting.");
 	exit;
     } else { #make sure it exists
 	if (! -e $config->{paths}->{target_chroot}) {
-	    print "Target chroot directory not found at $config->{paths}->{target_chroot}\n";
+	    logger( "crit", "Target chroot directory not found at $config->{paths}->{target_chroot}.");
 	    exit;
 	}
     }
     if (! defined $config->{paths}->{encfs}) {
-	print "Missing path to encfs binaries in config file. Exiting.\n";
+	logger( "crit", "Missing path to encfs binaries in config file. Exiting.");
 	exit;
     } else { # make sure it's there
 	if (! -e $config->{paths}->{encfs}) {
-	    print "Absolute path to encfs binary is incorrect. Exiting.\n";
+	    logger( "crit", "Absolute path to encfs binary is incorrect. Exiting.");
 	    exit;
 	}
     }
     if (! defined $config->{paths}->{fusermount}) {
-	print "Missing path to fusermount binary in config file. Exiting.\n";
+	logger( "crit", "Missing path to fusermount binary in config file. Exiting.");
 	exit;
     } else { # make sure we can find it
 	if (! -e $config->{paths}->{fusermount}) {
-	    print "Absolute path to fusermount binary is incorrect. Exiting.\n";
+	    logger( "crit", "Absolute path to fusermount binary is incorrect. Exiting.");
 	    exit;
 	}
     }
     if (! defined $config->{paths}->{iso_path}) 
     { #is the image path detailed in the config file?
-        print "Missing path to iso image output direcdtory in config file. Exiting.\n";
+        logger( "crit", "Missing path to iso image output direcdtory in config file. Exiting.");
 	exit;
     }
     if (! defined $config->{paths}->{isolinux}) {
-	print "Missing path to isolinux binary in config file. Exiting.\n";
+	logger( "crit", "Missing path to isolinux binary in config file. Exiting.");
 	exit;
     } else { # make sure we can find it
 	if (! -e $config->{paths}->{isolinux}) {
-	    print "isolinux.bin not found at location specified in config. Exiting.\n";
+	    logger( "crit", "isolinux.bin not found at location specified in config. Exiting.");
 	    exit;
 	}
     }
     if (! defined $config->{paths}->{memtest}) {
-	print "Missing path to memtest binary in config file. Exiting.\n";
+	logger( "crit", "Missing path to memtest binary in config file. Exiting.");
 	exit;
     } else { # make sure we can find it
 	if (! -e $config->{paths}->{memtest}) {
-	    print "memtest not found at location specified in config. Exiting.\n";
+	    logger( "crit", "memtest not found at location specified in config. Exiting.");
 	    exit;
 	}
     }
@@ -182,7 +206,7 @@ sub generateKeys {
     $pk->generate_key(512,65537);
     my $private_pem = $pk->export_key_pem('private');
     my $public_pem = $pk->export_key_pem('public');
-    print "Generated keys\n";
+    verbose ("Generated keys");
     return ($public_pem, $private_pem);
 }
 
@@ -196,7 +220,7 @@ sub generatePassword {
     #randomly picks 25 chacaters from the validChars string
     my $string = $rng->string_from($validChars, 25);
     
-    print "Generated random string\n";
+    verbose ("Generated random string.");
     return $string;
 }
 
@@ -237,7 +261,7 @@ sub generateUUID {
     my $uuid_obj = Data::UUID->new;
     #generate a UUID string
     my $uuid = $uuid_obj->create_str();
-    print "Generated UUID\n";
+    verbose ("Generated UUID: $uuid");
     return ($uuid);
 }
 
@@ -245,14 +269,17 @@ sub generateUUID {
 # we can use the password we have in the extpass option
 # by using '-extpass="echo $password"'. 
 sub mountENCFS {
-    print "Mounting ENCFS\n";
+    verbose ("Mounting ENCFS");
     my $password = shift @_;
     my $encfs = $config->{paths}->{encfs};
     my $enc_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{enc_destination};
     my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
-
-    print "Encrypted directory: $enc_dir\n";
-    print "Public directory: $pub_dir\n";
+    my $stderr;
+    my $stdout;
+    my $exit;
+    
+    verbose ("Encrypted directory: $enc_dir");
+    verbose ("Public directory: $pub_dir");
     # make the directories in advance so encfs doesn't ask for input
     # from the keyboard. Be sure to clear any existing directories. 
     # if the directory exists remove everything in it
@@ -262,8 +289,8 @@ sub mountENCFS {
     if (! -w $enc_dir) {
 	#it doesn't exist or is not writeable. same thing. So try to make it.
 	if (! make_path($enc_dir)) {
-	    print "Failed to create encrypted encfs directory in target chroot. $! Exiting.\n";
-	    exit;
+	    logger("crit", "Failed to create encrypted encfs directory in target chroot. $! Exiting.");
+	    return -1;
 	}
     }	
     if (-e $pub_dir) {
@@ -271,19 +298,25 @@ sub mountENCFS {
     }
     if (! -w $pub_dir) {
 	if (! make_path($pub_dir)) {
-	    print "Failed to create public encfs directory in target chroot. $! Exiting.\n";
-	    exit;
+	    logger("Failed to create public encfs directory in target chroot. $! Exiting.");
+	    return -1;
 	}
     }	
 
     #This allows us to create an encfs mount without userinteraction
-    system ("$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir");
-
+    if ($options{v}) {
+	system ("$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir");
+    } else {
+	($stdout, $stderr, $exit) = capture {
+	    system ("$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir");
+	};
+    }
+    
     if ($? == -1) {
 	return -1;
     }
       
-    print "Mounted ENCFS\n";
+    verbose ("Mounted ENCFS");
     return 1;
 }
 
@@ -291,7 +324,7 @@ sub mountENCFS {
 sub copyFiles {
     my $source = $config->{paths}->{source};
     my $destination =  $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
-    print "copying from $source to $destination\n";
+    verbose ("Copying from $source to $destination");
     return(dircopy($source, $destination));
 }
 
@@ -303,7 +336,7 @@ sub unmountENCFS {
     if ($? == -1) {
 	return -1;
     }
-    print "ENCFS unmounted\n";
+    verbose ("ENCFS unmounted");
     return 1;
 }
 
@@ -313,75 +346,65 @@ sub writeConfigToChroot {
     my $uuid = shift @_;
     my $known_enc = shift @_;
     my $conf_dir = $config->{paths}->{target_chroot} . "/" .  $config->{paths}->{config_directory};
+    my $FH; 
+
     if (-e $conf_dir) {
 	remove_tree ($conf_dir, {keep_root => 1});
     }
     if (! -w $conf_dir) {
 	if (! make_path($conf_dir)) {
-	    print "Failed to create configuration directory in target chroot. $! Exiting.\n";
-	    exit;
+	    logger("crit", "Failed to create configuration directory in target chroot. $! Exiting.");
+	    return -1;
 	}
     }
-    print "Configuration directory: $conf_dir\n";
-    open (my $FH, ">", "$conf_dir/UUID") or die 
-	"Cannot open $conf_dir/UUID for writing.\n";
+    verbose ("Configuration directory: $conf_dir");
+    if (!open ($FH, ">", "$conf_dir/UUID")) {
+	logger ("crit", "Cannot open $conf_dir/UUID for writing.");
+	return -1;
+    }
     print $FH "$uuid\n";
     close ($FH);
-    open ($FH, ">", "$conf_dir/challenge") or die
-	"Cannot open $conf_dir/challenge for writing.\n";
+    if (!open ($FH, ">", "$conf_dir/challenge")){
+	logger ("crit", "Cannot open $conf_dir/challenge for writing.");
+	return -1;
+    }
     print $FH "$known_enc\n";
     close ($FH);
 
     #write the configuration data
-    $config_out->write("$conf_dir/tr2.cfg"); 
-
-    #make sure the files exist
-    if (! -e "$conf_dir/UUID" ) {
-	return -1;
-    }
-    if (! -e "$conf_dir/challenge" ) {
-	return -1;
-    }
-    if (! -e "$conf_dir/tr2.cfg") {
+    if ( ! $config_out->write("$conf_dir/tr2.cfg")) {
+	logger ("crit", "Could not write tr2 config file to $conf_dir");
 	return -1;
     }
     return 1;
-    # still need to have it write the NOC public key
-    # NOC host, NOC user, test configuration and so forth
 }
 
 #copy the master chroot to the target chroot
 sub copyMaster {
-    print "Copying master chroot to target\n";
+    verbose ("Copying master chroot to target");
     return(dircopy($config->{paths}->{master_chroot}, $config->{paths}->{target_chroot}));
 }
 
-#TODO: Need to get NOC configuaration options from the
+# Get NOC configuaration options from the
 # database and write them to the client table. This would include
 # values for the maximum number of runs, valid to dates, and
-# the public key to write the data back to the NOCs server
+# the public key to write the data back to the NOCs server.
+# We assume that the values in the database have been validated. 
+# note: config_out is instantiated as a global. 
 
 sub readConfFromDB {
     my $uid = shift @_;
     my $cid = shift @_;
     my $result = 0;
     my @data = ();
-    my $customer_query = "SELECT inst_data_host, 
-                                 inst_host_uname,
-                                 tt_system
-                          FROM customer
-                          WHERE cid = ?";
-    my $user_query = "SELECT username,
-                             useremail,
-                             user_tt_id,
-                             validtodate,
-                             maxrun,
-                             requested_tests
-                      FROM user
-                      WHERE uid = ?";
 
-     # get the customer data
-    my $sth = $DBH->prepare($customer_query);
+    # get the customer data
+    my $query = "SELECT inst_data_host, 
+                        inst_host_uname,
+                         tt_system
+                 FROM customer
+                 WHERE cid = ?";
+    my $sth = $DBH->prepare($query);
     $result = $sth->execute($cid);
     try
     {
@@ -389,20 +412,29 @@ sub readConfFromDB {
     }
     catch
     {
-	printf "Recieved DBI error: $_\n";
-	exit;
+	logger ("crit", "Recieved DBI error: $_");
+	return -1;
     };
     $sth->finish;
     if ($#data != 2) {
-        print "Missing customer data! CID may not exist. Exiting\n";
+        logger ("crit", "Missing customer data! CID may not exist. Exiting.");
 	return -1;
     }
     $config_out->{customer}->{data_host} = $data[0];
     $config_out->{customer}->{data_uname} = $data[1];
     $config_out->{customer}->{tt_system} = $data[2];
+
+    $query = "SELECT username,
+                     useremail,
+                     user_tt_id,
+                     validtodate,
+                     maxrun,
+                     requested_tests
+              FROM user
+              WHERE uid = ?";
     
     #get the user data
-    $sth = $DBH->prepare($user_query);
+    $sth = $DBH->prepare($query);
     $result = $sth->execute($uid);
     try
     {
@@ -410,12 +442,12 @@ sub readConfFromDB {
     }
     catch
     {
-	printf "Recieved DBI error: $_\n";
-	exit;
+	logger ("crit", "Recieved DBI error: $_");
+	return -1;
     };
     $sth->finish;  
     if ($#data != 5) {
-        print "Missing user data! UID may not exist. Exiting\n";
+        logger ("crit", "Missing user data! UID may not exist. Exiting.");
 	return -1;
     }
     $config_out->{user}->{username} = $data[0];
@@ -424,8 +456,6 @@ sub readConfFromDB {
     $config_out->{user}->{validtodate} = $data[3];
     $config_out->{user}->{maxrun} = $data[4];
     $config_out->{user}->{tests} = $data[5];
-    print Dumper($config_out);
-
     return 1;
 }
 
@@ -466,8 +496,8 @@ sub writeToDB {
     }
     catch
     {
-	print "Received DBI error: $_\n";
-	exit;
+	logger ("crit", "Received DBI error: $_");
+	return -1;
     };
     $sth->finish;
     return $result;
@@ -478,12 +508,16 @@ sub generateISO {
     # we use the UUID to make sure that all directories are unique
     my $uuid = shift @_;
 
-    ##Path Variables
+    #Path Variables
     my $workingChrootPath = $config->{paths}->{target_chroot}; #NEED TO MAKE THIS A PARAM
     my $chrootPath = $workingChrootPath; #path to working chroot
     my $imagePath = $config->{paths}->{iso_path} . "/" . $uuid;
     my $isolinuxPath = $config->{paths}->{isolinux}; #we need isolinux.bin
     my $memtestPath = $config->{paths}->{memtest};
+    my $stdout;
+    my $stderr;
+    my $exit;
+
     
     #var for holding string of commands to pass to system
     my $cmd;
@@ -563,26 +597,28 @@ END_DISKDEFINES
     #copy Isolinux from host machine
     if (! -e $isolinuxPath) #does it exist on this machine?
     {
-	print "Unable to locate isolinux.bin at $isolinuxPath. Make sure it is installed. Exiting.\n";
-	exit;
+	logger ("crit", "Unable to locate isolinux.bin at $isolinuxPath. Make sure it is installed. Exiting.");
+	return -1;
     }else { 
 	$cmd="cp $isolinuxPath $imagePath/isolinux/";
 	system($cmd);
     }
     #copy Memtest from host machine
     if (! -e $memtestPath) #is memtest on this machine? 
-    { print "Unable to locate memtest86+.bin at $memtestPath. Make sure it is installed. Exiting.\n";
-      exit;
+    { logger("crit", "Unable to locate memtest86+.bin at $memtestPath. Make sure it is installed. Exiting.");
+      return -1;
     } else { 
 	$cmd="cp $memtestPath $imagePath/install/memtest";
 	system($cmd);
     }
     #build manifest of packages installed
     $cmd="chroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
-    system($cmd);
+    ($stdout, $stderr, $exit) = capture {
+	system($cmd);
+    };
     
     #make a copy of it, named for desktop OSes(?)
-    $cmd="cp -v $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
+    $cmd="cp $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
     system($cmd);
     
     #list of packages not to include in manifest
@@ -615,19 +651,26 @@ END_DISKDEFINES
     
     #create the squashfs file
     $cmd="mksquashfs $chrootPath $imagePath/casper/filesystem.squashfs -e boot";
-    system($cmd);
-    
+    ($stdout, $stderr, $exit) = capture {
+	system($cmd);
+    };
+
     #calc md5sum
     $cmd="cd $imagePath && find . -type f -print0 | xargs -0 md5sum | grep -v \"\./md5sum.txt\" > $imagePath/md5sum.txt";
-    system($cmd);
+    ($stdout, $stderr, $exit) = capture {
+	system($cmd);
+    };
     
     #generate iso image
     #
     # using two cmd variables because genisoimage does NOT
     # like absolute paths for -c and -b options
-    $cmd="cd $imagePath";
-    my $cmd2="genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
-    system("$cmd;$cmd2");
+    $cmd="cd $imagePath && genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
+
+    ($stdout, $stderr, $exit) = capture {
+	system("$cmd");
+    };
+
     
 } #### END ISO Generation Subroutine ####
 
@@ -645,7 +688,7 @@ sub cleanUp {
 
 # process command line options
 
-getopts ("u:c:f:h", \%options);
+getopts ("qvu:c:f:h", \%options);
 if (defined $options{h}) {
     print "encfbuilder usage\n";
     print "\tencfbuilder.pl -u -c [-f] [-h]\n";
@@ -653,6 +696,8 @@ if (defined $options{h}) {
     print "\t-u user id (the recipient of the iso)\n";
     print "\t-c customer id (the requesting organization)\n";
     print "\t-h this help text\n";
+    print "\t-v verbose progress messages\n";
+    print "\t-q quiet all error messages. Messages still logged.\n";
     exit;
 }
 
@@ -660,27 +705,27 @@ if (defined $options{f}) {
     if (-e $options{f}) {
 	$cfg_path = $options{f};
     } else {
-	printf "Configuration file not found at $options{f}. Exiting.\n";
+	logger ("crit", "Configuration file not found at $options{f}. Exiting.");
 	exit;
     }
 }
 
 if (!defined $options{u}) {
-    printf "User id must be provided.\n";
+    logger ("crit", "User id must be provided.");
     exit;
 }
 
 if (!defined $options{c}) {
-    printf "Customer id must be provided.\n";
+    logger ("crit", "Customer id must be provided.");
     exit;
 }
 
 # get configuration from file
+verbose ("Reading config.");
 readConfig();
-print "Read config\n";
 
 validateConfig();
-print "Config validated\n";
+verbose("Config validated.");
 
 # get db handle
 # TODO use SSL for the connection. 
@@ -694,56 +739,53 @@ $DBH = DBI->connect($config->{db}->{host},
 			AutoCommit => 1,
 		    });
 
-print "$config->{db}->{host}, $config->{db}->{user}, $config->{db}->{password}\n";
-
 if (! defined $DBH) {
-    print "Could not connect to TestRig management server. Exiting.\n";
+    logger ("crit", "Could not connect to TestRig management server. Exiting.");
     exit;
 }
 
 #generate the UUID
 
-print "Generating UUID\n";
+verbose ("Generating UUID.");
 
 my $uuid = generateUUID();
 
-print "UUID: $uuid\n";
 $config->{paths}->{target_chroot} = "$config->{paths}->{target_chroot}/$uuid";
 
 #create the target chroot directory which is the user defined path plus the uuid
 if (! mkdir $config->{paths}->{target_chroot}) {
-    print "TestRig destination directory could not be created at $config->{paths}->{target_chroot} \n";
+    logger ("crit", "TestRig destination directory could not be created at $config->{paths}->{target_chroot}");
     exit;
 }
 
 
 # generate public private key pairs. 
 
-print "Generating Keys\n";
+verbose("Generating Keys.");
 
 my ($public_key, $private_key) = generateKeys();
 
 # generate the encfs password
-print "Generating password\n";
+verbose("Generating password.");
 my $encfs_password = generatePassword();
 
 # get configuration data from database
-print "Getting configuration data from database\n";
+verbose("Getting configuration data from database.");
 if (readConfFromDB($options{u}, $options{c}) == -1) {
-    print "Could not read configuration data from testrig database\n";
+    logger ("crit", "Could not read configuration data from testrig database");
     cleanUp($uuid);
     exit;
 }
-print "Got configuration data\n";
+verbose("Got configuration data.");
 
 # generate some known text. This is the same routine as the password
 # but we're using the resulting text differently
 
-print "Generating known text\n";
+verbose("Generating known text.");
 
 my $known_text_clear = generatePassword();
 
-print "Encrypting known text\n";
+verbose ("Encrypting known text.");
 
 my $known_text_enc = encryptKnownText($public_key, $known_text_clear);
 
@@ -751,7 +793,7 @@ my $known_text_enc = encryptKnownText($public_key, $known_text_clear);
 my $test_text = decryptKnownText($private_key, $known_text_enc);
 
 if ($known_text_clear ne $test_text) {
-    print "Public key encryption failed!\n";
+    logger("crit", "Public key encryption failed.");
     cleanUp($uuid);
     exit;
 }
@@ -759,7 +801,7 @@ if ($known_text_clear ne $test_text) {
 # copy the master chroot directory to temporary chroot
 
 if (! copyMaster()) {
-    printf "Failed to copy master chroot directory\n";
+    logger ("crit", "Failed to copy master chroot directory");
     cleanUp($uuid);
     exit;
 }
@@ -768,7 +810,7 @@ if (! copyMaster()) {
 # time to create the encfs directory space
 
 if (mountENCFS($encfs_password) != 1) {
-    print "Failed to create and/or mount encfs filespace. Exiting.\n";
+    logger ("crit", "Failed to create and/or mount encfs filespace. Exiting.");
     cleanUp($uuid);
     exit;
 }
@@ -778,14 +820,14 @@ if (mountENCFS($encfs_password) != 1) {
 # a known text string encrypted with our public key
 
 if (! copyFiles()) {
-    print "File copy failed! Exiting.\n";
+    logger("crit", "File copy failed! Exiting.");
     cleanUp($uuid);
     exit;
 }
 
 # unmount the encfs directory as we no longer need it to be open.
 if (unmountENCFS() != 1) {
-    print "Could not unmount encfs directories. Exiting.\n";
+    logger("crit", "Could not unmount encfs directories. Exiting.");
     exit;
 }
 
@@ -794,25 +836,26 @@ if (unmountENCFS() != 1) {
 # known location in the chroot. It can be anywhere
 # but I suggest /usr/local/etc/testrig
 if (writeConfigToChroot($uuid, $known_text_enc, ) != 1) {
-    print "Problem writing configuration information to target chroot. Exiting.\n";
+    logger("crit", "Problem writing configuration information to target chroot. Exiting.");
     cleanUp($uuid);
     exit;
 }
 
 # now we have to write everything to the correct table in the database
 
-print "Writing TestRig data to database.\n";
-if (writeToDB($uuid, $public_key, $private_key, $encfs_password, $known_text_clear) == 0) {
-    print "Failed to write data to database. Exiting.\n";
+verbose ("Writing TestRig data to database.");
+if (writeToDB($uuid, $public_key, $private_key, $encfs_password, $known_text_clear) <= 0) {
+    logger ("crit", "Failed to write data to database. Exiting.\n");
     cleanUp($uuid);
     exit;
 }
 
 #generate the iso
-generateISO($uuid);
+if (generateISO($uuid) == -1) {
+    logger ("crit", "Problem generating ISO.");
+}
 
 #clean up the tempory directories
 cleanUp($uuid);
 
-print "TestRig target ISO generation process completed.\n";
-
+verbose ("TestRig target ISO generation process completed.");
