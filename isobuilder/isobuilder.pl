@@ -64,29 +64,13 @@ my $DBH;
 #initialize the logger
 openlog("TR-isobuilder", "nowait, pid", "user");
 
-sub logger {
-    my $message = shift @_;
-    my $level = shift @_;
+#------------Config Functions-----------#
 
-    syslog($level, $message);
-    if (!defined $options{q}) {
-	print $message . "\n";
-    }
-    return;
-}
-
-sub verbose {
-    my $message = shift @_;
-    if (defined $options{v}) {
-	print $message . "\n";
-    }
-}
-    
 # read the configuration file and put everything into
 # the global config data structure
 sub readConfig {
     if (! -e $cfg_path) {
-	logger ("Config file not found at $cfg_path. Exiting.");
+	logger ("crit", "Config file not found at $cfg_path. Exiting.");
 	exit;
     } else {
 	$config = Config::Tiny->read($cfg_path);
@@ -199,6 +183,8 @@ sub validateConfig {
     
 }
 
+#----------Crypto Functions--------------#
+
 # create a new pem key set
 # and return them as strings
 sub generateKeys {
@@ -265,18 +251,18 @@ sub generateUUID {
     return ($uuid);
 }
 
+#--------- ENCFS Functions------------#
+
 # all we are doing here is shelling out to encfs 
 # we can use the password we have in the extpass option
 # by using '-extpass="echo $password"'. 
 sub mountENCFS {
     verbose ("Mounting ENCFS");
     my $password = shift @_;
+    my $uuid = shift @_;
     my $encfs = $config->{paths}->{encfs};
     my $enc_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{enc_destination};
     my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
-    my $stderr;
-    my $stdout;
-    my $exit;
     
     verbose ("Encrypted directory: $enc_dir");
     verbose ("Public directory: $pub_dir");
@@ -298,16 +284,14 @@ sub mountENCFS {
     }
     if (! -w $pub_dir) {
 	if (! make_path($pub_dir)) {
-	    logger("Failed to create public encfs directory in target chroot. $! Exiting.");
+	    logger("crit", "Failed to create public encfs directory in target chroot. $! Exiting.");
 	    return -1;
 	}
     }	
 
     #This allows us to create an encfs mount without userinteraction
     my $cmd = "$encfs --standard --extpass=\"echo \'$password\'\" $enc_dir $pub_dir";
-    runSystem($cmd);
-    
-    if ($? == -1) {
+    if (runSystem($cmd, "") != 1) {
 	return -1;
     }
       
@@ -315,21 +299,25 @@ sub mountENCFS {
     return 1;
 }
 
+# unmount the encfs directory
+sub unmountENCFS {
+    my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
+    my $fuser = $config->{paths}->{fusermount};
+    if (runSystem("$fuser -q -u $pub_dir", "") != 1) {
+	return -1;
+    }
+    verbose ("ENCFS unmounted");
+    return 1;
+}
+
+#----------File Copy/Write Functions--------------#
+
 # copy the testrig operational files to the encyrpted directory
 sub copyFiles {
     my $source = $config->{paths}->{source};
     my $destination =  $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
     verbose ("Copying from $source to $destination");
     return(dircopy($source, $destination));
-}
-
-# unmount the encfs directory
-sub unmountENCFS {
-    my $pub_dir = $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
-    my $fuser = $config->{paths}->{fusermount};
-    runSystem("$fuser -q -u $pub_dir");
-    verbose ("ENCFS unmounted");
-    return 1;
 }
 
 #there are individual configuration files unique
@@ -377,6 +365,8 @@ sub copyMaster {
     return(dircopy($config->{paths}->{master_chroot}, $config->{paths}->{target_chroot}));
 }
 
+#---------Database Functions------------#
+
 # Get NOC configuaration options from the
 # database and write them to the client table. This would include
 # values for the maximum number of runs, valid to dates, and
@@ -408,14 +398,17 @@ sub readConfFromDB {
 	return -1;
     };
     $sth->finish;
+    #did we get enough data? We should have 3 values. 
     if ($#data != 2) {
-        logger ("crit", "Missing customer data! CID may not exist. Exiting.");
+	logger ("crit", "Missing customer data! CID may not exist. Exiting.");
 	return -1;
     }
+    #add results to config out configuration struct
     $config_out->{customer}->{data_host} = $data[0];
     $config_out->{customer}->{data_uname} = $data[1];
     $config_out->{customer}->{tt_system} = $data[2];
 
+    # get the user information from the database
     $query = "SELECT username,
                      useremail,
                      user_tt_id,
@@ -438,16 +431,20 @@ sub readConfFromDB {
 	return -1;
     };
     $sth->finish;  
+    # did we get enough data? We should have 6 values
     if ($#data != 5) {
         logger ("crit", "Missing user data! UID may not exist. Exiting.");
 	return -1;
     }
+    # add data to the config out configuration struct
     $config_out->{user}->{username} = $data[0];
     $config_out->{user}->{email} = $data[1];
     $config_out->{user}->{tt_id} = $data[2];
     $config_out->{user}->{validtodate} = $data[3];
     $config_out->{user}->{maxrun} = $data[4];
     $config_out->{user}->{tests} = $data[5];
+    # later on the config_out struct is written to the ISO as a Config::Tiny
+    # format configuration file. 
     return 1;
 }
 
@@ -495,26 +492,7 @@ sub writeToDB {
     return $result;
 }
 
-# wrapper for system command that allows us to
-# capture and squelch stdout/err from shell
-# enable option v to see stdout
-sub runSystem {
-    my $cmd = shift @_;
-    my $stdout;
-    my $stderr;
-    my $exit;
-
-    if ($options{v}) {
-	system ($cmd);
-    } else {
-	($stdout, $stderr, $exit) = capture {
-	    system($cmd);
-	};
-    }
-
-    return $exit;
-}
-
+#--------------ISO Functions------------#
 
 sub generateISO {
     # we use the UUID to make sure that all directories are unique
@@ -585,22 +563,22 @@ END_DISKDEFINES
     #create directories for liveCD creation
     # mkdir -p don't work here, durrrrrr
     $cmd="mkdir $imagePath";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     $cmd="mkdir $imagePath/casper";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     $cmd="mkdir $imagePath/isolinux";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     $cmd="mkdir $imagePath/install";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
 
     
     #copy Web10G Kernel from chroot 
     $cmd="cp $chrootPath/boot/vmlinuz-$kernel $imagePath/casper/vmlinuz";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     
     #copy Web10G initrd from chroot
     $cmd="cp $chrootPath/boot/initrd.img-$kernel $imagePath/casper/initrd.lz";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     
     #copy Isolinux from host machine
     if (! -e $isolinuxPath) #does it exist on this machine?
@@ -609,7 +587,7 @@ END_DISKDEFINES
 	return -1;
     }else { 
 	$cmd="cp $isolinuxPath $imagePath/isolinux/";
-	runSystem($cmd);
+	runSystem($cmd, $uuid);
     }
     #copy Memtest from host machine
     if (! -e $memtestPath) #is memtest on this machine? 
@@ -617,15 +595,15 @@ END_DISKDEFINES
       return -1;
     } else { 
 	$cmd="cp $memtestPath $imagePath/install/memtest";
-	runSystem($cmd);
+	runSystem($cmd, $uuid);
     }
     #build manifest of packages installed
     $cmd="chroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     
     #make a copy of it, named for desktop OSes(?)
     $cmd="cp $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     
     #list of packages not to include in manifest
     my @removeFromManifest = qw(ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4);
@@ -633,7 +611,7 @@ END_DISKDEFINES
     #remove the above list from the manifest
     foreach my $i (@removeFromManifest) {
 	$cmd="sudo sed -i \"/$i/d\" $imagePath/casper/filesystem.manifest-desktop";
-	runSystem($cmd);
+	runSystem($cmd, $uuid);
     }
     
     #put isolinux config in place
@@ -657,20 +635,81 @@ END_DISKDEFINES
     
     #create the squashfs file
     $cmd="mksquashfs $chrootPath $imagePath/casper/filesystem.squashfs -e boot";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
 
     #calc md5sum
     $cmd="cd $imagePath && find . -type f -print0 | xargs -0 md5sum | grep -v \"\./md5sum.txt\" > $imagePath/md5sum.txt";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     
     #generate iso image
     #
     # using two cmd variables because genisoimage does NOT
     # like absolute paths for -c and -b options
     $cmd="cd $imagePath && genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
-    runSystem($cmd);
+    runSystem($cmd, $uuid);
     
 } #### END ISO Generation Subroutine ####
+
+#------- Utility Functions ------------#
+
+# logger function to write data to system log and/or stdout
+sub logger {
+    my $level = shift @_;
+    my $message = shift @_;
+
+    syslog($level, $message);
+    if (!defined $options{q}) {
+	print $message . "\n";
+    }
+    return;
+}
+
+# function to print out all status messages
+sub verbose {
+    my $message = shift @_;
+    if (defined $options{v}) {
+	print $message . "\n";
+    }
+}
+    
+# wrapper for system command that allows us to
+# capture and squelch stdout/err from shell
+# enable option v to see stdout
+# if $uuid is defined then run the clean up process
+# and exit. If null then we return -1;
+sub runSystem {
+    my $cmd = shift @_;
+    my $uuid = shift @_;
+    my $stdout;
+    my $stderr;
+    my $status;
+
+    if ($options{v}) {
+	system ($cmd);
+	$status = $?;
+    } else {
+	($stdout, $stderr, $status) = capture {
+	    system($cmd);
+	};
+    }
+    if ($status == -1) {
+	logger ("crit", "System command $cmd failed to execute");
+	if (defined $uuid) {
+	    cleanUp($uuid);
+	    exit;
+	}
+	return -1;
+    } elsif ($status & 127) {
+	logger ("crit", "System command $cmd died with signal %d");
+	if (defined $uuid) {
+	    cleanUp($uuid);
+	    exit;
+	}
+	return -1;
+    } else {
+	return 1;
+    }	       
+}
 
 #remove the temporary directories
 sub cleanUp {
@@ -807,7 +846,7 @@ if (! copyMaster()) {
 # we now have all of the necessaries. 
 # time to create the encfs directory space
 
-if (mountENCFS($encfs_password) != 1) {
+if (mountENCFS($encfs_password, $uuid) != 1) {
     logger ("crit", "Failed to create and/or mount encfs filespace. Exiting.");
     cleanUp($uuid);
     exit;
@@ -826,6 +865,7 @@ if (! copyFiles()) {
 # unmount the encfs directory as we no longer need it to be open.
 if (unmountENCFS() != 1) {
     logger("crit", "Could not unmount encfs directories. Exiting.");
+    cleanUp($uuid);
     exit;
 }
 
