@@ -23,9 +23,7 @@
 
 //- turn off compression on the server
 //@apache_setenv('no-gzip', 1);
-//@ini_set('zlib.output_compression', 'Off');
-
-$isopath = "/var/testrig/isos/";
+@ini_set('zlib.output_compression', 'Off');
 
 function verify () {
     // make sure we have the necessary incoming data
@@ -47,9 +45,10 @@ function verify () {
     $uuid = $_REQUEST['uuid'];
     $known_hash = $_REQUEST['known_hash'];
     $offer = $_REQUEST['offer'];
-    $isoname = "testrig2-" . $uuid . ".iso";
+    $isopath = "/var/testrig/isos/";
+    $isoname = "TestRig2.0-" . $uuid . ".iso";
     $iso = $isopath . $isoname;
-    
+
     // does the hashed offer match the known hash?
     // note the use of the special comparator here
     if ($known_hash === hash("sha256", $offer)) {
@@ -63,23 +62,37 @@ function verify () {
                 header("Cache-Control: public, must-revalidate, post-check=0, pre-check=0");
                 header("Content-Disposition: attachment; filename=\"$isoname\"");
                 header("Content-Type: application/octect-stream");
+                header("Refresh: 0; url='$PHP_SELF?complete=true'");
                 while(!feof($file)) {
                     print (@fread($file, 1024*8));
                     ob_flush();
                     flush();
                 }
+                fclose($file);
             } else {
                 // file couldn't be opened
-                header("HTTP/1.0 500 Internal Server Error");
+                printHeader ();
+                print ("The TestRig2 ISO you are reqeusting has a problem and can not be sent ");
+                print ("to you at this time. Please contact your network administrator and inform ");
+                print ("them of this problem.");
+                printFooter ();
                 exit;
             }
         } else {
             // file doesn't exist
-            header("HTTP/1.0 404 Internal Server Error");
+            printHeader ();
+            print ("The TestRig2 ISO you are requesting no longer exists on this server.<br>");
+            print ("TestRig2 ISOs are only valid for a set period of time and it is possible ");
+            print ("that the requested ISO  has already expired. Please request a new one from your ");
+            print ("network administrator</br>");
+            printFooter ();
             exit;
         }
     } else {
-        print "Passphase mismatch!";
+        printHeader();
+        print ("The passphrase you entered does not match our records. Please double ");
+        print ("check the passphrase in the email you received.");
+        printFooter ();
         exit;
     }
 }
@@ -87,13 +100,13 @@ function verify () {
 function loadPage () {
     printHeader();
     // make sure we have the necessary incoming data
-    if(!isset($_REQUEST['known_hash']) || empty($_REQUEST['cc'])) {
-        //missing_data();
+    if(!isset($_REQUEST['known_hash']) || empty($_REQUEST['known_hash'])) {
+        missing_data();
     }
     $known_hash = $_REQUEST['known_hash'];
     
     if(!isset($_REQUEST['uuid']) || empty($_REQUEST['uuid'])) {
-        //missing_data();
+        missing_data();
     }
     $uuid = $_REQUEST['uuid'];
     
@@ -126,8 +139,18 @@ function printFooter () {
     print ("</html>\n");
 }
 
-if ($_REQUEST[verify]) {
+function complete () {
+    printHeader();
+    print ("Your download should be starting now. If not please wait a few moments. ");
+    print ("Once your have downloaded the TestRig 2.0 please go to the following link ");
+    print ("for instructions on creating the bootable CD/DVD or flash drive.<br>");
+    printFooter();
+}
+
+if ($_REQUEST['verify'] === "true") {
     verify();
+} else if ($_REQUEST['complete'] === "true") {
+    complete();
 } else {
     loadPage();
 }
