@@ -102,6 +102,7 @@ function loadPage () {
     print ("<input type='text' size='24' maxlength='24' name='offer'>\n<br>\n");
     print ("<input type='hidden' name='uuid' value='$uuid'>\n");
     print ("<input type='hidden' name='known_hash' value='$known_hash'>\n");
+    print ("<input type='hidden' name='verify' value='true'>\n");
     print ("<input type='submit'>\n");
     printFooter();    
 }
