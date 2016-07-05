@@ -1,13 +1,15 @@
 <html>
 
 <head>
-<title> PHP Form Process </title>
+<title> TestRig2.0 Customer Signup </title>
 </head>
 
 <body>
 <?php
+
 // hide notices
 @ini_set('error_reporting', E_ALL & ~ E_NOTICE);
+
 //init variables for form validation
 //required variables
 $inputs = array(
@@ -36,12 +38,6 @@ $fNameError =
     $testRigUsernameError =
     $testRigPasswordError =
     $testRigPasswordConfirmError = "";
-
-//database-related variables
-$dbHost = "192.168.122.1"; //ionia's private IP
-$username = "testrig";
-$password = "tinycats";
-$dbname = "testrig";
 
 //input scrubber
 function scrubInput($data)
@@ -84,11 +80,9 @@ function verifyKey($key) {
 //function for inserting values into the database
 function insertIntoDB($cleanedInputs)
 {
-	//database-related variables
-	$dbHost = "192.168.122.1"; //ionia's private IP
-	$username = "testrig";
-	$password = "tinycats";
-	$dbname = "testrig";
+    // load configuration file holding database/etc defines. 
+    include('./signup.cfg.php');
+
     //this function is basically a giant try/catch
     try {
 	   	$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
@@ -228,19 +222,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $inputs["rtEmailAddress"] = scrubInput($_REQUEST["rtEmailAddress"]);
                 //hash the password
                 $inputs["testRigPassword"] =  password_hash($_REQUEST["testRigPassword"], PASSWORD_BCRYPT);
-                //echo "You entered:<hr>First Name:  ".$inputs["fName"]. "<br>Last Name:  " . $inputs["lName"]. "<br>Email:  " . $inputs["email"] . "<br>Phone:  " . $inputs["phoneNumber"] . "<br>Institution:  " . $inputs["instName"] . "<br>SCP Username:  " .$inputs["scpUsername"]. "<br>Dst IP:  " .$inputs["scpDstIp"]. "<br>Key:  " . $inputs["scpPubKey"] . "<br>" . "Password: " . $inputs["testRigPassword"] . "<br>";
                 
-                
-                //insert this shit into the DB
+                //insert this into the DB
                 if (insertIntoDB($inputs)) {
                     if (triggerNotification($inputs)) {
+                        // This should be a redifect so we don't redisplay the form. 
                         echo "Your subscription request to TestRig2.0 has been received. Please allow 1 ";
                         echo "business day to process the request and receive approval notification.";
+                        exit;
                     } else {
                         echo "The attempt to send notification of your request failed.";
+                        exit;
                     }
                 } else {
                     echo "There was a problem processing your request.";
+                    exit;
                 }
             }
     }
