@@ -111,7 +111,7 @@ function insertIntoDB($cleanedInputs)
     }
     catch(PDOException $e) {
         
-	   	echo "<h1> Oops! Something went wrong while interacting with the database:</h1> <br>"
+	   	echo "There was problem submitting your data. <br>"
             . $e->getMessage();
         return 0;
     }

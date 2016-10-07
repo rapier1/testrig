@@ -1,0 +1,62 @@
+	body
+	 {
+		background-color: lightblue;
+	 }
+	
+	#loginSection
+	 {
+		background-color: #ffff;
+		background-color: rgba(255,255,255,0.75);
+		text-align: center;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 200%;
+	 }
+	#isoRequestListDiv
+	 {
+                background-color: #ffff;
+                background-color: rgba(255,255,255,0.85);
+                text-align: center;
+                position: fixed;
+                bottom: 5%;
+                right: 1%;
+		height: 50%;
+		width: 45%;
+		overflow-x: scroll;
+		overflow-y: scroll;
+
+	 }
+	#welcomeDiv
+	 {
+		background-color: #ffff;
+                background-color: rgba(255,255,255,0.85);
+                text-align: center;
+                position: fixed;
+                top: 1%;
+                left: 1%;
+		font-size: 150%;
+
+	 }
+	#logoutDiv
+         {
+                text-align: center;
+                position: fixed;
+                top: 1%;
+                right: 1%;
+
+         }
+
+	#isoRequestSection
+	 {
+                background-color: #ffff;
+                background-color: rgba(255,255,255,0.85);
+                text-align: left;
+                position: fixed;
+                bottom: 5%;
+                leftt: 1%;
+                height: 60%;
+                width: 45%;
+                overflow-y: auto;
+	 }

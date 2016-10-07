@@ -1,0 +1,13 @@
+encfs for Debian
+----------------
+
+In order to use encfs, you need the fusermount program (package: fuse-utils)
+and the FUSE kernel driver module (load with "modprobe fuse") which is
+shipped in Debian kernel packages.
+
+The encfs utilities are not installed with setuid-root permissions since the
+fusermount utility is used for sensitive operations. To mount and umount
+encrypted directories as user, the user needs to be in the fuse users group.
+See documentation of the fuse-utils package for details.
+
+ -- Eduard Bloch <blade@debian.org>, Sun, 29 Nov 2009 13:38:31 +0100

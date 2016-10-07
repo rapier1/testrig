@@ -1,0 +1,2 @@
+grub 	 /run/grub/menu.lst
+samba-common 	 /etc/samba/smb.conf

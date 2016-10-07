@@ -1,0 +1,13 @@
+## ## End Default Options ##
+
+title		Ubuntu, kernel 4.1.0.web10g+
+root		(hd0,0)
+kernel		/boot/vmlinuz-4.1.0.web10g+ root=/dev/hda1 ro quiet splash 
+initrd		/boot/initrd.img-4.1.0.web10g+
+
+title		Ubuntu, kernel 4.1.0.web10g+ (recovery mode)
+root		(hd0,0)
+kernel		/boot/vmlinuz-4.1.0.web10g+ root=/dev/hda1 ro  single
+initrd		/boot/initrd.img-4.1.0.web10g+
+
+### END DEBIAN AUTOMAGIC KERNELS LIST

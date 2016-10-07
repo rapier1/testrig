@@ -1,0 +1,21 @@
+This package was debianized by Eduard Bloch <blade@debian.org> on
+Thu, 10 Mar 2005 10:30:54 +0100.
+
+It was downloaded from http://www.arg0.net/encfs .
+
+Upstream Author:  Valient Gough <vgough at pobox dot com>
+
+Copyright: 2003-2008 Valient Gough
+
+License:
+
+GNU General Public License Version 3 with extra permission to link
+with OpenSSL (see below). Complete text of the GPL v3 is available in
+the file /usr/share/common-licenses/GPL-3 on Debian systems.
+
+As a special exception to encfs's GPL license, the copyright holders give
+permission to link the code or portions of this program with the OpenSSL
+library, and distribute linked combinations including the two. This
+exception should be construed as narrowly as possible to allow OpenSSL to be
+used and distributed as part of encfs.
+

@@ -1,0 +1,81 @@
+#!/bin/bash
+mkdir -p /mnt/image/{casper,isolinux,install}
+cp /mnt/chroot/boot/vmlinuz-4.1.0.web10g+ /mnt/image/casper/vmlinuz
+cp /mnt/chroot/boot/initrd.img-4.1.0.web10g+ /mnt/image/casper/initrd.lz
+cp /usr/lib/syslinux/isolinux.bin /mnt/image/isolinux/
+cp /boot/memtest86+.bin /mnt/image/install/memtest
+
+#prompt to be shown at boot
+###########################
+echo "***********************
+
+Welcome to TestRig!
+
+type live, dawg
+
+**********************" >> /mnt/image/isolinux/isolinux.txt
+
+#menu system when you go to boot testrig
+#######################################
+echo "DEFAULT live
+LABEL live
+  menu label ^Start or install TestRig
+  kernel /casper/vmlinuz
+  append  file=/cdrom/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz quiet splash --
+LABEL check
+  menu label ^Check CD for defects
+  kernel /casper/vmlinuz
+  append  boot=casper integrity-check initrd=/casper/initrd.lz quiet splash --
+LABEL memtest
+  menu label ^Memory test
+  kernel /install/memtest
+  append -
+LABEL hd
+  menu label ^Boot from first hard disk
+  localboot 0x80
+  append -
+DISPLAY isolinux.txt
+TIMEOUT 300
+PROMPT 1" >> /mnt/image/isolinux/isolinux.cfg
+
+
+#building manifest
+##################
+chroot /mnt/chroot dpkg-query -W --showformat='${Package} ${Version}\n' | sudo tee /mnt/image/casper/filesystem.manifest
+cp -v /mnt/image/casper/filesystem.manifest /mnt/image/casper/filesystem.manifest-desktop
+REMOVE='ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4'
+
+for i in $REMOVE
+do
+        sudo sed -i "/${i}/d" /mnt/image/casper/filesystem.manifest-desktop
+done
+
+#create squashfs file
+####################
+mksquashfs /mnt/chroot /mnt/image/casper/filesystem.squashfs -e boot
+
+
+#create diskdefines
+###################
+echo "#define DISKNAME  TestRig2.0
+#define TYPE  binary
+#define TYPEbinary  1
+#define ARCH  i386
+#define ARCHi386  1
+#define DISKNUM  1
+#define DISKNUM1  1
+#define TOTALNUM  0
+#define TOTALNUM0  1" >> /mnt/image/README.diskdefines
+
+
+#calc md5sum
+#################
+cd /mnt/image && find . -type f -print0 | xargs -0 md5sum | grep -v "\./md5sum.txt" > /mnt/image/md5sum.txt
+
+
+cd /mnt/image
+
+#generate iso image
+###################
+genisoimage -r -V "TestRig 2.0" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../TestRig2.0.iso .
+

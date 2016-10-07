@@ -1,0 +1,5 @@
+encfs: non-dev-pkg-with-shlib-symlink usr/lib/libencfs.so.6.0.1 usr/lib/libencfs.so
+encfs: no-shlibs-control-file usr/lib/libencfs.so.6.0.1
+encfs: postinst-must-call-ldconfig usr/lib/libencfs.so.6.0.1
+encfs: package-name-doesnt-match-sonames libencfs6
+
