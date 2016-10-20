@@ -1,4 +1,4 @@
-#/usr/bin/perl -w
+#!/usr/local/bin/perl -w
 
 # we need an automated way to generate a password,
 # instantiate an encfs directory, load the encfs directory, 
