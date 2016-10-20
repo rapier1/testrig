@@ -66,14 +66,13 @@
 
 			Username:<input type="text" id="trUsername" name="trUsername"> <?php print $inputErrors["trUsername"]; ?> <br>
 			Password:<input type="password" id="trPassword" name="trPassword"> <?php print $inputErrors["trPassword"]; ?> <br>
-			<input type="submit" value="Submit">
+			<input type="submit" value="Log In">
 
 		</form>
 
-
+	<p>Need an account? <a href="signup.php">Sign up today</a></p>
 	</div>
 
-	<input type="button" value="Log Out" onclick="window.location.href = 'http://testrig.psc.edu/logout.php';">
 
 </body>
 

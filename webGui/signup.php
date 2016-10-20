@@ -2,6 +2,9 @@
 
 <head>
 <title> PHP Form Process </title>
+
+<link href="trstylesheet.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
@@ -248,10 +251,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 ?>
 
 
-<div id="inputSection" name="inputSection">
+<div id="signupSection" name="signupSection">
 <form id="contactInformation" name="contactInformation" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
     <fieldset>
-    <legend>Contact Information</legend>
+    <legend align="center">Sign Up For A New TestRig Account</legend>
     * required fields <br>
     First Name*: <input type="text" name="fName" id="fName" value="<?php echo $_REQUEST['fName']?>"> <?php echo $fNameError ?><br>
     Last Name*: <input type="text" name="lName" id="lName" value="<?php echo $_REQUEST['lName']?>"> <?php echo $lNameError ?><br>
@@ -265,13 +268,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     SCP Username: <input type="text" name="scpUsername" id="scpUsername" value="<?php echo $_REQUEST['scpUsername']?>"> <?php echo $scpUsernameError ?><br>
     SCP Dst IP: <input type="text" name="scpDstIp" id="scpDstIp" value="<?php echo $_REQUEST['scpDstIp']?>"> <?php echo $scpDstIpError ?><br>
     SCP Public Key*: <input type="textarea" name="scpPubKey" id="scpPubKey"> <?php echo $scpPubKeyError ?> <br>
-    <br> <input type="submit" value="Submit">
+    <br> <input type="submit" value="Register">
     </fieldset>
 </form>
+<p> Already have an account? <a href="login.php"> Log in </a> </p>
 </div>
-<div id="outputSection" name="outputSection">
 
-</div>
 </body>
 
 

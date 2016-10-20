@@ -88,7 +88,36 @@
 		. $e->getMessage();
         	return 0;
          }
-       $dbLink = null;
+	$dbLink = null;
+	//we need to add the UID of the recently created ISO to the session for the ISO creation to take place
+	//since we have all of the other params for this iso, we can query for the combination of them and then get the UID
+		//do we need a new db handle? -> yup, it wouldn't work unless I made a new one
+		$dbh = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+
+		$sqlStmnt = $dbh->prepare('SELECT uid FROM testParameters 
+			 WHERE cid = :cid 
+			 AND username = :username 
+			 AND useremail = :email 
+			 AND user_tt_id = :troubleTicket 
+			 AND requested_tests = :testCSV');
+		$sqlStmnt->bindParam(':cid', $_SESSION["CID"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':username', $cleanedInputs["username"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':email', $cleanedInputs["email"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':troubleTicket', $cleanedInputs["troubleTicket"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':testCSV', $cleanedInputs["testCSV"], PDO::PARAM_STR);
+
+		$sqlStmnt->execute();
+		$uidQueryResult = $sqlStmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
+		if (!$uidQueryResult)
+		 {
+			print "an error occurred interacting with the database!";
+		 }
+		else
+		 {
+			$_SESSION["UID"] = $uidQueryResult["uid"];
+		 }
+
+
        return 1;
      }//END insertNewISORequest();
 

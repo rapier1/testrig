@@ -163,7 +163,8 @@ function generateISORequestForm()
 
 
 
-		//are required variables empty?
+		//has there been a request sent to the server?
+		//are the variables empty?
     		if ($_SERVER["REQUEST_METHOD"] == "POST")
      		 {
         		if (empty($_REQUEST["isoTestTargetIP"]))
@@ -202,7 +203,46 @@ function generateISORequestForm()
                 		$errFlag = 1;
           		 }
 
-     		 }//END empty var check
+		/////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
+		if ($errFlag != 1) //Has everything been successfully submitted? 
+                  {
+			//have to assemble the tests in a csv
+			$count = 0;
+			$testString = "";
+			$checkedTests = $_REQUEST["testCheckbox_list"];
+                        foreach ($checkedTests as $val)
+                         {
+				$val = scrubInput($val); //just in case someone does something funky to the form
+                         	if ($count == (count($checkedTests) - 1))
+                         	 {
+
+                                	$testString = $testString . $val;
+                         	 }
+                        	else //slap a comma on that shit
+                         	 {
+                                	$testString = $testString . $val . ", ";
+                         	 }
+				$count++;
+                         }//END foreach checkedTests
+
+
+			$inputs["username"] = scrubInput($_REQUEST["username"]);
+			$inputs["email"] = scrubInput($_REQUEST["email"]);
+                        $inputs["troubleTicket"] = scrubInput($_REQUEST["troubleTicket"]);
+                        $inputs["testCSV"] = $testString;
+
+			//everything is scrubbed and prepped for entry into the DB, so let's do this
+			insertNewISORequest($inputs);
+
+
+                  }//END successful submission if/then
+
+
+
+
+     		 }//END request and empty var check
+
+
 		//$isoForm will hold the entire new <div> element
 		$isoForm = 	'<div id="isoRequestSection" name="isoRequestSection">
 				<form id="isoRequest" name="isoRequest" action="<?php echo htmlspecialchars($_SERVER[PHP_SELF]);?>" method="post">
@@ -230,3 +270,48 @@ function generateISORequestForm()
 		return $isoForm;
 
 	}//END generateISORequestForm()
+
+function insertNewISORequest($cleanedInputs)
+     {
+	//this function will insert parameters for an ISO into the test_parameters table
+     	//database-related variables
+        $dbHost = "192.168.122.1"; //ionia's private IP
+        $username = "testrig";
+        $password = "tinycats";
+        $dbname = "testrig";
+	//generate a timestamp for the ISO's creation date
+
+	date_default_timezone_set('UTC');
+	$creationTimestamp = date('YmdHs');
+	//$creationTimestamp = $creationTimestamp . microtime($get_as_float=true);
+
+
+
+	//actually attempt connecting to the database using PHP's PDO
+        try
+         {
+        	$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+        	//error mode for PDO is exception
+        	$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        	$cmd = "INSERT INTO testParameters
+                          (cid,username,useremail,user_tt_id,requested_tests, creation_timestamp)
+                        VALUES (?, ?, ?, ?, ?, ?)";
+        	$statement = $dbLink->prepare($cmd);
+		$CID = scrubInput($_SESSION["CID"]);
+        	$statement->execute(array( $CID,
+					   $cleanedInputs["username"],
+               		                   $cleanedInputs["email"],
+                       		           $cleanedInputs["troubleTicket"],
+                     		           $cleanedInputs["testCSV"],
+					   $creationTimestamp));
+     	 }//END try
+       catch(PDOException $e)
+         {
+        	echo "<h1> Oops! Something went wrong while interacting with the database:</h1> <br>"
+		. $e->getMessage();
+        	return 0;
+         }
+       $dbLink = null;
+       return 1;
+     }//END insertNewISORequest();
+
