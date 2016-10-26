@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 
 # we need an automated way to generate a password,
 # instantiate an encfs directory, load the encfs directory, 
@@ -60,6 +60,7 @@ my $config_out = Config::Tiny->new;
 my $cfg_path = "/usr/local/etc/isobuilder.cfg";
 my %options = ();
 my $DBH;
+$ENV{PATH} = "/bin:/usr/bin";
 
 #initialize the logger
 openlog("TR-isobuilder", "nowait, pid", "user");
@@ -176,6 +177,15 @@ sub validateConfig {
     } else { # make sure we can find it
 	if (! -e $config->{paths}->{memtest}) {
 	    logger( "crit", "memtest not found at location specified in config. Exiting.");
+	    exit;
+	}
+    }
+    if (! defined $config->{paths}->{manifest}) {
+	logger( "crit", "Missing path to filesystem.manifest in config file. Exiting.");
+	exit;
+    } else { # make sure we can find it
+	if (! -e $config->{paths}->{manifest}) {
+	    logger( "crit", "filesystem.manifest not found at location specified in config. Exiting.");
 	    exit;
 	}
     }
@@ -312,7 +322,7 @@ sub unmountENCFS {
 
 #----------File Copy/Write Functions--------------#
 
-# copy the testrig operational files to the encyrpted directory
+# copy the testrig operational files to the encrypted directory
 sub copyFiles {
     my $source = $config->{paths}->{source};
     my $destination =  $config->{paths}->{target_chroot} . "/" . $config->{paths}->{pub_destination};
@@ -415,7 +425,7 @@ sub readConfFromDB {
                      validtodate,
                      maxrun,
                      requested_tests
-              FROM user
+              FROM testParameters
               WHERE uid = ?";
     
     #get the user data
@@ -598,7 +608,10 @@ END_DISKDEFINES
 	runSystem($cmd, $uuid);
     }
     #build manifest of packages installed
-    $cmd="chroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
+    #we can probably just build a static filesystem.manifest and copy it over
+    #that way we can get rid of using chroot entirely
+#    $cmd="/home/rapier/testrig/isobuilder/modchroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
+    $cmd = "cp $config->{paths}->{manifest} $imagePath/casper/filesystem.manifest";
     runSystem($cmd, $uuid);
     
     #make a copy of it, named for desktop OSes(?)

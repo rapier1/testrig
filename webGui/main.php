@@ -16,7 +16,6 @@
 	$isoRequestListFields = array("username", "useremail", "user_tt_id", "validtodate", "maxrun", "requested_tests");
 	$isoRequestListDiv = buildDiv("isoRequestListDiv", "testParameters", $isoRequestListFields);
 	$welcomeDiv = generateUserInfo();
-
 	$isoForm = generateISORequestForm();
 
 ?>
