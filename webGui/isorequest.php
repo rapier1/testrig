@@ -194,11 +194,11 @@
 
 			//everything is scrubbed and prepped for entry into the DB, so let's do this
 			insertNewISORequest($inputs);
-            // Need to fork off an exec to start the external ISO generation script
-            print("/home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] -q &\n");
-            exec("/home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] -q");
-
-                  }//END successful submission if/then
+            // It turns out that exec has an issue with some versions of bash which prevents it
+            // from properly redirecting STDIN and STDERR to a file. This prevents exec from going into
+            // the background. Turns out this proc_close(proc_open()) trick does work. 
+            proc_close (proc_open ("/home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
+}//END successful submission if/then
 
 
 
