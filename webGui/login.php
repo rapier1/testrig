@@ -17,6 +17,7 @@
 	if (!empty($_SESSION["username"]))
 	{
 		print 'You are already logged in, ' . $_SESSION["username"];
+		header("Location:http://". $_SERVER['SERVER_NAME'] ."/main.php");
 	}
 	else if ($_SERVER["REQUEST_METHOD"] == "POST")
     	 {
@@ -70,9 +71,8 @@
 
 		</form>
 
-	<p>Need an account? <a href="signup.php">Sign up today</a></p>
+	<p>Need an Account? <a href="signup.php">Sign up today</a></p>
 	</div>
-
 
 </body>
 
