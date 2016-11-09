@@ -112,7 +112,7 @@ function logIn($username, $password)
 				$_SESSION["inst_name"] = $queryResult["inst_name"];
 				$_SESSION["username"] = $queryResult["tr_username"];
 				$_SESSION["CID"] = $queryResult["cid"];
-				header("Location:http://testrig.psc.edu/main.php");
+				header("Location:http://". $_SERVER['SERVER_NAME'] ."/main.php");
 				die();
 			 }
 		 }
@@ -204,7 +204,7 @@ function generateISORequestForm()
           		 }
 
 		/////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
-		if ($errFlag != 1) //Has everything been successfully submitted? 
+		if ($errFlag != 1) //Has everything been successfully submitted?
                   {
 			//have to assemble the tests in a csv
 			$count = 0;
@@ -249,7 +249,7 @@ function generateISORequestForm()
                 		<fieldset>
                         		<legend>ISO Request Form</legend>
                         		* required fields <br>
-                        		IP Address to test*:      <input type="text" name="isoTestTargetIP" id="isoTestTargetIP">' . $isoFormInputErrors["ipAddress"] . '<br>
+                        		IP Address to test*:      <input type="text" name="isoTestTargetIP" id="isoTestTargetIP">' . $isoFormInputErrors["testTargetIP"] . '<br>
                         		Trouble Ticket No.*:      <input type="text" name="isoTroubleTicket" id="isoTroubleTicket">' . $isoFormInputErrors["troubleTicket"] . '<br>
                         		Username*:                <input type="text" name="isoUsername" id="isoUsername">' . $isoFormInputErrors["username"] . '<br>
                         		Email*:                   <input type="text" name="isoEmail" id="isoEmail">' . $isoFormInputErrors["email"] . '<br>
@@ -265,7 +265,7 @@ function generateISORequestForm()
 		$testList = $testList . '</ul>'; //Close the list of tests
 		$isoForm = $isoForm . $testList; //add it to the form
 		//finish the form
-                $isoForm = $isoForm . $inputErrors["testCSV"] . '<br> <input type="submit" value="Submit"></fieldset></form></div>';
+                $isoForm = $isoForm . $isoFormInputErrors["testCSV"] . '<br> <input type="submit" value="Submit"></fieldset></form></div>';
 
 		return $isoForm;
 
@@ -294,8 +294,8 @@ function insertNewISORequest($cleanedInputs)
         	//error mode for PDO is exception
         	$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         	$cmd = "INSERT INTO testParameters
-                          (cid,username,useremail,user_tt_id,requested_tests, creation_timestamp)
-                        VALUES (?, ?, ?, ?, ?, ?)";
+                          (cid,username,useremail,user_tt_id,requested_tests, creation_timestamp, queue_name)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)";
         	$statement = $dbLink->prepare($cmd);
 		$CID = scrubInput($_SESSION["CID"]);
         	$statement->execute(array( $CID,
@@ -303,7 +303,8 @@ function insertNewISORequest($cleanedInputs)
                		                   $cleanedInputs["email"],
                        		           $cleanedInputs["troubleTicket"],
                      		           $cleanedInputs["testCSV"],
-					   $creationTimestamp));
+					   $creationTimestamp,
+					   $cleanedInputs["queueName"]));
      	 }//END try
        catch(PDOException $e)
          {
@@ -312,6 +313,45 @@ function insertNewISORequest($cleanedInputs)
         	return 0;
          }
        $dbLink = null;
+	//we need to add the UID of the recently created ISO to the session for the ISO creation to take place
+        //since we have all of the other params for this iso, we can query for the combination of them and then get the UID
+                //do we need a new db handle? -> yup, it wouldn't work unless I made a new one
+                $dbh = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+
+                $sqlStmnt = $dbh->prepare('SELECT uid FROM testParameters 
+                         WHERE cid = :cid 
+                         AND username = :username 
+                         AND useremail = :email 
+                         AND user_tt_id = :troubleTicket 
+                         AND requested_tests = :testCSV');
+                $sqlStmnt->bindParam(':cid', $_SESSION["CID"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':username', $cleanedInputs["username"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':email', $cleanedInputs["email"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':troubleTicket', $cleanedInputs["troubleTicket"], PDO::PARAM_STR);
+                $sqlStmnt->bindParam(':testCSV', $cleanedInputs["testCSV"], PDO::PARAM_STR);
+
+                $sqlStmnt->execute();
+                $uidQueryResult = $sqlStmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
+                if (!$uidQueryResult)
+                 {
+                        print "an error occurred interacting with the database!";
+                 }
+                else
+                 {
+                        $_SESSION["UID"] = $uidQueryResult["uid"];
+                 }
+
+
+
        return 1;
      }//END insertNewISORequest();
 
+function logOut()
+    {
+
+	unset($_SESSION["username"]);
+        session_unset();
+        session_destroy();
+        header("Location: http://". $_SERVER['SERVER_NAME']. "/login.php");
+        die();
+    }//END logOut()
