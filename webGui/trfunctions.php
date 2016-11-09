@@ -279,12 +279,10 @@ function insertNewISORequest($cleanedInputs)
         $username = "testrig";
         $password = "tinycats";
         $dbname = "testrig";
-	//generate a timestamp for the ISO's creation date
 
+	//generate a timestamp for the ISO's creation date
 	date_default_timezone_set('UTC');
 	$creationTimestamp = date('YmdHs');
-	//$creationTimestamp = $creationTimestamp . microtime($get_as_float=true);
-
 
 
 	//actually attempt connecting to the database using PHP's PDO
