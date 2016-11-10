@@ -51,6 +51,7 @@ use File::Path qw(remove_tree make_path);
 use Try::Tiny;
 use Sys::Syslog qw(:standard);
 use Capture::Tiny ':all';
+use MIME::Lite;
 
 #use Data::Dumper;
 
@@ -393,7 +394,8 @@ sub readConfFromDB {
     # get the customer data
     my $query = "SELECT inst_data_host, 
                         inst_host_uname,
-                         tt_system
+                        tt_system,
+                        contact_email
                  FROM customer
                  WHERE cid = ?";
     my $sth = $DBH->prepare($query);
@@ -408,8 +410,8 @@ sub readConfFromDB {
 	return -1;
     };
     $sth->finish;
-    #did we get enough data? We should have 3 values. 
-    if ($#data != 2) {
+    #did we get enough data? We should have 4 values. 
+    if ($#data != 3) {
 	logger ("crit", "Missing customer data! CID may not exist. Exiting.");
 	return -1;
     }
@@ -417,14 +419,16 @@ sub readConfFromDB {
     $config_out->{customer}->{data_host} = $data[0];
     $config_out->{customer}->{data_uname} = $data[1];
     $config_out->{customer}->{tt_system} = $data[2];
-
+    $config_out->{customer}->{contact_email} = $data[3];
+    
     # get the user information from the database
     $query = "SELECT username,
                      useremail,
                      user_tt_id,
                      validtodate,
                      maxrun,
-                     requested_tests
+                     requested_tests,
+                     qname
               FROM testParameters
               WHERE uid = ?";
     
@@ -453,6 +457,7 @@ sub readConfFromDB {
     $config_out->{user}->{validtodate} = $data[3];
     $config_out->{user}->{maxrun} = $data[4];
     $config_out->{user}->{tests} = $data[5];
+    $config_out->{user}->{qname} = $data[6];
     # later on the config_out struct is written to the ISO as a Config::Tiny
     # format configuration file. 
     return 1;
@@ -500,6 +505,51 @@ sub writeToDB {
     };
     $sth->finish;
     return $result;
+}
+
+#--------------Mail Functions-----------#
+# mail the end user the pickup URL.
+# 
+sub isoAvailableMail {
+    my $uuid = shift @_;
+    my $passphrase = generatePassword();
+    my $hash = encryptKnownText($passphrase);
+    my $url = "http://testrig.psc.edu/isofetcher?uuid=$uuid&known_hash=$hash";
+    my $text = "$config_out->{user}->{username}.\n\n";
+    $text .= "The Testrig 2.0 ISO that you have requested is now available for download.\n";
+    $text .= "This ISO will only be available for 7 days from the following link.\n $url\n";
+    $text .= "At the link please enter the folllowing code to start your download\n";
+    $text .= "Claim code: $passphrase\n";
+	
+    my $msg = MIME::Lite->new (
+	From => "testrig2\@psc.edu",
+	To   => $config_out->{user}->{email},
+        CC   => ,
+	Subject => "Your Testrig ISO is ready",
+	Data => $text,
+	);
+    $msg->send();
+}
+
+#inform the NOC that th ISO has been generated and mail sent to user.
+sub isoCompleteMail {
+    my $qname = "";
+    my $text ="The TestRig2.0 ISO for $config_out->{user}->{username} has been successfully generated.\n";
+    if ($config_out->{user}->{tt_id} != "") {
+	$text .= "The associated trouble ticket is $config_out->{user}->{tt_id}\n";
+	$qname = "[$config_out->{user}->{qname} #$config_out->{user}->{tt_id}] ";
+    }
+    $text .= "An email has been sent to the user at $config_out->{user}->{email}.\n";
+    $text .= "\n\nThank you for using PSC's TestRig 2.0 service\n";
+    
+    my $msg = MIME::Lite->new (
+	From => "testrig2\@psc.edu",
+	To   => $config_out->{customer}->{contact_email},
+        CC   => $config_out->{customer}->{tt_system},
+	Subject => $qname . "TestRig ISO Generated for user $config_out->{user}->{username}",
+	Data => $text,
+	);
+    $msg->send();
 }
 
 #--------------ISO Functions------------#
@@ -910,3 +960,6 @@ if (generateISO($uuid) == -1) {
 cleanUp($uuid);
 
 verbose ("TestRig target ISO generation process completed.");
+
+isoCompleteMail();
+isoAvailableMail($uuid);
