@@ -7,6 +7,7 @@
 <body>
 <?php
 
+	include 'trfunctions.php';
 	session_start();
         if (empty($_SESSION["username"]))
          {
@@ -29,7 +30,8 @@
 		'scpPubKey' => "",
 		'troubleTicket' => "",
 		'testTargetIP' => "",
-		'testCSV' => "");
+		'testCSV' => "",
+		'queueName' => "");
 
 	$inputErrors = array(
 		'username' => "",
@@ -39,7 +41,8 @@
 		'scpPubKey' => "",
 		'troubleTicket' => "",
 		'testTargetIP' => "",
-		'testCSV' => "");
+		'testCSV' => "",
+		'queueName' => "");
 
 	//	array of tests. We might be able to make this a little more
 	//	readable once we get a list of available tests(?) maybe read from DB(??)
@@ -47,79 +50,69 @@
 	$errFlag = 0;
 
 
-	//input scrubber
-	function scrubInput($data)
-	{
-    		$data = trim($data);
-    		$data = stripslashes($data);
-    		$data = htmlspecialchars($data);
-    		return $data;
-	}
-
-
     //function for inserting values into the database
-    function insertNewISORequest($cleanedInputs)
-     {
-        //database-related variables
-        $dbHost = "192.168.122.1"; //ionia's private IP
-        $username = "testrig";
-        $password = "tinycats";
-        $dbname = "testrig";
+//    function insertNewISORequest($cleanedInputs)
+//     {
+//        //database-related variables
+//        $dbHost = "192.168.122.1"; //ionia's private IP
+//        $username = "testrig";
+//        $password = "tinycats";
+//        $dbname = "testrig";
 	//actually attempt connecting to the database using PHP's PDO
-        try
-         {
-        	$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
-        	//error mode for PDO is exception
-        	$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        	$cmd = "INSERT INTO testParameters
-                          (cid,username,useremail,user_tt_id,requested_tests)
-                        VALUES (?, ?, ?, ?, ?)";
-        	$statement = $dbLink->prepare($cmd);
-		$CID = scrubInput($_SESSION["CID"]);
-        	$statement->execute(array( $CID,
-					   $cleanedInputs["username"],
-               		                   $cleanedInputs["email"],
-                       		           $cleanedInputs["troubleTicket"],
-                     		           $cleanedInputs["testCSV"]));
-     	 }//END try
-       catch(PDOException $e)
-         {
-        	echo "<h1> Oops! Something went wrong while interacting with the database:</h1> <br>"
-		. $e->getMessage();
-        	return 0;
-         }
-	$dbLink = null;
+//        try
+//         {
+//        	$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+//        	//error mode for PDO is exception
+//        	$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//        	$cmd = "INSERT INTO testParameters
+//                          (cid,username,useremail,user_tt_id,requested_tests)
+//                        VALUES (?, ?, ?, ?, ?)";
+//        	$statement = $dbLink->prepare($cmd);
+//		$CID = scrubInput($_SESSION["CID"]);
+//        	$statement->execute(array( $CID,
+//					   $cleanedInputs["username"],
+//              		                   $cleanedInputs["email"],
+//                       		           $cleanedInputs["troubleTicket"],
+//                     		           $cleanedInputs["testCSV"]));
+//     	 }//END try
+//       catch(PDOException $e)
+//         {
+//        	echo "<h1> Oops! Something went wrong while interacting with the database:</h1> <br>"
+//		. $e->getMessage();
+//        	return 0;
+//         }
+//	$dbLink = null;
 	//we need to add the UID of the recently created ISO to the session for the ISO creation to take place
 	//since we have all of the other params for this iso, we can query for the combination of them and then get the UID
 		//do we need a new db handle? -> yup, it wouldn't work unless I made a new one
-		$dbh = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
-
-		$sqlStmnt = $dbh->prepare('SELECT uid FROM testParameters 
-			 WHERE cid = :cid 
-			 AND username = :username 
-			 AND useremail = :email 
-			 AND user_tt_id = :troubleTicket 
-			 AND requested_tests = :testCSV');
-		$sqlStmnt->bindParam(':cid', $_SESSION["CID"], PDO::PARAM_STR);
-                $sqlStmnt->bindParam(':username', $cleanedInputs["username"], PDO::PARAM_STR);
-                $sqlStmnt->bindParam(':email', $cleanedInputs["email"], PDO::PARAM_STR);
-                $sqlStmnt->bindParam(':troubleTicket', $cleanedInputs["troubleTicket"], PDO::PARAM_STR);
-                $sqlStmnt->bindParam(':testCSV', $cleanedInputs["testCSV"], PDO::PARAM_STR);
-
-		$sqlStmnt->execute();
-		$uidQueryResult = $sqlStmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
-		if (!$uidQueryResult)
-		 {
-			print "an error occurred interacting with the database!";
-		 }
-		else
-		 {
-			$_SESSION["UID"] = $uidQueryResult["uid"];
-		 }
-
-
-       return 1;
-     }//END insertNewISORequest();
+//		$dbh = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+//
+//		$sqlStmnt = $dbh->prepare('SELECT uid FROM testParameters 
+//			 WHERE cid = :cid 
+//			 AND username = :username 
+//			 AND useremail = :email 
+//			 AND user_tt_id = :troubleTicket 
+//			 AND requested_tests = :testCSV');
+//		$sqlStmnt->bindParam(':cid', $_SESSION["CID"], PDO::PARAM_STR);
+  //              $sqlStmnt->bindParam(':username', $cleanedInputs["username"], PDO::PARAM_STR);
+    //            $sqlStmnt->bindParam(':email', $cleanedInputs["email"], PDO::PARAM_STR);
+//                $sqlStmnt->bindParam(':troubleTicket', $cleanedInputs["troubleTicket"], PDO::PARAM_STR);
+//                $sqlStmnt->bindParam(':testCSV', $cleanedInputs["testCSV"], PDO::PARAM_STR);
+//
+//		$sqlStmnt->execute();
+//		$uidQueryResult = $sqlStmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
+//		if (!$uidQueryResult)
+//		 {
+//			print "an error occurred interacting with the database!";
+//		 }
+//		else
+//		 {
+//			$_SESSION["UID"] = $uidQueryResult["uid"];
+//		 }
+//
+//
+  //     return 1;
+//     }//END insertNewISORequest();
 
 
 
@@ -161,7 +154,10 @@
 		$inputErrors["testCSV"] = "You must select at least 1 test";
 		$errFlag = 1;
 	  }
-
+	if (empty($_REQUEST["queueName"]))
+	 {
+		$inputErrors["queueName"] = "Specify an RT Queue for RT integration";
+	 }
      }//END empty var check
 
 
@@ -191,6 +187,7 @@
 			$inputs["email"] = scrubInput($_REQUEST["email"]);
                         $inputs["troubleTicket"] = scrubInput($_REQUEST["troubleTicket"]);
                         $inputs["testCSV"] = $testString;
+			$inputs["queueName"] = scrubInput($_REQUEST["queueName"]);
 
 			//everything is scrubbed and prepped for entry into the DB, so let's do this
 			insertNewISORequest($inputs);
@@ -216,6 +213,7 @@
 	    		Username*: 		  <input type="text" name="username" id="username"> <?php echo $inputErrors["username"]; ?> <br>
 	    		Email*: 		  <input type="text" name="email" id="email"> <?php echo $inputErrors["email"]; ?> <br>
 	    		Affiliation*: 		  <input type="text" name="affiliation" id="affiliation"> <?php echo $inputErrors["affiliation"]; ?> <br>
+			RT Queue Name:		  <input type="text" name="queueName" id="queueName"> <?php echo $inputErrors["queueName"]; ?> <br>
 			Tests to run*: <br>
 			<ul title="Tests to Run">
 				<?php //assemble the list of tests to choose from dynamically

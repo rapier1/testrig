@@ -6,7 +6,7 @@
 	session_start();
 	if (empty($_SESSION["username"]))
 	 {
-		header("Location: http://testrig.psc.edu/login.php");
+		header("Location: http://". $_SERVER['SERVER_NAME']. "/login.php");
 		die();
 	 }
 
@@ -31,7 +31,7 @@
 
 ?>
 <div id="logoutDiv">
-<input type="button" value="Logout" onClick="window.location='http://testrig.psc.edu/logout.php'">
+<input type="button" value="Logout" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/logout.php'">
 </div>
 
 </body>
