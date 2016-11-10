@@ -389,8 +389,8 @@ sub readConfFromDB {
     my $uid = shift @_;
     my $cid = shift @_;
     my $result = 0;
-    my @data = ();
-
+    my $row;
+    
     # get the customer data
     my $query = "SELECT inst_data_host, 
                         inst_host_uname,
@@ -402,7 +402,7 @@ sub readConfFromDB {
     $result = $sth->execute($cid);
     try
     {
-        @data = $sth->fetchrow_array();
+        $row = $sth->fetchrow_hashref();
     }
     catch
     {
@@ -411,15 +411,17 @@ sub readConfFromDB {
     };
     $sth->finish;
     #did we get enough data? We should have 4 values. 
-    if ($#data != 3) {
+    if (!$row->{inst_data_host} 
+	or !$row->{inst_host_uname}
+	or !$row->{contact_email}) {
 	logger ("crit", "Missing customer data! CID may not exist. Exiting.");
 	return -1;
     }
     #add results to config out configuration struct
-    $config_out->{customer}->{data_host} = $data[0];
-    $config_out->{customer}->{data_uname} = $data[1];
-    $config_out->{customer}->{tt_system} = $data[2];
-    $config_out->{customer}->{contact_email} = $data[3];
+    $config_out->{customer}->{data_host} = $row->{inst_data_host};
+    $config_out->{customer}->{data_uname} = $row->{inst_host_uname};
+    $config_out->{customer}->{tt_system} = $row->{tt_system};
+    $config_out->{customer}->{contact_email} = $row->{contact_email};
     
     # get the user information from the database
     $query = "SELECT username,
@@ -428,16 +430,16 @@ sub readConfFromDB {
                      validtodate,
                      maxrun,
                      requested_tests,
-                     qname
+                     queue_name
               FROM testParameters
               WHERE uid = ?";
-    
+
     #get the user data
     $sth = $DBH->prepare($query);
     $result = $sth->execute($uid);
     try
     {
-	@data = $sth->fetchrow_array();
+	$row = $sth->fetchrow_hashref();
     }
     catch
     {
@@ -445,19 +447,25 @@ sub readConfFromDB {
 	return -1;
     };
     $sth->finish;  
-    # did we get enough data? We should have 6 values
-    if ($#data != 5) {
+
+    
+    # they may not have a trouble ticket system so don't check for those
+    # we need specific checks for maxrun and validtodate.
+    # as the default valuies in the db are 0. 
+    if (!$row->{username} 
+	or !$row->{useremail} 
+	or !$row->{requested_tests}) {
         logger ("crit", "Missing user data! UID may not exist. Exiting.");
 	return -1;
     }
     # add data to the config out configuration struct
-    $config_out->{user}->{username} = $data[0];
-    $config_out->{user}->{email} = $data[1];
-    $config_out->{user}->{tt_id} = $data[2];
-    $config_out->{user}->{validtodate} = $data[3];
-    $config_out->{user}->{maxrun} = $data[4];
-    $config_out->{user}->{tests} = $data[5];
-    $config_out->{user}->{qname} = $data[6];
+    $config_out->{user}->{username} = $row->{username};
+    $config_out->{user}->{email} = $row->{useremail};
+    $config_out->{user}->{tt_id} = $row->{user_tt_id};
+    $config_out->{user}->{validtodate} = $row->{validtodate};
+    $config_out->{user}->{maxrun} = $row->{maxrun};
+    $config_out->{user}->{tests} = $row->{requested_tests};
+    $config_out->{user}->{queue_name} = $row->{queue_name};
     # later on the config_out struct is written to the ISO as a Config::Tiny
     # format configuration file. 
     return 1;
@@ -533,11 +541,11 @@ sub isoAvailableMail {
 
 #inform the NOC that th ISO has been generated and mail sent to user.
 sub isoCompleteMail {
-    my $qname = "";
+    my $queue_name = "";
     my $text ="The TestRig2.0 ISO for $config_out->{user}->{username} has been successfully generated.\n";
     if ($config_out->{user}->{tt_id} != "") {
 	$text .= "The associated trouble ticket is $config_out->{user}->{tt_id}\n";
-	$qname = "[$config_out->{user}->{qname} #$config_out->{user}->{tt_id}] ";
+	$queue_name = "[$config_out->{user}->{queue_name} #$config_out->{user}->{tt_id}] ";
     }
     $text .= "An email has been sent to the user at $config_out->{user}->{email}.\n";
     $text .= "\n\nThank you for using PSC's TestRig 2.0 service\n";
@@ -546,7 +554,7 @@ sub isoCompleteMail {
 	From => "testrig2\@psc.edu",
 	To   => $config_out->{customer}->{contact_email},
         CC   => $config_out->{customer}->{tt_system},
-	Subject => $qname . "TestRig ISO Generated for user $config_out->{user}->{username}",
+	Subject => $queue_name . "TestRig ISO Generated for user $config_out->{user}->{username}",
 	Data => $text,
 	);
     $msg->send();
