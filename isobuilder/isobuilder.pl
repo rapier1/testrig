@@ -41,6 +41,7 @@ use warnings;
 use Config::Tiny;
 use Crypt::PK::RSA;
 use CryptX;
+use Digest::SHA qw(sha256_hex);
 use Data::UUID;
 use DBI;
 use Getopt::Std;
@@ -521,7 +522,7 @@ sub writeToDB {
 sub isoAvailableMail {
     my $uuid = shift @_;
     my $passphrase = generatePassword();
-    my $hash = encryptKnownText($passphrase);
+    my $hash = sha256_hex($passphrase);
     my $url = "http://testrig.psc.edu/isofetcher?uuid=$uuid&known_hash=$hash";
     my $text = "$config_out->{user}->{username}.\n\n";
     $text .= "The Testrig 2.0 ISO that you have requested is now available for download.\n";
@@ -532,24 +533,27 @@ sub isoAvailableMail {
     my $msg = MIME::Lite->new (
 	From => "testrig2\@psc.edu",
 	To   => $config_out->{user}->{email},
-        CC   => ,
 	Subject => "Your Testrig ISO is ready",
 	Data => $text,
 	);
-    $msg->send();
+    try {
+	$msg->send("sendmail", "/usr/sbin/sendmail -t -oi -oem");
+    } catch {
+	logger("crit", "Sending message to end user failed\n");
+    }
 }
 
 #inform the NOC that th ISO has been generated and mail sent to user.
 sub isoCompleteMail {
     my $queue_name = "";
     my $text ="The TestRig2.0 ISO for $config_out->{user}->{username} has been successfully generated.\n";
-    if ($config_out->{user}->{tt_id} != "") {
+    if ($config_out->{user}->{tt_id} ne "") {
 	$text .= "The associated trouble ticket is $config_out->{user}->{tt_id}\n";
 	$queue_name = "[$config_out->{user}->{queue_name} #$config_out->{user}->{tt_id}] ";
     }
     $text .= "An email has been sent to the user at $config_out->{user}->{email}.\n";
     $text .= "\n\nThank you for using PSC's TestRig 2.0 service\n";
-    
+
     my $msg = MIME::Lite->new (
 	From => "testrig2\@psc.edu",
 	To   => $config_out->{customer}->{contact_email},
@@ -557,7 +561,11 @@ sub isoCompleteMail {
 	Subject => $queue_name . "TestRig ISO Generated for user $config_out->{user}->{username}",
 	Data => $text,
 	);
-    $msg->send();
+    try {
+	$msg->send("sendmail", "/usr/sbin/sendmail -t -oi -oem");
+    } catch {
+	logger ("crit", "Sending message to requestor failed\n");
+    }
 }
 
 #--------------ISO Functions------------#
@@ -969,5 +977,7 @@ cleanUp($uuid);
 
 verbose ("TestRig target ISO generation process completed.");
 
+verbose ("Sending completeion mail to requestor.");
 isoCompleteMail();
+verbose ("Sending notification mail to end user.");
 isoAvailableMail($uuid);

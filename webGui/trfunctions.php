@@ -139,7 +139,9 @@ function generateISORequestForm()
         'scpPubKey' => "",
         'troubleTicket' => "",
         'testTargetIP' => "",
-        'testCSV' => "");
+        'testCSV' => "",
+        'maxRun' => "",
+        'validToDate' => "");
     
     $isoFormInputErrors = array(
         'username' => "",
@@ -149,7 +151,9 @@ function generateISORequestForm()
         'scpPubKey' => "",
         'troubleTicket' => "",
         'testTargetIP' => "",
-        'testCSV' => "");
+        'testCSV' => "",
+        'maxRun' => "",
+        'validToDate' => "");
     
     //array of tests. We might be able to make this a little more
     //readable once we get a list of available tests(?) maybe read from DB(??)
@@ -165,8 +169,40 @@ function generateISORequestForm()
                     $isoFormInputErrors["ipAddress"] = "You must provide an IP address";
                     $errFlag = 1;
                 }
+
+            if (empty($_REQUEST["isoMaxRun"]))
+                {
+                    $isoFormInputErrors["maxRun"] = "You must enter a maximum number of runs";
+                    $errFlag = 1;
+                }
+                       
+            if ($_REQUEST["isoMaxRun"] < 1)
+                {
+                    $isoFormInputErrors["maxRun"] = "The maximum number of runs must be at least 1";
+                    $errFlag = 1;  
+                }
+
+            if ($_REQUEST["isoMaxRun"] > 25)
+                {
+                    $isoFormInputErrors["maxRun"] = "The maximum number of runs must be 25 or less";
+                    $errFlag = 1;  
+                }
+ 
+            if (empty($_REQUEST["isoValidToDate"]))
+                {
+                    $isoFormInputErrors["validToDate"] = "You must enter an expiration date for the ISO";
+                    $errFlag = 1;
+                } else {
+                $format = "m/d/Y";
+                $date = trim($_REQUEST["isoValidToDate"]);
+                $time = strtotime($date);
+                if (date($format, $time) != $date) {
+                    $isoFormInputErrors["validToDate"] = "You entered and invalid date or date format.";
+                    $errFlag = 1;
+                }
+            }
             
-			if (empty($_REQUEST["isoTroubleTicket"]))
+            if (empty($_REQUEST["isoTroubleTicket"]))
                 {
                     $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
                     $errFlag = 1;
@@ -174,7 +210,7 @@ function generateISORequestForm()
             
             if (empty($_REQUEST["isoUsername"]))
                 {
-                    $isoFormInputErrors["username"] = "You must provide your username";
+                    $isoFormInputErrors["username"] = "You must provide the recipient's name";
                     $errFlag = 1;
                 }
             
@@ -221,6 +257,10 @@ function generateISORequestForm()
                     $inputs["username"] = scrubInput($_REQUEST["isoUsername"]);
                     $inputs["email"] = scrubInput($_REQUEST["isoEmail"]);
                     $inputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
+                    $inputs["target"] = scrubInput($_REQUEST["isoTestTargetIP"]);
+                    $inputs["maxRun"] = scrubInput($_REQUEST["isoMaxRun"]);
+                    $date = scrubInput($_REQUEST["isoValidToDate"]);
+                    $inputs["validToDate"] = date("Y-m-d", strtotime($date));
                     $inputs["testCSV"] = $testString;
                     
                     //everything is scrubbed and prepped for entry into the DB, so let's do this
@@ -236,14 +276,11 @@ function generateISORequestForm()
                     } else {
                         echo "Failed to create new ISO!<p>";
                     }
-                    
                 }//END successful submission if/then
-            
-            
-            
             
         }//END request and empty var check
     
+    $valid_date = date("m/d/Y", strtotime("+7 days"));     
     
     //$isoForm will hold the entire new <div> element
     $isoForm =	'<div id="isoRequestSection" name="isoRequestSection">
@@ -252,8 +289,10 @@ function generateISORequestForm()
 								<legend>ISO Request Form</legend>
 								* required fields <br>
 								IP Address to test*:	  <input type="text" name="isoTestTargetIP" id="isoTestTargetIP">' . $isoFormInputErrors["testTargetIP"] . '<br>
+                                Maximum # of Runs:        <input type="text" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '<br> 
+                                ISO Valid Until:          <input type="date" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '">' . $isoFormInputErrors["validToDate"] . '<br>
 								Trouble Ticket No.*:	  <input type="text" name="isoTroubleTicket" id="isoTroubleTicket">' . $isoFormInputErrors["troubleTicket"] . '<br>
-								Username*:				  <input type="text" name="isoUsername" id="isoUsername">' . $isoFormInputErrors["username"] . '<br>
+								Name*:				      <input type="text" name="isoUsername" id="isoUsername">' . $isoFormInputErrors["username"] . '<br>
 								Email*:					  <input type="text" name="isoEmail" id="isoEmail">' . $isoFormInputErrors["email"] . '<br>
 								Affiliation*:			  <input type="text" name="isoAffiliation" id="isoAffiliation">' . $isoFormInputErrors["affiliation"] . '<br>
 								Tests to run*: <br>';
@@ -271,7 +310,7 @@ function generateISORequestForm()
     
     return $isoForm;
     
-}//END generateISORequestForm()
+}//END generateISORequestForm()    
 
 function insertNewISORequest($cleanedInputs)
 {
@@ -294,8 +333,16 @@ function insertNewISORequest($cleanedInputs)
 			//error mode for PDO is exception
 			$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$cmd = "INSERT INTO testParameters
-						  (cid,username,useremail,user_tt_id,requested_tests, creation_timestamp, queue_name)
-						VALUES (?, ?, ?, ?, ?, ?, ?)";
+						          (cid, username,
+                                   useremail, user_tt_id,
+                                   requested_tests, creation_timestamp, 
+                                   queue_name, target,
+                                   maxrun, validtodate)
+						   VALUES (?, ?, 
+                                   ?, ?, 
+                                   ?, ?, 
+                                   ?, ?,
+                                   ?, ?)";
 			$statement = $dbLink->prepare($cmd);
             $CID = scrubInput($_SESSION["CID"]);
 			$statement->execute(array( $CID,
@@ -304,7 +351,10 @@ function insertNewISORequest($cleanedInputs)
                                 $cleanedInputs["troubleTicket"],
                                 $cleanedInputs["testCSV"],
                                 $creationTimestamp,
-                                $cleanedInputs["queueName"]));
+                                $cleanedInputs["queueName"],
+                                $cleanedInputs["target"],
+                                $cleanedInputs["maxRun"],
+                                $cleanedInputs["validToDate"]));
         }//END try
     catch(PDOException $e)
         {
