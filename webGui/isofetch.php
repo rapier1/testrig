@@ -112,7 +112,7 @@ function loadPage () {
     
     print ("<form method='post' action='$PHP_SELF'>\n");
     print ("Passphrase from e-mail:");
-    print ("<input type='text' size='24' maxlength='24' name='offer'>\n<br>\n");
+    print ("<input type='text' size='25' maxlength='25' name='offer'>\n<br>\n");
     print ("<input type='hidden' name='uuid' value='$uuid'>\n");
     print ("<input type='hidden' name='known_hash' value='$known_hash'>\n");
     print ("<input type='hidden' name='verify' value='true'>\n");

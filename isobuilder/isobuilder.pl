@@ -523,7 +523,7 @@ sub isoAvailableMail {
     my $uuid = shift @_;
     my $passphrase = generatePassword();
     my $hash = sha256_hex($passphrase);
-    my $url = "http://testrig.psc.edu/isofetcher?uuid=$uuid&known_hash=$hash";
+    my $url = "http://testrig.psc.edu/isofetch.php?uuid=$uuid&known_hash=$hash";
     my $text = "$config_out->{user}->{username}.\n\n";
     $text .= "The Testrig 2.0 ISO that you have requested is now available for download.\n";
     $text .= "This ISO will only be available for 7 days from the following link.\n $url\n";
