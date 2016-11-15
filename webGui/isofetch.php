@@ -62,7 +62,7 @@ function verify () {
                 header("Cache-Control: public, must-revalidate, post-check=0, pre-check=0");
                 header("Content-Disposition: attachment; filename=\"$isoname\"");
                 header("Content-Type: application/octect-stream");
-                header("Refresh: 0; url='$PHP_SELF?complete=true'");
+                header("Refresh: 0; url='$PHP_SELF?complete=true&uuid=$uuid'");
                 while(!feof($file)) {
                     print (@fread($file, 1024*8));
                     ob_flush();
@@ -95,6 +95,97 @@ function verify () {
         printFooter ();
         exit;
     }
+}
+
+// we need to work on some database access in order to get the necessary information
+// to inform the requestor that the ISO has been picked up by the user
+// or if there were any problems. We have the UUID so we can use that to get the necessary
+// contact data
+
+function notifyPickup () {
+    $uuid = $_REQUEST['uuid'];
+    $DB_HOST = "192.168.122.1"; //ionia's private IP
+    $DB_USERNAME = "testrig";
+    $DB_PASSWORD = "tinycats";
+    $DB_NAME = "testrig";
+    try {
+        $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
+    } catch (PDOException $e) {
+        $myerror = $e->getMessage();
+        syslog (LOG_CRIT, "isofetch.php could not contact database: $myerror");
+        return;
+    }    
+    
+    // we have the uuid so first get the cid and other data from testParameters
+    $query = "SELECT queue_name, cid, user_tt_id FROM testParameters WHERE uuid= :uuid";
+    try {
+        $statement = $dbh->prepare($query);
+        $statement->bindParam(':uuid', $uuid, PDO::PARAM_STR);
+        $statement->execute(); 
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $myerror = $e->getMessage(); 
+        syslog (LOG_CRIT, "isofetch.pl could not fetch data from testParameters table: $myerror"); 
+        return;
+    }
+    $queue = $result['queue_name'];
+    $cid = $result['cid'];
+    $tt_id = $result['user_tt_id'];
+    $statement = null; 
+    
+    // now use the cid to get contact information from the customer table
+    $query = "SELECT contact_email, tt_system FROM customer WHERE cid=:cid";
+    try {
+        $statement = $dbh->prepare($query);
+        $statement->bindParam(':cid', $cid, PDO::PARAM_STR);
+        $statement->execute(); 
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $myerror = $e->getMessage(); 
+        syslog (LOG_CRIT, "isofetch.pl could not fetch data from customer table: $myerror"); 
+        return;
+    }
+    $contact_email = $result['contact_email'];
+    $tt_system = $result['tt_system'];
+    $statement = null;
+
+// we have all to the necessary data to send email
+    // if we have a queue name use it in the subject
+    if ($queue != "") {
+        $tt_prefix = "[" . $queue ."]" . " ";
+    }
+    // if we have a TT number use it in the subject
+    if ($tt_id != "") {
+        $tt_prefix .= "#" . $tt_id . " ";
+    }
+    $to = $contact_email;
+    // if there is a tt system then append that to the To: header
+    if ($tt_system != "") {
+        $to .= ", " . $tt_system;
+    }
+    $subject = $tt_prefix . "User has retreived TestRig ISO";
+    $headers = "From: testrig2@psc.edu";
+    $body = "The TestRig ISO [$uuid] has been downloaded from the server";
+
+    mail ($to, $subject, $body, $headers);
+
+    //lastly update the client table with when the ISO was (most recently) picked up
+    date_default_timezone_set('UTC');
+    $pickuptime = date('c'); // RFC compliant date string
+    $query = "UPDATE client SET iso_retreived= :date WHERE UUID= :uuid";
+    try {
+        $statement = $dbh->prepare($query);
+        $statement->bindParam(':date', $pickuptime, PDO::PARAM_STR);
+        $statement->bindParam(':uuid', $uuid, PDO::PARAM_STR);
+        $statement->execute(); 
+    } catch (PDOException $e) {
+        $myerror = $e->getMessage(); 
+        syslog (LOG_CRIT, "isofetch.pl could not update iso_retreived time in client table: $myerror"); 
+        return;
+    }
+    $statement = null;
+    $dbh = null;
+    return;
 }
 
 function loadPage () {
@@ -144,6 +235,7 @@ function complete () {
     print ("Your download should be starting now. If not please wait a few moments. ");
     print ("Once your have downloaded the TestRig 2.0 please go to the following link ");
     print ("for instructions on creating the bootable CD/DVD or flash drive.<br>");
+    notifyPickup();
     printFooter();
 }
 

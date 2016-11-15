@@ -472,7 +472,6 @@ sub readConfFromDB {
     return 1;
 }
 
-
 #write the results to the database
 sub writeToDB {
     my $uuid = shift @_;
@@ -512,6 +511,20 @@ sub writeToDB {
 	logger ("crit", "Received DBI error: $_");
 	return -1;
     };
+
+    # update the testParameters table with the UUID.
+    $query = "UPDATE testParameters SET uuid='$uuid' WHERE uid=?";
+    $sth = $DBH->prepare($query);
+    try 
+    {
+	$result = $sth->execute($options{u});
+    } 
+    catch 
+    {
+	logger ("crit", "Could not update UUID in testParameters: $_");
+	return -1;
+    };
+
     $sth->finish;
     return $result;
 }
@@ -674,8 +687,8 @@ END_DISKDEFINES
 	runSystem($cmd, $uuid);
     }
     #build manifest of packages installed
-    #we can probably just build a static filesystem.manifest and copy it over
-    #that way we can get rid of using chroot entirely
+    #ww no just build a static filesystem.manifest and copy it over
+    #that way we can get rid of using chroot and sudo entirely
 #    $cmd="/home/rapier/testrig/isobuilder/modchroot $chrootPath dpkg-query -W --showformat='\${Package} \${Version}\n' | sudo tee $imagePath/casper/filesystem.manifest";
     $cmd = "cp $config->{paths}->{manifest} $imagePath/casper/filesystem.manifest";
     runSystem($cmd, $uuid);
@@ -684,14 +697,15 @@ END_DISKDEFINES
     $cmd="cp $imagePath/casper/filesystem.manifest $imagePath/casper/filesystem.manifest-desktop";
     runSystem($cmd, $uuid);
     
+    # the following is no longer needed
     #list of packages not to include in manifest
-    my @removeFromManifest = qw(ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4);
+    #my @removeFromManifest = qw(ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover1 xresprobe os-prober libdebian-installer4);
     
     #remove the above list from the manifest
-    foreach my $i (@removeFromManifest) {
-	$cmd="sudo sed -i \"/$i/d\" $imagePath/casper/filesystem.manifest-desktop";
-	runSystem($cmd, $uuid);
-    }
+    #foreach my $i (@removeFromManifest) {
+    # 	$cmd="sudo sed -i \"/$i/d\" $imagePath/casper/filesystem.manifest-desktop";
+    #	runSystem($cmd, $uuid);
+    #}
     
     #put isolinux config in place
     my $isolinuxFile = "$imagePath/isolinux/isolinux.cfg";
