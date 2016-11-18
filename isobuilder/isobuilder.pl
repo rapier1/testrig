@@ -431,7 +431,8 @@ sub readConfFromDB {
                      validtodate,
                      maxrun,
                      requested_tests,
-                     queue_name
+                     queue_name,
+                     target
               FROM testParameters
               WHERE uid = ?";
 
@@ -467,6 +468,8 @@ sub readConfFromDB {
     $config_out->{user}->{maxrun} = $row->{maxrun};
     $config_out->{user}->{tests} = $row->{requested_tests};
     $config_out->{user}->{queue_name} = $row->{queue_name};
+    $config_out->{user}->{target} = $row->{target};
+    # the uuuid is added to the config_out struct after it is generated
     # later on the config_out struct is written to the ISO as a Config::Tiny
     # format configuration file. 
     return 1;
@@ -879,6 +882,8 @@ if (! defined $DBH) {
 verbose ("Generating UUID.");
 
 my $uuid = generateUUID();
+# add the UUID to the config that will be written to the ISO
+$config_out->{user}->{uuid} = $uuid;
 
 $config->{paths}->{target_chroot} = "$config->{paths}->{target_chroot}/$uuid";
 

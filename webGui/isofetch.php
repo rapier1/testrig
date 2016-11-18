@@ -150,13 +150,13 @@ function notifyPickup () {
     $statement = null;
 
 // we have all to the necessary data to send email
-    // if we have a queue name use it in the subject
-    if ($queue != "") {
-        $tt_prefix = "[" . $queue ."]" . " ";
+    // if we have a queue name and tt then use it in the subject
+    if (($queue != "") && ($tt_id != "")) {
+        $tt_prefix = "[" . $queue . " #" . $tt_id . "] ";
     }
-    // if we have a TT number use it in the subject
-    if ($tt_id != "") {
-        $tt_prefix .= "#" . $tt_id . " ";
+    // if we only have a TT number use it in the subject
+    if (($tt_id != "") && ($queue == "")) {
+        $tt_prefix = "#" . $tt_id . " ";
     }
     $to = $contact_email;
     // if there is a tt system then append that to the To: header
