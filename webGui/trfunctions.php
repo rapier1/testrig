@@ -141,8 +141,9 @@ function generateISORequestForm()
         'testTargetIP' => "",
         'testCSV' => "",
         'maxRun' => "",
-        'validToDate' => "");
-    
+        'validToDate' => "",
+	'queueName' => "");
+
     $isoFormInputErrors = array(
         'username' => "",
         'email' => "",
@@ -153,13 +154,14 @@ function generateISORequestForm()
         'testTargetIP' => "",
         'testCSV' => "",
         'maxRun' => "",
-        'validToDate' => "");
-    
+        'validToDate' => "",
+	'queueName' => "");
+
     //array of tests. We might be able to make this a little more
     //readable once we get a list of available tests(?) maybe read from DB(??)
     $allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute");
     $isoFormInputErrFlag = 0;
-    
+
     //has there been a request sent to the server?
     //are the variables empty?
     if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -175,27 +177,29 @@ function generateISORequestForm()
                     $isoFormInputErrors["maxRun"] = "You must enter a maximum number of runs";
                     $errFlag = 1;
                 }
-                       
+
             if ($_REQUEST["isoMaxRun"] < 1)
                 {
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be at least 1";
-                    $errFlag = 1;  
+                    $errFlag = 1;
                 }
 
             if ($_REQUEST["isoMaxRun"] > 25)
                 {
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be 25 or less";
-                    $errFlag = 1;  
+                    $errFlag = 1;
                 }
- 
+
             if (empty($_REQUEST["isoValidToDate"]))
                 {
                     $isoFormInputErrors["validToDate"] = "You must enter an expiration date for the ISO";
                     $errFlag = 1;
-                } else {
-                $format = "m/d/Y";
-                $date = trim($_REQUEST["isoValidToDate"]);
+                }
+		else {
+                $format ="Y-m-d";
+		$date = trim($_REQUEST["isoValidToDate"]);
                 $time = strtotime($date);
+
                 if (date($format, $time) != $date) {
                     $isoFormInputErrors["validToDate"] = "You entered and invalid date or date format.";
                     $errFlag = 1;
@@ -225,13 +229,18 @@ function generateISORequestForm()
                     $isoFormInputErrors["affiliation"] = "You must list your affiliation";
                     $errFlag = 1;
                 }
-            
+
             if (empty($_REQUEST["testCheckbox_list"]))
                 {
                     $isoFormInputErrors["testCSV"] = "You must select at least 1 test";
                     $errFlag = 1;
                 }
-            
+            if (empty($_REQUEST["queueName"]))
+         	{
+                    $inputErrors["queueName"] = "Specify an RT Queue for RT integration";
+         	}
+
+
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
             if ($errFlag != 1) //Has everything been successfully submitted?
                 {
@@ -252,8 +261,7 @@ function generateISORequestForm()
                                 }
                             $count++;
                         }//END foreach checkedTests
-                    
-                    
+
                     $inputs["username"] = scrubInput($_REQUEST["isoUsername"]);
                     $inputs["email"] = scrubInput($_REQUEST["isoEmail"]);
                     $inputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
@@ -262,7 +270,7 @@ function generateISORequestForm()
                     $date = scrubInput($_REQUEST["isoValidToDate"]);
                     $inputs["validToDate"] = date("Y-m-d", strtotime($date));
                     $inputs["testCSV"] = $testString;
-                    
+
                     //everything is scrubbed and prepped for entry into the DB, so let's do this
                     if (insertNewISORequest($inputs)) {
                         if (!$_SESSION[CID] or !$_SESSION[UID]) {
@@ -281,21 +289,26 @@ function generateISORequestForm()
         }//END request and empty var check
     
     $valid_date = date("m/d/Y", strtotime("+7 days"));     
-    
+
     //$isoForm will hold the entire new <div> element
-    $isoForm =	'<div id="isoRequestSection" name="isoRequestSection">
-				<form id="isoRequest" name="isoRequest" action="' . htmlspecialchars($_SERVER[PHP_SELF]) . '" method="post">
-						<fieldset>
-								<legend>ISO Request Form</legend>
-								* required fields <br>
-								IP Address to test*:	  <input type="text" name="isoTestTargetIP" id="isoTestTargetIP">' . $isoFormInputErrors["testTargetIP"] . '<br>
-                                Maximum # of Runs:        <input type="text" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '<br> 
-                                ISO Valid Until:          <input type="date" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '">' . $isoFormInputErrors["validToDate"] . '<br>
-								Trouble Ticket No.*:	  <input type="text" name="isoTroubleTicket" id="isoTroubleTicket">' . $isoFormInputErrors["troubleTicket"] . '<br>
-								Name*:				      <input type="text" name="isoUsername" id="isoUsername">' . $isoFormInputErrors["username"] . '<br>
-								Email*:					  <input type="text" name="isoEmail" id="isoEmail">' . $isoFormInputErrors["email"] . '<br>
-								Affiliation*:			  <input type="text" name="isoAffiliation" id="isoAffiliation">' . $isoFormInputErrors["affiliation"] . '<br>
-								Tests to run*: <br>';
+    //we have to do this in a few steps due to the need for PHP_SELF to be in quotes for the redirection to work correctly
+	$serverURL = htmlspecialchars($_SERVER["PHP_SELF"]);
+
+	$isoForm =	'<div id="isoRequestSection" name="isoRequestSection">
+			<form id="isoRequest" name="isoRequest" action="' . $serverURL;
+	$isoForm = $isoForm . '" method="post">
+			<fieldset>
+			<legend>ISO Request Form</legend>
+			* required fields <br>
+			IP Address to test*:	  <input type="text" name="isoTestTargetIP" id="isoTestTargetIP">' . $isoFormInputErrors["testTargetIP"] . '<br>
+                        Maximum # of Runs:        <input type="text" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '<br> 
+                        ISO Valid Until:          <input type="date" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '">' . $isoFormInputErrors["validToDate"] . '<br>
+			Trouble Ticket No.*:	  <input type="text" name="isoTroubleTicket" id="isoTroubleTicket">' . $isoFormInputErrors["troubleTicket"] . '<br>
+			Name*:			  <input type="text" name="isoUsername" id="isoUsername">' . $isoFormInputErrors["username"] . '<br>
+			Email*:			  <input type="text" name="isoEmail" id="isoEmail">' . $isoFormInputErrors["email"] . '<br>
+			Affiliation*:		  <input type="text" name="isoAffiliation" id="isoAffiliation">' . $isoFormInputErrors["affiliation"] . '<br>
+			RT Queue Name:            <input type="text" name="queueName" id="queueName"> <?php echo $inputErrors["queueName"]; ?> <br>
+			Tests to run*: <br>';
     //break for assembling the checkbox list
     $testList = '<ul title="Tests to Run">';
     //assemble the list of tests to choose from dynamically
@@ -333,12 +346,12 @@ function insertNewISORequest($cleanedInputs)
 			//error mode for PDO is exception
 			$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$cmd = "INSERT INTO testParameters
-						          (cid, username,
+				  (cid, username,
                                    useremail, user_tt_id,
                                    requested_tests, creation_timestamp, 
                                    queue_name, target,
-                                   maxrun, validtodate)
-						   VALUES (?, ?, 
+                                   maxrun, validtodate) 
+				VALUES (?, ?, 
                                    ?, ?, 
                                    ?, ?, 
                                    ?, ?,
