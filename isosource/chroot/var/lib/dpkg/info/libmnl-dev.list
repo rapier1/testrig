@@ -1,0 +1,17 @@
+/.
+/usr
+/usr/include
+/usr/include/libmnl
+/usr/include/libmnl/libmnl.h
+/usr/lib
+/usr/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu/libmnl.a
+/usr/lib/x86_64-linux-gnu/pkgconfig
+/usr/lib/x86_64-linux-gnu/pkgconfig/libmnl.pc
+/usr/share
+/usr/share/doc
+/usr/share/doc/libmnl-dev
+/usr/share/doc/libmnl-dev/README
+/usr/share/doc/libmnl-dev/copyright
+/usr/lib/x86_64-linux-gnu/libmnl.so
+/usr/share/doc/libmnl-dev/changelog.Debian.gz

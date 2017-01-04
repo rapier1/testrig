@@ -157,7 +157,7 @@ function generateISORequestForm()
     
     //array of tests. We might be able to make this a little more
     //readable once we get a list of available tests(?) maybe read from DB(??)
-    $allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute");
+    $allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute", "UDP");
     $isoFormInputErrFlag = 0;
     
     //has there been a request sent to the server?
@@ -271,7 +271,7 @@ function generateISORequestForm()
                             // It turns out that exec has an issue with some versions of bash which prevents it
                             // from properly redirecting STDIN and STDERR to a file. This prevents exec from going into
                             // the background. Turns out this proc_close(proc_open()) trick does work. 
-                            proc_close (proc_open ("/home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
+                            proc_close (proc_open ("/usr/bin/sudo /home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
                         }
                     } else {
                         echo "Failed to create new ISO!<p>";

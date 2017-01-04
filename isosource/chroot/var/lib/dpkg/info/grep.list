@@ -19,7 +19,6 @@
 /usr/share/doc/grep/TODO.gz
 /usr/share/doc/grep/changelog.Debian.gz
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/grep.1.gz
 /usr/share/man/man1/egrep.1.gz
 /usr/share/man/man1/rgrep.1.gz

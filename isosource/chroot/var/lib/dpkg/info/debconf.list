@@ -25,7 +25,6 @@
 /usr/share/doc/debconf/README.Debian
 /usr/share/doc/debconf/copyright
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/debconf-communicate.1.gz
 /usr/share/man/man1/debconf-apt-progress.1.gz
 /usr/share/man/man1/debconf.1.gz
@@ -33,7 +32,6 @@
 /usr/share/man/man1/debconf-set-selections.1.gz
 /usr/share/man/man1/debconf-escape.1.gz
 /usr/share/man/man1/debconf-show.1.gz
-/usr/share/man/man8
 /usr/share/man/man8/dpkg-reconfigure.8.gz
 /usr/share/man/man8/dpkg-preconfigure.8.gz
 /usr/share/debconf

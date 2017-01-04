@@ -43,8 +43,8 @@ use warnings;
 use DBI;
 use Config::Tiny;
 use Getopt::Std;
-use Sys::Syslog qw(:standard);
-openlog("TR2Manager", "nowait,pid", "user");
+use Sys::Syslog qw(:standard :macros);
+use MIME::Lite;
 
 my $config= Config::Tiny->new;
 my $cfg_path = "/usr/local/etc/tr2authmanager.cfg";
@@ -54,15 +54,13 @@ my %options = ();
 # the global config data structure
 sub readConfig {
     if (! -e $cfg_path) {
-	print STDERR "Config file not found at $cfg_path. Exiting.\n";
-	syslog ("crit", "Config file not found at $cfg_path. Exiting.");
+	print "Config file not found at $cfg_path. Exiting.\n";
 	exit;
     } else {
 	$config = Config::Tiny->read($cfg_path);
 	my $error = $config->errstr();
 	if ($error ne "") {
-	    print STDERR "Error: $error. Exiting.\n";
-	    syslog("crit", "Error: $error. Exiting.");
+	    print "Error: $error. Exiting.\n";
 	    exit;
 	}
     }
@@ -73,18 +71,15 @@ sub readConfig {
 sub validateConfig {
 #check db data
     if (! defined $config->{db}->{host}) {
-	print STDERR "Missing DB host infomation in config file. Exiting.\n";
-	syslog ("crit", "Missing DB host infomation in config file. Exiting.");
+	print "Missing DB host infomation in config file. Exiting\n";
 	exit;
     }
     if (! defined $config->{db}->{password}) {
-	print STDERR "Missing DB password infomation in config file. Exiting.\n";
-	syslog ("crit", "Missing DB password infomation in config file. Exiting.");
+	print "Missing DB password infomation in config file. Exiting\n";
 	exit;
     }
     if (! defined $config->{db}->{user}) {
-	print STDERR "Missing DB user infomation in config file. Exiting.\n";
-	syslog ("crit", "Missing DB user infomation in config file. Exiting.");
+	print "Missing DB user infomation in config file. Exiting\n";
 	exit;
     }
 }
@@ -102,8 +97,7 @@ if (defined $options{f}) {
     if (-e $options{f}) {
 	$cfg_path = $options{f};
     } else {
-	printf STDERR "Configuration file not found at $options{f}. Exiting.\n";
-	syslog ("crit", "Configuration file not found at $options{f}. Exiting.");
+	printf "Configuration file not found at $options{f}. Exiting.\n";
 	exit;
     }
 }
@@ -115,21 +109,29 @@ print "Read config\n";
 validateConfig();
 print "Config validated\n";
 
-closelog();
-
 package TRManagerServer;
+#use ssl certs and only for ipv4
+use IO::Socket::SSL qw(inet4);
 use base qw(Net::Server::Fork);
-use Crypt::PK::DSA;
+
+TRManagerServer->run({
+    log_level => 4,
+    log_file => "Sys::Syslog",
+    syslog_ident => "TR2manager",
+    syslog_logopt => "pid,nowait",
+    proto => "ssl",
+    SSL_cert_file => "/home/rapier/testrig/trmanager/20161220.testrig.psc.edu.crt",
+    SSL_key_file => "/home/rapier/testrig/trmanager/testrig.psc.edu.key"
+});
+use Crypt::PK::RSA;
 use CryptX;
-use Date::Calc;
-use Sys::Syslog qw(:standard);
-openlog("TR2Manager", "nowait,pid", "user");
+use Date::Calc qw(Delta_Days);
+use Try::Tiny;
 
-syslog("info", "Starting TR2Manager");
+my $self;
 
-TRManagerServer->run({log_level => 4});
-
-# open the connection to syslog
+# open the connection to $self->log
+openlog("$$", "pid,nowait", "local0");
 
 # decrypt our cipher string with the private key
 # the incoming cipher text is unpacked into hex
@@ -138,16 +140,18 @@ sub decryptKnownText {
     my $privkey = shift @_;
     my $text = shift @_;
     my $clear;
-    if (length($text) != 512) {
-	return "BADCHALLENGE";
-    }
     $text = pack(qq{H*},qq{$text});
     #instantiate new PK object 
-    my $dec = Crypt::PK::DSA->new();
+    my $dec = Crypt::PK::RSA->new();
     #import the private key
     $dec->import_key(\$privkey);
     # decrypt the cipher with SHA256
-    $clear = $dec->decrypt($text, 'oaep', 'SHA256');
+    try {
+	$clear = $dec->decrypt($text, 'oaep', 'SHA256');
+    } catch {
+	# this is triggered if the challenge is the wrong size, modified, etc
+	$clear = "BADCHALLENGE";
+    };
     return($clear);
 }
 
@@ -157,9 +161,10 @@ sub dbConnect {
     my $DBH;
 
     $DBH = DBI->connect($config->{db}->{host}, $config->{db}->{user},
-			$config->{db}->{password});
+			$config->{db}->{password}) or die $DBH::strerr;
     
     if (! defined $DBH) {
+	$self->log("err", "Could not connect to database");
 	return "NODBH";
     }
     return $DBH;
@@ -207,6 +212,7 @@ sub authenticate {
     if ($numruns >= $maxruns) {
 	return "NOMORERUNS";
     }
+
     # the default (unset date) in the db is 0000-00-00 which is
     # always going to fail this the delta test so only check if
     # it has been explicitly set
@@ -219,9 +225,10 @@ sub authenticate {
 	$curY += 1900; #add to get 4 digit year
 	#get date from db
 	(my $cutoffY, my $cutoffM, my $cutoffD) = split(/-/, $cutoffdate);
-	if (DeltaDays($curY, $curM, $curD, $cutoffY, $cutoffM, $cutoffD) < 0) {
-	    return "EXPIREDISO";
+	if (Delta_Days($curY, $curM, $curD, $cutoffY, $cutoffM, $cutoffD) < 0) {
+	    #return "EXPIREDISO";
 	}
+	
     }
     my $cleartext = decryptKnownText($clientkey, $challenge);
     if ($cleartext eq "BADCHALLENGE") {
@@ -234,16 +241,18 @@ sub authenticate {
 }
 
 sub getSCPKey {
-    my $uuid = shift;
-    my $token = shift;
+    my $uuid = shift @_;
+    my $token = shift @_;
     my $DBH = dbConnect();
     
+    $self->log("info", "in getSCPKey");
     # need a query that will fetch the public key for the 
     # scp transfer. We don't have as much checking here
     # because if they have the encfspassword they've already 
     # been authenticated.
     my @data;
-    my $query = "SELECT userkey
+    my $key;
+    my $query = "SELECT inst_priv_key
                  FROM   client
                  WHERE  UUID=? 
                         AND
@@ -255,16 +264,18 @@ sub getSCPKey {
 	return "NOUUIDMATCH";
     }
     @data = $sth->fetchrow_array();
+    chomp $data[0]; #remove any trailing newline to ensure correct format
+    $key = $data[0] . "\nEOD\n"; #needs to be last line 
     $sth->finish;
     $DBH->disconnect();
-    return ($data[0]); #this is the text of the public key
+    return ($key); #this is the text of the public key
 }    
 # the client has indicated that the run was completed successfully
 # so update the number of runs in the database
 sub runSuccess {
     my $uuid = shift @_;
     my $token = shift @_; #token is the encfs password
-    my $DBH = DbConnect();
+    my $DBH = dbConnect();
 
     #need a query that will increment testrig.client.numruns
     my $query = "UPDATE client 
@@ -279,46 +290,177 @@ sub runSuccess {
     }
     $sth->finish();
     $DBH->disconnect();
+    return "SUCCESS";
+}
+
+# we need to let the person who requested the testrig iso
+# know that it has completed and the data is available. 
+sub notifyNOCMail {
+    my $uuid = shift @_;
+    my $queue_name = "";
+    my $DBH = dbConnect();
+    # the data we need is on two different tables so join
+    my $query = "SELECT 
+                    a.contact_email, a.tt_system,
+                    a.inst_data_host, b.user_tt_id, 
+                    b.username, b.queue_name
+                 FROM customer a 
+                 JOIN testParameters b 
+                 ON a.cid = b.cid and b.uuid=?";
+    my $sth = $DBH->prepare($query);
+    $sth->execute($uuid);
+    my $row = $sth->fetchrow_hashref();
+
+    my $text ="The TestRig2.0 session for $row->{username} has completed.\n";
+    if ($row->{user_tt_id} ne "") {
+        $text .= "The associated trouble ticket is $row->{user_tt_id}\n";
+        $queue_name = "[$row->{queue_name} #$row->{user_tt_id}] ";
+    }
+    $text .= "You may now retreive the dataset ($uuid) from \n";
+    $text .= "the data host $row->{inst_data_host}";
+    $text .= "\n\nThank you for using PSC's TestRig 2.0 service\n";
+
+    my $msg = MIME::Lite->new (
+        From => "testrig2\@psc.edu",
+        To   => $row->{contact_email},
+        CC   => $row->{tt_system},
+        Subject => $queue_name . "TestRig 2.0 Test complete for $row->{username}",
+        Data => $text,
+        );
+    try {
+	$msg->send("sendmail", "/usr/sbin/sendmail -t -oi -oem");
+    } catch {
+	return "BADMAIL";
+    };
+    return "SUCCESS";
+}
+
+# set a time stamp for each test sucessfully completed.
+sub runTestComplete {
+    my $uuid = shift @_;
+    my $timestamp = shift @_;
+    my $test = shift @_;
+    my $runnum = shift @_;
+    my $insertflag = shift @_;
+    my $DBH = dbConnect();
+    my $query;
+    my $sth;
+    
+    if ($insertflag) {
+	$query = "INSERT INTO testResponses
+                         (UUID, run,
+                          $test)
+                  VALUES
+                         (?, ?,
+                          ?)";
+	my $sth = $DBH->prepare($query);
+	$sth->execute($uuid, $runnum, $timestamp);
+    } else {
+	$query = "UPDATE testResponses
+                  SET $test = ?
+                  WHERE UUID = ?
+                  AND run = ?";
+	my $sth = $DBH->prepare($query);
+	$sth->execute($timestamp, $uuid, $runnum);
+    }
+    
+    if (($sth->rows == 0) || ($sth->rows > 1)) {
+	#no results or too many results returned
+	return "NOUUIDMATCH";
+    }
+    $sth->finish();
+    $DBH->disconnect();
     return("SUCCESS");
 }
 
+#get the current number of runs for this UUID
+sub getNumRuns {
+    my $uuid = shift @_;
+    my $token = shift @_;
+    my $DBH = dbConnect();
+    my $query = "SELECT numruns
+                 FROM client
+                 WHERE UUID=?
+                 AND encfspass=?";
+    my $sth = $DBH->prepare($query);
+    $sth->execute($uuid, $token);
+    if (($sth->rows == 0) || ($sth->rows > 1)) {
+	#no results or too many results returned
+	return "NOUUIDMATCH";
+    }
+    my @data = $sth->fetchrow_array();
+    # make sure it's a number. Otherwise something is wrong.
+    if ($data[0] =~ /^\d+$/) {
+	return ($data[0] + 1); #add one otherwise we may have a run number of 0
+    } else {
+	# it's not an integer and that's really weird. 
+	return "BADDATA";
+    }
+}
+    
 # take this incoming client request data and
 # determine the type of request
 sub parseResponse {
     my $clientdata = shift;
-
-    my $response;
+    my $response = "";
     
     # we won't always have enough fields to fill each
     # variable here. Only INCTEST will fill all of them
-    (my $request, my $uuid, my $data, my $test) = split (':', $clientdata);
+    (my $request, my $uuid, my $data) = split (':', $clientdata);
     if ($request eq "") {
-	syslog ("info", "NOCLIENTDATA: Unknown client passed malformed request.");
+	$self->log ("info", "NOCLIENTDATA: Unknown client passed malformed request.");
 	return "NOCLIENTDATA";
     }	
     # requesting authentication success returns encfpass
     if ($request =~ /^AUTH/i) {
 	#this is an auth request
+	$self->log("info", "Received auth Request");
 	$response = authenticate($uuid, $data);
     }
     # requesting scp key success returns public key
     elsif ($request =~ /^SCPKEY/i) {
 	#this is an scp key request
+	$self->log("info", "Received SCP key Request");
 	$response = getSCPKey($uuid, $data);
     }
     # run completed successfully. increment run counter by 1 
     elsif ($request =~ /^RUNSUCCESS/i) {
-	$response = runSuccess ($uuid, $data)
 	# we've decided that the run was successful according
 	# to the client so increment testrig.client.numruns
+	$self->log("info", "Received runsuccess Request");
+	$response = runSuccess ($uuid, $data);
+	$response = notifyNOCMail ($uuid);
     }
     # test completed successfully increment test counter by 1
     elsif ($request =~ /^INCTEST/i) {
+	#because of the :'s in the timestamp we get from the client
+	# we need to do extra fun here. The incupdate array
+	# has the following format
+	# [0] - request
+	# [1] - uuid
+	# [2] - date and hour
+	# [3] - minutes
+	# [4] - seconds
+	# [5] - test
+	# [6] - test run number
+	# [7] - insert flag
+	my @incupdate = split (':', $clientdata);
+	$data = $incupdate[2] . ":" . $incupdate[3] . ":" . $incupdate[4];
+	# these aren't strictly necessary but it's more readable
+	my $test = $incupdate[5];
+	my $run = $incupdate[6];
+	my $insert = $incupdate[7];
+	$self->log("info", "Received inctest Request");
 	# a single test was successfully completed so
 	# make a note of that in the accounting
-	#TODO we aren't implementing this yet
-	# we need a better idea of what the db structure is
-	# going to look like first
+	$response = runTestComplete($uuid, $data, $test, $run, $insert);
+    }
+    elsif ($request =~ /^NUMRUNS/i) {
+	# we need to get the current run number in order to prevent the
+	# resulting data sets from overwriting each other and keep them
+	# in a more human readable order.
+	$response = getNumRuns($uuid, $data);
+	$self->log("info", "reponse is $response");
     }
     # keep the connection alive
     elsif ($request =~ /^KEEPALIVE/i) {
@@ -328,34 +470,35 @@ sub parseResponse {
     }
     
     if ($response eq "FAILUTH") {
-	#they failed authentication. Specifically - the presented
-	# challenge text did not match the known text
-	syslog ("info", "FAILUTH: Client $uuid failed authentication.");
+	$self->log ("err", "FAILUTH: Client $uuid failed authentication.");
+	#they failed authentication
     } elsif ($response eq "BADCHALLENGE") {
+	$self->log ("err", "BADCHALLENGE: Client $uuid passed a malformed challenge.");
 	#the challenge code presented didn't match our
 	#expected byte length
-	syslog ("info", "BADCHALLENGE: Client $uuid passed a malformed challenge.");
     } elsif ($response eq "NOUUIDMATCH") {
+	$self->log ("err", "NOUUIDMATCH: Client $uuid not found in DB."); 	
 	#the UUID didn't match or returned too many matches
-	syslog ("info", "NOUUIDMATCH: Client $uuid not found in DB."); 	
     } elsif ($response eq "EXPIREDISO") {
-	# the ISO is older than the use by date
-	syslog ("info", "EXPIREDISO: Client $uuid has expired.");
+	$self->log ("err", "EXPIREDISO: Client $uuid has expired.");
     } elsif ($response eq "NOMORERUNS") {
-	# the iso has been run more times than allowed
-	syslog ("info", "NOMORERUNS: Client $uuid has no more available runs.");
+	$self->log ("err", "NOMORERUNS: Client $uuid has no more available runs.");
     } elsif ($response eq "NODBH") {
-	# unable to get a database handle
-	syslog("crit", "NODBH: Could not fetch database handle.");
+	$self->log("err", "NODBH: Could not fetch database handle.");
+    } elsif ($response eq "BADDATA") {
+	$self->log("err", "BADDATA: Unexpected value in database field");
+    } elsif ($response eq "BADMAIL") {
+	$self->log("err", "BADMAIL: Failed to send mail to ISO requestor");
     }
     return ($response);
 }
 
 sub process_request () {
-    my $self = shift;
+    $self = shift;
+    $self->log("err", "TR2Manager started and accepting connections");
     eval {
 	local $SIG{'ALRM'} = sub { die "Timed Out!\n" };
-	my $timeout = 60; # timeout for client data
+	my $timeout = 240; # timeout for client data
 	
 	my $previous_alarm = alarm($timeout);
 	while (<STDIN>) {
@@ -364,6 +507,7 @@ sub process_request () {
 	    if (/quit/i) {
 		last;
 	    }
+	    $self->log("info", "incoming response is $_");
 	    my $response = parseResponse($_);
 	    print $response  . "\n";
 	    alarm($timeout);

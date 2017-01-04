@@ -38,10 +38,8 @@
 /usr/share/pkgconfig
 /usr/share/pkgconfig/udev.pc
 /usr/share/man
-/usr/share/man/man7
 /usr/share/man/man7/udev.7.gz
 /usr/share/man/man7/hwdb.7.gz
-/usr/share/man/man8
 /usr/share/man/man8/udevadm.8.gz
 /usr/share/man/man8/systemd-udevd.service.8.gz
 /usr/share/man/man8/systemd-hwdb.8.gz

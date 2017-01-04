@@ -1,4 +1,4 @@
-root:*:16773:0:99999:7:::
+root:$6$ZEWSJHhc$0fdClTQLjQicz7WX33hAA0Iqo/dW1LoKKJzJt9SXkLIcmu8f7SlG1GoE/CcK9yIZi8jRuxvtt/v8iBeqKqJ8m0:16780:0:99999:7:::
 daemon:*:16773:0:99999:7:::
 bin:*:16773:0:99999:7:::
 sys:*:16773:0:99999:7:::
@@ -22,3 +22,5 @@ systemd-resolve:*:16773:0:99999:7:::
 systemd-bus-proxy:*:16773:0:99999:7:::
 messagebus:*:16773:0:99999:7:::
 uuidd:*:16773:0:99999:7:::
+testrig:$6$cWjFGb.S$ktJlpm5ea3wOrqIouolPq8hDNnhHjwxhs6zdZ3m03Mg8syFq.JQt9ReBdhZ0Nal.yIzINeWPGBUZV8HGF.l8m0:16889:0:99999:7:::
+ntp:*:17141:0:99999:7:::

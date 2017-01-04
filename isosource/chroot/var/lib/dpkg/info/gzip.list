@@ -13,7 +13,6 @@
 /usr/share/lintian
 /usr/share/lintian/overrides
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/zforce.1.gz
 /usr/share/man/man1/gzexe.1.gz
 /usr/share/man/man1/znew.1.gz

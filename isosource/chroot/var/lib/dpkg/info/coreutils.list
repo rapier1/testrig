@@ -119,7 +119,6 @@
 /usr/share/doc/coreutils/AUTHORS
 /usr/share/doc/coreutils/changelog.Debian.gz
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/uniq.1.gz
 /usr/share/man/man1/expr.1.gz
 /usr/share/man/man1/du.1.gz
@@ -220,7 +219,6 @@
 /usr/share/man/man1/shuf.1.gz
 /usr/share/man/man1/factor.1.gz
 /usr/share/man/man1/sum.1.gz
-/usr/share/man/man8
 /usr/share/man/man8/chroot.8.gz
 /usr/share/info
 /usr/share/info/coreutils.info.gz

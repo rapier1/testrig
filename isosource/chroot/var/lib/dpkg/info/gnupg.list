@@ -37,12 +37,10 @@
 /usr/share/doc/gnupg/TODO.Debian
 /usr/share/doc/gnupg/Upgrading_From_PGP.txt
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/gpgsplit.1.gz
 /usr/share/man/man1/gpg-zip.1.gz
 /usr/share/man/man1/lspgpot.1.gz
 /usr/share/man/man1/gpg.1.gz
-/usr/share/man/man7
 /usr/share/man/man7/gnupg.7.gz
 /usr/share/info
 /usr/share/info/gnupg1.info.gz

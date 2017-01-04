@@ -12,7 +12,6 @@
 /usr/share/libc-bin
 /usr/share/libc-bin/nsswitch.conf
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/getconf.1.gz
 /usr/share/man/man1/catchsegv.1.gz
 /usr/share/man/man1/tzselect.1.gz

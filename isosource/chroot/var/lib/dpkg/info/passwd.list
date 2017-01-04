@@ -54,15 +54,12 @@
 /usr/share/man/de/man8/grpunconv.8.gz
 /usr/share/man/de/man8/newusers.8.gz
 /usr/share/man/de/man8/pwck.8.gz
-/usr/share/man/man1
 /usr/share/man/man1/chsh.1.gz
 /usr/share/man/man1/chage.1.gz
 /usr/share/man/man1/chfn.1.gz
 /usr/share/man/man1/gpasswd.1.gz
 /usr/share/man/man1/expiry.1.gz
 /usr/share/man/man1/passwd.1.gz
-/usr/share/man/ja
-/usr/share/man/ja/man1
 /usr/share/man/ja/man1/chsh.1.gz
 /usr/share/man/ja/man1/chage.1.gz
 /usr/share/man/ja/man1/chfn.1.gz
@@ -127,8 +124,6 @@
 /usr/share/man/tr/man8/groupmod.8.gz
 /usr/share/man/tr/man8/useradd.8.gz
 /usr/share/man/tr/man8/userdel.8.gz
-/usr/share/man/ru
-/usr/share/man/ru/man1
 /usr/share/man/ru/man1/chsh.1.gz
 /usr/share/man/ru/man1/chage.1.gz
 /usr/share/man/ru/man1/chfn.1.gz
@@ -156,8 +151,6 @@
 /usr/share/man/ru/man8/grpunconv.8.gz
 /usr/share/man/ru/man8/newusers.8.gz
 /usr/share/man/ru/man8/pwck.8.gz
-/usr/share/man/pl
-/usr/share/man/pl/man1
 /usr/share/man/pl/man1/chsh.1.gz
 /usr/share/man/pl/man1/chage.1.gz
 /usr/share/man/pl/man1/expiry.1.gz
@@ -171,8 +164,6 @@
 /usr/share/man/pl/man8/vipw.8.gz
 /usr/share/man/pl/man8/userdel.8.gz
 /usr/share/man/pl/man8/grpck.8.gz
-/usr/share/man/fr
-/usr/share/man/fr/man1
 /usr/share/man/fr/man1/chsh.1.gz
 /usr/share/man/fr/man1/chage.1.gz
 /usr/share/man/fr/man1/chfn.1.gz
@@ -224,7 +215,6 @@
 /usr/share/man/zh_TW/man8/useradd.8.gz
 /usr/share/man/zh_TW/man8/chpasswd.8.gz
 /usr/share/man/zh_TW/man8/userdel.8.gz
-/usr/share/man/man5
 /usr/share/man/man5/gshadow.5.gz
 /usr/share/man/man5/passwd.5.gz
 /usr/share/man/man5/subuid.5.gz
@@ -289,8 +279,6 @@
 /usr/share/man/ko/man8
 /usr/share/man/ko/man8/vigr.8.gz
 /usr/share/man/ko/man8/vipw.8.gz
-/usr/share/man/it
-/usr/share/man/it/man1
 /usr/share/man/it/man1/chsh.1.gz
 /usr/share/man/it/man1/chage.1.gz
 /usr/share/man/it/man1/chfn.1.gz
@@ -323,7 +311,6 @@
 /usr/share/man/id/man1/chsh.1.gz
 /usr/share/man/id/man8
 /usr/share/man/id/man8/useradd.8.gz
-/usr/share/man/man8
 /usr/share/man/man8/cpgr.8.gz
 /usr/share/man/man8/usermod.8.gz
 /usr/share/man/man8/groupadd.8.gz

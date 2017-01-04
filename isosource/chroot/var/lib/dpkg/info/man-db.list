@@ -1,0 +1,11 @@
+/etc
+/etc/manpath.config
+/etc/cron.daily
+/etc/cron.daily/man-db
+/etc/cron.weekly
+/etc/cron.weekly/man-db
+/var
+/var/lib
+/var/lib/man-db
+/var/cache
+/var/cache/man

@@ -377,6 +377,16 @@ sub copyMaster {
     return(dircopy($config->{paths}->{master_chroot}, $config->{paths}->{target_chroot}));
 }
 
+#the testrig use on the iso is uid 1000 gid 1000
+sub setOwner {
+    my $homepath = $config->{paths}->{target_chroot} . "/home/testrig";
+    my $optpath = $config->{paths}->{target_chroot} . "/opt";
+    my $command = "/bin/chown -R 1000:1000 $homepath";
+    runSystem($command);
+    $command = "/bin/chown 1000:1000 $optpath";
+    runSystem($command);
+}
+
 #---------Database Functions------------#
 
 # Get NOC configuaration options from the
@@ -395,6 +405,8 @@ sub readConfFromDB {
     # get the customer data
     my $query = "SELECT inst_data_host, 
                         inst_host_uname,
+                        inst_pub_key,
+                        inst_host_path,
                         tt_system,
                         contact_email
                  FROM customer
@@ -414,7 +426,9 @@ sub readConfFromDB {
     #did we get enough data? We should have 4 values. 
     if (!$row->{inst_data_host} 
 	or !$row->{inst_host_uname}
-	or !$row->{contact_email}) {
+	or !$row->{contact_email}
+	or !$row->{inst_host_path}
+	or !$row->{inst_pub_key}) {
 	logger ("crit", "Missing customer data! CID may not exist. Exiting.");
 	return -1;
     }
@@ -423,6 +437,9 @@ sub readConfFromDB {
     $config_out->{customer}->{data_uname} = $row->{inst_host_uname};
     $config_out->{customer}->{tt_system} = $row->{tt_system};
     $config_out->{customer}->{contact_email} = $row->{contact_email};
+    $config_out->{customer}->{inst_pub_key} = $row->{inst_pub_key};
+    $config_out->{customer}->{inst_host_path} = $row->{inst_host_path};
+    
     
     # get the user information from the database
     $query = "SELECT username,
@@ -475,6 +492,21 @@ sub readConfFromDB {
     return 1;
 }
 
+sub getCustomerPrivateKey {
+    my $query = "SELECT inst_priv_key
+                 FROM   customer
+                 WHERE cid = ?";
+    my $sth = $DBH->prepare($query);
+    my $result;
+    try {
+	$result = $sth->execute($options{c});
+    } catch {
+	logger ("crit", "Error retreiving customer key: $_");
+    };
+    my $row = $sth->fetchrow_hashref();
+    return $row->{inst_priv_key};
+}
+
 #write the results to the database
 sub writeToDB {
     my $uuid = shift @_;
@@ -483,19 +515,21 @@ sub writeToDB {
     my $encfspassword = shift @_;
     my $known_text_clear = shift @_;
     my $result = 0;
+    my $host_key = getCustomerPrivateKey();
     my $query = "INSERT INTO client 
                                 (UUID, maxrun, 
                                  numruns, encfspass,
                                  knowntext, authfailures,
                                  clientpubkey, clientprivkey,
-                                 validtodate, cid, uid)
+                                 inst_priv_key, validtodate, 
+                                 cid, uid)
                           VALUES
                                 (?, ?,
                                  0, ?,
                                  ?, 0,
                                  ?, ?,
                                  ?, ?, 
-                                 ?);";
+                                 ?, ?);";
     my $sth = $DBH->prepare($query);
     try 
     {
@@ -505,6 +539,7 @@ sub writeToDB {
 				$known_text_clear, 
 				$public_key, 
 				$private_key,
+				$host_key,
 	                        $config_out->{user}->{validtodate},
 	                        $options{c},
                                 $options{u});
@@ -559,7 +594,7 @@ sub isoAvailableMail {
     }
 }
 
-#inform the NOC that th ISO has been generated and mail sent to user.
+#inform the NOC that the ISO has been generated and mail sent to user.
 sub isoCompleteMail {
     my $queue_name = "";
     my $text ="The TestRig2.0 ISO for $config_out->{user}->{username} has been successfully generated.\n";
@@ -940,6 +975,9 @@ if (! copyMaster()) {
     cleanUp($uuid);
     exit;
 }
+
+#reset the ownership of the testrig directory. 
+setOwner();
 
 # we now have all of the necessaries. 
 # time to create the encfs directory space

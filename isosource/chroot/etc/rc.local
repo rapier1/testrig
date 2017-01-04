@@ -11,4 +11,8 @@
 #
 # By default this script does nothing.
 
+/sbin/modprobe -f tcp_estats_nl
+/sbin/sysctl -w net.ipv4.tcp_estats=127
+/sbin/sysctl -w net.ipv4.estats_delay=1500
+
 exit 0

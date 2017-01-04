@@ -48,3 +48,5 @@ messagebus:x:108:
 netdev:x:109:
 uuidd:x:110:
 testrig:x:1000:
+ntp:x:111:
+ssh:x:112:

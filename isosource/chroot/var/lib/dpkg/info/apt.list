@@ -190,7 +190,6 @@
 /usr/share/man/pt/man5/sources.list.5.gz
 /usr/share/man/pt/man5/apt.conf.5.gz
 /usr/share/man/pt/man5/apt_preferences.5.gz
-/usr/share/man/it
 /usr/share/man/it/man8
 /usr/share/man/it/man8/apt-get.8.gz
 /usr/share/man/it/man8/apt-cdrom.8.gz
@@ -203,7 +202,6 @@
 /usr/share/man/it/man5/sources.list.5.gz
 /usr/share/man/it/man5/apt.conf.5.gz
 /usr/share/man/it/man5/apt_preferences.5.gz
-/usr/share/man/fr
 /usr/share/man/fr/man8
 /usr/share/man/fr/man8/apt-get.8.gz
 /usr/share/man/fr/man8/apt-cdrom.8.gz
@@ -231,7 +229,6 @@
 /usr/share/man/de/man5/sources.list.5.gz
 /usr/share/man/de/man5/apt.conf.5.gz
 /usr/share/man/de/man5/apt_preferences.5.gz
-/usr/share/man/man8
 /usr/share/man/man8/apt-get.8.gz
 /usr/share/man/man8/apt-cdrom.8.gz
 /usr/share/man/man8/apt.8.gz
@@ -240,11 +237,9 @@
 /usr/share/man/man8/apt-key.8.gz
 /usr/share/man/man8/apt-config.8.gz
 /usr/share/man/man8/apt-cache.8.gz
-/usr/share/man/man5
 /usr/share/man/man5/sources.list.5.gz
 /usr/share/man/man5/apt.conf.5.gz
 /usr/share/man/man5/apt_preferences.5.gz
-/usr/share/man/ja
 /usr/share/man/ja/man8
 /usr/share/man/ja/man8/apt-get.8.gz
 /usr/share/man/ja/man8/apt-cdrom.8.gz
@@ -271,7 +266,6 @@
 /usr/share/man/es/man5/sources.list.5.gz
 /usr/share/man/es/man5/apt.conf.5.gz
 /usr/share/man/es/man5/apt_preferences.5.gz
-/usr/share/man/pl
 /usr/share/man/pl/man8
 /usr/share/man/pl/man8/apt-get.8.gz
 /usr/share/man/pl/man8/apt-cdrom.8.gz

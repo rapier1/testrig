@@ -15,12 +15,9 @@
 /usr/bin/mesg
 /usr/share
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/mesg.1.gz
 /usr/share/man/man1/last.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/init-d-script.5.gz
-/usr/share/man/man8
 /usr/share/man/man8/sulogin.8.gz
 /usr/share/man/man8/killall5.8.gz
 /usr/share/man/man8/service.8.gz

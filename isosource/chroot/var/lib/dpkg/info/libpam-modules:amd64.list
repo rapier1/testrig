@@ -22,7 +22,6 @@
 /usr/share/lintian/overrides
 /usr/share/lintian/overrides/libpam-modules
 /usr/share/man
-/usr/share/man/man5
 /usr/share/man/man5/group.conf.5.gz
 /usr/share/man/man5/limits.conf.5.gz
 /usr/share/man/man5/sepermit.conf.5.gz
@@ -31,7 +30,6 @@
 /usr/share/man/man5/pam_env.conf.5.gz
 /usr/share/man/man5/namespace.conf.5.gz
 /usr/share/man/man5/update-motd.5.gz
-/usr/share/man/man8
 /usr/share/man/man8/pam_tty_audit.8.gz
 /usr/share/man/man8/pam_shells.8.gz
 /usr/share/man/man8/pam_localuser.8.gz

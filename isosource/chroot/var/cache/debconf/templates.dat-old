@@ -342,6 +342,190 @@ Extended_description-ru.utf-8: Программа update-passwd обнаружи
 Type: boolean
 Owners: base-passwd/user-remove
 
+Name: ca-certificates/enable_crts
+Choices: ${enable_crts}
+Description: Certificates to activate:
+Description-ca.utf-8: Certificats a activar:
+Description-cs.utf-8: Certifikáty, které se mají aktivovat:
+Description-da.utf-8: Certifikater at aktivere:
+Description-de.utf-8: Zu aktivierende Zertifikate:
+Description-es.utf-8: Certificados a activar:
+Description-eu.utf-8: Gaitzeko Ziurtagiriak:
+Description-fi.utf-8: Aktivoitavat varmenteet:
+Description-fr.utf-8: Certificats à accepter :
+Description-gl.utf-8: Certificados a activar:
+Description-it.utf-8: Certificati da attivare:
+Description-ja.utf-8: 活性化する証明書:
+Description-nl.utf-8: Te activeren certificaten:
+Description-pl.utf-8: Certyfikaty do aktywowania:
+Description-pt.utf-8: Certificados para activar:
+Description-pt_br.utf-8: Certificados a serem ativados:
+Description-ru.utf-8: Сертификаты для активации:
+Description-sk.utf-8: Certifikáty, ktoré majú byť aktivované:
+Description-sv.utf-8: Certfikat att aktivera:
+Description-tr.utf-8: Etkinleştirilecek sertifikalar:
+Description-vi.utf-8: Các chứng nhận cần kích hoạt:
+Extended_description: This package installs common CA (Certificate Authority) certificates in /usr/share/ca-certificates. . Please select the certificate authorities you trust so that their certificates are installed into /etc/ssl/certs. They will be compiled into a single /etc/ssl/certs/ca-certificates.crt file.
+Extended_description-ca.utf-8: Aquest paquet instaŀla certificats comuns de les CA (autoritats certificadores) en /usr/share/ca-certificates.\n\nSeleccioneu les autoritats certificadores en què confieu per a que s'instaŀlen els seus certificats a /etc/ssl/certs. Aquests es compilaran en un sol fitxer /etc/ssl/certs/ca-certificates.crt.
+Extended_description-cs.utf-8: Tento balík instaluje běžné certifikáty certifikačních autorit (CA) do /usr/share/ca-certificates.\n\nVyberte prosím certifikační autority, kterým věříte a jejichž certifikáty se mají nainstalovat do /etc/ssl/certs. Vybrané certifikáty budou sloučeny do jediného souboru /etc/ssl/certs/ca-certificates.crt.
+Extended_description-da.utf-8: Denne pakke installerer udbredte CA-certifikater (Certificate Authority) i /usr/share/ca-certificates.\n\nVælg venligst de certifikatautoriteter du stoler på, så deres certifikater installeres i /etc/ssl/certs. De vil blive kompileret til en enkelt fil /etc/ssl/certs/ca-certificates.crt.
+Extended_description-de.utf-8: Dieses Paket installiert gebräuchliche Zertifikate von CAs (Zertifizierungsstellen) unter /usr/share/ca-certificates.\n\nBitte wählen Sie die Zertifizierungsstellen aus, denen Sie vertrauen, damit deren Zertifikate in /etc/ssl/certs installiert werden. Sie werden in eine einzige Datei /etc/ssl/certs/ca-certificates.crt zusammengestellt.
+Extended_description-es.utf-8: Este paquete instala certificados comunes de CA (Autoridad Certificadora) en /usr/share/ca-certificates.\n\nEscoja las autoridades de certificación en las que confía para instalarlas en «/etc/ssl/certs». Se incluirán todas en un único archivo «/etc/ssl/certs/ca-certificates.crt».
+Extended_description-eu.utf-8: Pakete honek ZA (Ziurtagiri Autoritate) arrunt ziurtagiriak  /usr/share/ca-certificates direktorioan gordeko ditu,\n\nMesedez hautatu fidagarri zaizkizun ziurtagiri autoritateak /etc/ssl/certs-en instala daitezen. /etc/ssl/certs/ca-certificates fitxategi soilean konpilatuko dira.
+Extended_description-fi.utf-8: Tämä paketti asentaa yleisiä CA-varmenteita (Certificate Authority, varmentaja) hakemistoon /usr/share/ca-certificates.\n\nValitse varmentajat, joihin luotat. Heidän varmenteensa asennetaan hakemistoon /etc/ssl/certs. Ne kootaan yhteen tiedostoon /etc/ssl/certs/ca-certificates.crt.
+Extended_description-fr.utf-8: Ce paquet peut installer des certificats de nouveaux tiers de confiance (« Certificate Authority ») dans /usr/share/ca-certificates.\n\nVeuillez choisir les tiers de confiance que vous agréez afin que leurs certificats soient installés dans /etc/ssl/certs. Ils seront rassemblés dans un seul fichier nommé /etc/ssl/certs/ca-certificates.crt.
+Extended_description-gl.utf-8: Este paquete instala certificados de entidades de acreditación comúns en /usr/share/ca-certificates.\n\nEscolla as entidades de acreditación nas que confía para instalar os seus certificados en /etc/ssl/certs. Hanse reunir todos nun só ficheiro /etc/ssl/certs/ca-certificates.crt.
+Extended_description-it.utf-8: Questo pacchetto installa i certificati di note CA (Autorità di Certificazione) in /usr/share/ca-certificates.\n\nSelezionare le autorità di certificazione fidate così da installare i relativi certificati in /etc/ssl/certs. Questi vengono compilati in un unico file /etc/ssl/certs/ca-certificates.crt.
+Extended_description-ja.utf-8: このパッケージは、共通の CA (証明機関) 証明書を /usr/share/ca-certificates にインストールします。\n\n/etc/ssl/certs にインストールされる、信用する証明機関の証明書を選択してください。これらは、単一のファイル /etc/ssl/certs/ca-certificates.crt にコンパイルされます。
+Extended_description-nl.utf-8: Gangbare CA (certificaatautoriteit) certificaten worden door dit pakket geïnstalleerd in '/usr/share/ca-certificates'.\n\nSelecteer de certificaatautoriteiten die u vertrouwt. Hun certificaten zullen worden opgenomen in '/etc/ssl/certs' en worden gebundeld in het bestand '/etc/ssl/certs/ca-certificates.crt'.
+Extended_description-pl.utf-8: Pakiet instaluje wspólne certyfikaty urzędów certyfikacji (ang. Certificate Authority) w /usr/share/ca-certificates.\n\nProszę wybrać zaufane urzędy certyfikacji, których certyfikaty są instalowane w /etc/ssl/certs. Zostaną one skompilowane do jednego pliku /etc/ssl/certs/ca-certificates.crt.
+Extended_description-pt.utf-8: Este pacote instala certificados CA (Certificate Authority) comuns em /usr/share/ca-certificates.\n\nPor favor escolha as autoridades de certificados em que confia para que os seus certificados sejam instalados em /etc/ssl/certs. Serão compilados num único ficheiro /etc/ssl/cets/ca-certificates.crt.
+Extended_description-pt_br.utf-8: Este pacote instala certificados de CAs (Autoridades Certificadoras) comuns em /usr/share/ca-certificates.\n\nPor favor, selecione as autoridades certificadoras que você confia, de modo que seus certificados sejam instalados em /etc/ssl/certs. Eles serão compilados em um único arquivo /etc/ssl/certs/ca-certificates.crt.
+Extended_description-ru.utf-8: Этот пакет устанавливает сертификаты удостоверяющих центров (CA) в каталог /usr/share/ca-certificates.\n\nВыберите удостоверяющие центры, которым вы доверяете; их сертификаты будут установлены в каталог /etc/ssl/certs (скомпонованы в файл /etc/ssl/certs/ca-certificates.crt).
+Extended_description-sk.utf-8: Tento balík inštaluje bežné certifikáty certifikačných autorít (CA) do /usr/share/ca-certificates.\n\nProsím, vyberte certifikačné autority, ktorým dôverujete a ktorých certifikáty budú inštalované do /etc/ssl/certs. Tieto budú zlúčené do jedného súboru /etc/ssl/certs/ca-certificates.crt.
+Extended_description-sv.utf-8: Detta paket installerar gemensamma CA-certifikat (Certificate Authority) i /usr/share/ca-certificates.\n\nVälj de certifikatutfärdare som du litar på så att deras certifikat installeras i /etc/ssl/certs. De kommer att kompileras till en enda fil, /etc/ssl/certs/ca-certificates.crt.
+Extended_description-tr.utf-8: Bu paket /usr/share/ca-certificates dizinine yaygın SY (Sertifika Yetkilisi) sertifikalarını kurar.\n\nLütfen güvendiğiniz sertifika yetkililerini seçiniz. Güvendiğiniz yetkililerin sertifikaları /etc/ssl/certs dizinine kurulacak ve aynı zamanda /etc/ssl/certs/ca-certificates.crt dosyasında toplanacaktır.
+Extended_description-vi.utf-8: Gói này sẽ tạo các chứng nhận CA (nhà cầm quyền chứng nhận) vào «  /usr/share/ca-certificates ».\n\nHãy chọn những nhà cầm quyền chứng nhận bạn tin cậy để cài đặt các chứng nhận của chúng vào « /etc/ssl/certs ». Chúng sẽ được biên dịch vào một tập tin « /etc/ssl/certs/ca-certificates.crt » riêng lẻ.
+Type: multiselect
+Owners: ca-certificates/enable_crts
+
+Name: ca-certificates/new_crts
+Choices: ${new_crts}
+Description: New certificates to activate:
+Description-ca.utf-8: Certificats nous a activar:
+Description-cs.utf-8: Nové certifikáty, které se mají aktivovat:
+Description-da.utf-8: Nye certifikater at aktivere:
+Description-de.utf-8: Zu aktivierende neue Zertifikate:
+Description-es.utf-8: Nuevos certificados a activar:
+Description-eu.utf-8: Gaitzeko ziurtagiri berriak:
+Description-fi.utf-8: Uudet aktivoitavat varmenteet:
+Description-fr.utf-8: Nouveaux certificats à accepter :
+Description-gl.utf-8: Novos certificados a activar:
+Description-it.utf-8: Nuovi certificati da attivare:
+Description-ja.utf-8: 活性化する新しい証明書:
+Description-nl.utf-8: Te activeren nieuwe certificaten:
+Description-pl.utf-8: Nowe certyfikaty do aktywowania:
+Description-pt.utf-8: Novos certificados para activar:
+Description-pt_br.utf-8: Novos certificados a serem ativados:
+Description-ru.utf-8: Новые сертификаты для активации:
+Description-sk.utf-8: Nové certifikáty, ktoré majú byť aktivované:
+Description-sv.utf-8: Nya certfikat att aktivera:
+Description-tr.utf-8: Etkinleştirilecek yeni sertifikalar:
+Description-vi.utf-8: Các chứng nhận mới cần kích hoạt:
+Extended_description: During upgrades, new certificates will be added. Please choose those you trust.
+Extended_description-ca.utf-8: Durant l'actualització s'afegiran certificats nous. Seleccioneu aquells en què confieu.
+Extended_description-cs.utf-8: Během aktualizace budou přidány nové certifikáty. Vyberte prosím ty, kterým důvěřujete.
+Extended_description-da.utf-8: Under opgraderinger vil nye certifikater blive tilføjet. Vælg venligt dem du stoler på.
+Extended_description-de.utf-8: Während Upgrades werden neue Zertifikate hinzugefügt. Bitte wählen Sie diejenigen aus, denen Sie vertrauen.
+Extended_description-es.utf-8: Se añadirán estos certificados durante la actualización. Escoja de la lista aquellos en los que confía.
+Extended_description-eu.utf-8: Bertsio berritzeetan, ziurtagiri berriak gehituko dira, Mesedez hautatu zeinetaz fidatzen zaren.
+Extended_description-fi.utf-8: Päivitysten yhteydessä lisätään uusia varmenteita. Valitse ne, joihin luotat.
+Extended_description-fr.utf-8: Lors de cette mise à jour, de nouveaux certificats ont été ajoutés. Veuillez choisir si vous les acceptez.
+Extended_description-gl.utf-8: Durante as anovacións engadiranse novos certificados. Indique os certificados nos que confía.
+Extended_description-it.utf-8: Con l'aggiornamento, vengono aggiunti dei nuovi certificati. Selezionare quelli fidati.
+Extended_description-ja.utf-8: この更新では、新しい証明書が追加されています。これらの証明書を信用するかどうか選んでください。
+Extended_description-nl.utf-8: Bij deze opwaardering worden nieuwe certificaten toegevoegd. Selecteer de certificaten die u vertrouwt.
+Extended_description-pl.utf-8: Podczas aktualizacji dodano nowe certyfikaty. Proszę wybrać te, którym się ufa.
+Extended_description-pt.utf-8: Durante a actualização, serão adicionados novos certificados. Por favor escolha os que confia.
+Extended_description-pt_br.utf-8: Durante as atualizações, novos certificados serão adicionados. Por favor, selecione aqueles nos quais você confia.
+Extended_description-ru.utf-8: Во время обновления будут добавлены новые сертификаты. Выберите те, которым вы доверяете.
+Extended_description-sk.utf-8: Počas aktualizácie boli pridané nové certifikáty. Prosím, vyberte tie, ktorým dôverujete.
+Extended_description-sv.utf-8: Under uppgraderingar kommer nya certifikat att läggas till. Välj de som du litar på.
+Extended_description-tr.utf-8: Yükseltmeler sırasında yeni sertifikalar eklenecektir. Lütfen güvendiklerinizi seçiniz.
+Extended_description-vi.utf-8: Trong khi nâng cấp, chứng nhận mới sẽ được thêm. Hãy chọn những chứng nhận bạn tin vậy.
+Type: multiselect
+Owners: ca-certificates/new_crts
+
+Name: ca-certificates/title
+Description: ca-certificates configuration
+Description-ca.utf-8: Configuració de ca-certificates
+Description-cs.utf-8: Nastavení ca-certificates
+Description-da.utf-8: konfiguration af ca-certificates
+Description-de.utf-8: ca-certificates-Konfiguration
+Description-es.utf-8: Configuración de ca-certificates
+Description-fr.utf-8: Configuration de ca-certificates
+Description-gl.utf-8: Configuración dos certificados das entidades de acreditación (EA)
+Description-it.utf-8: Configurazione di ca-certificates
+Description-ja.utf-8: ca-certificates の設定
+Description-nl.utf-8: ca-certificates configuratie
+Description-pl.utf-8: Konfiguracja ca-certificates
+Description-pt.utf-8: configuração de ca-certificates
+Description-pt_br.utf-8: Configuração do ca-certificates
+Description-ru.utf-8: Настройка ca-certificates
+Description-sk.utf-8: Nastavenie ca-certificates
+Description-sv.utf-8: Inställningar för ca-certificates
+Description-tr.utf-8: ca-certificates yapılandırması
+Type: title
+Owners: ca-certificates/title
+
+Name: ca-certificates/trust_new_crts
+Choices: yes, no, ask
+Choices-ca.utf-8: sí, no, demana
+Choices-cs.utf-8: ano, ne, zeptat se
+Choices-da.utf-8: ja, nej, spørg
+Choices-de.utf-8: Ja, Nein, Fragen
+Choices-es.utf-8: sí, no, preguntar
+Choices-eu.utf-8: bai, ez, galdetu
+Choices-fi.utf-8: kyllä, ei, kysy
+Choices-fr.utf-8: Oui, Non, Demander
+Choices-gl.utf-8: si, non, preguntar
+Choices-it.utf-8: sì, no, chiedi
+Choices-ja.utf-8: はい, いいえ, 質問する
+Choices-nl.utf-8: ja, nee, selectie
+Choices-pl.utf-8: tak, nie, pytaj
+Choices-pt.utf-8: sim, não, perguntar
+Choices-pt_br.utf-8: sim, não, perguntar
+Choices-ru.utf-8: да, нет, спрашивать
+Choices-sk.utf-8: áno, nie, pýtať sa
+Choices-sv.utf-8: ja, nej, fråga
+Choices-tr.utf-8: evet, hayır, sor
+Choices-vi.utf-8: có, không, hỏi
+Default: yes
+Description: Trust new certificates from certificate authorities?
+Description-ca.utf-8: Voleu confiar en els nous certificats de les autoritats certificadores?
+Description-cs.utf-8: Důvěřovat novým certifikátům certifikačních autorit?
+Description-da.utf-8: Stol på nye certifikater fra certifikatautoriteter?
+Description-de.utf-8: Neuen Zertifikaten von Zertifizierungsstellen vertrauen?
+Description-es.utf-8: ¿Desea confiar en los nuevos certificados de las autoridades de certificación?
+Description-eu.utf-8: Ziurtagiri autoritateen ziurtagiri berrietaz fidatu?
+Description-fi.utf-8: Luotetaanko varmentajien uusiin varmenteisiin?
+Description-fr.utf-8: Faut-il accepter les nouveaux certificats de tiers de confiance ?
+Description-gl.utf-8: Confiar nos novos certificados das entidades de acreditación?
+Description-it.utf-8: Fiducia ai certificati delle nuove autorità di certificazione?
+Description-ja.utf-8: 証明機関からの新しい証明書を信用しますか?
+Description-nl.utf-8: Nieuwe certificaten van certificaatautoriteiten vertrouwen?
+Description-pl.utf-8: Ufać nowym certyfikatom urzędów certyfikacji?
+Description-pt.utf-8: Confiar nos novos certificados das autoridades de certificados?
+Description-pt_br.utf-8: Confiar em novos certificados de autoridades certificadoras?
+Description-ru.utf-8: Доверять новым сертификатам удостоверяющих центров?
+Description-sk.utf-8: Dôverovať novým certifikátom certifikačných autorít?
+Description-sv.utf-8: Lita på nya certifikat från certifikatutfärdare?
+Description-tr.utf-8: Sertifika yetkililerinin yeni sertifikalarına güvenilsin mi?
+Description-vi.utf-8: Tin chứng nhận mới của nhà cầm quyền chứng nhận mới không?
+Extended_description: This package may install new CA (Certificate Authority) certificates when upgrading. You may want to check such new CA certificates and select only certificates that you trust.\n\n - yes: new CA certificates will be trusted and installed;\n - no : new CA certificates will not be installed by default;\n - ask: prompt for each new CA certificate.
+Extended_description-ca.utf-8: Aquest paquet pot instal·lar nous certificats de les CA (Entitats Certificadores) en el moment d'actualitzar-lo. Podeu escollir comprovar aquests nous certificats de les CA i seleccionar-ne només els certificats en què confieu.\n\n- 'sí', es confiarà i s'instal·laran els nous certificats de les CA. - 'no', no s'instal·laran, per defecte, els nous certificats de les CA. - 'demana', se us demanarà si confieu o no en cada nou certificat de les CA.
+Extended_description-cs.utf-8: Tento balík může při aktualizaci instalovat nové certifikáty certifikačních autorit (CA). Měli byste tyto nové certifikáty zkontrolovat a vybrat jen ty, kterým důvěřujete.\n\n - ano: důvěřujete novým certifikátům a budou nainstalovány.\n - ne:  nové certifikáty nebudou implicitně instalovány.\n - zeptat se: zeptá se na každý nový certifikát individuálně.
+Extended_description-da.utf-8: Denne pakke kan installere nye CA-certifikater (Certificate Authority), under opgraderinger. Måske vil du gerne tjekke sådanne nye CA-certifikater og kun vælge de certifikater, du stoler på.\n\n - ja: Nye CA-certifikater vil blive installeret og stolet på.\n - nej: Nye CA-certifikater vil som udgangspunkt ikke blive installeret.\n - spørg: Spørger om du vil stole på hvert enkelt nyt CA-certifikat eller ej.
+Extended_description-de.utf-8: Dieses Paket kann neue Zertifikate von CAs (Zertifizierungsstellen) installieren, wenn ein Upgrade durchgeführt wird. Sie sollten solche neuen CA-Zertifikate vielleicht prüfen und nur Zertifikate auswählen, denen Sie vertrauen.\n\n - Ja    : neuen CA-Zertifikaten wird vertraut und sie werden installiert;\n - Nein  : neue CA-Zertifikate werden standardmäßig nicht installiert;\n - Fragen: fragt bei jedem neuen CA-Zertifikat nach.
+Extended_description-es.utf-8: Este paquete puede que instale nuevos certificados de CA (Autoridad Certificadora) al actualizarse. Quizás quiera comprobar esos nuevos certificados CA y seleccionar sólo los certificados en los que confíe.\n\n - sí: se confiará en los nuevos certificados de CA y se instalarán.\n - no: los nuevos certificados de CA no se instalarán por omisión.\n - preguntar: se hará la pregunta para cada nuevo certificado de CA.
+Extended_description-eu.utf-8: Pakete honek ZA (Ziurtagiri Autoritate) berri ziurtagiriak instala ditzake bertsio berritzean. Agian ZA ziurtagiri hauek arakatu eta fidatzen zarenetaz bakarrik hautatu ditzakezu.\n\n - bai: ZA berrietako ziurtagiriak instalatu eta fidagarriak dira;\n - ez: lehenespen bezala ZA berrietako ziurtagiriak ez dira instalatuko\n - galdetu: ZA berrietako ziuratgiri bakoitzean galdetu.
+Extended_description-fi.utf-8: Tämä paketti saattaa asentaa uusia CA-varmenteita (Certificate Authority, varmentaja) päivitettäessä. Saatat haluta tarkistaa tällaiset uudet CA-varmenteet ja valita vain ne varmenteet, joihin luotat.\n\n - kyllä: uusiin CA-varmenteisiin luotetaan ja ne asennetaan\n - ei:    uusia CA-varmenteita ei oletuksena asenneta\n - kysy:  kunkin uuden CA-varmenteen kohdalla kysytään erikseen
+Extended_description-fr.utf-8: Ce paquet peut installer des certificats de nouveaux tiers de confiance (« Certificate Authority ») lors de ses mises à jour. Vous pouvez souhaiter vérifier ces nouveaux certificats et ne choisir que ceux que vous acceptez.\n\n - Oui      : les nouveaux certificats seront acceptés et installés ;\n - Non      : les nouveaux certificats ne seront pas installés par défaut ;\n - Demander : l'agrément de chacun des nouveaux certificats vous sera\n             demandé.
+Extended_description-gl.utf-8: Este paquete pode instalar novos certificados de entidades de acreditación (EA) ao actualizar. Pode querer comprobar eses novos certificados e escoller só nos que confíe.\n\n - si       : hase confiar e instalar os novos certificados de entidades de acreditación.\n - non      : non se han instalar por defecto os novos certificados de entidades de acreditación.\n - preguntar: preguntar por cada novo certificado dunha entidade de acreditación.
+Extended_description-it.utf-8: L'aggiornamento di questo pacchetto potrebbe installare certificati di nuove CA (Autorità di Certificazione). Si potrebbe voler esaminare i certificati delle nuove CA e scegliere solo quelli fidati.\n\n - sì    : i certificati delle nuove CA sono fidati e installati;\n - no    : i certificati delle nuove CA non vengono installati;\n - chiedi: per ogni certificato delle nuove CA viene chiesto cosa fare.
+Extended_description-ja.utf-8: このパッケージは、更新時に新しい CA (証明機関) をインストールできます。そのような新しい CA 証明書を確認して、信用する証明書だけを選択できます。\n\n - `はい: 新しい CA 証明書を信用し、インストールします。\n - `いいえ': 新しい CA 証明書をデフォルトではインストールしません。\n - `質問する': 新しい CA 証明書についてそれぞれ尋ねます。
+Extended_description-nl.utf-8: Het is mogelijk dat dit pakket nieuwe CA (certificaatautoriteit) certificaten installeert tijdens een opwaardering naar een nieuwe versie. Mogelijk wilt u dergelijke nieuwe certificaten controleren en alleen certificaten selecteren van autoriteiten die u vertrouwt.\n\n - ja: nieuwe CA certificaten vertrouwen en installeren;\n - nee: nieuwe CA certificaten niet standaard installeren;\n - selectie: CA certificaten handmatig selecteren.
+Extended_description-pl.utf-8: Pakiet może instalować nowe certyfikaty urzędów certyfikacji (ang. Certificate Authority - CA) podczas aktualizacji. Można zechcieć sprawdzać nowe certyfikaty i wybierać tylko zaufane.\n\n - tak:   nowe certyfikaty CA będą zaufane i instalowane;\n - nie:   nowe certyfikaty CA nie będą domyślnie instalowane;\n - pytaj: pytaj o każdy nowy certyfikat CA.
+Extended_description-pt.utf-8: Este pacote poderá instalar novos certificados CA (Certificate Authority) quando for actualizado. Poderá querer verificar esses novos certificados e escolher apenas os certificados em que confia.\n\n - sim      : novos certificados CA serão confiados e instalados;\n - não      : novos certificados CA não serão instalados por omissão;\n - perguntar: perguntar para cada novo certificado CA.
+Extended_description-pt_br.utf-8: Este pacote pode instalar novos certificados de CAs (Autoridades Certificadoras) ao atualizar. Você pode querer checar esses novos certificados de CAs e selecionar somente aqueles certificados nos quais você confia.\n\n - sim: novos certificados de CAs serão confiáveis e serão instalados;\n - não: novos certificados de CAs não serão instalados por padrão;\n - perguntar: pergunta a cada novo certificado de CA.
+Extended_description-ru.utf-8: При обновлении этот пакет может установить новые сертификаты удостоверяющих центров (CA). Вы можете проверить их и выбрать только те, которым доверяете.\n\n - да: доверять новым сертификатам CA и установить их.\n - нет: по умолчанию не устанавливать новые сертификаты CA.\n - спрашивать: подтверждать каждый новый сертификат CA.
+Extended_description-sk.utf-8: Tento balík môže pri aktualizácii inštalovať nové certifikáty certifikačných autorít (CA). Môžete chcieť  tieto nové certifikáty CA skontrolovať a zvoliť len certifikáty, ktorým dôverujete.\n\n - áno     : nové certifikáty CA budú dôveryhodné a nainštalované;\n - nie     : nové certifikáty CA nebudú predvolene nainštalované;\n - pýtať sa: pýtať sa na každý nový certifikát CA.
+Extended_description-sv.utf-8: Detta paket kan installera nya CA-certifikat (Certificate Authority) vid uppgradering.  Du kanske vill kontrollera de nya CA-certifikaten och endast välja de certifikat som du litar på.\n\n - ja: nya CA-certifikat kommer att litas på och installeras;\n - nej: nya CA-certifikat kommer inte att installeras som standard;\n - fråga: fråga för varje nytt CA-certifikat.
+Extended_description-tr.utf-8: Bu paket yükseltme sırasında yeni bir Sertifika Yetkilisi (SY) kurabilir. Olası yeni SY sertifikalarını denetlemek ve yalnızca güvendiğiniz sertifikaları kullanmak isteyebilirsiniz.\n\n - evet: yeni SY sertifikalarına güvenilecek ve kurulacak;\n - hayır: öntanımlı olarak yeni SY sertifikaları kurulmayacak;\n - sor: her yeni SY sertifikası için görüş istenecek.
+Extended_description-vi.utf-8: Gói này có lẽ sẽ cài đặt chứng nhận CA (nhà cầm quyền chứng nhận) mới khi nâng cấp. Đề nghị bạn kiểm tra các chứng nhận CA như vậy, chỉ chọn chứng nhận đã tin cậy.\n\n • có	 		tin và cài đặt chứng nhận CA mới.\n • không		mặc định là không cài đặt chứng nhận CA mới.\n • hỏi		nhắc với mỗi chứng nhận CA mới
+Type: select
+Owners: ca-certificates/trust_new_crts
+
 Name: dash/sh
 Default: true
 Description: Use dash as the default system shell (/bin/sh)?
@@ -2035,6 +2219,70 @@ Extended_description-vi.utf-8: Phiên bản OpenSSL này sửa chữa một số
 Extended_description-zh_tw.utf-8: 這個 OpenSSL 的釋出版修正了一些安全上的問題。這些服務程式必須重新啟動否則無法套用這些修正。請注意到，重新啟動 SSH 服務程式 (sshd) 並不會影響到任何現有的連線。\n\n請檢視被偵測到需重新啟動的服務程式之列表，有必要時請加以修正。這些服務程式名稱必須和 /etc/init.d 裡的初始化 Script 名稱一致，並以空白分隔。如果列表裡空無一物，就表示沒有服務程式會被重新啟動。\n\n在此更新之後，必須將任何預料之外無法成功運行的服務程式重新啟動。建議重新啟動這台主機以避免發生任何 SSL 相關的問題。
 Type: string
 Owners: libssl1.0.0/restart-services
+
+Name: man-db/auto-update
+Default: true
+Description: for internal use; can be preseeded
+Extended_description: If true, automatically rebuild man-db's database when packages containing manual pages are installed.
+Type: boolean
+Owners: man-db/auto-update
+
+Name: man-db/install-setuid
+Default: false
+Description: Should man and mandb be installed 'setuid man'?
+Description-ca.utf-8: Voleu que man i mandb s'instal·lin «setuid man»?
+Description-cs.utf-8: Mají se man a mandb nainstalovat jako „setuid man“?
+Description-da.utf-8: Skal man og mandb installeres 'setuid man'?
+Description-de.utf-8: Möchten Sie man und mandb »setuid man« installieren?
+Description-es.utf-8: ¿Quiere que man y man-db se instalen 'setuid man'?
+Description-eu.utf-8: man eta mandb 'setuid man' bezala instalatu behar al da?
+Description-fi.utf-8: Tulisiko man ja mandb asentaa asetuksella ”setuid man”?
+Description-fr.utf-8: Faut-il exécuter les programmes man et mandb avec les droits de l'utilisateur « man » ?
+Description-gl.utf-8: ¿Deberían instalarse man e mandb con "setuid man"?
+Description-it.utf-8: Installare i programmi man e mandb con "setuid man"?
+Description-ja.utf-8: man と mandb を man に setuid した状態でインストールしますか?
+Description-nl.utf-8: Wilt u man en mandb installeren met 'setuid man'?
+Description-pl.utf-8: Czy man i mandb mają być zainstalowane jako 'setuid man'?
+Description-pt.utf-8: Devem os man e mandb ser instalados com 'setuid man'?
+Description-pt_br.utf-8: O man e o mandb devem ser instalados 'setuid man'?
+Description-ru.utf-8: Установить программы man и mandb как 'setuid man'?
+Description-sk.utf-8: Majú byť man a mandb nainštalované pomocou „setuid man”?
+Description-sr.utf-8: Треба ли <man> и <mandb> бити инсталиран као 'setuid man'
+Description-sr@latin.utf-8: Treba li <man> i <mandb> biti instaliran kao 'setuid man'
+Description-sv.utf-8: Ska man och mandb installeras "setuid man"?
+Description-ta.utf-8: மான் மற்றும் மான்டிபி(mandb) ஐ செட்யூஐடி மான் 'setuid man' உடன் நிறுவ வேண்டுமா?
+Description-tr.utf-8: man ve mandb'nin 'setuid man' olarak kurulmasını ister misiniz?
+Description-uk.utf-8: Чи потрібно встановлювати mandb з атрибутом 'setuid man'?
+Description-vi.utf-8: Có nên cài đặt cả hai gói man và mandb một cách « setuid man » không?
+Description-zh_cn.utf-8: 要把 man 和 mandb 安装为“setuid man”权限吗？
+Extended_description: The man and mandb program can be installed with the set-user-id bit set, so that they will run with the permissions of the 'man' user. This allows ordinary users to benefit from the caching of preformatted manual pages ('cat pages'), which may aid performance on slower machines.\n\nCached man pages only work if you are using an 80-column terminal, to avoid one user causing cat pages to be saved at widths that would be inconvenient for other users. If you use a wide terminal, you can force man pages to be formatted to 80 columns anyway by setting MANWIDTH=80.\n\nEnabling this feature may be a security risk, so it is disabled by default. If in doubt, you should leave it disabled.
+Extended_description-ca.utf-8: Els programes man i mandb poden ser instal·lats amb el bit «set-user-id» establert, per tal d'executar-los amb els permisos de l'usuari «man». Això permetrà als usuaris regulars beneficiar-se de la memòria cau de pàgines de manual preformatades (també conegudes com «cat pages»), que pot millorar el rendiment en màquines lentes.\n\nLa memòria cau de les pàgines de manual només funciona si useu un terminal de 80 columnes d'amplada, per tal d'evitar que es desin pàgines cat amb amplades que podrien resultar incòmodes a altres usuaris. Si utilitzeu un terminal més ample, podeu forçar el format de les pàgines de manual a 80 columnes establint MANWIDTH=80.\n\nHabilitar aquesta característica pot representar un risc de seguretat, de manera que està desactivada per defecte. Si dubteu, segurament us convingui deixar-la desactivada.
+Extended_description-cs.utf-8: Programy man a mandb mohou být nainstalovány s nastaveným příznakem set-user-id, tudíž se spouští s právy uživatele „man“. Takto mohou i obyčejní uživatelé využívat urychleného načítání předformátovaných manuálových stránek z vyrovnávací paměti, což může pomoci obzvláště na pomalejších počítačích.\n\nManuálové stránky ve vyrovnávací paměti fungují pouze pokud používáte 80 sloupcový terminál, aby se zabránilo možnosti, že některý uživatel uloží stránky s takovou šířkou, která bude obtěžovat ostatní uživatele. Používáte-li široký terminál, můžete přinutit formátovač stránek, aby použil standardních 80 sloupců nastavením proměnné MANWIDTH=80.\n\nProtože se povolením této vlastnosti můžete vystavit bezpečnostnímu riziku, je vlastnost standardně vypnutá.
+Extended_description-da.utf-8: Programmerne man og mandb kan blive installeret med sæt-bruger-ID sat, så de vil blive kørt med brugeren 'man's rettigheder. Det gør det muligt for almindelige brugere at benytte præformaterede manualsider ('cat-sider') fra mellemlageret, hvilket går hurtigere på langsomme maskiner.\n\nGemte manualsider vil kun virke, hvis du bruger en terminal, der er 80 tegn bred, for at undgå at nogle cat-sider bliver gemt med bredder, der ikke passer til andre brugeres skærme. Hvis du bruger en 'bred' terminal, tvinge manualsider til alligevel at blive tilpasset 80 tegn ved at sætte MANWIDTH=80.\n\nDet kan være en sikkerhedsrisiko at slå denne funktion til. Derfor er den som udgangspunkt slået fra. Hvis du er i tvivl, bør du slå den fra.
+Extended_description-de.utf-8: Die Programme »man« und »mandb« können so installiert werden, dass das »set-user-id-Bit« gesetzt ist und die Programme daher mit den Rechten des Benutzers »man« laufen. Dadurch kommen reguläre Benutzer in den Genuss von vorformatierten Handbuchseiten (sogenannten »cat-Seiten«), die auf langsameren Computern einen Geschwindigkeitsvorteil beim Benutzen der Handbuchseiten bringen.\n\nVorformatierte Handbuchseiten funktionieren nur mit Terminals mit normaler Breite (80 Buchstaben). Dadurch wird verhindert, dass ein Benutzer die Seiten mit einer Größe speichert, die für andere Benutzer unlesbar ist. Zukünftig wird sich dies konfigurieren lassen. Falls Sie ein breiteres Terminal verwenden, können Sie dennoch eine Breite der Handbuchseiten von 80 Zeichen durch Setzen der Umgebungsvariable MANWIDTH=80 erzwingen.\n\nDas Einschalten dieses Funktionalität kann ein Sicherheitsrisiko sein. Daher ist es standardmäßig abgeschaltet. Falls Sie sich nicht sicher sind, sollten Sie es daher deaktiviert lassen.
+Extended_description-es.utf-8: Los programas man y mandb se pueden instalar setuid man, de forma que se ejecutarán con los permisos del usuario 'man'. Esto permite a los usuarios normales beneficiarse de la caché de las páginas de manual preformateadas ('cat pages'), lo cual puede contribuir a mejorar el rendimiento en máquinas lentas.\n\nLa caché de las páginas de manual preformateadas sólo funciona si está usando un terminal de 80 columnas, para evitar que algún usuario guarde páginas de manual preformateadas con anchuras que puedan resultar molestas para otros usuarios. Si usa un terminal ancho, puede obligar a que las páginas de manual se formateen a 80 columnas estableciendo MANWIDTH=80 como variable de entorno.\n\nEsta práctica puede representar un riesgo de seguridad, por lo que está desactivada por defecto. Si tiene dudas, le sugiero que la deje desactivada.
+Extended_description-eu.utf-8: Man eta mandb programak set-user-id-a ezarririk dutela instala daitezke 'man' erabiltzailearen baimenekin abiarazi ahal izateko. Honek erabiltzaile arruntei aurrez eraikitako manual orriez ('cat pages') baliatzeko aukera ematen die, honekin makina geldoen performantzia hobetzen.\n\nKatxeaturiko man orrialdeak 80 zutabeko terminal bat erabiltzen baduzu bakarrik funtzionatzen dute erabiltzaile batek beste erabiltzaileei arazoak sor ditzaken zutabe tamaina bat ezarri ez dezan. Terminal zabal bat erabiltzen baduzu, man orrialdeak hala ere 80 zutabetara mugatzea egin dezakezu MANWIDTH=80 ezarriaz.\n\nEzaugarri hau gaitzea segurtasun arrisku bat izan daiteke, beraz ezgaiturik dago lehenespen gisa. Ziur ez bazaude ezgaiturik utzi beharko zenuke.
+Extended_description-fi.utf-8: Ohjelmat man ja mandb voidaan asentaa asetuksella set-user-id, jolloin ne ajetaan käyttäjän ”man” oikeuksilla. Tämä sallii tavallisten käyttäjien hyötyä esimuotoiltujen man-ohjesivujen (”cat-sivujen”) varastosta, mikä saattaa parantaa suorituskykyä hitaammilla koneilla.\n\nVarastoidut man-sivut toimivat vain 80 merkin levyisillä päätteillä, jottei yksi käyttäjä tule tallentaneeksi cat-sivuja leveyksillä, jotka olisivat hankalia muille käyttäjille. man-sivut voidaan pakottaa näytettäväksi 80 merkin levyisinä asetuksella MANWIDTH=80, vaikka pääte olisikin leveämpi.\n\nOminaisuuden käyttäminen saattaa olla turvallisuusriski, joten se on oletuksena passivoitu. Jos olet epävarma, jätä se passivoiduksi.
+Extended_description-fr.utf-8: Les programmes man et mandb peuvent s'exécuter avec les droits de l'utilisateur « man ». Les utilisateurs ordinaires peuvent ainsi bénéficier du cache des pages de manuel pré-formatées (« catpage ») ce qui peut améliorer les performances des machines lentes.\n\nUn terminal d'une largeur « normale » (80 caractères par ligne) est indispensable pour que la mise en cache des pages fonctionne. Cela évite qu'un utilisateur ne mette en cache des pages dans un format inutilisable par un autre utilisateur. Si vous utilisez un terminal plus large, vous pouvez forcer un formatage des pages sur 80 colonnes avec le paramètre MANWIDTH=80.\n\nCette fonctionnalité peut comporter un risque pour la sécurité du système ; elle n'est pas activée par défaut. Dans le doute, vous devriez la laisser désactivée.
+Extended_description-gl.utf-8: Poden instalarse os programas man e mandb co bit de cambio de usuario (setuid) activado para que se executen cos permisos do usuario "man". Isto permite que os usuarios normais se poidan beneficiar do armacenamento de versións preformatadas das páxinas de manual (páxinas "cat"), o que pode mellorar o rendemento nas máquinas lentas.\n\nO armacenamento de páxinas man preformatadas só funciona se emprega un terminal de 80 columnas para evitar que un usuario garde as páxinas "cat" en anchuras que non serven para outros usuarios. Se emprega un terminal ancho pode facer que as páxinas man saian formatadas en 80 columnas estabrecendo a variable de ambiente MANWIDTH=80.\n\nEsta característica pode ser un risco de seguridade, así que está desactivada por defecto. Se ten dúbidas, debería deixala desactivada.
+Extended_description-it.utf-8: I programmi man e mandb possono essere installati con il bit set-user-id attivo per essere eseguiti con i permessi dell'utente "man". Questo permette ai normali utenti di usare la versione in cache delle pagine di manuale già preformattate (le "cat page") e quindi migliorare le prestazioni sulle macchine più lente.\n\nLe pagine in cache funzionano solo se viene usato un terminale con 80 colonne, questo per evitare che un utente provochi la creazione delle "cat page" con una larghezza che potrebbe essere scomoda per gli altri. Se si usa un terminale più largo si può comunque forzare la formattazione delle pagine a 80 colonne impostando MANWIDTH=80.\n\nL'attivazione di questa funzione può essere un rischio per la sicurezza, quindi nelle impostazioni predefinite è disattivata. In caso di dubbi è consigliato lasciarla disattivata.
+Extended_description-ja.utf-8: man プログラムと mandb プログラムは、「man」ユーザの権限恩恵を受けるために、set-user-id ビットをセットした状態でインストールすることができます。そうすると、通常のユーザがフォーマット済みのマニュアルページ (「cat ページ」) のキャッシングを使うことができ、遅いマシンでのパフォーマンスの向上に役立ちます。\n\nほかのユーザにとって不便な幅に整形されたページが保存されてしまうのを防ぐため、キャッシュされたマニュアルページは、80 文字幅の端末を使っているときのみ動作します。幅の広い端末を使っている場合、MANWIDTH=80 と設定することでマニュアルページが 80 文字幅で整形されるように強制できます。\n\nこれを有効にするとセキュリティ上の問題が発生するかもしれないため、この機能はデフォルトでは無効となっています。よくわからなければ、無効のままにしておくことをお勧めします。
+Extended_description-nl.utf-8: De man en mandb programma's kunnen geinstalleerd worden met de set-user-id bit ingesteld zodat ze uitgevoerd worden als de gebruiker 'man'. Dit geeft gewone gebruikers de gelegenheid om van de tijdelijke opslag van voorgeformatteerde handleidingpagina's ('cat pages') gebruik te maken, wat de prestaties op tragere systemen kan verbeteren.\n\nTijdelijk opgeslagen man-pagina's werken enkel wanneer u een terminal met een breedte van 80 gebruikt. Dit vermijdt dat één gebruiker cat-pagina's opslaat met breedtes die niet geschikt zijn voor andere gebruikers. Wanneer u een bredere terminal gebruikt kunt u een breedte van 80 karakters afdwingen voor man-pagina's door 'MANWIDTH=80' in te stellen als omgevingsvariabele.\n\nHet activeren van deze optie kan een veiligheidsrisico zijn; daarom staat deze optie standaard uit. Bij twijfel kunt u deze optie best uit laten.
+Extended_description-pl.utf-8: Programy man i mandb mogą być zainstalowane z ustawionym bitem set-user-id, tak że będą się uruchamiać z uprawnieniami użytkownika 'man'. Pozwala to zwykłym użytkownikom na korzystanie z buforowania preformatowanych stron podręcznika (tzw. "strony cat"), co może zwiększyć wydajność działania programu man na wolniejszych komputerach.\n\nBuforowanie preformatowanych stron podręcznika jest dostępne tylko na terminalach o szerokości 80 znaków, aby uniknąć sytuacji, gdy strona podręcznika zachowana przez jednego użytkownika sprawiałaby kłopot innym użytkownikom. Jeżeli używany jest szeroki terminal, można wymusić na programie man zachowywanie preformatowanych stron o szerokości 80 znaków ustawiając zmienną środowiska MANWIDTH=80.\n\nWłączenie tej opcji stanowi ryzyko dla bezpieczeństwa systemu, więc jest domyślnie wyłączona. W razie wątpliwości, sugerujemy pozostawienie jej wyłączonej.
+Extended_description-pt.utf-8: Os programas man e mandb podem ser instalados com o bit set-user-id ligado, de modo a que corram com as permissões do utilizador 'man'. Isto permite a vulgares utilizadores beneficiar da cache de páginas de manual pré--formatadas ('cat pages'), que podem ajudar na performance em máquinas mais lentas.\n\nAs páginas em cache do manual só funcionam se estiver a utilizar um terminal de 80-colunas, para evitar que um utilizador faça com que as páginas sejam guardadas com larguras inconvenientes para outros utilizadores. Se utilizar um terminal largo, pode forçar que as páginas do manual sejam formatadas à mesma em 80 colunas definindo MANWIDTH=80.\n\nHabilitar esta funcionalidade pode ser um risco de segurança, por isso desabilita-la é a escolha por omissão. Em caso de dúvida, deve deixa-la desabilitada.
+Extended_description-pt_br.utf-8: Os programas man e mandb podem ser instalados com bit set-user-id ligado, assim eles serão executados com as permissões do usuário 'man'. Isto permite que usuários normais se beneficiem do caching de páginas de manual pré-formatadas ('cat pages'), o que pode ajudar na performance em máquinas mais lentas.\n\nPáginas de manual em cache funcionarão somente se você utilizar um terminal de 80 colunas. Isso é para evitar que um usuário faça com que páginas cat sejam salvas em larguras que seriam incovenientes para outros usuários. Caso você utilize um terminal amplo, você pode forçar as páginas de manual a serem formatadas para 80 colunas definindo a variável de ambiente MANWIDTH=80.\n\nHabilitar este recurso pode ser um risco de segurança, por isso o mesmo está desabilitado por padrão. Em caso de dúvidas, é sugerido que você mantenho-o desabilitado.
+Extended_description-ru.utf-8: Программы man и mandb могут быть установлены с включённым битом set-user-id для того, чтобы они запускались с правами пользователя 'man'. Это позволит обычным пользователям использовать ранее отформатированные страницы руководств ('cat pages'), что, возможно, ускорит вывод страниц на медленных машинах.\n\nКэшированные страницы руководств используются при выводе только на 80-ти колоночный терминал, что избавляет от сохранения в кэше страниц одного из пользователей с форматом, несовместимым с форматом других пользователей. Если вы используете широкий терминал, то можете принудительно форматировать страницы по 80 символов в строке установкой MANWIDTH=80.\n\nВключение этой возможности является угрозой безопасности, поэтому по умолчанию она выключена. Если не знаете что делать, то оставьте как есть.
+Extended_description-sk.utf-8: Programy man a mandb môžu byť nainštalované s nastaveným príznakom set-user-id, takže sa budú spúšťať s právami používateľa „man“. Takto môžu aj obyčajní používatelia využívať zrýchlené načítanie predformátovaných manuálových stránok z vyrovnávacej pamäte, čo môže pomôcť najmä na pomalších počítačoch.\n\nManuálové stránky z vyrovnávacej pamäte fungujú, len ak používate 80 stĺpcový terminál, aby sa zabránilo možnosti, že niekto iný uloží stránky so šírkou, ktorá bude nevyhovujúca pre iných. Ak používate široký terminál, môžete vynútiť formátovanie manuálových stránok na 80 stĺpcov nastavením premennej MANWIDTH=80.\n\nPovolenie tejto možnosti môže byť bezpečnostným rizikom, preto je predvolene vypnutá. Ak máte pochybnosti, nechajte ju vypnutú.
+Extended_description-sr.utf-8: <man> и <mandb> програм може бити инсталиран са (set-user-id bit) постављеним тако, да ће се покретати са дозволама 'man' корисника. Ово дозвољава обичним корисницима да имају корист од кешираних преформатираних страница са упутствима ('cat pages'), што може повећати перформансе на старијим машинама.\n\nКеширане странице са упуствима раде само ако кориситите терминал са 80-колонада би се избјегло да један корисник сачува (cat pages) ширину која бу била непогодназа остале кориснике. Ако користите широки терминал, можете форсирати странице саупутствима да буду форматиране на 80 колона подешавањем MANWIDTH=80.\n\nОмогућавање ове опције може бити сигурносни ризик, тако да није подразумијевана. Ако сте у недоумици, ова опција треба бити остављена онемогућена.
+Extended_description-sr@latin.utf-8: <man> i <mandb> program može biti instaliran sa (set-user-id bit) postavljenim тtako, da će se pokretati sa dozvolama 'man' korisnika. Ovo dozvoljava običnim korisnicima da imaju korist od keširanih preformatiranih stranica sa uputstvima ('cat pages'), što može povećati performanse na starijim mašinama.\n\nKeširane stranice sa upustvima rade samo ako korisitite terminal sa 80-kolonada bi se izbjeglo da jedan korisnik sačuva (cat pages) širinu koja bu bila nepogodnaza ostale korisnike. Ako koristite široki terminal, možete forsirati stranice sauputstvima da budu formatirane na 80 kolona podešavanjem MANWIDTH=80.\n\nOmogućavanje ove opcije može biti sigurnosni rizik, tako da nije podrazumijevana. Ako ste u nedoumici, ova opcija treba biti ostavljena onemogućena.
+Extended_description-sv.utf-8: Programmen man och mandb kan installeras med set-user-id-biten inställd så att de kommer att köras med rättigheterna från användaren "man". Detta gör att vanliga användare att dra nytta av mellanlagring av förformaterade manualsidor ("cat pages") vilket kan öka prestandan för långsammare maskiner.\n\nCachelagrade manualsidor fungerar endast om du använder en 80-kolumners terminal för att undvika att en användare orsakar att sidor sparas med en bredd som inte lämpar sig för andra användare. Om du använder en bred terminal kan du tvinga manualsidorna att formateras till 80 kolumner i alla fall, genom att ställa in MANWIDTH=80.\n\nAktivera denna funktion kan vara en säkerhetsrisk så den är inaktiverad som standard. Om du är osäker bör du låta den vara inaktiverad.
+Extended_description-ta.utf-8: மான் மற்றும் மான்டிபி(mandb) ஐ செட்யூஐடி மான் 'setuid man' பிட் உடன் நிறுவலாம். அதனால் அவை மான் 'man'  பயனர் அனுமதியுடன் இயங்கும். இதனால் சாதாரண பயனர்கள் முன் வகைப்படுத்திய கையேட்டு பக்கங்களை இடையகப்படுத்தி பார்க்க ('cat pages') முடியும். மெதுவான கணினிகளுக்கு இது உதவியாக இருக்கும்.\n\nஒரு பயனர் மற்ற பயனர்களுக்கு இடையூறாக இருக்கும்படி பக்கங்களை சேமிப்பதை தவிர்க்க, 'cat pages' நீங்கள் 80 பத்தி முனையம் பயன்படுத்தினால்தான் வேலை செய்யும். நீங்கள் இன்னும் அகல முனையத்தை பயன்படுத்தினால், கையேட்டு பக்கங்களை80 பத்தியாக MANWIDTH=80 அமைப்பின் மூலம் வடிவமைக்கலாம்.\n\nஇதை இயலுமைபடுத்துவது ஒரு பாதுகாப்பு பிரச்சினை. அதனால் இது முன்னிருப்பாக செய்ல் நீக்கி இருக்கும். நீங்கள் குழம்பினால் இதை முன்னிருப்பிலேயே விடவும்.
+Extended_description-tr.utf-8: man kullanıcısı izinleri ile çalışması için man ve mandb uygulamaları set-user-id biti ile kurulabilir. Bu, normal kullanıcıların önceden biçimlendirilmiş yardım sayfalarının önbelleğe alınması avantajından yararlanmalarını sağlar ('cat pages'). Önbellek kullanımı, yavaş makinelerde performans artışına yardımcı olabilir.\n\nÖnbelleğe alınmış man sayfaları sadece eğer 80 sütun genişlikte bir terminal kullanıyorsanız çalışır. Bu, bir kullanıcı için görüntülenmiş sayfaların diğer kullanıcılarla uyumlu olmayan genişliklerde kaydedilmemesi içindir. Eğer geniş bir terminal kullanıyorsanız MANWIDTH=80 ayarıyla man sayfalarını 80 sütun genişliğinde biçimlendirmeye zorlayabilirsiniz.\n\nBu özelliği açmak bir güvenlik riski oluşturabilir, bu yüzden etkinleştirilmedi. Eğer kararsızsanız böyle bırakmanızı tavsiye ederiz.
+Extended_description-uk.utf-8: Програми man та mandb можуть бути інстальовані з встановленим бітом set-user-id, таким чином вони будуть запускатися з правами користувача 'man'. Це дозволить звичайним користувачам користуватися кешуванням відформатованих сторінок керівництва, що може збільшити швидкість роботи на повільних машинах.\n\nЩоб запобігти збереженню сторінок з кількістю стовпців неприйнятною для інших користувачів, кешовані сторінки керівництва будуть працювати тільки якщо ви використовуєте термінал шириною 80 стовпців. Якщо ви використовуєте широкий термінал, то ви можете вказати, щоб сторінки керівництва форматувалися по 80 колонок, шляхом встановлення MANWIDTH=80.\n\nВвімкнення цієї можливості може бути ризиком з точки зору безпеки, тому вона заборонена за замовчанням. Якщо ви невпевнені, то залиште її забороненою.
+Extended_description-vi.utf-8: Chương trình man và man-db đều có thể được cài đặt với bit « set-user-id » được đặt, để chạy với quyền của người dùng « man ». Vì thế người dùng chuẩn có lợi dụng khả năng nhớ tạm các trang hướng dẫn đã định dạng sẵn (« trang cat »), mà có thể tăng hiệu suất trên máy chạy chậm hơn.\n\nKhả năng nhớ tạm trang hướng dẫn chỉ hoạt động được nếu bạn có phải sử dụng một thiết bị cuối kiểu 80-cột, để tránh có một người dùng gây ra các trang cat được lưu theo độ rộng bất tiện cho người dùng khác. Nếu bạn sử dụng thiết bị rộng, vẫn còn có thể ép buộc các trang hướng dẫn được định dạng thành 80 cột, bằng cách lập biến « MANWIDTH=80 ».\n\nHiệu lực tính năng này có thể rủi ro bảo mật, vậy nó bị tắt theo mặc định. Chưa chắc thì bạn nên để lại nó bị tắt.
+Extended_description-zh_cn.utf-8: 在安装 man 和 mandb 这两个程序时，可以把它们的 set-user-id 位开启，从而使其以用户“man”的权限运行。这样做可以让普通用户也能得益于对预先排版好的手册页 (又称 cat 页) 所作的缓存处理，有助于提高在比较慢的机器上的运行速度。\n\n为了避免因一个用户的特殊设置造成所存储的 cat 页使用对其他用户来说都不方便的行宽，手册页的缓存处理只在使用 80 列的终端时生效。如果您使用更宽的终端，仍可使用 MANWIDTH=80 设置来强制对手册页以 80 列行宽进行排版。\n\n启用这一功能可能会有安全隐患，因此默认关闭此功能。如果您不确定，请保留关闭的设定。
+Type: boolean
+Owners: man-db/install-setuid
 
 Name: passwd/auto-login
 Default: false

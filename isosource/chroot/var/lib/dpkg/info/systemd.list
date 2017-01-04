@@ -91,7 +91,6 @@
 /usr/share/systemd/language-fallback-map
 /usr/share/systemd/kbd-model-map
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/systemd-cgls.1.gz
 /usr/share/man/man1/systemd-machine-id-commit.1.gz
 /usr/share/man/man1/systemd-ask-password.1.gz
@@ -120,7 +119,6 @@
 /usr/share/man/man1/hostnamectl.1.gz
 /usr/share/man/man1/systemd-nspawn.1.gz
 /usr/share/man/man1/systemd-bootchart.1.gz
-/usr/share/man/man7
 /usr/share/man/man7/systemd.special.7.gz
 /usr/share/man/man7/daemon.7.gz
 /usr/share/man/man7/systemd.time.7.gz
@@ -131,7 +129,6 @@
 /usr/share/man/man7/kernel-command-line.7.gz
 /usr/share/man/man7/bootup.7.gz
 /usr/share/man/man7/file-hierarchy.7.gz
-/usr/share/man/man5
 /usr/share/man/man5/hostname.5.gz
 /usr/share/man/man5/sysusers.d.5.gz
 /usr/share/man/man5/systemd.device.5.gz
@@ -171,7 +168,6 @@
 /usr/share/man/man5/systemd.resource-control.5.gz
 /usr/share/man/man5/udev.conf.5.gz
 /usr/share/man/man5/systemd.network.5.gz
-/usr/share/man/man8
 /usr/share/man/man8/systemd-user-sessions.service.8.gz
 /usr/share/man/man8/systemd-hibernate-resume@.service.8.gz
 /usr/share/man/man8/systemd-sysctl.service.8.gz

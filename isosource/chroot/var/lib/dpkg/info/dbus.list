@@ -35,7 +35,6 @@
 /usr/bin/dbus-cleanup-sockets
 /usr/share
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/dbus-cleanup-sockets.1.gz
 /usr/share/man/man1/dbus-uuidgen.1.gz
 /usr/share/man/man1/dbus-daemon.1.gz

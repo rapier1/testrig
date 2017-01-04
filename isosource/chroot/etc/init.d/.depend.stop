@@ -1,9 +1,9 @@
-TARGETS = uuidd urandom sendsigs hwclock.sh umountnfs.sh networking umountfs umountroot halt reboot
+TARGETS = uuidd ntp urandom sendsigs hwclock.sh umountnfs.sh networking umountfs umountroot halt reboot
 sendsigs: uuidd
 hwclock.sh: uuidd
-umountnfs.sh: sendsigs uuidd
+umountnfs.sh: uuidd sendsigs
 networking: umountnfs.sh
-umountfs: hwclock.sh urandom uuidd umountnfs.sh networking
+umountfs: hwclock.sh uuidd networking umountnfs.sh urandom
 umountroot: umountfs
 halt: umountroot
 reboot: umountroot

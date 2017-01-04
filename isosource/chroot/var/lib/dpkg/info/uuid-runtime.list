@@ -9,9 +9,7 @@
 /usr/share/doc/uuid-runtime/changelog.Debian.gz
 /usr/share/doc/uuid-runtime/copyright
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/uuidgen.1.gz
-/usr/share/man/man8
 /usr/share/man/man8/uuidd.8.gz
 /usr/share/bash-completion
 /usr/share/bash-completion/completions

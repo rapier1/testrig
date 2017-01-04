@@ -72,7 +72,6 @@
 /usr/share/lintian/overrides
 /usr/share/lintian/overrides/util-linux
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/line.1.gz
 /usr/share/man/man1/whereis.1.gz
 /usr/share/man/man1/tailf.1.gz
@@ -100,10 +99,8 @@
 /usr/share/man/man1/ionice.1.gz
 /usr/share/man/man1/more.1.gz
 /usr/share/man/man1/taskset.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/hwclock.5.gz
 /usr/share/man/man5/terminal-colors.d.5.gz
-/usr/share/man/man8
 /usr/share/man/man8/blkid.8.gz
 /usr/share/man/man8/readprofile.8.gz
 /usr/share/man/man8/lsblk.8.gz
