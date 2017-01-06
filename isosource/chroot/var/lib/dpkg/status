@@ -45,26 +45,6 @@ Description: module with common regular expressions
 Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Homepage: https://metacpan.org/release/Regexp-Common/
 
-Package: iputils-ping
-Status: install ok installed
-Priority: important
-Section: net
-Installed-Size: 160
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: iputils
-Version: 3:20121221-5ubuntu2
-Provides: ping
-Depends: libc6 (>= 2.14), libcap2 (>= 2.10), libgnutls-openssl27
-Recommends: libcap2-bin
-Description: Tools to test the reachability of network hosts
- The ping command sends ICMP ECHO_REQUEST packets to a host in order to
- test if the host is reachable via the network.
- .
- This package includes a ping6 utility which supports IPv6 network
- connections.
-Original-Maintainer: Noah Meyerhans <noahm@debian.org>
-
 Package: libedit2
 Status: install ok installed
 Priority: standard
@@ -187,29 +167,6 @@ Description: Perl module to accelerate Class::C3
 Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Homepage: https://metacpan.org/release/Class-C3-XS
 
-Package: cpp
-Status: install ok installed
-Priority: optional
-Section: interpreters
-Installed-Size: 87
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: allowed
-Source: gcc-defaults (1.136ubuntu2)
-Version: 4:4.9.2-2ubuntu2
-Depends: cpp-4.9 (>= 4.9.2-1~)
-Suggests: cpp-doc
-Conflicts: cpp-doc (<< 1:2.95.3)
-Description: GNU C preprocessor (cpp)
- The GNU C preprocessor is a macro processor that is used automatically
- by the GNU C compiler to transform programs before actual compilation.
- .
- This package has been separated from gcc for the benefit of those who
- require the preprocessor but not the compiler.
- .
- This is a dependency package providing the default GNU C preprocessor.
-Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
-
 Package: libsub-install-perl
 Status: install ok installed
 Priority: optional
@@ -289,25 +246,8 @@ Description: creates device files in /dev
  subsystem provides a more dynamic mechanism for device file management.
 Original-Maintainer: Debian QA Group <packages@qa.debian.org>
 
-Package: lupin-casper
-Status: install ok installed
-Priority: extra
-Section: misc
-Installed-Size: 59
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Source: lupin
-Version: 0.55
-Depends: initramfs-tools (>= 0.40ubuntu11), casper (>= 0.98)
-Description: Add support for loop-mount installations to casper
- The Wubi installer provides a means for installing Ubuntu into a
- loop-mounted filesystem image hosted on a Windows filesystem. lupin-casper
- provides hooks to find an ISO image on a hard disk and to read a preseed
- file from a hard disk, which are used in the early part of this process.
-Original-Maintainer: Agostino Russo <agostino.russo@gmail.com>
-
 Package: libntdb1
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 122
@@ -316,6 +256,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: ntdb
 Version: 1.0-5
+Config-Version: 1.0-5
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: New Trivial Database - shared library
@@ -484,7 +425,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Data-OptList/
 
 Package: libtdb1
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 128
@@ -493,6 +434,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: tdb
 Version: 1.3.4-1
+Config-Version: 1.3.4-1
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: Trivial Database - shared library
@@ -525,7 +467,7 @@ Homepage: http://www.gnu.org/software/cpio/
 Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 
 Package: libpopt0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: important
 Section: libs
 Installed-Size: 128
@@ -534,6 +476,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: popt
 Version: 1.16-10
+Config-Version: 1.16-10
 Replaces: popt
 Depends: libc6 (>= 2.17)
 Pre-Depends: multiarch-support
@@ -551,7 +494,7 @@ Original-Maintainer: Paul Martin <pm@debian.org>
 Homepage: http://rpm5.org/
 
 Package: libwbclient0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 189
@@ -560,6 +503,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: samba
 Version: 2:4.1.13+dfsg-4ubuntu3
+Config-Version: 2:4.1.13+dfsg-4ubuntu3
 Depends: libbsd0 (>= 0.0), libc6 (>= 2.14)
 Pre-Depends: dpkg (>= 1.15.6~), multiarch-support
 Breaks: libpam-smbpass (<< 2:3.4.1), libsmbclient (<< 2:3.4.1), samba (<< 2:3.4.1), samba-common (<< 2:3.4.1), samba-tools (<< 2:3.4.1), smbclient (<< 2:3.4.1), smbfs (<< 2:3.4.1), swat (<< 2:3.4.1), winbind (<< 2:3.4.1)
@@ -664,7 +608,7 @@ Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 Homepage: http://netfilter.org/projects/libmnl/
 
 Package: libk5crypto3
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 311
@@ -673,6 +617,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: krb5
 Version: 1.12.1+dfsg-18
+Config-Version: 1.12.1+dfsg-18
 Depends: libc6 (>= 2.14), libkrb5support0 (>= 1.12~alpha1+dfsg)
 Pre-Depends: multiarch-support
 Suggests: krb5-doc, krb5-user
@@ -714,13 +659,14 @@ Homepage: http://e2fsprogs.sourceforge.net
 Original-Maintainer: Theodore Y. Ts'o <tytso@mit.edu>
 
 Package: cifs-utils
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: otherosfs
 Installed-Size: 256
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Version: 2:6.0-1ubuntu2
+Config-Version: 2:6.0-1ubuntu2
 Replaces: smbfs (<< 2:4.0~rc1-1)
 Depends: samba-common, libc6 (>= 2.17), libkeyutils1, libkrb5-3 (>= 1.10+dfsg~), libtalloc2 (>= 2.0.4~git20101213), libwbclient0 (>= 2:3.6.0~pre3)
 Recommends: keyutils
@@ -757,32 +703,6 @@ Description: XML parsing C library - runtime library
  might find in the XML document (like start tags).
 Homepage: http://expat.sourceforge.net
 Original-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
-
-Package: make
-Status: install ok installed
-Priority: standard
-Section: devel
-Installed-Size: 352
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: make-dfsg
-Version: 4.0-8.1
-Replaces: make-guile
-Depends: libc6 (>= 2.17)
-Suggests: make-doc
-Conflicts: make-guile
-Description: utility for directing compilation
- GNU Make is a utility which controls the generation of executables
- and other target files of a program from the program's source
- files. It determines automatically which pieces of a large program
- need to be (re)created, and issues the commands to (re)create
- them. Make can be used to organize any task in which targets (files)
- are to be automatically updated based on input files whenever the
- corresponding input is newer --- it is not limited to building
- computer programs. Indeed, Make is a general purpose dependency
- solver.
-Original-Maintainer: Manoj Srivastava <srivasta@debian.org>
-Homepage: http://www.gnu.org/software/make/
 
 Package: liblzma5
 Status: install ok installed
@@ -844,34 +764,8 @@ Description: module to read chunks of data from a module's DATA section
 Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Homepage: https://github.com/rjbs/Data-Section
 
-Package: python-crypto
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 1384
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 2.6.1-5
-Provides: python2.7-crypto
-Depends: python (<< 2.8), python (>= 2.7~), python:any (>= 2.7.5-5~), libc6 (>= 2.14), libgmp10
-Suggests: python-crypto-dbg, python-crypto-doc
-Breaks: python-keyring (<= 0.7.1-1)
-Description: cryptographic algorithms and protocols for Python
- A collection of cryptographic algorithms and protocols, implemented
- for use from Python. Among the contents of the package:
- .
-  * Hash functions: HMAC, MD2, MD4, MD5, RIPEMD160, SHA, SHA256.
-  * Block encryption algorithms: AES, ARC2, Blowfish, CAST, DES, Triple-DES.
-  * Stream encryption algorithms: ARC4, simple XOR.
-  * Public-key algorithms: RSA, DSA, ElGamal.
-  * Protocols: All-or-nothing transforms, chaffing/winnowing.
-  * Miscellaneous: RFC1751 module for converting 128-bit keys
-    into a set of English words, primality testing, random number generation.
-Original-Maintainer: Sebastian Ramacher <sramacher@debian.org>
-Homepage: http://www.pycrypto.org/
-
 Package: samba-libs
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 18077
@@ -880,6 +774,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: samba
 Version: 2:4.1.13+dfsg-4ubuntu3
+Config-Version: 2:4.1.13+dfsg-4ubuntu3
 Replaces: libdcerpc-server0 (<< 2:4.0.9), libdcerpc0 (<< 2:4.0.9), libgensec0 (<< 2:4.0.9), libndr-standard0 (<< 2:4.0.9), libndr0 (<< 2:4.0.9), libnetapi0 (<< 2:4.0.9), libregistry0 (<< 2:4.0.9), libsamba-credentials0 (<< 2:4.0.9), libsamba-hostconfig0 (<< 2:4.0.9), libsamba-policy0 (<< 2:4.0.9), libsamba-util0 (<< 2:4.0.9), libsamdb0 (<< 2:4.0.9), libsmbclient-raw0 (<< 2:4.0.9), libsmbd0 (<< 2:4.0.9), libtorture0 (<< 2:4.0.9)
 Depends: libldb1 (<< 1:1.1.19~), libldb1 (>> 1:1.1.18~), libacl1 (>= 2.2.51-8), libasn1-8-heimdal (>= 1.4.0+git20110226), libattr1 (>= 1:2.4.46-8), libbsd0 (>= 0.3.0), libc6 (>= 2.14), libcap2 (>= 1:2.10), libcomerr2 (>= 1.01), libcups2 (>= 1.6.0), libgnutls-deb0-28 (>= 3.3.0), libgssapi3-heimdal (>= 1.4.0+git20110226), libhcrypto4-heimdal (>= 1.4.0+git20110226), libhx509-5-heimdal (>= 1.4.0+git20110226), libkrb5-26-heimdal (>= 1.4.0+git20110226), libldap-2.4-2 (>= 2.4.7), libntdb1 (>= 1.0), libpam0g (>= 0.99.7.1), libpopt0 (>= 1.14), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtevent0 (>= 0.9.16), libwbclient0 (>= 2:4.0.3+dfsg1), python-talloc (>= 2.0.6), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
@@ -928,7 +823,7 @@ Homepage: http://www.freedesktop.org/wiki/Software/systemd
 Original-Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
 
 Package: libhogweed2
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 218
@@ -937,6 +832,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: nettle
 Version: 2.7.1-5
+Config-Version: 2.7.1-5
 Depends: libc6 (>= 2.14), libgmp10 (>= 2:6.0.0), libnettle4 (= 2.7.1-5)
 Pre-Depends: multiarch-support
 Description: low level cryptographic library (public-key cryptos)
@@ -1036,21 +932,6 @@ Description: high level tools to configure network interfaces
  interface definitions in the file /etc/network/interfaces.
 Original-Maintainer: Andrew Shadura <andrewsh@debian.org>
 
-Package: linux-headers-4.1.0.web10g+
-Status: install ok installed
-Priority: optional
-Section: kernel
-Installed-Size: 65186
-Maintainer: Anonymous <root@darksagan.psc.edu>
-Architecture: amd64
-Source: linux-upstream
-Version: 4.1.0.web10g+-3
-Provides: linux-headers, linux-headers-2.6
-Description: Linux kernel headers for 4.1.0.web10g+ on amd64
- This package provides kernel header files for 4.1.0.web10g+ on amd64
- This is useful for people who need to build external modules
-Homepage: http://www.kernel.org/
-
 Package: psmisc
 Status: install ok installed
 Priority: optional
@@ -1092,30 +973,6 @@ Description: Secure Sockets Layer toolkit - shared libraries
  .
  It provides the libssl and libcrypto shared libraries.
 Original-Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
-
-Package: python-ntdb
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 62
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: ntdb
-Version: 1.0-5
-Provides: python2.7-ntdb
-Depends: libntdb1 (= 1.0-5), python (>= 2.7), python (<< 2.8), libc6 (>= 2.14), libpython2.7 (>= 2.7)
-Description: Python bindings for NTDB
- This is a simple database API. It is modelled after the structure
- of GDBM. TDB features, unlike GDBM, multiple writers support with
- appropriate locking and transactions.
- .
- ntdb uses a file format that is incompatible with tdb, but the API
- is similar. It improves performance, adds support for databases
- larger than 4 Gb, and improves integration with talloc.
- .
- This package contains the Python bindings.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: http://tdb.samba.org/
 
 Package: base-passwd
 Essential: yes
@@ -1250,7 +1107,7 @@ Description: Miscellaneous utilities specific to Debian
 Original-Maintainer: Clint Adams <clint@debian.org>
 
 Package: mime-support
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: net
 Installed-Size: 147
@@ -1258,6 +1115,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: all
 Multi-Arch: foreign
 Version: 3.58ubuntu1
+Config-Version: 3.58ubuntu1
 Recommends: file
 Conffiles:
  /etc/mime.types 54abb0a14b63c8ed2ca024975dc58d34
@@ -1308,7 +1166,7 @@ Description: Linux kernel, version 4.1.0.web10g+
 Homepage: http://www.kernel.org/
 
 Package: libwind0-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 230
@@ -1317,6 +1175,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libc6 (>= 2.14), libcomerr2 (>= 1.01), libroken18-heimdal (>= 1.4.0+git20110226)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - stringprep implementation
@@ -1372,47 +1231,6 @@ Description: Provide limited super user privileges to specific users
  This version is built with minimal shared library dependencies, use the
  sudo-ldap package instead if you need LDAP support for sudoers.
 Original-Maintainer: Bdale Garbee <bdale@gag.com>
-
-Package: iso-codes
-Status: install ok installed
-Priority: optional
-Section: misc
-Installed-Size: 16108
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Version: 3.57-1
-Suggests: isoquery
-Description: ISO language, territory, currency, script codes and their translations
- This package provides the ISO 639, ISO 639-3, and ISO 639-5 language
- code lists, the ISO 4217 currency code list, the ISO 3166 territory
- code list, the ISO 3166-2 sub-territory list, and the ISO 15924
- script code list as XML files.
- .
- More importantly, it also provides their translations to be used by
- other programs.
-Original-Maintainer: Tobias Quathamer <toddy@debian.org>
-Homepage: http://pkg-isocodes.alioth.debian.org/
-
-Package: python-tdb
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 70
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: tdb
-Version: 1.3.4-1
-Provides: python2.7-tdb
-Depends: libtdb1 (= 1.3.4-1), python (<< 2.8), python (>= 2.7~), libc6 (>= 2.2.5), libpython2.7 (>= 2.7)
-Description: Python bindings for TDB
- This is a simple database API. It is modelled after the structure
- of GDBM. TDB features, unlike GDBM, multiple writers support with
- appropriate locking and transactions.
- .
- This package contains the Python bindings.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: http://tdb.samba.org/
 
 Package: libncursesw5
 Status: install ok installed
@@ -1846,7 +1664,7 @@ Homepage: http://www.freedesktop.org/wiki/Software/systemd
 Original-Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
 
 Package: libasn1-8-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 820
@@ -1855,6 +1673,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libc6 (>= 2.14), libcomerr2 (>= 1.01), libroken18-heimdal (>= 1.4.0+git20110226)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - ASN.1 library
@@ -1949,27 +1768,6 @@ Description: ThreadSanitizer -- a Valgrind-based detector of data races (runtime
 Homepage: http://gcc.gnu.org/
 Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 
-Package: libssl-dev
-Status: install ok installed
-Priority: optional
-Section: libdevel
-Installed-Size: 6299
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: openssl
-Version: 1.0.1f-1ubuntu11
-Depends: libssl1.0.0 (= 1.0.1f-1ubuntu11), zlib1g-dev
-Recommends: libssl-doc
-Description: Secure Sockets Layer toolkit - development files
- This package is part of the OpenSSL project's implementation of the SSL
- and TLS cryptographic protocols for secure communication over the
- Internet.
- .
- It contains development libraries, header files, and manpages for libssl
- and libcrypto.
-Original-Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
-
 Package: groff-base
 Status: deinstall ok config-files
 Priority: important
@@ -2001,7 +1799,7 @@ Description: GNU troff text-formatting system (base system components)
 Homepage: https://www.gnu.org/software/groff/
 
 Package: libldb1
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 401
@@ -2010,6 +1808,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: ldb
 Version: 1:1.1.18-1
+Config-Version: 1:1.1.18-1
 Replaces: libldb0
 Depends: libc6 (>= 2.14), libldap-2.4-2 (>= 2.4.7), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtevent0 (>= 0.9.9)
 Pre-Depends: multiarch-support
@@ -2133,48 +1932,6 @@ Description: Filesystem in Userspace (library)
 Homepage: http://fuse.sourceforge.net/
 Original-Maintainer: Daniel Baumann <mail@daniel-baumann.ch>
 
-Package: libsasl2-modules-db
-Status: install ok installed
-Priority: standard
-Section: libs
-Installed-Size: 83
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: cyrus-sasl2
-Version: 2.1.26.dfsg1-13
-Replaces: libsasl2-2 (<< 2.1.26.dfsg1-2~), libsasl2-modules (<< 2.1.26.dfsg1-6~)
-Depends: libc6 (>= 2.14), libdb5.3
-Breaks: libsasl2-2 (<< 2.1.26.dfsg1-2~)
-Description: Cyrus SASL - pluggable authentication modules (DB)
- This is the Cyrus SASL API implementation, version 2.1. See package
- libsasl2-2 and RFC 2222 for more information.
- .
- This package provides the DB plugin, which supports Berkeley DB lookups.
-Original-Maintainer: Debian Cyrus SASL Team <pkg-cyrus-sasl2-debian-devel@lists.alioth.debian.org>
-Homepage: http://www.cyrusimap.org/
-
-Package: python-samba
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 6498
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: samba
-Version: 2:4.1.13+dfsg-4ubuntu3
-Provides: python2.7-samba
-Depends: python-ldb (>= 1.1.2~), python-tdb, python-ntdb, python-crypto, python (>= 2.7), python (<< 2.8), libattr1 (>= 1:2.4.46-8), libbsd0 (>= 0.0), libc6 (>= 2.14), libldb1 (>= 0.9.21), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213), libtevent0 (>= 0.9.16), python-talloc (>= 2.0.6), samba-libs (= 2:4.1.13+dfsg-4ubuntu3)
-Description: Python bindings for Samba
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file sharing with Microsoft Windows, OS X,
- and other Unix systems.  Samba can also function as a domain controller
- or member server in both NT4-style and Active Directory domains.
- .
- This package contains Python bindings for most Samba libraries.
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-
 Package: gnupg
 Status: install ok installed
 Priority: important
@@ -2268,7 +2025,7 @@ Description: Tools for mounting and manipulating filesystems
 Original-Maintainer: Debian util-linux Maintainers <ah-util-linux@debian.org>
 
 Package: libhcrypto4-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 285
@@ -2277,6 +2034,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libasn1-8-heimdal (>= 1.4.0+git20110226), libc6 (>= 2.14), libroken18-heimdal (>= 1.4.0+git20110226)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - crypto library
@@ -2313,7 +2071,7 @@ Description: X11 client-side library
 Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 
 Package: libsasl2-2
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 167
@@ -2322,6 +2080,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: cyrus-sasl2
 Version: 2.1.26.dfsg1-13
+Config-Version: 2.1.26.dfsg1-13
 Replaces: libsasl2
 Depends: libc6 (>= 2.15), libsasl2-modules-db (>= 2.1.26.dfsg1-13)
 Pre-Depends: multiarch-support
@@ -2399,13 +2158,14 @@ Homepage: http://support.ntp.org/
 Original-Maintainer: Debian NTP Team <pkg-ntp-maintainers@lists.alioth.debian.org>
 
 Package: keyutils
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: admin
 Installed-Size: 163
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Version: 1.5.9-5ubuntu1
+Config-Version: 1.5.9-5ubuntu1
 Depends: libc6 (>= 2.15), libkeyutils1 (>= 1.5.9)
 Conffiles:
  /etc/request-key.conf bf33ebef2dd99b739d06c67976d549fd
@@ -2464,7 +2224,7 @@ Homepage: http://gitorious.org/procps
 Original-Maintainer: Craig Small <csmall@debian.org>
 
 Package: python2.7
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: python
 Installed-Size: 365
@@ -2472,6 +2232,7 @@ Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Multi-Arch: allowed
 Version: 2.7.9-2ubuntu3
+Config-Version: 2.7.9-2ubuntu3
 Replaces: python-profiler (<= 2.7.1-2), python2.7-minimal (<< 2.7.3-7~)
 Depends: python2.7-minimal (= 2.7.9-2ubuntu3), libpython2.7-stdlib (= 2.7.9-2ubuntu3), mime-support
 Suggests: python2.7-doc, binutils
@@ -2484,7 +2245,7 @@ Description: Interactive high-level object-oriented language (version 2.7)
 Original-Maintainer: Matthias Klose <doko@debian.org>
 
 Package: samba-common
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: net
 Installed-Size: 647
@@ -2493,6 +2254,7 @@ Architecture: all
 Multi-Arch: foreign
 Source: samba
 Version: 2:4.1.13+dfsg-4ubuntu3
+Config-Version: 2:4.1.13+dfsg-4ubuntu3
 Replaces: samba (<< 3.0.20b-1), samba-doc (<< 2:4.0.5~), samba4-common (<< 4.0.0~alpha7-1)
 Depends: ucf, debconf (>= 0.5) | debconf-2.0
 Pre-Depends: dpkg (>= 1.15.6~)
@@ -2566,7 +2328,7 @@ Description: pipeline manipulation library
 Homepage: http://libpipeline.nongnu.org/
 
 Package: libroken18-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 159
@@ -2575,6 +2337,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libc6 (>= 2.15)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - roken support library
@@ -2711,27 +2474,6 @@ Description: mro::* interface compatibility for Perls < 5.9.5
 Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Homepage: http://search.cpan.org/dist/MRO-Compat/
 
-Package: cpp-4.9
-Status: install ok installed
-Priority: optional
-Section: interpreters
-Installed-Size: 16470
-Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: gcc-4.9
-Version: 4.9.2-10ubuntu13
-Replaces: gccgo-4.9 (<< 4.9.2-10ubuntu13)
-Depends: gcc-4.9-base (= 4.9.2-10ubuntu13), libc6 (>= 2.14), libcloog-isl4 (>= 0.17), libgmp10 (>= 2:5.0.1~), libisl13 (>= 0.10), libmpc3, libmpfr4 (>= 3.1.2), zlib1g (>= 1:1.1.4)
-Suggests: gcc-4.9-locales (>= 4.9)
-Description: GNU C preprocessor
- A macro processor that is used automatically by the GNU C compiler
- to transform programs before actual compilation.
- .
- This package has been separated from gcc for the benefit of those who
- require the preprocessor but not the compiler.
-Homepage: http://gcc.gnu.org/
-Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
-
 Package: libpod-latex-perl
 Status: install ok installed
 Priority: optional
@@ -2777,24 +2519,6 @@ Description: GNU core utilities
  uniq unlink users vdir wc who whoami yes
 Homepage: http://gnu.org/software/coreutils
 Original-Maintainer: Michael Stone <mstone@debian.org>
-
-Package: file
-Status: install ok installed
-Priority: standard
-Section: utils
-Installed-Size: 105
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 1:5.20-1ubuntu2
-Depends: libc6 (>= 2.4), libmagic1 (= 1:5.20-1ubuntu2)
-Description: Determines file type using "magic" numbers
- File tests each argument in an attempt to classify it. There are
- three sets of tests, performed in this order: filesystem tests,
- magic number tests, and language tests. The first test that
- succeeds causes the file type to be printed.
-Homepage: http://www.darwinsys.com/file/
-Original-Maintainer: Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
 
 Package: libdns-export100
 Status: install ok installed
@@ -2870,7 +2594,7 @@ Original-Maintainer: Debian iproute2 Maintainers <ah-iproute@debian.org>
 Homepage: http://www.linux-foundation.org/en/Net:Iproute2
 
 Package: libbsd0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 152
@@ -2879,6 +2603,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: libbsd
 Version: 0.7.0-2
+Config-Version: 0.7.0-2
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: utility functions from BSD systems - shared library
@@ -2981,7 +2706,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Log-Message-Simple
 
 Package: libkrb5support0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 163
@@ -2990,6 +2715,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: krb5
 Version: 1.12.1+dfsg-18
+Config-Version: 1.12.1+dfsg-18
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Breaks: libgssapi-krb5-2 (<< 1.12.1+dfsg-8), libk5crypto3 (<< 1.12.1+dfsg-8), libkadm5clnt-mit9 (<< 1.12.1+dfsg-8), libkadm5srv-mit9 (<< 1.12.1+dfsg-8), libkdb5-7 (<< 1.12.1+dfsg-8)
@@ -3008,7 +2734,7 @@ Original-Maintainer: Sam Hartman <hartmans@debian.org>
 Homepage: http://web.mit.edu/kerberos/
 
 Package: libhx509-5-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 378
@@ -3017,6 +2743,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libasn1-8-heimdal (>= 1.4.0+git20110226), libc6 (>= 2.14), libcomerr2 (>= 1.34), libhcrypto4-heimdal (>= 1.4.0+git20110226), libheimbase1-heimdal (>= 1.6~git20131117), libroken18-heimdal (>= 1.4.0+git20110226), libwind0-heimdal (>= 1.4.0+git20110226)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - X509 support library
@@ -3071,7 +2798,7 @@ Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 Homepage: http://www.bzip.org/
 
 Package: ucf
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: utils
 Installed-Size: 229
@@ -3079,6 +2806,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: all
 Multi-Arch: foreign
 Version: 3.0030
+Config-Version: 3.0030
 Depends: debconf (>= 1.5.19), coreutils (>= 5.91)
 Conffiles:
  /etc/ucf.conf 5565b8b26108c49ba575ba452cd69b3e
@@ -3178,7 +2906,7 @@ Description: X11 miscellaneous micro-utility library
 Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 
 Package: tcpdump
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: net
 Installed-Size: 1151
@@ -3186,6 +2914,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Multi-Arch: foreign
 Version: 4.6.2-4ubuntu1
+Config-Version: 4.6.2-4ubuntu1
 Depends: libc6 (>= 2.14), libpcap0.8 (>= 1.5.1), libssl1.0.0 (>= 1.0.0)
 Suggests: apparmor (>= 2.3)
 Conffiles:
@@ -3202,22 +2931,6 @@ Description: command-line network traffic analyzer
  or to monitor network activities.
 Homepage: http://www.tcpdump.org/
 Original-Maintainer: Romain Francoise <rfrancoise@debian.org>
-
-Package: casper
-Status: install ok installed
-Priority: extra
-Section: misc
-Installed-Size: 271
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 1.360
-Depends: libc6 (>= 2.14), libplymouth4 (>= 0.8.0~-13~ppa1), init-system-helpers (>= 1.18~), initramfs-tools (>= 0.92bubuntu55), busybox-initramfs (>= 1:1.1.3-4ubuntu3), dmsetup, user-setup, sudo, eject, uuid-runtime, localechooser-data (>= 2.03ubuntu1), util-linux (>= 2.15-1), file, lzma, udev (>= 174), cifs-utils
-Breaks: genext2fs (<< 1.4.1)
-Conflicts: live-initramfs, usplash (<< 0.4-43)
-Conffiles:
- /etc/casper.conf 873654121350964ec51b3ccd8c0186cd
-Description: Run a "live" preinstalled system from read-only media
-Tag: admin::boot, admin::filesystem, implemented-in::shell, protocol::smb, role::plugin, scope::utility, special::completely-tagged, works-with-format::iso9660
 
 Package: libblkid1
 Status: install ok installed
@@ -3238,6 +2951,23 @@ Description: block device id library
  filesystems by hard-coded device names, but via a logical naming
  system instead.
 Original-Maintainer: Debian util-linux Maintainers <ah-util-linux@debian.org>
+
+Package: casper
+Status: deinstall ok config-files
+Priority: extra
+Section: misc
+Installed-Size: 271
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: amd64
+Version: 1.360
+Config-Version: 1.360
+Depends: libc6 (>= 2.14), libplymouth4 (>= 0.8.0~-13~ppa1), init-system-helpers (>= 1.18~), initramfs-tools (>= 0.92bubuntu55), busybox-initramfs (>= 1:1.1.3-4ubuntu3), dmsetup, user-setup, sudo, eject, uuid-runtime, localechooser-data (>= 2.03ubuntu1), util-linux (>= 2.15-1), file, lzma, udev (>= 174), cifs-utils
+Breaks: genext2fs (<< 1.4.1)
+Conflicts: live-initramfs, usplash (<< 0.4-43)
+Conffiles:
+ /etc/casper.conf 873654121350964ec51b3ccd8c0186cd
+Description: Run a "live" preinstalled system from read-only media
+Tag: admin::boot, admin::filesystem, implemented-in::shell, protocol::smb, role::plugin, scope::utility, special::completely-tagged, works-with-format::iso9660
 
 Package: libcgi-fast-perl
 Status: install ok installed
@@ -3309,7 +3039,7 @@ Homepage: http://www.freetype.org
 Original-Maintainer: Steve Langasek <vorlon@debian.org>
 
 Package: libtasn1-6
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 131
@@ -3317,6 +3047,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Multi-Arch: same
 Version: 4.2-2ubuntu1
+Config-Version: 4.2-2ubuntu1
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: Manage ASN.1 structures (runtime)
@@ -3332,29 +3063,6 @@ Description: Manage ASN.1 structures (runtime)
  This package contains runtime libraries.
 Homepage: http://www.gnu.org/software/libtasn1/
 Original-Maintainer: Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
-
-Package: python-minimal
-Status: install ok installed
-Priority: standard
-Section: python
-Installed-Size: 163
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: allowed
-Source: python-defaults
-Version: 2.7.9-1
-Replaces: python (<= 2.7.3-1~)
-Depends: python2.7-minimal (>= 2.7.9-1~), dpkg (>= 1.13.20)
-Recommends: python
-Breaks: idle (<< 2.6), python (<= 2.7.3-1~), python-all (<< 2.6), python-all-dbg (<< 2.6), python-all-dev (<< 2.6), python-dbg (<< 2.6), python-dev (<< 2.6), python-examples (<< 2.6), python-support (<< 1.0.10ubuntu2), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2)
-Conflicts: python-central (<< 0.5.5)
-Description: minimal subset of the Python language (default version)
- This package contains the interpreter and some essential modules.  It's used
- in the boot process for some basic tasks.
- See /usr/share/doc/python2.7-minimal/README.Debian for a list of the modules
- contained in this package.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-Homepage: http://www.python.org/
 
 Package: isc-dhcp-client
 Status: install ok installed
@@ -3424,7 +3132,7 @@ Description: runtime components for the Universally Unique ID library
 Original-Maintainer: Debian util-linux Maintainers <ah-util-linux@debian.org>
 
 Package: libmagic1
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 3110
@@ -3433,6 +3141,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: file
 Version: 1:5.20-1ubuntu2
+Config-Version: 1:5.20-1ubuntu2
 Depends: libc6 (>= 2.15), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Suggests: file
@@ -3566,7 +3275,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Sub-Exporter/
 
 Package: libgssapi-krb5-2
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 422
@@ -3575,6 +3284,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: krb5
 Version: 1.12.1+dfsg-18
+Config-Version: 1.12.1+dfsg-18
 Depends: libc6 (>= 2.14), libcomerr2 (>= 1.34), libk5crypto3 (>= 1.8+dfsg), libkrb5-3 (= 1.12.1+dfsg-18), libkrb5support0 (>= 1.12~alpha1+dfsg)
 Pre-Depends: multiarch-support
 Suggests: krb5-doc, krb5-user
@@ -3645,29 +3355,8 @@ Description: library for common error values and messages in GnuPG components
 Original-Maintainer: Debian GnuPG Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
 Homepage: http://www.gnupg.org/related_software/libgpg-error/
 
-Package: libpython-stdlib
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 54
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: python-defaults
-Version: 2.7.9-1
-Depends: libpython2.7-stdlib (>= 2.7.9-1~)
-Description: interactive high-level object-oriented language (default python version)
- Python, the high-level, interactive object oriented language,
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
- .
- This package is a dependency package, which depends on Debian's default
- Python version (currently v2.7).
-Original-Maintainer: Matthias Klose <doko@debian.org>
-Homepage: http://www.python.org/
-
 Package: libtevent0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 98
@@ -3676,6 +3365,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: tevent
 Version: 0.9.22-1
+Config-Version: 0.9.22-1
 Depends: libc6 (>= 2.15), libtalloc2 (>= 2.1.0)
 Pre-Depends: multiarch-support
 Description: talloc-based event loop library - shared library
@@ -3748,7 +3438,7 @@ Description: Debian base system miscellaneous files
 Original-Maintainer: Santiago Vila <sanvila@debian.org>
 
 Package: libgmp10
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 574
@@ -3757,6 +3447,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: gmp
 Version: 2:6.0.0+dfsg-6ubuntu1
+Config-Version: 2:6.0.0+dfsg-6ubuntu1
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: Multiprecision arithmetic library
@@ -3932,23 +3623,6 @@ Description: Perl module to convert POD to README file
 Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Homepage: http://search.cpan.org/dist/Pod-Readme/
 
-Package: localechooser-data
-Status: install ok installed
-Priority: optional
-Section: devel
-Installed-Size: 62
-Maintainer: Ubuntu Installer Team <ubuntu-installer@lists.ubuntu.com>
-Architecture: all
-Source: localechooser
-Version: 2.49ubuntu5
-Depends: iso-codes
-Breaks: system-config-kickstart (<< 2.5.20-0ubuntu17)
-Description: Lists of locales supported by the installer
- This package contains lists of languages, countries, and locales supported
- by the installer, for use by programs that create automatic installation
- scripts.
-Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
-
 Package: libusb-1.0-0
 Status: install ok installed
 Priority: optional
@@ -3995,28 +3669,6 @@ Description: basic terminal type definitions
  vt52, and xterm.
 Homepage: http://invisible-island.net/ncurses/
 Original-Maintainer: Craig Small <csmall@debian.org>
-
-Package: krb5-locales
-Status: install ok installed
-Priority: standard
-Section: localization
-Installed-Size: 2672
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Source: krb5
-Version: 1.12.1+dfsg-18
-Description: Internationalization support for MIT Kerberos
- Kerberos is a system for authenticating users and services on a network.
- Kerberos is a trusted third-party service.  That means that there is a
- third party (the Kerberos server) that is trusted by all the entities on
- the network (users and services, usually called "principals").
- .
- This is the MIT reference implementation of Kerberos V5.
- .
- This package contains internationalized messages for MIT Kerberos.
-Original-Maintainer: Sam Hartman <hartmans@debian.org>
-Homepage: http://web.mit.edu/kerberos/
 
 Package: libc-bin
 Essential: yes
@@ -4150,7 +3802,7 @@ Homepage: http://www.freedesktop.org/wiki/Software/systemd
 Original-Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
 
 Package: libnettle4
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 327
@@ -4159,6 +3811,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: nettle
 Version: 2.7.1-5
+Config-Version: 2.7.1-5
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: low level cryptographic library (symmetric and one-way cryptos)
@@ -4199,13 +3852,14 @@ Homepage: http://apparmor.net/
 Original-Maintainer: Kees Cook <kees@debian.org>
 
 Package: user-setup
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: extra
 Section: admin
 Installed-Size: 554
 Maintainer: Ubuntu Installer Team <ubuntu-installer@lists.ubuntu.com>
 Architecture: all
 Version: 1.48ubuntu5
+Config-Version: 1.48ubuntu5
 Depends: debconf (>= 0.5) | debconf-2.0, passwd, adduser
 Description: Set up initial user and password
  This package creates an initial user, using the same code as is
@@ -4214,7 +3868,7 @@ Description: Set up initial user and password
 Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
 
 Package: libldap-2.4-2
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 511
@@ -4223,6 +3877,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: openldap
 Version: 2.4.31-1+nmu2ubuntu12
+Config-Version: 2.4.31-1+nmu2ubuntu12
 Replaces: libldap-2.3-0, libldap2
 Depends: libc6 (>= 2.14), libgcrypt20 (>= 1.6.1), libgnutls-deb0-28 (>= 3.3.0), libgssapi3-heimdal (>= 1.4.0+git20110226), libsasl2-2
 Pre-Depends: multiarch-support
@@ -4259,7 +3914,7 @@ Homepage: http://savannah.nongnu.org/projects/sysvinit
 Original-Maintainer: Debian sysvinit maintainers <pkg-sysvinit-devel@lists.alioth.debian.org>
 
 Package: libheimbase1-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 131
@@ -4268,6 +3923,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - Base library
@@ -4341,7 +3997,7 @@ Homepage: http://gcc.gnu.org/
 Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 
 Package: libp11-kit0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 334
@@ -4350,6 +4006,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: p11-kit
 Version: 0.20.7-1
+Config-Version: 0.20.7-1
 Depends: libc6 (>= 2.16), libffi6 (>= 3.0.4)
 Pre-Depends: multiarch-support
 Description: Library for loading and coordinating access to PKCS#11 modules - runtime
@@ -4366,7 +4023,7 @@ Original-Maintainer: Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.de
 Homepage: http://p11-glue.freedesktop.org/p11-kit.html
 
 Package: libgnutls-openssl27
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 108
@@ -4375,6 +4032,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: gnutls28
 Version: 3.3.8-3ubuntu3
+Config-Version: 3.3.8-3ubuntu3
 Depends: libgnutls-deb0-28 (= 3.3.8-3ubuntu3), libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: GNU TLS library - OpenSSL wrapper
@@ -4420,7 +4078,7 @@ Description: Debian Configuration Management System (C-implementation library)
 Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
 
 Package: libgnutls-deb0-28
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 1380
@@ -4429,6 +4087,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: gnutls28
 Version: 3.3.8-3ubuntu3
+Config-Version: 3.3.8-3ubuntu3
 Replaces: gnutls0, gnutls0.4, gnutls3
 Depends: libc6 (>= 2.17), libgmp10 (>= 2:6), libhogweed2 (>= 2.7), libnettle4 (>= 2.7), libp11-kit0 (>= 0.20.7), libtasn1-6 (>= 4.1-0), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
@@ -4541,7 +4200,7 @@ Homepage: http://www.freedesktop.org/wiki/Software/systemd
 Original-Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
 
 Package: libpython2.7
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 3607
@@ -4550,6 +4209,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: python2.7
 Version: 2.7.9-2ubuntu3
+Config-Version: 2.7.9-2ubuntu3
 Replaces: python2.7 (<< 2.6)
 Depends: libpython2.7-stdlib (= 2.7.9-2ubuntu3), libc6 (>= 2.15), zlib1g (>= 1:1.2.0)
 Pre-Depends: multiarch-support
@@ -4620,7 +4280,7 @@ Description: Secure Sockets Layer toolkit - cryptographic utility
 Original-Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
 
 Package: libplymouth4
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 323
@@ -4629,6 +4289,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: plymouth
 Version: 0.9.0-0ubuntu9
+Config-Version: 0.9.0-0ubuntu9
 Replaces: plymouth (<< 0.7.0+git20090207-0ubuntu0.1~ppa4)
 Depends: libc6 (>= 2.14), libpng12-0 (>= 1.2.13-4), libudev1 (>= 183)
 Pre-Depends: multiarch-support
@@ -4641,7 +4302,7 @@ Description: graphical boot animation and logger - shared libraries
  This package contains the shared libraries.
 
 Package: wget
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: important
 Section: web
 Installed-Size: 684
@@ -4649,6 +4310,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Multi-Arch: foreign
 Version: 1.16.1-1ubuntu1
+Config-Version: 1.16.1-1ubuntu1
 Depends: libc6 (>= 2.17), libidn11 (>= 1.13), libpcre3, libssl1.0.0 (>= 1.0.1), libuuid1 (>= 2.16), zlib1g (>= 1:1.1.4)
 Recommends: ca-certificates
 Conflicts: wget-ssl
@@ -4765,7 +4427,7 @@ Original-Maintainer: Andreas Metzler <ametzler@debian.org>
 Homepage: http://www.gnu.org/software/autogen/
 
 Package: libsqlite3-0
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 902
@@ -4774,6 +4436,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: sqlite3
 Version: 3.8.7.4-1
+Config-Version: 3.8.7.4-1
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: SQLite 3 shared library
@@ -4843,7 +4506,7 @@ Description: commandline package manager
 Original-Maintainer: APT Development Team <deity@lists.debian.org>
 
 Package: libmpfr4
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 780
@@ -4852,6 +4515,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: mpfr4
 Version: 3.1.2-3
+Config-Version: 3.1.2-3
 Depends: libc6 (>= 2.14), libgmp10
 Pre-Depends: multiarch-support
 Conflicts: libgmp3 (<< 4.1.4-3)
@@ -4956,7 +4620,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Log-Message/
 
 Package: libcloog-isl4
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 199
@@ -4965,6 +4629,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: cloog
 Version: 0.18.2-3
+Config-Version: 0.18.2-3
 Depends: libc6 (>= 2.14), libgmp10, libisl13 (>= 0.13)
 Pre-Depends: multiarch-support
 Description: Chunky Loop Generator (runtime library)
@@ -5005,7 +4670,7 @@ Description: on-line manual pager
 Homepage: http://man-db.nongnu.org/
 
 Package: libisl13
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 1421
@@ -5014,6 +4679,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: isl
 Version: 0.14-1
+Config-Version: 0.14-1
 Depends: libc6 (>= 2.14), libgmp10
 Pre-Depends: multiarch-support
 Description: manipulating sets and relations of integer points bounded by linear constraints
@@ -5057,7 +4723,7 @@ Homepage: http://www.vim.org/
 Original-Maintainer: Debian Vim Maintainers <pkg-vim-maintainers@lists.alioth.debian.org>
 
 Package: libavahi-client3
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 138
@@ -5066,6 +4732,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: avahi
 Version: 0.6.31-4ubuntu4
+Config-Version: 0.6.31-4ubuntu4
 Depends: libavahi-common3 (>= 0.6.22), libc6 (>= 2.4), libdbus-1-3 (>= 1.1.1)
 Pre-Depends: multiarch-support
 Description: Avahi client library
@@ -5111,7 +4778,7 @@ Homepage: http://pam.sourceforge.net/
 Original-Maintainer: Steve Langasek <vorlon@debian.org>
 
 Package: libmpc3
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: extra
 Section: libs
 Installed-Size: 130
@@ -5120,6 +4787,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: mpclib3
 Version: 1.0.3-1
+Config-Version: 1.0.3-1
 Depends: libc6 (>= 2.4), libgmp10, libmpfr4 (>= 3.1.2)
 Pre-Depends: multiarch-support
 Description: multiple precision complex floating-point library
@@ -5189,7 +4857,7 @@ Homepage: http://gcc.gnu.org/
 Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 
 Package: libtalloc2
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 102
@@ -5198,6 +4866,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: talloc
 Version: 2.1.1-2
+Config-Version: 2.1.1-2
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: hierarchical pool based memory allocator
@@ -5224,7 +4893,7 @@ Homepage: http://gcc.gnu.org/
 Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 
 Package: libkrb5-3
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 1004
@@ -5233,6 +4902,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: krb5
 Version: 1.12.1+dfsg-18
+Config-Version: 1.12.1+dfsg-18
 Depends: libc6 (>= 2.16), libcomerr2 (>= 1.34), libk5crypto3 (>= 1.9+dfsg~beta1), libkeyutils1 (>= 1.5.9), libkrb5support0 (= 1.12.1+dfsg-18)
 Pre-Depends: multiarch-support
 Recommends: krb5-locales
@@ -5252,38 +4922,15 @@ Description: MIT Kerberos runtime libraries
 Original-Maintainer: Sam Hartman <hartmans@debian.org>
 Homepage: http://web.mit.edu/kerberos/
 
-Package: lzma
-Status: install ok installed
-Priority: required
-Section: base
-Installed-Size: 145
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 9.22-2ubuntu2
-Depends: libc6 (>= 2.14), libgcc1 (>= 1:4.1.1), libstdc++6 (>= 4.4.0)
-Conflicts: xz-lzma (<< 5.1.1alpha+20110809-2)
-Description: Compression and decompression in the LZMA format - command line utility
- The Lempel-Ziv Markov-chain Algorithm is a compression method based on
- the famous LZ77 algorithm, and was first introduced by 7-Zip for use in
- 7z archives.
- .
- Its main characteristics are a very high compression ratio, with high RAM
- usage, and fast decompression, with low RAM usage. These properties make
- it well suited to embedded uses, such as for ROM (firmware) compression.
- .
- This package provides the lzma command line utility, which has a
- familiar gzip-like interface.
-Homepage: http://www.7-zip.org/sdk.html
-Original-Maintainer: Mohammed Adnène Trojette <adn+deb@diwi.org>
-
 Package: binutils
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: devel
 Installed-Size: 12428
 Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Version: 2.25-5ubuntu7
+Config-Version: 2.25-5ubuntu7
 Replaces: binutils-gold (<< 2.20.51.20100415), binutils-mingw-w64-i686 (<< 2.23.52.20130612-1+3), binutils-mingw-w64-x86-64 (<< 2.23.52.20130612-1+3)
 Provides: binutils-gold, elf-binutils
 Depends: libc6 (>= 2.14), zlib1g (>= 1:1.2.0)
@@ -5297,7 +4944,7 @@ Description: GNU assembler, linker and binary utilities
 Original-Maintainer: Matthias Klose <doko@debian.org>
 
 Package: libffi6
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 71
@@ -5306,6 +4953,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: libffi
 Version: 3.2.1-2
+Config-Version: 3.2.1-2
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: Foreign Function Interface library runtime
@@ -5338,46 +4986,8 @@ Description: Dynamic library for security auditing - common files
 Homepage: http://people.redhat.com/sgrubb/audit/
 Original-Maintainer: Laurent Bigonville <bigon@debian.org>
 
-Package: libssl-doc
-Status: install ok installed
-Priority: optional
-Section: doc
-Installed-Size: 1457
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Source: openssl
-Version: 1.0.1f-1ubuntu11
-Replaces: libssl-dev (<< 1.0.0)
-Breaks: libssl-dev (<< 1.0.0)
-Description: Secure Sockets Layer toolkit - development documentation
- This package is part of the OpenSSL project's implementation of the SSL
- and TLS cryptographic protocols for secure communication over the
- Internet.
- .
- It contains manpages and demo files for libssl and libcrypto.
-Original-Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
-
-Package: libc-dev-bin
-Status: install ok installed
-Priority: optional
-Section: libdevel
-Installed-Size: 391
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Source: glibc
-Version: 2.21-0ubuntu4
-Replaces: libc0.1-dev, libc0.3-dev, libc6-dev, libc6.1-dev
-Depends: libc6 (>> 2.21), libc6 (<< 2.22)
-Recommends: manpages-dev
-Description: GNU C Library: Development binaries
- This package contains utility programs related to the GNU C Library
- development package.
-Homepage: http://www.gnu.org/software/libc/libc.html
-Original-Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
-
 Package: libavahi-common3
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 119
@@ -5386,6 +4996,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: avahi
 Version: 0.6.31-4ubuntu4
+Config-Version: 0.6.31-4ubuntu4
 Depends: libc6 (>= 2.14), libavahi-common-data
 Pre-Depends: multiarch-support
 Description: Avahi common library
@@ -5416,7 +5027,7 @@ Description: binaries used by initramfs-tools
 Original-Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 
 Package: libkrb5-26-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 658
@@ -5425,6 +5036,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libasn1-8-heimdal (>= 1.6~git20131117), libc6 (>= 2.15), libcomerr2 (>= 1.41.11), libhcrypto4-heimdal (>= 1.4.0+git20110226), libheimbase1-heimdal (>= 1.6~git20131117), libhx509-5-heimdal (>= 1.4.0+git20110226), libroken18-heimdal (>= 1.6~git20131117), libsqlite3-0 (>= 3.5.9), libwind0-heimdal (>= 1.6~git20120311)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - libraries
@@ -5604,7 +5216,7 @@ Description: device mounting library
 Original-Maintainer: Debian util-linux Maintainers <ah-util-linux@debian.org>
 
 Package: libkeyutils1
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: libs
 Installed-Size: 55
@@ -5613,6 +5225,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: keyutils
 Version: 1.5.9-5ubuntu1
+Config-Version: 1.5.9-5ubuntu1
 Depends: libc6 (>= 2.14)
 Pre-Depends: multiarch-support
 Description: Linux Key Management Utilities (library)
@@ -5656,7 +5269,7 @@ Description: collection of more utilities from FreeBSD
 Original-Maintainer: Debian Bsdmainutils Team <pkg-bsdmainutils@teams.debian.net>
 
 Package: libsasl2-modules
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 243
@@ -5665,6 +5278,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: cyrus-sasl2
 Version: 2.1.26.dfsg1-13
+Config-Version: 2.1.26.dfsg1-13
 Depends: libc6 (>= 2.14), libssl1.0.0 (>= 1.0.0)
 Suggests: libsasl2-modules-otp, libsasl2-modules-ldap, libsasl2-modules-sql, libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
 Breaks: logcheck-database (<= 1.3.16~)
@@ -5730,7 +5344,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Module-Build
 
 Package: libgssapi3-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 332
@@ -5739,6 +5353,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libasn1-8-heimdal (>= 1.4.0+git20110226), libc6 (>= 2.14), libcomerr2 (>= 1.01), libhcrypto4-heimdal (>= 1.4.0+git20110226), libheimntlm0-heimdal (>= 1.4.0+git20110226), libkrb5-26-heimdal (>= 1.6~git20131117), libroken18-heimdal (>= 1.4.0+git20110226)
 Pre-Depends: multiarch-support
 Conflicts: libgssapi3
@@ -5751,7 +5366,7 @@ Original-Maintainer: Brian May <bam@debian.org>
 Homepage: http://www.h5l.org/
 
 Package: libpython2.7-minimal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: python
 Installed-Size: 2694
@@ -5760,6 +5375,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: python2.7
 Version: 2.7.9-2ubuntu3
+Config-Version: 2.7.9-2ubuntu3
 Replaces: libpython2.7-stdlib (<< 2.7.8-7), python2.7 (<< 2.7.4-2), python2.7-minimal (<< 2.7.3-10)
 Recommends: libpython2.7-stdlib
 Breaks: python2.7-minimal (<< 2.7.4~rc1-1~)
@@ -5770,31 +5386,6 @@ Description: Minimal subset of the Python language (version 2.7)
  This package contains some essential modules. It is normally not
  used on it's own, but as a dependency of python2.7-minimal.
 Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: samba-common-bin
-Status: install ok installed
-Priority: optional
-Section: net
-Installed-Size: 1545
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: samba
-Version: 2:4.1.13+dfsg-4ubuntu3
-Replaces: python-samba (<< 2:4.0.6~), samba-common (<< 2:3.4.0~pre2-1), samba-doc (<< 2:4.0.5~), samba4-common (<< 4.0.0~alpha7-1), samba4-common-bin
-Depends: python, python-samba, samba-common (= 2:4.1.13+dfsg-4ubuntu3), python2.7:any, libbsd0 (>= 0.0), libc6 (>= 2.14), libcomerr2 (>= 1.01), libgssapi3-heimdal (>= 1.4.0+git20110226), libkrb5-26-heimdal (>= 1.4.0+git20110226), libldap-2.4-2 (>= 2.4.7), libncurses5 (>= 5.5-5~), libpopt0 (>= 1.14), libreadline6 (>= 6.0), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtevent0 (>= 0.9.12), libtinfo5, libwbclient0 (>= 2:4.0.3+dfsg1), samba-libs (= 2:4.1.13+dfsg-4ubuntu3)
-Suggests: heimdal-clients
-Conflicts: samba (<< 2:3.3.0~rc2-5), samba-common (<< 2:3.3.0~rc2-5), samba-doc (<< 2:4.0.5~)
-Description: Samba common files used by both the server and the client
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file sharing with Microsoft Windows, OS X,
- and other Unix systems.  Samba can also function as a domain controller
- or member server in both NT4-style and Active Directory domains.
- .
- This package contains the common files that are used by both the server
- (provided in the samba package) and the client (provided in the samba-clients
- package).
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 
 Package: libpci3
 Status: install ok installed
@@ -6033,27 +5624,6 @@ Description: terminal-related programs and man pages
 Homepage: http://invisible-island.net/ncurses/
 Original-Maintainer: Craig Small <csmall@debian.org>
 
-Package: libc6-dev
-Status: install ok installed
-Priority: optional
-Section: libdevel
-Installed-Size: 12410
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: glibc
-Version: 2.21-0ubuntu4
-Provides: libc-dev
-Depends: libc6 (= 2.21-0ubuntu4), libc-dev-bin (= 2.21-0ubuntu4), linux-libc-dev
-Suggests: glibc-doc, manpages-dev
-Breaks: binutils (<< 2.20.1-1), binutils-gold (<< 2.20.1-11), cmake (<< 2.8.4+dfsg.1-5), gcc-4.4 (<< 4.4.6-4), gcc-4.5 (<< 4.5.3-2), gcc-4.6 (<< 4.6.0-12), libhwloc-dev (<< 1.2-3), libjna-java (<< 3.2.7-4), liblouis-dev (<< 2.3.0-2), liblouisxml-dev (<< 2.4.0-2), make (<< 3.81-8.1), pkg-config (<< 0.26-1)
-Conflicts: libc0.1-dev, libc0.3-dev, libc6.1-dev
-Description: GNU C Library: Development Libraries and Header Files
- Contains the symlinks, headers, and object files needed to compile
- and link programs which use the standard C library.
-Homepage: http://www.gnu.org/software/libc/libc.html
-Original-Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
-
 Package: libslang2
 Status: install ok installed
 Priority: required
@@ -6265,7 +5835,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Text-Template/
 
 Package: libheimntlm0-heimdal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 103
@@ -6274,6 +5844,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: heimdal
 Version: 1.6~rc2+dfsg-9
+Config-Version: 1.6~rc2+dfsg-9
 Depends: libc6 (>= 2.4), libhcrypto4-heimdal (>= 1.4.0+git20110226), libkrb5-26-heimdal (>= 1.4.0+git20110226), libroken18-heimdal (>= 1.4.0+git20110226)
 Pre-Depends: multiarch-support
 Description: Heimdal Kerberos - NTLM support library
@@ -6332,31 +5903,8 @@ Description: GNU Transactional Memory Library
 Homepage: http://gcc.gnu.org/
 Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 
-Package: libpython2.7-stdlib
-Status: install ok installed
-Priority: standard
-Section: python
-Installed-Size: 8393
-Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: python2.7
-Version: 2.7.9-2ubuntu3
-Replaces: python2.7 (<< 2.7.5-0~)
-Provides: python-argparse, python2.7-argparse, python2.7-celementtree, python2.7-cjkcodecs, python2.7-ctypes, python2.7-elementtree, python2.7-profiler, python2.7-wsgiref
-Depends: libpython2.7-minimal (= 2.7.9-2ubuntu3), mime-support, libbz2-1.0, libc6 (>= 2.15), libdb5.3, libexpat1 (>= 2.1~beta3), libffi6 (>= 3.0.4), libncursesw5 (>= 5.6+20070908), libreadline6 (>= 6.0), libsqlite3-0 (>= 3.5.9), libssl1.0.0 (>= 1.0.1), libtinfo5
-Breaks: python-urllib3 (<< 1.9.1-3)
-Description: Interactive high-level object-oriented language (standard library, version 2.7)
- Python is a high-level, interactive, object-oriented language. Its 2.7 version
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
- .
- This package contains Python 2.7's standard library. It is normally not
- used on its own, but as a dependency of python2.7.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
 Package: python
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: python
 Installed-Size: 680
@@ -6365,6 +5913,7 @@ Architecture: amd64
 Multi-Arch: allowed
 Source: python-defaults
 Version: 2.7.9-1
+Config-Version: 2.7.9-1
 Replaces: python-dev (<< 2.6.5-2)
 Provides: python-ctypes, python-email, python-importlib, python-profiler, python-wsgiref
 Depends: python2.7 (>= 2.7.9-1~), libpython-stdlib (= 2.7.9-1)
@@ -6631,7 +6180,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/Class-C3
 
 Package: python2.7-minimal
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: standard
 Section: python
 Installed-Size: 3820
@@ -6640,6 +6189,7 @@ Architecture: amd64
 Multi-Arch: allowed
 Source: python2.7
 Version: 2.7.9-2ubuntu3
+Config-Version: 2.7.9-2ubuntu3
 Replaces: python2.7 (<< 2.7.8-7~)
 Depends: libpython2.7-minimal (= 2.7.9-2ubuntu3), zlib1g (>= 1:1.2.0)
 Pre-Depends: libc6 (>= 2.15)
@@ -6652,50 +6202,6 @@ Description: Minimal subset of the Python language (version 2.7)
  See /usr/share/doc/python2.7-minimal/README.Debian for a list of the modules
  contained in this package.
 Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: libavahi-common-data
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 116
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: avahi
-Version: 0.6.31-4ubuntu4
-Description: Avahi common data files
- Avahi is a fully LGPL framework for Multicast DNS Service Discovery.
- It allows programs to publish and discover services and hosts
- running on a local network with no specific configuration. For
- example you can plug into a network and instantly find printers to
- print to, files to look at and people to talk to.
- .
- This package contains common data files for avahi.
-Homepage: http://avahi.org/
-Original-Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-
-Package: eject
-Status: install ok installed
-Priority: optional
-Section: utils
-Installed-Size: 160
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 2.1.5+deb1+cvs20081104-13.1
-Depends: libc6 (>= 2.8), libdevmapper1.02.1 (>= 2:1.02.20)
-Suggests: cdtool, setcd
-Description: ejects CDs and operates CD-Changers under Linux
- This little program will eject CD-ROMs (assuming your drive supports
- the CDROMEJECT ioctl). It also allows setting the autoeject feature.
- .
- On supported ATAPI/IDE multi-disc CD-ROM changers, it allows changing
- the active disc.
- .
- You can also use eject to properly disconnect external mass-storage
- devices like digital cameras or portable music players.
-Original-Maintainer: Frank Lichtenheld <djpig@debian.org>
-Homepage: http://www.pobox.com/~tranter/eject.html
 
 Package: sed
 Essential: yes
@@ -6718,7 +6224,7 @@ Homepage: http://www.gnu.org/software/sed/
 Original-Maintainer: Clint Adams <clint@debian.org>
 
 Package: libcups2
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: libs
 Installed-Size: 2704
@@ -6727,6 +6233,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: cups
 Version: 2.0.2-1ubuntu3
+Config-Version: 2.0.2-1ubuntu3
 Depends: libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libc6 (>= 2.14), libgnutls-deb0-28 (>= 3.3.0), libgssapi-krb5-2 (>= 1.10+dfsg~), zlib1g (>= 1:1.2.0)
 Pre-Depends: multiarch-support
 Suggests: cups-common
@@ -6841,26 +6348,6 @@ Description: Basic TCP/IP networking system
  networking.
 Original-Maintainer: Marco d'Itri <md@linux.it>
 
-Package: zlib1g-dev
-Status: install ok installed
-Priority: optional
-Section: libdevel
-Installed-Size: 451
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: zlib
-Version: 1:1.2.8.dfsg-2ubuntu1
-Provides: libz-dev
-Depends: zlib1g (= 1:1.2.8.dfsg-2ubuntu1), libc6-dev | libc-dev
-Conflicts: zlib1-dev
-Description: compression library - development
- zlib is a library implementing the deflate compression method found
- in gzip and PKZIP.  This package includes the development support
- files.
-Homepage: http://zlib.net/
-Original-Maintainer: Mark Brown <broonie@debian.org>
-
 Package: libcpan-meta-perl
 Status: install ok installed
 Priority: optional
@@ -6882,7 +6369,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/CPAN-Meta
 
 Package: python-talloc
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: python
 Installed-Size: 78
@@ -6890,6 +6377,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Source: talloc
 Version: 2.1.1-2
+Config-Version: 2.1.1-2
 Provides: python2.7-talloc
 Depends: libc6 (>= 2.2.5), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213), python (>= 2.7), python (<< 2.8)
 Pre-Depends: multiarch-support
@@ -6902,7 +6390,7 @@ Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debi
 Homepage: http://talloc.samba.org/
 
 Package: python-ldb
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: python
 Installed-Size: 148
@@ -6910,6 +6398,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Source: ldb
 Version: 1:1.1.18-1
+Config-Version: 1:1.1.18-1
 Provides: python2.7-ldb
 Depends: libldb1 (= 1:1.1.18-1), python (>= 2.7), python (<< 2.8), libc6 (>= 2.2.5), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213)
 Pre-Depends: multiarch-support

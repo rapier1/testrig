@@ -1,3 +1,0 @@
-#!/bin/sh
-
-ln -s /dev/null /root/lib/systemd/system/cdrom.mount

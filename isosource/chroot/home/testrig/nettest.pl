@@ -68,7 +68,9 @@ sub fetchUUID {
 }
 
 sub notice {
-   print<<EOF;
+    $cmd = "/usr/bin/clear";
+    runSystem ($cmd, 0, 0);
+    print<<EOF;
 The TestRig 2.0 automated network test suit will run a series of tests
 against a host a remote host. The goal is to establish a baseline set of
 metrics and collect data using an optimally configured client. This
@@ -156,7 +158,7 @@ sub runSystem {
     
     ($stdout, $stderr, $status) = 
 	capture { system($cmd);};
-    
+
     if ($status == -1) {
         logger ("crit", "System command $cmd failed to execute");
     } elsif ($status & 127) {
@@ -387,8 +389,11 @@ sub unmountEncfs {
 # we need to make sure the clock is synched via ntpd
 # or the tests via bwctl will fail
 sub syncClock {
+    logger("warn", "Synching local clock\n");
     my $command = "/usr/sbin/ntpd";
     runSystem($command, 0, 1);
+    #give it a moment to sync
+    sleep 2;
 }
 
 sub runTcptrace {

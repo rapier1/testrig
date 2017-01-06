@@ -575,10 +575,10 @@ sub isoAvailableMail {
     my $passphrase = generatePassword();
     my $hash = sha256_hex($passphrase);
     my $url = "http://testrig.psc.edu/isofetch.php?uuid=$uuid&known_hash=$hash";
-    my $text = "$config_out->{user}->{username}.\n\n";
+    my $text = "Hello $config_out->{user}->{username},\n\n";
     $text .= "The Testrig 2.0 ISO that you have requested is now available for download.\n";
-    $text .= "This ISO will only be available for 7 days from the following link.\n $url\n";
-    $text .= "At the link please enter the folllowing code to start your download\n";
+    $text .= "This ISO will only be available for 4 days from the following link.\n $url\n";
+    $text .= "At the link please enter the folllowing code to start your download\n\n";
     $text .= "Claim code: $passphrase\n";
 	
     my $msg = MIME::Lite->new (
@@ -641,20 +641,22 @@ sub generateISO {
     #Boring, big static text prompts needed for 
     #buliding the ISO
     my $bootPrompt = <<'END_PROMPT';
+
 ********************************
 
 Welcome to TestRig 2.0!
 
-Type 'live' to begin
+The system will being booting shortly. 
 
 ********************************
 END_PROMPT
     
     my $isolinuxCfg = <<'END_SYSPROMPT';
+DEFAULT live
 LABEL live
   menu label ^Start or install TestRig
   kernel /casper/vmlinuz
-  append  file=/cdrom/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz quiet splash --
+  append boot=casper initrd=/casper/initrd.lz quiet 
 LABEL check
   menu label ^Check CD for defects
   kernel /casper/vmlinuz
@@ -669,7 +671,7 @@ LABEL hd
   append -
 DISPLAY isolinux.txt
 TIMEOUT 300
-PROMPT 1
+PROMPT 0
 END_SYSPROMPT
 
     my $diskDefines = <<'END_DISKDEFINES';
@@ -768,6 +770,9 @@ END_DISKDEFINES
     $cmd="mksquashfs $chrootPath $imagePath/casper/filesystem.squashfs -e boot";
     runSystem($cmd, $uuid);
 
+    $cmd = "printf $(du -sx --block-size=1 $chrootPath | cut -f1) > $imagePath/casper/filesystem.size";
+    runSystem($cmd, $uuid);
+    
     #calc md5sum
     $cmd="cd $imagePath && find . -type f -print0 | xargs -0 md5sum | grep -v \"\./md5sum.txt\" > $imagePath/md5sum.txt";
     runSystem($cmd, $uuid);

@@ -274,3 +274,93 @@ Start-Date: 2017-01-04  18:57:09
 Commandline: apt-get remove netcat-openbsd
 Remove: netcat-openbsd:amd64 (1.105-7ubuntu1)
 End-Date: 2017-01-04  18:57:10
+
+Start-Date: 2017-01-04  21:18:43
+Commandline: apt-get remove wget
+Remove: wget:amd64 (1.16.1-1ubuntu1)
+End-Date: 2017-01-04  21:18:43
+
+Start-Date: 2017-01-04  21:20:12
+Commandline: apt-get remove cpp
+Remove: cpp:amd64 (4.9.2-2ubuntu2)
+End-Date: 2017-01-04  21:20:13
+
+Start-Date: 2017-01-04  21:20:50
+Commandline: apt-get remove cpp-4.9
+Remove: cpp-4.9:amd64 (4.9.2-10ubuntu13)
+End-Date: 2017-01-04  21:20:50
+
+Start-Date: 2017-01-04  21:21:04
+Commandline: apt-get autoremove
+Remove: libisl13:amd64 (0.14-1), libmpc3:amd64 (1.0.3-1), libmpfr4:amd64 (3.1.2-3), ca-certificates:amd64 (20141019), libcloog-isl4:amd64 (0.18.2-3), openssl:amd64 (1.0.1f-1ubuntu11)
+End-Date: 2017-01-04  21:21:07
+
+Start-Date: 2017-01-04  21:21:21
+Commandline: apt-get install ca-certificates openssl
+Install: ca-certificates:amd64 (20141019), openssl:amd64 (1.0.1f-1ubuntu11)
+End-Date: 2017-01-04  21:21:41
+
+Start-Date: 2017-01-04  21:24:35
+Commandline: apt-get remove iputils-ping
+Remove: iputils-ping:amd64 (20121221-5ubuntu2)
+End-Date: 2017-01-04  21:24:36
+
+Start-Date: 2017-01-04  21:25:53
+Commandline: apt-get remove samba-common
+Remove: casper:amd64 (1.360), lupin-casper:amd64 (0.55), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3), cifs-utils:amd64 (6.0-1ubuntu2), samba-common:amd64 (4.1.13+dfsg-4ubuntu3)
+End-Date: 2017-01-04  21:25:53
+
+Start-Date: 2017-01-04  21:26:09
+Commandline: apt-get autoremove
+Remove: mime-support:amd64 (3.58ubuntu1), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13), libgnutls-openssl27:amd64 (3.3.8-3ubuntu3), python-crypto:amd64 (2.6.1-5), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3), python-samba:amd64 (4.1.13+dfsg-4ubuntu3), python-minimal:amd64 (2.7.9-1), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9), libpopt0:amd64 (1.16-10), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9), libkrb5-3:amd64 (1.12.1+dfsg-18), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9), libcups2:amd64 (2.0.2-1ubuntu3), lzma:amd64 (9.22-2ubuntu2), libntdb1:amd64 (1.0-5), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9), python-tdb:amd64 (1.3.4-1), file:amd64 (5.20-1ubuntu2), libmagic1:amd64 (5.20-1ubuntu2), python2.7:amd64 (2.7.9-2ubuntu3), libtevent0:amd64 (0.9.22-1), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12), libsqlite3-0:amd64 (3.8.7.4-1), eject:amd64 (2.1.5+deb1+cvs20081104-13.1), krb5-locales:amd64 (1.12.1+dfsg-18), libldb1:amd64 (1.1.18-1), libavahi-common-data:amd64 (0.6.31-4ubuntu4), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9), binutils:amd64 (2.25-5ubuntu7), libavahi-client3:amd64 (0.6.31-4ubuntu4), libtdb1:amd64 (1.3.4-1), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3), libpython2.7:amd64 (2.7.9-2ubuntu3), libhogweed2:amd64 (2.7.1-5), libp11-kit0:amd64 (0.20.7-1), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9), keyutils:amd64 (1.5.9-5ubuntu1), python:amd64 (2.7.9-1), libplymouth4:amd64 (0.9.0-0ubuntu9), libavahi-common3:amd64 (0.6.31-4ubuntu4), libpython-stdlib:amd64 (2.7.9-1), libtalloc2:amd64 (2.1.1-2), libnettle4:amd64 (2.7.1-5), python2.7-minimal:amd64 (2.7.9-2ubuntu3), libbsd0:amd64 (0.7.0-2), python-talloc:amd64 (2.1.1-2), libsasl2-modules:amd64 (2.1.26.dfsg1-13), ucf:amd64 (3.0030), libsasl2-2:amd64 (2.1.26.dfsg1-13), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9), python-ldb:amd64 (1.1.18-1), libtasn1-6:amd64 (4.2-2ubuntu1), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9), localechooser-data:amd64 (2.49ubuntu5), libkeyutils1:amd64 (1.5.9-5ubuntu1), python-ntdb:amd64 (1.0-5), user-setup:amd64 (1.48ubuntu5), iso-codes:amd64 (3.57-1), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3), libkrb5support0:amd64 (1.12.1+dfsg-18), libk5crypto3:amd64 (1.12.1+dfsg-18), libffi6:amd64 (3.2.1-2)
+End-Date: 2017-01-04  21:26:14
+
+Start-Date: 2017-01-04  21:28:31
+Commandline: apt-get remove linux-headers-4.1.0.web10g+
+Remove: linux-headers-4.1.0.web10g+:amd64 (4.1.0.web10g+-3)
+End-Date: 2017-01-04  21:28:32
+
+Start-Date: 2017-01-04  21:30:08
+Commandline: apt-get remove libc-dev-bin
+Remove: zlib1g-dev:amd64 (1.2.8.dfsg-2ubuntu1), libc-dev-bin:amd64 (2.21-0ubuntu4), libssl-dev:amd64 (1.0.1f-1ubuntu11), libc6-dev:amd64 (2.21-0ubuntu4)
+End-Date: 2017-01-04  21:30:08
+
+Start-Date: 2017-01-04  21:30:19
+Commandline: apt-get autoremove
+Remove: libssl-doc:amd64 (1.0.1f-1ubuntu11)
+End-Date: 2017-01-04  21:30:19
+
+Start-Date: 2017-01-04  21:30:50
+Commandline: apt-get remove make
+Remove: make:amd64 (4.0-8.1)
+End-Date: 2017-01-04  21:30:50
+
+Start-Date: 2017-01-04  21:32:16
+Commandline: apt-get remove tcpdump
+Remove: tcpdump:amd64 (4.6.2-4ubuntu1)
+End-Date: 2017-01-04  21:32:16
+
+Start-Date: 2017-01-04  21:32:31
+Commandline: apt-get autoremove
+Remove: libpcap0.8:amd64 (1.6.2-2)
+End-Date: 2017-01-04  21:32:31
+
+Start-Date: 2017-01-04  21:32:41
+Commandline: apt-get install libpcap0.8
+Install: libpcap0.8:amd64 (1.6.2-2)
+End-Date: 2017-01-04  21:32:42
+
+Start-Date: 2017-01-06  21:06:03
+Commandline: apt-get install casper
+Install: mime-support:amd64 (3.58ubuntu1, automatic), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13, automatic), python-crypto:amd64 (2.6.1-5, automatic), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3, automatic), python-samba:amd64 (4.1.13+dfsg-4ubuntu3, automatic), python-minimal:amd64 (2.7.9-1, automatic), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3, automatic), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18, automatic), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libpopt0:amd64 (1.16-10, automatic), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), casper:amd64 (1.360), libkrb5-3:amd64 (1.12.1+dfsg-18, automatic), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libcups2:amd64 (2.0.2-1ubuntu3, automatic), lzma:amd64 (9.22-2ubuntu2, automatic), libntdb1:amd64 (1.0-5, automatic), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-tdb:amd64 (1.3.4-1, automatic), file:amd64 (5.20-1ubuntu2, automatic), libmagic1:amd64 (5.20-1ubuntu2, automatic), python2.7:amd64 (2.7.9-2ubuntu3, automatic), libtevent0:amd64 (0.9.22-1, automatic), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12, automatic), libsqlite3-0:amd64 (3.8.7.4-1, automatic), eject:amd64 (2.1.5+deb1+cvs20081104-13.1, automatic), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3, automatic), krb5-locales:amd64 (1.12.1+dfsg-18, automatic), libldb1:amd64 (1.1.18-1, automatic), libavahi-common-data:amd64 (0.6.31-4ubuntu4, automatic), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libavahi-client3:amd64 (0.6.31-4ubuntu4, automatic), libtdb1:amd64 (1.3.4-1, automatic), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1, automatic), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libpython2.7:amd64 (2.7.9-2ubuntu3, automatic), libhogweed2:amd64 (2.7.1-5, automatic), libp11-kit0:amd64 (0.20.7-1, automatic), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), keyutils:amd64 (1.5.9-5ubuntu1, automatic), python:amd64 (2.7.9-1, automatic), libplymouth4:amd64 (0.9.0-0ubuntu9, automatic), libavahi-common3:amd64 (0.6.31-4ubuntu4, automatic), libpython-stdlib:amd64 (2.7.9-1, automatic), libtalloc2:amd64 (2.1.1-2, automatic), libnettle4:amd64 (2.7.1-5, automatic), python2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), cifs-utils:amd64 (6.0-1ubuntu2, automatic), libbsd0:amd64 (0.7.0-2, automatic), python-talloc:amd64 (2.1.1-2, automatic), libsasl2-modules:amd64 (2.1.26.dfsg1-13, automatic), ucf:amd64 (3.0030, automatic), libsasl2-2:amd64 (2.1.26.dfsg1-13, automatic), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-ldb:amd64 (1.1.18-1, automatic), libtasn1-6:amd64 (4.2-2ubuntu1, automatic), samba-common:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), localechooser-data:amd64 (2.49ubuntu5, automatic), libkeyutils1:amd64 (1.5.9-5ubuntu1, automatic), python-ntdb:amd64 (1.0-5, automatic), user-setup:amd64 (1.48ubuntu5, automatic), iso-codes:amd64 (3.57-1, automatic), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), libkrb5support0:amd64 (1.12.1+dfsg-18, automatic), libk5crypto3:amd64 (1.12.1+dfsg-18, automatic), libffi6:amd64 (3.2.1-2, automatic)
+End-Date: 2017-01-06  21:06:54
+
+Start-Date: 2017-01-06  21:33:37
+Commandline: apt-get remove casper
+Remove: casper:amd64 (1.360)
+End-Date: 2017-01-06  21:33:38
+
+Start-Date: 2017-01-06  21:33:46
+Commandline: apt-get autoremove
+Remove: mime-support:amd64 (3.58ubuntu1), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13), python-crypto:amd64 (2.6.1-5), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3), python-samba:amd64 (4.1.13+dfsg-4ubuntu3), python-minimal:amd64 (2.7.9-1), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9), libpopt0:amd64 (1.16-10), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9), libkrb5-3:amd64 (1.12.1+dfsg-18), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9), libcups2:amd64 (2.0.2-1ubuntu3), lzma:amd64 (9.22-2ubuntu2), libntdb1:amd64 (1.0-5), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9), python-tdb:amd64 (1.3.4-1), file:amd64 (5.20-1ubuntu2), libmagic1:amd64 (5.20-1ubuntu2), python2.7:amd64 (2.7.9-2ubuntu3), libtevent0:amd64 (0.9.22-1), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12), libsqlite3-0:amd64 (3.8.7.4-1), eject:amd64 (2.1.5+deb1+cvs20081104-13.1), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3), krb5-locales:amd64 (1.12.1+dfsg-18), libldb1:amd64 (1.1.18-1), libavahi-common-data:amd64 (0.6.31-4ubuntu4), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9), libavahi-client3:amd64 (0.6.31-4ubuntu4), libtdb1:amd64 (1.3.4-1), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3), libpython2.7:amd64 (2.7.9-2ubuntu3), libhogweed2:amd64 (2.7.1-5), libp11-kit0:amd64 (0.20.7-1), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9), keyutils:amd64 (1.5.9-5ubuntu1), python:amd64 (2.7.9-1), libplymouth4:amd64 (0.9.0-0ubuntu9), libavahi-common3:amd64 (0.6.31-4ubuntu4), libpython-stdlib:amd64 (2.7.9-1), libtalloc2:amd64 (2.1.1-2), libnettle4:amd64 (2.7.1-5), python2.7-minimal:amd64 (2.7.9-2ubuntu3), cifs-utils:amd64 (6.0-1ubuntu2), libbsd0:amd64 (0.7.0-2), python-talloc:amd64 (2.1.1-2), libsasl2-modules:amd64 (2.1.26.dfsg1-13), ucf:amd64 (3.0030), libsasl2-2:amd64 (2.1.26.dfsg1-13), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9), python-ldb:amd64 (1.1.18-1), libtasn1-6:amd64 (4.2-2ubuntu1), samba-common:amd64 (4.1.13+dfsg-4ubuntu3), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9), localechooser-data:amd64 (2.49ubuntu5), libkeyutils1:amd64 (1.5.9-5ubuntu1), python-ntdb:amd64 (1.0-5), user-setup:amd64 (1.48ubuntu5), iso-codes:amd64 (3.57-1), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3), libkrb5support0:amd64 (1.12.1+dfsg-18), libk5crypto3:amd64 (1.12.1+dfsg-18), libffi6:amd64 (3.2.1-2)
+End-Date: 2017-01-06  21:33:50

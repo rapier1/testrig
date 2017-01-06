@@ -20,9 +20,7 @@
 /usr/share/pkgconfig/usbutils.pc
 /usr/share/misc
 /usr/share/man
-/usr/share/man/man1
 /usr/share/man/man1/usb-devices.1.gz
-/usr/share/man/man8
 /usr/share/man/man8/update-usbids.8.gz
 /usr/share/man/man8/lsusb.8.gz
 /usr/share/misc/usb.ids
