@@ -19,17 +19,17 @@ function buildDiv($divID, $dbTableName, $fields)
     //	$fields is an array of fields that you want to select from the DB
     // *RETURN VALUE*: string of HTML which contains a div element and a table composed of
     //		 returned values from the given query
-    
+
     //need an ID that isn't the same as the div for the table element
     $htmlTableID = $divID . "Table";
-    
+
     //Create our Database Handler, $dbh
     $DB_HOST = "192.168.122.1"; //ionia's private IP
     $DB_USERNAME = "testrig";
     $DB_PASSWORD = "tinycats";
     $DB_NAME = "testrig";
     $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
-    
+
     $fieldString = "";
     //Assemble list of fields to retrieve in our select statement (last field can't have a comma!)
     for ($count=0; $count < count($fields); $count++)
@@ -44,20 +44,20 @@ function buildDiv($divID, $dbTableName, $fields)
                     $fieldString = $fieldString . $fields[$count] . ", ";
                 }
         }//END field assembly
-    
+
     //now that we have a string of fields, assemble the query ******CID 5 IS A DUMMY VALUE FOR TESTING - CHANGE IT*****
     $stmnt = "SELECT " . $fieldString . " FROM " . $dbTableName . " WHERE cid = " . $_SESSION["CID"];
     $results = $dbh->query($stmnt);
     //create a div and html table with our query results
     $newDiv = "<div id='$divID' >
-			   <table id='$htmlTableID' border='1'>
+			   <table id='$htmlTableID' class='table'>
 			   <tr>";
 		//create column headers based on $fields
 		for ($counter = 0; $counter < count($fields); $counter++) //assemble each column of the new row
             {
-                $newDiv = $newDiv . "<td>$fields[$counter]</td>";
+                $newDiv = $newDiv . "<th>$fields[$counter]</th>";
             }
-        
+
 		$newDiv = $newDiv . "</tr>";
 		//fill in the table with the results from the query
 		foreach ($results as $row) //go row-by-row through returned query
@@ -71,7 +71,7 @@ function buildDiv($divID, $dbTableName, $fields)
             }
 		//close the table and div tags!
         $newDiv = $newDiv . "</table></div>";
-        
+
 		return $newDiv;
 }//END buildDiv
 
@@ -86,7 +86,7 @@ function logIn($username, $password)
     $DB_NAME = "testrig";
     $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
     $errString = "Incorrect username/password combination";
-    
+
     $stmnt = $dbh->prepare('SELECT tr_username, tr_password, cid, inst_name 
 					FROM customer 
 					WHERE tr_username = :username');
@@ -159,7 +159,7 @@ function generateISORequestForm()
 
     //array of tests. We might be able to make this a little more
     //readable once we get a list of available tests(?) maybe read from DB(??)
-    $allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute", "UDP");
+    $allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute");
     $isoFormInputErrFlag = 0;
 
     //has there been a request sent to the server?
@@ -294,32 +294,44 @@ function generateISORequestForm()
     //we have to do this in a few steps due to the need for PHP_SELF to be in quotes for the redirection to work correctly
 	$serverURL = htmlspecialchars($_SERVER["PHP_SELF"]);
 
-	$isoForm =	'<div id="isoRequestSection" name="isoRequestSection">
-			<form id="isoRequest" name="isoRequest" action="' . $serverURL;
+	$isoForm =	'<form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
 	$isoForm = $isoForm . '" method="post">
-			<fieldset>
-			<legend>ISO Request Form</legend>
-			* required fields <br>
-			IP Address to test*:	  <input type="text" name="isoTestTargetIP" id="isoTestTargetIP">' . $isoFormInputErrors["testTargetIP"] . '<br>
-                        Maximum # of Runs:        <input type="text" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '<br> 
-                        ISO Valid Until:          <input type="date" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '">' . $isoFormInputErrors["validToDate"] . '<br>
-			Trouble Ticket No.*:	  <input type="text" name="isoTroubleTicket" id="isoTroubleTicket">' . $isoFormInputErrors["troubleTicket"] . '<br>
-			Name*:			  <input type="text" name="isoUsername" id="isoUsername">' . $isoFormInputErrors["username"] . '<br>
-			Email*:			  <input type="text" name="isoEmail" id="isoEmail">' . $isoFormInputErrors["email"] . '<br>
-			Affiliation*:		  <input type="text" name="isoAffiliation" id="isoAffiliation">' . $isoFormInputErrors["affiliation"] . '<br>
-			RT Queue Name:            <input type="text" name="queueName" id="queueName"> <?php echo $inputErrors["queueName"]; ?> <br>
+			<legend>ISO Request Form </legend><small>* required fields </small>
+			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
+			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address">' . $isoFormInputErrors["testTargetIP"] . '</div>
+
+			<div class="form-group"> <label for="isoMaxRun">Maximum # of Runs:</label>
+			<input type="text" class="form-control" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '</div>
+
+			<div class="form-group"> <label for="isoValidToDate">ISO Valid Until:</label>
+			<input type="date" class="form-control" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '" >' . $isoFormInputErrors["validToDate"] . '</div>
+
+			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.*:</label>
+			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #">' . $isoFormInputErrors["troubleTicket"] . '</div>
+
+			<div class="form-group"> <label for="isoUsername">Name*:</label>
+			<input type="text" class="form-control" name="isoUsername" id="isoUsername" placeholder="username">' . $isoFormInputErrors["username"] . '</div>
+
+			<div class="form-group"> <label for="isoEmail">Email*:</label>
+			<input type="email" class="form-control" name="isoEmail" id="isoEmail" placeholder="user@emailaddress">' . $isoFormInputErrors["email"] . '</div>
+
+			<div class="form-group"> <label for="isoAffiliation">Affiliation*:</label>
+			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name">' . $isoFormInputErrors["affiliation"] . '</div>
+
+			<div class="form-group"> <label for="queueName">RT Queue Name:</label>
+			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue"> <?php echo $inputErrors["queueName"]; ?> </div>
 			Tests to run*: <br>';
     //break for assembling the checkbox list
-    $testList = '<ul title="Tests to Run">';
+	$testlist = "";
     //assemble the list of tests to choose from dynamically
     foreach ($allTests as $val)
         {
-            $testList = $testList . '<li> <input type="checkbox" name="testCheckbox_list[]" id="testCheckbox_list[]" value=' . $val . '>'. $val .'</li>';
+            $testList = $testList . '<div class="checkbox"><label><input type="checkbox" name="testCheckbox_list[]" id="testCheckbox_list[]" value=' . $val . '>'. $val .'</label>';
         }
-    $testList = $testList . '</ul>'; //Close the list of tests
+    //$testList = $testList . '</ul>'; //Close the list of tests
     $isoForm = $isoForm . $testList; //add it to the form
     //finish the form
-    $isoForm = $isoForm . $isoFormInputErrors["testCSV"] . '<br> <input type="submit" value="Submit"></fieldset></form></div>';
+    $isoForm = $isoForm . '<br>' . $isoFormInputErrors["testCSV"] . '</div> <button type="submit" class="btn btn-primary">Generate New ISO</button></div></form>';
     
     return $isoForm;
     
@@ -411,10 +423,104 @@ function insertNewISORequest($cleanedInputs)
 
 function logOut()
 {
-    
+
 	unset($_SESSION["username"]);
+	unset($_SESSION["CID"]);
+	unset($_SESSION["UID"]);
     session_unset();
     session_destroy();
     header("Location: http://". $_SERVER['SERVER_NAME']. "/login.php");
     die();
 }//END logOut()
+
+
+/*function generateAdminPanel()
+{
+	//This panel is where the user can update their info that is saved into the database. They will need
+	// to provide their password in order for any changes to take effect
+	$url = htmlspecialchars($_SERVER["PHP_SELF"]);
+
+
+	$adminPanel = '<form id="updateContactInformation" role="form" class="form-horizontal col-md-8" action="'. $url . '" method="post">
+
+		<div class="form-group"> 
+			<label for="fName"> First Name*:</label>
+			<input type="text" name="fName" id="fName" class="form-control" value="<?php echo $_REQUEST['fName']?>"> <?php echo $fNameError ?>
+		</div>
+
+        	<div class="form-group">
+			<label for="lName">Last Name*:</label>
+			<input type="text" name="lName" id="lName" class="form-control" value="<?php echo $_REQUEST['lName']?>"> <?php echo $lNameError ?><
+		/div>
+
+        	<div class="form-group"> 
+			<label for="email">Email*:</label>
+			<input type="email" name="email" id="email" class="form-control" value="<?php echo $_REQUEST['email']?>"> <?php echo $emailError ?> 
+		</div>
+
+        	<div class="form-group"> 
+			<label for="testRigUsername">TestRig Username*:</label>
+			<input type="text" name="testRigUsername" id="testRigUsername" class="form-control" value="<?php echo $_REQUEST['testRigUsername']?>"> <?php echo $testRigUsernameError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="testRigPassword">TestRig Password*:</label>
+			<input type="password" name="testRigPassword" id="testRigPassword" class="form-control"> <?php echo $testRigPasswordError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="testRigPasswordConfirm">repeat password:<label>
+			<input type="password" name="testRigPasswordConfirm" id="testRigPasswordConfirm" class="form-control"> <?php echo $testRigPasswordConfirmError ?>
+		</div>
+
+	        <div class="form-group"> 
+			<label for="phoneNumber">Phone Number*:</label>
+			<input type="text" name="phoneNumber" id="phoneNumber" class="form-control"  value="<?php echo $_REQUEST['phoneNumber']?>"> <?php echo $phoneNumberError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="instName">Institution Name*:</label>
+			<input type="text" name="instName" id="instName" class="form-control" value="<?php echo $_REQUEST['instName']?>"> <?php echo $instNameError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="rtEmailAddress">RT Email Address:</label>
+			<input type="text" name="rtEmailAddress" id="rtEmailAddress" class="form-control" value="<?php echo $_REQUEST['rtEmailAddress']?>"> 
+		</div>
+
+        	<div class="form-group"> 
+			<label for="scpUsername">SCP Username:</label>
+			<input type="text" name="scpUsername" id="scpUsername" class="form-control" value="<?php echo $_REQUEST['scpUsername']?>"> <?php echo $scpUsernameError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="scpDstIp">SCP Dst IP:</label>
+			<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> <?php echo $scpDstIpError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="scpPubKey">SCP Public Key*:</label>
+			<input type="textarea" name="scpPubKey" id="scpPubKey" class="form-control"> <?php echo $scpPubKeyError ?>
+		</div>
+
+        	<div class="form-group"> 
+			<label for="scpPrivKey">SCP Private Key*:</label>
+        		<input type="textarea" name="scpPrivKey" id="scpPrivKey" class="form-control"> <?php echo $scpPrivKeyError ?>
+		</div>
+
+        	<div class="form-group"> 
+			 <label for="scpHostPath">SCP Destination Absolute Path*:</label>
+       			 <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control"> <?php echo $hostPathError ?>
+		</div>
+
+	    	<button type="submit" class="btn btn-lg btn-success">Update  Account</button>
+
+	</form>';
+
+
+
+return $adminpanel;
+
+}*/
+
+
