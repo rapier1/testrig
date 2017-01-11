@@ -64,11 +64,13 @@
 	</nav>
 
 <div id="container-main" class="container">
+	<div id="padding-left" class="col-4"></div>
+
 	<div id="container-isolist" class="hidden isoList">
 		<?php	print $isoRequestListDiv; ?>
 	</div>
 
-	<div id="container-isoform" class="col-md-8">
+	<div id="container-isoform" class="">
 		<?php	print $isoForm; ?>
 	</div>
 
@@ -76,6 +78,7 @@
 		<?php   //print $adminPanel; ?>
 	</div>
 
+	<div id="padding-right" class="col-4"></div>
 
 </div> <!-- END Main Container -->
 

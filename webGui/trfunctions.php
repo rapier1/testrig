@@ -296,9 +296,13 @@ function generateISORequestForm()
 
 	$isoForm =	'<form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
 	$isoForm = $isoForm . '" method="post">
-			<legend>ISO Request Form </legend><small>* required fields </small>
+			<small>* required fields </small>
 			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
-			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address">' . $isoFormInputErrors["testTargetIP"] . '</div>
+			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
+			<button type="submit" class="btn btn-primary">Host Search</button></div>
+
+			<div class="form-group hidden"> <label for="psPicker"> PerfSONAR Node Selection </label>
+			</div>
 
 			<div class="form-group"> <label for="isoMaxRun">Maximum # of Runs:</label>
 			<input type="text" class="form-control" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '</div>
@@ -307,19 +311,19 @@ function generateISORequestForm()
 			<input type="date" class="form-control" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '" >' . $isoFormInputErrors["validToDate"] . '</div>
 
 			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.*:</label>
-			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #">' . $isoFormInputErrors["troubleTicket"] . '</div>
+			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #" value="' . $_REQUEST["isoTroubleTicket"] . '">' . $isoFormInputErrors["troubleTicket"] . '</div>
 
 			<div class="form-group"> <label for="isoUsername">Name*:</label>
-			<input type="text" class="form-control" name="isoUsername" id="isoUsername" placeholder="username">' . $isoFormInputErrors["username"] . '</div>
+			<input type="text" class="form-control" name="isoUsername" id="isoUsername" placeholder="username" value="' . $_REQUEST["isoUsername"] . '">' . $isoFormInputErrors["username"] . '</div>
 
 			<div class="form-group"> <label for="isoEmail">Email*:</label>
-			<input type="email" class="form-control" name="isoEmail" id="isoEmail" placeholder="user@emailaddress">' . $isoFormInputErrors["email"] . '</div>
+			<input type="email" class="form-control" name="isoEmail" id="isoEmail" placeholder="user@emailaddress" value ="' . $_REQUEST["isoEmail"] . '">' . $isoFormInputErrors["email"] . '</div>
 
 			<div class="form-group"> <label for="isoAffiliation">Affiliation*:</label>
-			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name">' . $isoFormInputErrors["affiliation"] . '</div>
+			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name" value="' . $_REQUEST["isoAffiliation"] . '">' . $isoFormInputErrors["affiliation"] . '</div>
 
 			<div class="form-group"> <label for="queueName">RT Queue Name:</label>
-			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue"> <?php echo $inputErrors["queueName"]; ?> </div>
+			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $inputErrors["queueName"]; ?> </div>
 			Tests to run*: <br>';
     //break for assembling the checkbox list
 	$testlist = "";
@@ -328,7 +332,6 @@ function generateISORequestForm()
         {
             $testList = $testList . '<div class="checkbox"><label><input type="checkbox" name="testCheckbox_list[]" id="testCheckbox_list[]" value=' . $val . '>'. $val .'</label>';
         }
-    //$testList = $testList . '</ul>'; //Close the list of tests
     $isoForm = $isoForm . $testList; //add it to the form
     //finish the form
     $isoForm = $isoForm . '<br>' . $isoFormInputErrors["testCSV"] . '</div> <button type="submit" class="btn btn-primary">Generate New ISO</button></div></form>';
@@ -522,5 +525,3 @@ function logOut()
 return $adminpanel;
 
 }*/
-
-
