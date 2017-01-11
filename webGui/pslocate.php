@@ -23,9 +23,8 @@ class PerfSonarService {
 // Returns the output of running 'python ./ps_locate.py -i "$ip" -c $count' on the local system. Either returns array of records or an integer indicating error.
 function runPSLocate($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
 {
-    $path = 'ps_locate.py';
     $args = " -i '".$ip."' -c '".$count."'";
-    $jsonResponse = shell_exec('python '.$path.$args);   
+    $jsonResponse = shell_exec('ps_locate '.$args);   
     $records = json_decode($jsonResponse);
     if($records === null) {
         //die("ps_locate returned invalid json - likely an error response.\nOutput:".$hostRecord."\n");
