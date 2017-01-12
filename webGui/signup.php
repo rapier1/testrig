@@ -173,6 +173,57 @@ function triggerNotification ($input) {
     return 1;
 }
 
+// generate the public and private keys for use with the ISO
+function generateSSHKeys() {
+// generate private key
+    $privKey = openssl_pkey_new(array(
+        'private_key_bits' => 2048,
+        'private_key_type' => OPENSSL_KEYTYPE_RSA
+    ));
+    openssl_pkey_export($privKey, $pem); // convert to pem encoding
+    $pubKey = sshEncodePublicKey($privKey);
+    return array($pem, $pubKey);
+}
+
+// convert the private key into a openssh format publickey
+function sshEncodePublicKey($privKey)
+{
+    $keyInfo = openssl_pkey_get_details($privKey);
+
+    $buffer  = pack("N", 7) . "ssh-rsa" . 
+               sshEncodeBuffer($keyInfo['rsa']['e']) . 
+               sshEncodeBuffer($keyInfo['rsa']['n']);
+
+    return "ssh-rsa " . base64_encode($buffer); 
+}
+
+function sshEncodeBuffer($buffer)
+{
+    $len = strlen($buffer);
+    if (ord($buffer[0]) & 0x80) {
+        $len++;
+        $buffer = "\x00" . $buffer;
+    }
+
+    return pack("Na*", $len, $buffer);
+}
+
+function emailPubKey($pubKey, $email) {
+    $message = "Hello TestRig 2.0 Customer!\r\n\r\n";
+    $message .= "At the end of this message you will find a public openssh format key.\r\n";
+    $message .= "You will need to copy this key into a file named authorized_keys and place it\r\n";
+    $message .= "a directory named .ssh in the top level directory of the account\r\n";
+    $message .= "that will recieve the completed TestRig 2.0 diagnostic datasets.\r\n";
+    $message .= "\r\n\r\nOpenSSH Public Key:\r\n";
+    $message .= "$pubKey";
+    $subject = "TestRig 2.0 Public Key Enclosed";
+    $headers = 'From: testrig@psc.edu' . "\r\n" .
+    'Reply-To: testrig@psc.edu' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
+
+    mail($email, $subject, $message, $headers);
+}
+
 //check if required variables are empty. Empty? Alert user. Provided? Pass to input scrubber
 
 $errFlag = 0;
@@ -220,13 +271,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $errFlag = 1;
             }
         
-        if (empty($_REQUEST["scpPubKey"])){
-            $scpPubKeyError = "You must provide a public SCP key";
-            $errFlag = 1;
-        } elseif (verifyKey($_REQUEST["scpPubKey"]) != 1) {
-            $scpPubKeyError = "The SCP public key you provided is not valid.";
-            $errFlag = 1;
-        }
+//        if (empty($_REQUEST["scpPubKey"])){
+//            $scpPubKeyError = "You must provide a public SCP key";
+//            $errFlag = 1;
+//        } elseif (verifyKey($_REQUEST["scpPubKey"]) != 1) {
+//            $scpPubKeyError = "The SCP public key you provided is not valid.";
+//            $errFlag = 1;
+//        }
         
         if (empty($_REQUEST["testRigUsername"]))
             {
@@ -253,14 +304,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $errFlag = 1;
             }
 
-        if (empty($_REQUEST["scpPrivKey"]))
-            {
-                $scpPrivKeyError = "You must provide a private key";
-                $errFlag = 1;
-            }
+//        if (empty($_REQUEST["scpPrivKey"]))
+//           {
+//                $scpPrivKeyError = "You must provide a private key";
+//                $errFlag = 1;
+//            }
 
         if ($errFlag != 1)
             {
+                // All the inputs have been validated so generate the ssh keys
+                list ($inputs["scpPrivKey"], $inputs["scpPubKey"]) = generateSSHKeys();
                 $inputs["fName"] = scrubInput($_REQUEST["fName"]);
                 $inputs["lName"] = scrubInput($_REQUEST["lName"]);
                 $inputs["email"] = scrubInput($_REQUEST["email"]);
@@ -269,10 +322,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 $inputs["instName"] = scrubInput($_REQUEST["instName"]);
                 $inputs["scpUsername"] = scrubInput($_REQUEST["scpUsername"]);
                 $inputs["scpDstIp"] = scrubInput($_REQUEST["scpDstIp"]);
-                $inputs["scpPubKey"] = scrubInput($_REQUEST["scpPubKey"]);
+                //$inputs["scpPubKey"] = scrubInput($_REQUEST["scpPubKey"]);
                 $inputs["rtEmailAddress"] = scrubInput($_REQUEST["rtEmailAddress"]);
-		$inputs["scpPrivKey"] = scrubInput($_REQUEST["scpPrivKey"]);
-		$inputs["scpHostPath"] = scrubInput($_REQUEST["scpHostPath"]);
+                //$inputs["scpPrivKey"] = scrubInput($_REQUEST["scpPrivKey"]);
+                $inputs["scpHostPath"] = scrubInput($_REQUEST["scpHostPath"]);
                 //hash the password
                 $inputs["testRigPassword"] =  password_hash($_REQUEST["testRigPassword"], PASSWORD_BCRYPT);
                 //echo "You entered:<hr>First Name:  ".$inputs["fName"]. "<br>Last Name:  " . $inputs["lName"]. "<br>Email:  " . $inputs["email"] . "<br>Phone:  " . $inputs["phoneNumber"] . "<br>Institution:  " . $inputs["instName"] . "<br>SCP Username:  " .$inputs["scpUsername"]. "<br>Dst IP:  " .$inputs["scpDstIp"]. "<br>Key:  " . $inputs["scpPubKey"] . "<br>" . "Password: " . $inputs["testRigPassword"] . "<br>" . $inputs["scpPrivKey"] . "<br>" . $inputs["scpHostPath"]. "<br>";
@@ -283,6 +336,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     if (triggerNotification($inputs)) {
                         echo "Your subscription request to TestRig2.0 has been received. Please allow 1 ";
                         echo "business day to process the request and receive approval notification.";
+                        echo "Your SSH public key will be mailed to the supplied contact address shortly.";
+                        emailPubKey($inputs["scpPubKey"], $inputs["email"]);
                     } else {
                         echo "The attempt to send notification of your request failed.";
                     }
@@ -358,12 +413,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="form-group"> <label for="scpDstIp">SCP Dst IP:</label>
 	<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> <?php echo $scpDstIpError ?></div>
 
-        <div class="form-group"> <label for="scpPubKey">SCP Public Key*:</label>
+<!--        <div class="form-group"> <label for="scpPubKey">SCP Public Key*:</label>
 	<input type="textarea" name="scpPubKey" id="scpPubKey" class="form-control"> <?php echo $scpPubKeyError ?> </div>
 
         <div class="form-group"> <label for="scpPrivKey">SCP Private Key*:</label>
         <input type="textarea" name="scpPrivKey" id="scpPrivKey" class="form-control"> <?php echo $scpPrivKeyError ?> </div>
-
+-->
         <div class="form-group"> <label for="scpHostPath">SCP Destination Absolute Path*:</label>
         <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control"> <?php echo $hostPathError ?> </div>
 

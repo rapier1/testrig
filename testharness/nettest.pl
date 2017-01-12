@@ -68,7 +68,7 @@ sub fetchUUID {
 }
 
 sub notice {
-    $cmd = "/usr/bin/clear";
+    my $cmd = "/usr/bin/clear";
     runSystem ($cmd, 0, 0);
     print<<EOF;
 The TestRig 2.0 automated network test suit will run a series of tests
@@ -178,7 +178,7 @@ sub storeOutput {
     my $filename = shift @_;
     my $path = "/tmp/results";
     my $uuid = $config->{user}->{uuid};
-    my $filepath = $path . "/" . $uuid . "-" $currentRunNum . "-" . $filename;
+    my $filepath = $path . "/" . $uuid . "-" . $currentRunNum . "-" . $filename;
     my $FH;
     
     open ($FH, ">", $filepath);
@@ -548,14 +548,14 @@ sub testTR {
     # we are actually going to run a numebr of different network
     # mapping tools here
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwtraceroute -c $target";
+    my $command = "/opt/bin/bwtraceroute -a -c $target";
     my $output = runSystem($command, 1, 1);
     my $pass = 0;
 
     logger ("warn", "Running traceroute to $target");
     storeOutput($output, "traceroute");
     logger ("warn", "Running tracepath to $target");
-    $command = "/opt/bin/bwtraceroute -T tracepath -c $target";
+    $command = "/opt/bin/bwtraceroute -a -T tracepath -c $target";
     $output = runSystem($command, 1, 1);
     storeOutput($output, "tracepath");
     if (length($output) <= 0) {
@@ -573,7 +573,7 @@ sub testIperf {
     # start the web10g-logger
     my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats &";
     runSystem ($command);
-    $command = "/opt/bin/bwctl -c $target -t 30 -f m -i 1";
+    $command = "/opt/bin/bwctl -a -c $target -t 30 -f m -i 1";
     my $output = runSystem($command, 1);
     storeOutput($output, "iperf");
     if (length($output) <= 0) {
@@ -588,7 +588,7 @@ sub testIperf {
 
 sub testPing {
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwping -N 20 -c $target";
+    my $command = "/opt/bin/bwping -a -N 20 -c $target";
     my $output = runSystem ($command, 1, 1);
     my $pass = 0;
     logger ("warn", "Running ping test to $target");
@@ -601,7 +601,7 @@ sub testPing {
 
 sub testOwamp {
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwping -N 20 -T owamp -c $target";
+    my $command = "/opt/bin/bwping -a -N 20 -T owamp -c $target";
     my $output = runSystem($command, 1, 1);
     my $pass = 0;
     logger ("warn", "Running owamp ping test to $target");    
@@ -630,7 +630,7 @@ sub testTcpdump {
     sleep 2;
 
     # discard the outut from this iperf. we do not care about it.
-    $command = "bwctl -c $target -t 30";
+    $command = "bwctl -a -c $target -t 30";
     $output = runSystem($command, 1);
 
     #shutdown tcpdump
@@ -657,7 +657,7 @@ sub testUDP {
     foreach my $speed (@speeds) {
 	$pass = 0;
 	logger ("warn", "Running UDP test to $target at $speed Mbps");
-	$command = "bwctl -c $target -i1 -u -b ". $speed . "M";
+	$command = "bwctl -a -c $target -i1 -u -b ". $speed . "M";
 	$output = runSystem($command, 1);
 	storeOutput ($output, "UDP-$speed");
 	if (length($output) <= 0) {
@@ -683,13 +683,14 @@ if (confirmPath($config->{user}->{target}) == -1) {
     logger ("crit", "We have no path the test target.");
 }
 
+$currentRunNum = getCurrentRunNum($password);
+
 # get hardware data
 getHostData();
 
 #make sure ntpd is up to date
 syncClock();
 
-$currentRunNum = getCurrentRunNum($password);
 
 # run the tests
 # all error checking is done in the context of the tests
