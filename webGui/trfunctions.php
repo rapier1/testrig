@@ -299,9 +299,10 @@ function generateISORequestForm()
 			<small>* required fields </small>
 			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
 			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
-			<button type="submit" class="btn btn-primary">Host Search</button></div>
+			<button type="button" class="btn btn-primary" id="hostSearchButton">Host Search</button></div>
 
 			<div class="form-group hidden"> <label for="psPicker"> PerfSONAR Node Selection </label>
+			<div id="psPickerDiv"></div>
 			</div>
 
 			<div class="form-group"> <label for="isoMaxRun">Maximum # of Runs:</label>
@@ -525,3 +526,11 @@ function logOut()
 return $adminpanel;
 
 }*/
+
+function runPSLocateJson($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
+{
+    $args = " -i '".$ip."' -c '".$count."'";
+    $jsonResponse = shell_exec('ps_locate '.$args);
+    return $jsonResponse;
+}
+

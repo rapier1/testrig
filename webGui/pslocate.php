@@ -21,6 +21,14 @@ class PerfSonarService {
 /* Functions for getting and using data returned from ps_locate.py  */
 
 // Returns the output of running 'python ./ps_locate.py -i "$ip" -c $count' on the local system. Either returns array of records or an integer indicating error.
+function runPSLocateJson($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
+{
+    $args = " -i '".$ip."' -c '".$count."'";
+    $jsonResponse = shell_exec('ps_locate '.$args);   
+    return $jsonResponse;
+}
+
+// Returns the output of running 'python ./ps_locate.py -i "$ip" -c $count' on the local system. Either returns array of records or an integer indicating error.
 function runPSLocate($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
 {
     $args = " -i '".$ip."' -c '".$count."'";

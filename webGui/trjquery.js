@@ -1,4 +1,4 @@
-//Top Menu Bar Button Functions for Hiding/Showing active Div
+//Top Menu Bar Button Functions for Hiding/Showing active Div on main.php
 $( "#menu-isolist" ).click(
 	function()
 	 {
@@ -40,4 +40,21 @@ $( "td" ).click(
 		alert(this.innerHTML);
 	 });
 
+//function to call psLocate() and build a small div containing the results. It will take in the value of 
+$( "#hostSearchButton" ).click(
 
+	function()
+	{
+		$.ajax({
+		type: "POST",
+           	url: 'pslocationfunction.php',
+           	data:{psLocateIP:$( "#isoTestTargetIP").val()},
+           	success:function(html) 
+		 {
+             		alert(html);
+           	 }
+
+      		});
+
+	}
+);//end 
