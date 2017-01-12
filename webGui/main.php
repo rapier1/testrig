@@ -31,9 +31,48 @@
 		 }
 		include 'trfunctions.php';
 
+	//required variables
+	$AdminInputs = array(
+	        'fName' => "",
+	        'lName' => "",
+	        'email' => "",
+	        'testRigUsername' => "",
+	        'testRigPassword' => "",
+	        'phoneNumber' => "",
+	        'instName' => "",
+	        'scpPubKey' => "",
+	        'scpPrivKey' => "",
+	        'scpDstIp' => "",
+	        'scpHostPath' => "",
+	        'scpUsername' => "",
+	        'rtEmailAddress' => "",
+		'scpHostPath' => "",
+		'scpPrivKey' => "");
+
+ 	$AdminInputErrors = array(
+                'fName' => "",
+                'lName' => "",
+                'email' => "",
+                'testRigUsername' => "",
+                'testRigPassword' => "",
+                'phoneNumber' => "",
+                'instName' => "",
+                'scpPubKey' => "",
+                'scpPrivKey' => "",
+                'scpDstIp' => "",
+                'scpHostPath' => "",
+                'scpUsername' => "",
+                'rtEmailAddress' => "",
+                'scpHostPath' => "",
+                'scpPrivKey' => "");
+
+
+
+		//create a table from previous ISO requests where columns are these fields
 		$isoRequestListFields = array("username", "useremail", "user_tt_id", "validtodate", "maxrun", "creation_timestamp", "requested_tests");
 		$isoRequestListDiv = buildDiv("isoRequestListDiv", "testParameters", $isoRequestListFields);
-		$welcomeDiv = generateUserInfo();
+
+		//$welcomeDiv = generateUserInfo();
 		$isoForm = generateISORequestForm();
 		//$adminPanel = generateAdminPanel();
 	?>
@@ -67,6 +106,7 @@
 	<div id="padding-left" class="col-4"></div>
 
 	<div id="container-isolist" class="hidden isoList">
+	<div id="isoListTitle"><h1 class="text-center">My Generated ISOs</h1></div>
 		<?php	print $isoRequestListDiv; ?>
 	</div>
 
@@ -75,7 +115,7 @@
 	</div>
 
 	<div id="container-admin" class=" hidden">
-		<?php   //print $adminPanel; ?>
+		<?php   print $adminPanel; ?>
 	</div>
 
 	<div id="padding-right" class="col-4"></div>

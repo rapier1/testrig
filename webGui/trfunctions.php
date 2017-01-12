@@ -294,7 +294,7 @@ function generateISORequestForm()
     //we have to do this in a few steps due to the need for PHP_SELF to be in quotes for the redirection to work correctly
 	$serverURL = htmlspecialchars($_SERVER["PHP_SELF"]);
 
-	$isoForm =	'<form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
+	$isoForm =	'<div id="isoRequestTitle"><h1 class="text-center">Generate New ISO Image</h1></div><form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
 	$isoForm = $isoForm . '" method="post">
 			<small>* required fields </small>
 			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
@@ -438,7 +438,7 @@ function logOut()
 }//END logOut()
 
 
-/*function generateAdminPanel()
+/* function generateAdminPanel()
 {
 	//This panel is where the user can update their info that is saved into the database. They will need
 	// to provide their password in order for any changes to take effect
@@ -447,85 +447,85 @@ function logOut()
 
 	$adminPanel = '<form id="updateContactInformation" role="form" class="form-horizontal col-md-8" action="'. $url . '" method="post">
 
-		<div class="form-group"> 
-			<label for="fName"> First Name*:</label>
-			<input type="text" name="fName" id="fName" class="form-control" value="<?php echo $_REQUEST['fName']?>"> <?php echo $fNameError ?>
-		</div>
+			<div class="form-group"> 
+				<label for="fName"> First Name*:</label>
+				<input type="text" name="fName" id="fName" class="form-control" value="<?php echo $_REQUEST['fName']?>"> '. $fNameError .'
+			</div>
 
-        	<div class="form-group">
-			<label for="lName">Last Name*:</label>
-			<input type="text" name="lName" id="lName" class="form-control" value="<?php echo $_REQUEST['lName']?>"> <?php echo $lNameError ?><
-		/div>
+        		<div class="form-group">
+				<label for="lName">Last Name*:</label>
+				<input type="text" name="lName" id="lName" class="form-control" value="<?php echo $_REQUEST['lName']?>"> '.$lNameError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="email">Email*:</label>
-			<input type="email" name="email" id="email" class="form-control" value="<?php echo $_REQUEST['email']?>"> <?php echo $emailError ?> 
-		</div>
+        		<div class="form-group"> 
+				<label for="email">Email*:</label>
+				<input type="email" name="email" id="email" class="form-control" value="<?php echo $_REQUEST['email']?>"> '. $emailError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="testRigUsername">TestRig Username*:</label>
-			<input type="text" name="testRigUsername" id="testRigUsername" class="form-control" value="<?php echo $_REQUEST['testRigUsername']?>"> <?php echo $testRigUsernameError ?>
-		</div>
+        		<div class="form-group"> 
+				<label for="testRigUsername">TestRig Username*:</label>
+				<input type="text" name="testRigUsername" id="testRigUsername" class="form-control" value="<?php echo $_REQUEST['testRigUsername']?>"> '. $testRigUsernameError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="testRigPassword">TestRig Password*:</label>
-			<input type="password" name="testRigPassword" id="testRigPassword" class="form-control"> <?php echo $testRigPasswordError ?>
-		</div>
+	        	<div class="form-group"> 
+				<label for="testRigPassword">TestRig Password*:</label>
+				<input type="password" name="testRigPassword" id="testRigPassword" class="form-control"> '. $testRigPasswordError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="testRigPasswordConfirm">repeat password:<label>
-			<input type="password" name="testRigPasswordConfirm" id="testRigPasswordConfirm" class="form-control"> <?php echo $testRigPasswordConfirmError ?>
-		</div>
+        		<div class="form-group"> 
+				<label for="testRigPasswordConfirm">repeat password:<label>
+				<input type="password" name="testRigPasswordConfirm" id="testRigPasswordConfirm" class="form-control"> '. $testRigPasswordConfirmError .'
+			</div>
 
-	        <div class="form-group"> 
-			<label for="phoneNumber">Phone Number*:</label>
-			<input type="text" name="phoneNumber" id="phoneNumber" class="form-control"  value="<?php echo $_REQUEST['phoneNumber']?>"> <?php echo $phoneNumberError ?>
-		</div>
+		        <div class="form-group"> 
+				<label for="phoneNumber">Phone Number*:</label>
+				<input type="text" name="phoneNumber" id="phoneNumber" class="form-control"  value="<?php echo $_REQUEST['phoneNumber']?>"> '. $phoneNumberError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="instName">Institution Name*:</label>
-			<input type="text" name="instName" id="instName" class="form-control" value="<?php echo $_REQUEST['instName']?>"> <?php echo $instNameError ?>
-		</div>
+	        	<div class="form-group"> 
+				<label for="instName">Institution Name*:</label>
+				<input type="text" name="instName" id="instName" class="form-control" value="<?php echo $_REQUEST['instName']?>"> '. $instNameError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="rtEmailAddress">RT Email Address:</label>
-			<input type="text" name="rtEmailAddress" id="rtEmailAddress" class="form-control" value="<?php echo $_REQUEST['rtEmailAddress']?>"> 
-		</div>
+        		<div class="form-group"> 
+				<label for="rtEmailAddress">RT Email Address:</label>
+				<input type="text" name="rtEmailAddress" id="rtEmailAddress" class="form-control" value="<?php echo $_REQUEST['rtEmailAddress']?>">
+			</div>
 
-        	<div class="form-group"> 
-			<label for="scpUsername">SCP Username:</label>
-			<input type="text" name="scpUsername" id="scpUsername" class="form-control" value="<?php echo $_REQUEST['scpUsername']?>"> <?php echo $scpUsernameError ?>
-		</div>
+        		<div class="form-group"> 
+				<label for="scpUsername">SCP Username:</label>
+				<input type="text" name="scpUsername" id="scpUsername" class="form-control" value="<?php echo $_REQUEST['scpUsername']?>"> '. $scpUsernameError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="scpDstIp">SCP Dst IP:</label>
-			<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> <?php echo $scpDstIpError ?>
-		</div>
+        		<div class="form-group"> 
+				<label for="scpDstIp">SCP Dst IP:</label>
+				<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> '.$scpDstIpError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="scpPubKey">SCP Public Key*:</label>
-			<input type="textarea" name="scpPubKey" id="scpPubKey" class="form-control"> <?php echo $scpPubKeyError ?>
-		</div>
+        		<div class="form-group"> 
+				<label for="scpPubKey">SCP Public Key*:</label>
+				<input type="textarea" name="scpPubKey" id="scpPubKey" class="form-control"> '. $scpPubKeyError .'
+			</div>
 
-        	<div class="form-group"> 
-			<label for="scpPrivKey">SCP Private Key*:</label>
-        		<input type="textarea" name="scpPrivKey" id="scpPrivKey" class="form-control"> <?php echo $scpPrivKeyError ?>
-		</div>
+        		<div class="form-group"> 
+				<label for="scpPrivKey">SCP Private Key*:</label>
+        			<input type="textarea" name="scpPrivKey" id="scpPrivKey" class="form-control"> '. $scpPrivKeyError .'
+			</div>
 
-        	<div class="form-group"> 
-			 <label for="scpHostPath">SCP Destination Absolute Path*:</label>
-       			 <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control"> <?php echo $hostPathError ?>
-		</div>
+        		<div class="form-group"> 
+				 <label for="scpHostPath">SCP Destination Absolute Path*:</label>
+       				 <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control">'.$hostPathError .'
+			</div>
 
-	    	<button type="submit" class="btn btn-lg btn-success">Update  Account</button>
+		    	<button type="submit" class="btn btn-lg btn-success">Update  Account</button>
 
-	</form>';
+		</form>';
 
 
 
 return $adminpanel;
 
-}*/
+} */
 
 function runPSLocateJson($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
 {
