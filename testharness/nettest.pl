@@ -178,7 +178,7 @@ sub storeOutput {
     my $filename = shift @_;
     my $path = "/tmp/results";
     my $uuid = $config->{user}->{uuid};
-    my $filepath = $path . "/" . $uuid . "-" . $filename;
+    my $filepath = $path . "/" . $uuid . "-" $currentRunNum . "-" . $filename;
     my $FH;
     
     open ($FH, ">", $filepath);
