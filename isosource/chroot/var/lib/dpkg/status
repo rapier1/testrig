@@ -4470,13 +4470,14 @@ Homepage: http://savannah.nongnu.org/projects/sysvinit
 Original-Maintainer: Debian sysvinit maintainers <pkg-sysvinit-devel@lists.alioth.debian.org>
 
 Package: apt
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: important
 Section: admin
 Installed-Size: 3824
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Version: 1.0.9.7ubuntu4
+Config-Version: 1.0.9.7ubuntu4
 Replaces: manpages-it (<< 2.80-4~), manpages-pl (<< 20060617-3~), openjdk-6-jdk (<< 6b24-1.11-0ubuntu1~), sun-java5-jdk (>> 0), sun-java6-jdk (>> 0)
 Depends: libapt-pkg4.12 (>= 1.0.9.7ubuntu4), libc6 (>= 2.15), libgcc1 (>= 1:4.1.1), libstdc++6 (>= 4.9), ubuntu-keyring, gnupg
 Suggests: aptitude | synaptic | wajig, dpkg-dev (>= 1.17.2), apt-doc, python-apt
@@ -5713,7 +5714,7 @@ Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian
 Homepage: https://metacpan.org/release/FCGI
 
 Package: libapt-pkg4.12
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: important
 Section: libs
 Installed-Size: 3016
@@ -5722,6 +5723,7 @@ Architecture: amd64
 Multi-Arch: same
 Source: apt
 Version: 1.0.9.7ubuntu4
+Config-Version: 1.0.9.7ubuntu4
 Depends: libbz2-1.0, libc6 (>= 2.15), libgcc1 (>= 1:4.1.1), liblzma5 (>= 5.1.1alpha+20120614), libstdc++6 (>= 4.9), zlib1g (>= 1:1.2.2.3)
 Pre-Depends: multiarch-support
 Breaks: apt (<< 0.9.4~), libapt-inst1.5 (<< 0.9.9~)
