@@ -46,19 +46,28 @@ $( "#hostSearchButton" ).click(
 	function()
 	{
 		$.ajax({
-		type: "POST",
-           	url: 'pslocationfunction.php',
-           	data:{psLocateIP:$( "#isoTestTargetIP").val()},
-           	success:function(html) 
-		 {
-             		alert(html);
-           	 }
+			type: "POST",
+			url: 'pslocationfunction.php',
+			data:{psLocateIP:$( "#isoTestTargetIP").val()},
+			success:function(outputJson) 
+			{
+				// check output: Is it valid json? Is it an error?
+				
 
+				// if output is valid then use output data to populate #psPickerDiv
+				populatePsPickerForm(outputJson);
+			}
       		});
 
 	}
 );//end 
 
-function(json){
+function populatePsPickerForm(json){
+	// setup fields
 
+	// populate fields
+	$('#psPickerDiv').html(json)
+
+	// make div visible
+	$('#psPickerDiv').parent().removeClass('hidden');
 }
