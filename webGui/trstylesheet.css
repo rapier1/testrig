@@ -7,7 +7,7 @@
 
 	 }
 
-	#container-isoform {
+	.main-panels {
 		box-shadow: 0 0 30px black;
                 padding-top: 20px;
                 padding-left: 40px;
@@ -17,7 +17,6 @@
 	 }
 
 	#container-admin {
-		box-shadow: 0 0 30px black;
 
 	 }
 

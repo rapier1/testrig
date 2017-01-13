@@ -31,50 +31,13 @@
 		 }
 		include 'trfunctions.php';
 
-	//required variables
-	$AdminInputs = array(
-	        'fName' => "",
-	        'lName' => "",
-	        'email' => "",
-	        'testRigUsername' => "",
-	        'testRigPassword' => "",
-	        'phoneNumber' => "",
-	        'instName' => "",
-	        'scpPubKey' => "",
-	        'scpPrivKey' => "",
-	        'scpDstIp' => "",
-	        'scpHostPath' => "",
-	        'scpUsername' => "",
-	        'rtEmailAddress' => "",
-		'scpHostPath' => "",
-		'scpPrivKey' => "");
-
- 	$AdminInputErrors = array(
-                'fName' => "",
-                'lName' => "",
-                'email' => "",
-                'testRigUsername' => "",
-                'testRigPassword' => "",
-                'phoneNumber' => "",
-                'instName' => "",
-                'scpPubKey' => "",
-                'scpPrivKey' => "",
-                'scpDstIp' => "",
-                'scpHostPath' => "",
-                'scpUsername' => "",
-                'rtEmailAddress' => "",
-                'scpHostPath' => "",
-                'scpPrivKey' => "");
-
-
-
 		//create a table from previous ISO requests where columns are these fields
 		$isoRequestListFields = array("username", "useremail", "user_tt_id", "validtodate", "maxrun", "creation_timestamp", "requested_tests");
 		$isoRequestListDiv = buildDiv("isoRequestListDiv", "testParameters", $isoRequestListFields);
 
 		//$welcomeDiv = generateUserInfo();
 		$isoForm = generateISORequestForm();
-		//$adminPanel = generateAdminPanel();
+		$adminForm = generateAdminForm();
 	?>
   </head>
 
@@ -89,7 +52,7 @@
 				  <span class="icon-bar"></span>
 				  <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Testrig 2.0</a>
+				<a class="navbar-brand" href="<?php ?>">Testrig 2.0</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				  <ul class="nav navbar-nav">
@@ -103,6 +66,7 @@
 	</nav>
 
 <div id="container-main" class="container">
+<div class="row">
 	<div id="padding-left" class="col-4"></div>
 
 	<div id="container-isolist" class="hidden isoList">
@@ -110,16 +74,18 @@
 		<?php	print $isoRequestListDiv; ?>
 	</div>
 
-	<div id="container-isoform" class="">
+	<div id="container-isoform" class="main-panels">
 		<?php	print $isoForm; ?>
 	</div>
 
-	<div id="container-admin" class=" hidden">
-		<?php   print $adminPanel; ?>
+	<div id="container-admin" class="hidden main-panels">
+		<div id="adminFormTitle"><h1 class="text-center">Account Settings</h1></div>
+		<?php   print $adminForm; ?>
 	</div>
 
-	<div id="padding-right" class="col-4"></div>
-
+	<div id="padding-right" class="col-4">
+	</div>
+</div>
 </div> <!-- END Main Container -->
 
 
