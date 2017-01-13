@@ -171,37 +171,36 @@ function generateISORequestForm()
                     $isoFormInputErrors["ipAddress"] = "You must provide an IP address";
                     $errFlag = 1;
                 }
-
+            
             if (empty($_REQUEST["isoMaxRun"]))
                 {
                     $isoFormInputErrors["maxRun"] = "You must enter a maximum number of runs";
                     $errFlag = 1;
                 }
-
+            
             if ($_REQUEST["isoMaxRun"] < 1)
                 {
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be at least 1";
                     $errFlag = 1;
                 }
-
+            
             if ($_REQUEST["isoMaxRun"] > 25)
                 {
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be 25 or less";
                     $errFlag = 1;
                 }
-
+            
             if (empty($_REQUEST["isoValidToDate"]))
                 {
                     $isoFormInputErrors["validToDate"] = "You must enter an expiration date for the ISO";
                     $errFlag = 1;
-                }
-		else {
+                } else {
                 $format ="Y-m-d";
-		$inputDate = trim($_REQUEST["isoValidToDate"]);
-		$date = new DateTime($inputDate);
-		$formatdate = $date->format($format);
+                $inputDate = trim($_REQUEST["isoValidToDate"]);
+                $date = new DateTime($inputDate);
+                $formatdate = $date->format($format);
                 //$time = strtotime($date);
-
+                
                 //if (date($format, $time) != $date) {
                 //    $isoFormInputErrors["validToDate"] = "You entered and invalid date or date format.";
                 //    $errFlag = 1;
@@ -245,7 +244,7 @@ function generateISORequestForm()
 
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
             if ($errFlag != 1) //Has everything been successfully submitted?
-             {
+                {
                     //have to assemble the tests in a csv
                     $count = 0;
                     $testString = "";
@@ -253,19 +252,19 @@ function generateISORequestForm()
                     foreach ($checkedTests as $val)
                         {
                             $val = scrubInput($val); //just in case someone does something funky to the form
-				if ($count == (count($checkedTests) - 1))
+                            if ($count == (count($checkedTests) - 1))
                                 {
-					$testString = $testString . $val;
+                                    $testString = $testString . $val;
                                 }
-				else //slap a comma on that shit
+                            else //slap a comma on that shit
                                 {
-					$testString = $testString . $val . ", ";
+                                    $testString = $testString . $val . ", ";
                                 }
                             $count++;
                         }//END foreach checkedTests
-
-
-		    ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
+                
+                    
+                    ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
                     $isoFormInputs["username"] = scrubInput($_REQUEST["isoUsername"]);
                     $isoFormInputs["email"] = scrubInput($_REQUEST["isoEmail"]);
                     $isoFormInputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
@@ -275,40 +274,26 @@ function generateISORequestForm()
                     $isoFormInputs["validToDate"] = date("Y-m-d", strtotime($date));
                     $isoFormInputs["testCSV"] = $testString;
 
-			/*
-			$submissions = "";
-			$submissions .= 'Username: ' . $isoFormInputs["username"] . '<br>';
-			$submissions .= 'Email: ' . $isoFormInputs["email"] . '<br>';
-                        $submissions .= 'TroubleTicket: ' . $isoFormInputs["troubleTicket"] . '<br>';
-                        $submissions .= 'Target: ' . $isoFormInputs["isoTestTargetIP"] . '<br>';
-                        $submissions .= 'Max Runs: ' . $isoFormInputs["maxRun"] . '<br>';
-                        $submissions .= 'Valid to date: ' . $isoFormInputs["validToDate"] . '<br>';
-                        $submissions .= 'CSV of Tests: ' . $isoFormInputs["testCSV"] . '<br>';
-			print "<pre>";
-			print_r ($_REQUEST);
-			print $submissions;
-			print "</pre>";
-			
 			/////////////////////////////////////////// END WTF SECTION ///////////////////////////////// */
 
-
-                    //everything is scrubbed and prepped for entry into the DB, so let's do this
-  if (insertNewISORequest($inputs))
-		 {
-                	if (!$_SESSION[CID] or !$_SESSION[UID]) 
-			 {
+            
+            //everything is scrubbed and prepped for entry into the DB, so let's do this
+            if (insertNewISORequest($isoFormInputs))
+                {
+                    if (!$_SESSION[CID] or !$_SESSION[UID]) 
+                        {
                             echo "Missing necessary information (UID or CID) to build ISO.<p>";
-			 }
-			else
-			 {
+                        }
+                    else
+                        {
                             // It turns out that exec has an issue with some versions of bash which prevents it
                             // from properly redirecting STDIN and STDERR to a file. This prevents exec from going into
                             // the background. Turns out this proc_close(proc_open()) trick does work. 
                             proc_close (proc_open ("/usr/bin/sudo /home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
-                         }
-                 }
-		else
-		 {
+                        }
+                }
+            else
+                {
 
                         echo "Failed to create new ISO!<p>";
 
@@ -403,15 +388,15 @@ function insertNewISORequest($cleanedInputs)
 			$statement = $dbLink->prepare($cmd);
             $CID = scrubInput($_SESSION["CID"]);
 			$statement->execute(array( $CID,
-                                $cleanedInputs["isoUsername"],
-                                $cleanedInputs["isoEmail"],
+                                $cleanedInputs["username"],
+                                $cleanedInputs["email"],
                                 $cleanedInputs["troubleTicket"],
                                 $cleanedInputs["testCSV"],
                                 $creationTimestamp,
                                 $cleanedInputs["queueName"],
-                                $cleanedInputs["isoTestTargetIP"],
-                                $cleanedInputs["isoMaxRun"],
-                                $cleanedInputs["isoValidToDate"]));
+                                $cleanedInputs["testTargetIP"],
+                                $cleanedInputs["maxRun"],
+                                $cleanedInputs["validToDate"]));
         }//END try
     catch(PDOException $e)
         {
