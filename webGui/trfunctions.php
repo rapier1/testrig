@@ -160,7 +160,7 @@ function generateISORequestForm()
     //array of tests. We might be able to make this a little more
     //readable once we get a list of available tests(?) maybe read from DB(??)
     $allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute");
-    $isoFormInputErrFlag = 0;
+    $errFlag = 0;
 
     //has there been a request sent to the server?
     //are the variables empty?
@@ -237,9 +237,10 @@ function generateISORequestForm()
                 }
             if (empty($_REQUEST["queueName"]))
          	{
-                    $inputErrors["queueName"] = "Specify an RT Queue for RT integration";
+                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
          	}
 
+            $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
             if ($errFlag != 1) //Has everything been successfully submitted?
@@ -285,7 +286,7 @@ function generateISORequestForm()
                         echo "Failed to create new ISO!<p>";
                     }
                 }//END successful submission if/then
-            
+                
         }//END request and empty var check
     
     $valid_date = date("m/d/Y", strtotime("+7 days"));     
@@ -297,6 +298,7 @@ function generateISORequestForm()
 	$isoForm =	'<div id="isoRequestTitle"><h1 class="text-center">Generate New ISO Image</h1></div><form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
 	$isoForm = $isoForm . '" method="post">
 			<small>* required fields </small>
+                        <input type="hidden" name="form_src" value="isoForm" />
 			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
 			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
 			<button type="button" class="btn btn-primary" id="hostSearchButton">Host Search</button></div>
@@ -326,7 +328,7 @@ function generateISORequestForm()
 			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name" value="' . $_REQUEST["isoAffiliation"] . '">' . $isoFormInputErrors["affiliation"] . '</div>
 
 			<div class="form-group"> <label for="queueName">RT Queue Name:</label>
-			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $inputErrors["queueName"]; ?> </div>
+			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $isoFormInputErrors["queueName"]; ?> </div>
 			Tests to run*: <br>';
     //break for assembling the checkbox list
 	$testlist = "";
@@ -338,8 +340,8 @@ function generateISORequestForm()
     $isoForm = $isoForm . $testList; //add it to the form
     //finish the form
     $isoForm = $isoForm . '<button type="submit" class="btn btn-primary">Generate New ISO</button></div></form>';
-    
-    return $isoForm;
+ 
+    return [$isoForm, $errFlag, $errMsg];
     
 }//END generateISORequestForm()    
 
@@ -495,7 +497,8 @@ function generateAdminForm()
 
 
 	//We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
-	 $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . " method=\"post\">\n";
+	 $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
+	 $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
 	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
 	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
 	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
@@ -511,7 +514,7 @@ function generateAdminForm()
 	 $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
 
 
-return $adminForm;
+return [$adminForm, 0, ""];
 
 }
 
