@@ -521,24 +521,32 @@ sub runTests {
 	# test may have leading or tailing whitespace
 	$test =~ s/^\s+//;
 	$test =~ s/\s+$//;
+	# make sure whatever we have is in lowercase
+	$test = lc($test);
 	switch($test) {
-	    case "Traceroute" {
+	    case "traceroute" {
 		testTR();
 	    }
-	    case "Iperf" {
+	    case "iperf" {
 		testIperf();
 	    }
-	    case "Ping" {
+	    case "iperf3" {
+		testIperf(1);
+	    }
+	    case "ping" {
 		testPing();
 	    }
-	    case "Owping" {
+	    case "owamp" {
 		testOwamp();
 	    }
-	    case "Tcpdump" {
+	    case "tcpdump" {
 		testTcpdump();
 	    }
-	    case "UDP" {
+	    case "udp" {
 		testUDP();
+	    }
+	    case "nuttcp" {
+		testNuttcp ();
 	    }
 	}
     }
@@ -561,21 +569,54 @@ sub testTR {
     if (length($output) <= 0) {
 	$pass = -1;
     }
-    updateResultsDB("Traceroute", $pass);
+    updateResultsDB("traceroute", $pass);
 }
 
-sub testIperf {
+sub testNuttcp {
     my $target = $config->{user}->{target};
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
-    logger ("warn", "Running 30 second Iperf test to $target");
 
     # start the web10g-logger
-    my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats &";
-    runSystem ($command);
-    $command = "/opt/bin/bwctl -a -c $target -t 30 -f m -i 1";
+    my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-nuttcp &";
+    runSystem($command);
+ 
+    $command = "/opt/bin/bwctl -T nuttcp -f m -i 1 -t 30 -c $target";
     my $output = runSystem($command, 1);
-    storeOutput($output, "iperf");
+    storeOutput($output, "nuttcp");
+    if (length($output) <= 0) {
+	$pass = -1;
+    }
+
+    #kill the web10g logger 
+    $command = "/usr/bin/killall web10g-logger";
+    runSystem($command);
+    updateResultsDB("nuttcp", $pass)    
+}
+
+sub testIperf {
+    my $run_iperf3 = shift @_;
+    my $iperf_type;
+    if ($run_iperf3 == 1) {
+	$iperf_type = "iperf3";
+    } else {
+	$iperf_type = "iperf"
+    }
+    my $target = $config->{user}->{target};
+    my $uuid = $config->{user}->{uuid};
+    my $pass = 0;
+    if ($run_iperf3) {
+	logger ("warn", "Running 30 second Iperf3 test to $target");
+    } else {
+	logger ("warn", "Running 30 second Iperf test to $target");
+    }
+    
+    # start the web10g-logger
+    my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-$iperf_type &";
+    runSystem ($command);
+    $command = "/opt/bin/bwctl -T $iperf_type -a -c $target -t 30 -f m -i 1";
+    my $output = runSystem($command, 1);
+    storeOutput($output, $iperf_type);
     if (length($output) <= 0) {
 	$pass = -1;
     }
@@ -583,8 +624,9 @@ sub testIperf {
     #kill the web10g logger 
     $command = "/usr/bin/killall web10g-logger";
     runSystem($command);
-    updateResultsDB("Iperf", $pass)
+    updateResultsDB($iperf_type, $pass)
 }
+
 
 sub testPing {
     my $target = $config->{user}->{target};
@@ -596,7 +638,7 @@ sub testPing {
     if (length($output) <= 0) {
 	$pass = -1;
     }
-    updateResultsDB("Ping", $pass);
+    updateResultsDB("ping", $pass);
 }
 
 sub testOwamp {
@@ -609,7 +651,7 @@ sub testOwamp {
     if (length($output) <= 0) {
 	$pass = -1;
     }
-    updateResultsDB("Owping", $pass);
+    updateResultsDB("owamp", $pass);
 }
 
 sub testTcpdump {
@@ -645,7 +687,7 @@ sub testTcpdump {
     if (length($output) <= 0) {
 	$pass = -1;
     }
-    updateResultsDB("Tcpdump", $pass);
+    updateResultsDB("tcpdump", $pass);
 }
 
 sub testUDP {
@@ -663,7 +705,7 @@ sub testUDP {
 	if (length($output) <= 0) {
 	    $pass = -1;
 	}
-	updateResultsDB("UDP$speed", $pass);
+	updateResultsDB("udp$speed", $pass);
     }
 }
 
