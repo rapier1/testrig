@@ -301,8 +301,10 @@ function generateISORequestForm()
 			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
 			<button type="button" class="btn btn-primary" id="hostSearchButton">Host Search</button></div>
 
-			<div class="form-group hidden"> <label for="psPicker"> PerfSONAR Node Selection </label>
-			<div id="psPickerDiv"></div>
+			<div class="form-group hidden"> PerfSONAR nodes near you
+
+			<div id="psPickerDiv"><div class="row"></div></div>
+
 			</div>
 
 			<div class="form-group"> <label for="isoMaxRun">Maximum # of Runs:</label>
