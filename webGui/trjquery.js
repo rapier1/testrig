@@ -75,9 +75,6 @@ $( "#hostSearchButton" ).click(
 					nodeList = createHostNode(bwctlTools,targetHostname);
 
 
-
-
-
 				 }//end if valid json
 
 				// if output is valid then use output data to populate #psPickerDiv
@@ -111,20 +108,16 @@ function isJsonString(str) {
 
 function createHostNode(rawList,hostname)
 {
-	var testList = '<input type="radio" class="icon-bar label-success" id="nodeSelect" checked><div id="psNode" class="form-group col-2"><span class="col-2 label-success">' + hostname;
+	var testList = '<div id="psNode" name="psNode" class="form-group col-2"><span class="col-2 label-success">' + hostname;
+	    testList += '<ul title="Available Tests:">'
 		for (var i=0; i<rawList.length; i++)
 		 {
-			testList += '<div class="form-check"> <label class="form-check-label col-2 label-success" for="testCheckbox_list[]">';
-			testList += '<input class="form-check-input" type="checkbox" value = "' + rawList[i] + '" id="testCheckbox_list[]" checked>' + rawList[i];
+			testList += '<div class="form-check"> <label class="form-check-label label-success" for="testCheckbox_list[]">';
+			testList += '<li class="label-success"><input class="form-check-input list-group-item" data-style="button" type="checkbox" value = "' + rawList[i] + '" name="testCheckbox_list[]" checked>' + rawList[i] + '</li>';
 			testList += '</label></div>';
 		 }
 
-	testList += '</span></div>';
+	testList += '</ul></span></div>';
 	return testList;
-                        //<input type="email" class="form-control" name="isoEmail" id="isoEmail" placeholder="user@emailaddress" value ="' . $_REQUEST["isoEmail"] . '">' . $isoFormInputErrors["email"] . '</div>
-
-	//testList += '<div class="checkbox"><label><input type="checkbox" name="testCheckbox_list[]" id="testCheckbox_list[]" value=' . $val . '>'. $val .'</label></div>';
-
-
 
 }
