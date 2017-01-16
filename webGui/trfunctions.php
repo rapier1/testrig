@@ -57,7 +57,7 @@ function buildDiv($divID, $dbTableName, $fields)
             {
                 $newDiv = $newDiv . "<th>$fields[$counter]</th>";
             }
-
+        
 		$newDiv = $newDiv . "</tr>";
 		//fill in the table with the results from the query
 		foreach ($results as $row) //go row-by-row through returned query
@@ -263,30 +263,32 @@ function generateISORequestForm()
                             $count++;
                         }//END foreach checkedTests
 
-
-	////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
+                    //Sanitize ISO Request Inputs
                     $inputs["username"] = scrubInput($_REQUEST["isoUsername"]);
                     $inputs["email"] = scrubInput($_REQUEST["isoEmail"]);
                     $inputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
-                    $inputs["target"] = scrubInput($_REQUEST["isoTestTargetIP"]);
+                    $inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
                     $inputs["maxRun"] = scrubInput($_REQUEST["isoMaxRun"]);
                     $date = scrubInput($_REQUEST["isoValidToDate"]);
                     $inputs["validToDate"] = date("Y-m-d", strtotime($date));
                     $inputs["testCSV"] = $testString;
 
-		    	$alert = "";
-			$alert = '<script type="text/javascript">';
-			$submissions = "";
-			$submissions .= 'Username: ' . $inputs["username"] . '\n';
-			$submissions .= 'Email: ' . $inputs["email"] . '\n';
-                        $submissions .= 'TroubleTicket: ' . $inputs["troubleTicket"] . '\n';
-                        $submissions .= 'Target: ' . $inputs["isoTestTargetIP"] . '\n';
-                        $submissions .= 'Max Runs: ' . $inputs["maxRun"] . '\n';
-                        $submissions .= 'Valid to date: ' . $inputs["validToDate"] . '\n';
-                        $submissions .= 'CSV of Tests: ' . $inputs["testCSV"] . '\n';
-			$alert .= 'window.alert(' . $sumbissions . ');</script>';
-			print $alert;
-	/////////////////////////////////////////// END WTF SECTION /////////////////////////////////
+            ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
+                    /*
+                    
+                    $alert = "";
+                    $alert = '<script type="text/javascript">';
+                    $submissions = "";
+                    $submissions .= 'Username: ' . $inputs["username"] . '\n';
+                    $submissions .= 'Email: ' . $inputs["email"] . '\n';
+                    $submissions .= 'TroubleTicket: ' . $inputs["troubleTicket"] . '\n';
+                    $submissions .= 'Target: ' . $inputs["isoTestTargetIP"] . '\n';
+                    $submissions .= 'Max Runs: ' . $inputs["maxRun"] . '\n';
+                    $submissions .= 'Valid to date: ' . $inputs["validToDate"] . '\n';
+                    $submissions .= 'CSV of Tests: ' . $inputs["testCSV"] . '\n';
+                    $alert .= 'window.alert(' . $sumbissions . ');</script>';
+                    print $alert; */
+            /////////////////////////////////////////// END WTF SECTION /////////////////////////////////
 
 
                     //everything is scrubbed and prepped for entry into the DB, so let's do this
@@ -315,7 +317,7 @@ function generateISORequestForm()
 	$isoForm =	'<div id="isoRequestTitle"><h1 class="text-center">Generate New ISO Image</h1></div><form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
 	$isoForm = $isoForm . '" method="post">
 			<small>* required fields </small>
-                        <input type="hidden" name="form_src" value="isoForm" />
+            <input type="hidden" name="form_src" value="isoForm" />
 			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
 			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
 			<button type="button" class="btn btn-primary" id="hostSearchButton">Host Search</button></div>
@@ -506,24 +508,24 @@ function generateAdminForm()
 
 
 	//We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
-	 $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
-	 $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPrivKey\">SCP Private Key:</label><input type=\"textarea\" name=\"admin-scpPrivKey\" id=\"admin-scpPrivKey\" class=\"form-control\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
-	 $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
+    $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
+    $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPrivKey\">SCP Private Key:</label><input type=\"textarea\" name=\"admin-scpPrivKey\" id=\"admin-scpPrivKey\" class=\"form-control\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
+    $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
 
 
-return [$adminForm, 0, ""];
+    return [$adminForm, 0, ""];
 
 }
 
