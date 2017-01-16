@@ -9,6 +9,8 @@
 	$inputErrors = array(
 		"trUsername" => "",
 		"trPassword" => "");
+        $errFlag = 0;
+        $errMsg = "";
 	//END VARIABLE DECLARATIONS
 
 
@@ -21,7 +23,6 @@
 	}
 	else if ($_SERVER["REQUEST_METHOD"] == "POST")
     	 {
-		$errFlag = 0;
 		if (empty($_REQUEST["trUsername"]))
 		 {
 			$inputErrors["trUsername"] = "You must provide a username";
@@ -39,10 +40,15 @@
 			$inputs["trUsername"] = scrubInput($_REQUEST["trUsername"]);
 			$inputs["trPassword"] = scrubInput($_REQUEST["trPassword"]);
 
-			logIn($inputs["trUsername"],$inputs["trPassword"]);
+			$pwdMatchFlag = logIn($inputs["trUsername"],$inputs["trPassword"]);
+                        if ($pwdMatchFlag == 1){
+                            $inputErrors["trPassword"] = "Incorrect username/password combination";
+                            $errFlag = 1;
+                        }
 
 	 	 }
-
+                 // implode error messages into one string
+                 $errMsg = implode("<br>", array_filter($inputErrors));
 	 }//END AJAX processing
 
 
@@ -81,7 +87,55 @@
 
 
 <body>
-
+    <!-- Modals for warning and error messages -->
+    <div id="successModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><p class="text-success">Success!</p></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="successModalText" class="text-success">Something good happened.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="warnModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Oops..</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="warnModalText" class="text-warning">Giving you a warning.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="errorModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Oops..</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="errorModalText" class="text-danger">Oh no an error occurred.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
                         <div class="navbar-header">
@@ -119,12 +173,12 @@
 
 				<div class="form-group">
 					<label for="trUsername">Username</label> 
-					<input type="text" id="trUsername" name="trUsername" class="form-control"> <?php print $inputErrors["trUsername"]; ?>
+					<input type="text" id="trUsername" name="trUsername" class="form-control">
 				</div>
 
 				<div class="form-group">
 					<label for="trPassword">Password</label> 
-					<input type="password" id="trPassword" name="trPassword" class="form-control"> <?php print $inputErrors["trPassword"]; ?>
+					<input type="password" id="trPassword" name="trPassword" class="form-control">
 				</div>
 				<div class="form-group">
 					<input type="submit" value="Log In" class="btn btn-primary">
@@ -140,5 +194,13 @@
 
 </body>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="trmodals.js"></script>
+<script>
+     <?php
+        print "modalSetFormSrc(\"login\");";
+        print "loginFormInfo(".$errFlag.", \"".$errMsg."\");";
+    ?>   
+</script>
 </html>

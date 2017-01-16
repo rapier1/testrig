@@ -54,20 +54,23 @@ $inputs = array(
 	'rtEmailAddress' => "");
 
 // initialize variables
-$fNameError =
-    $lNameError =
-    $emailError =
-    $phoneNumberError =
-    $instNameError =
-    $scpPubKeyError =
-    $scpDstIpError =
-    $scpUsernameError =
-    $rtEmailAddress =
-    $testRigUsernameError =
-    $testRigPasswordError =
-    $scpHostPathError =
-    $scpPrivKeyError =
-    $testRigPasswordConfirmError = "";
+$inputErrors = array(
+	'fName' => "",
+	'lName' => "",
+	'email' => "",
+	'testRigUsername' => "",
+	'testRigPassword' => "",
+	'phoneNumber' => "",
+	'instName' => "",
+	'scpPubKey' => "",
+	'scpPrivKey' => "",
+	'scpDstIp' => "",
+	'scpHostPath' => "",
+	'scpUsername' => "",
+	'rtEmailAddress' => "");
+
+$errFlag = -1; //init as -1 to indicate page being loaded prior to form submission. (do not validate fields yet because they are all empty)
+$errMsg = "";
 
 //database-related variables
 $dbHost = "192.168.122.1"; //ionia's private IP
@@ -225,49 +228,48 @@ function emailPubKey($pubKey, $email) {
 }
 
 //check if required variables are empty. Empty? Alert user. Provided? Pass to input scrubber
-
-$errFlag = 0;
 if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
+        $errFlag = 0; //assume success until error found.
         if (empty($_REQUEST["fName"]))
             {
-                $fNameError = "You must provide your first name";
+                $inputErrors["fName"] = "You must provide your first name";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["lName"]))
             {
-                $lNameError = "You must provide your last name";
+                $inputErrors["lName"] = "You must provide your last name";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["email"]))
             {
-                $emailError = "You must provide your email address";
+                $inputErrors["email"] = "You must provide your email address";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["phoneNumber"]))
             {
-                $phoneNumberError = "You must provide a phone number";
+                $inputErrors["phoneNumber"] = "You must provide a phone number";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["instName"]))
             {
-                $instNameError = "You must provide your institution's name";
+                $inputErrors["instName"] = "You must provide your institution's name";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["scpUsername"]))
             {
-                $scpUsernameError = "You must provide an SCP-only account username";
+                $inputErrors["scpUsername"] = "You must provide an SCP-only account username";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["scpDstIp"]))
             {
-                $scpDstIpError = "You must provide the IP of transfer host";
+                $inputErrors["scpDstIp"] = "You must provide the IP of transfer host";
                 $errFlag = 1;
             }
         
@@ -281,26 +283,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         
         if (empty($_REQUEST["testRigUsername"]))
             {
-                $testRigUsernameError = "You must choose a username";
+                $inputErrors["testRigUsername"] = "You must choose a username";
                 $errFlag = 1;
             }
         
         if (empty($_REQUEST["testRigPassword"]))
             {
-                $testRigPasswordError = "You must provide a password";
+                $inputErrors["testRigPassword"] = "You must provide a password";
                 $errFlag = 1;
             }
         
         if ($_REQUEST["testRigPassword"] != $_REQUEST["testRigPasswordConfirm"])
             {
-                $testRigPasswordConfirmError = "passwords do not match";
+                $inputErrors["testRigPassword"] = "Passwords do not match";
                 $errFlag = 1;
             }
 
 
 	if (empty($_REQUEST["scpHostPath"]))
             {
-                $scpHostPathError = "You must provide a path for SCP data";
+                $inputErrors["scpHostPath"] = "You must provide a path for SCP data";
                 $errFlag = 1;
             }
 
@@ -309,8 +311,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 //                $scpPrivKeyError = "You must provide a private key";
 //                $errFlag = 1;
 //            }
-
-        if ($errFlag != 1)
+            // implode error messages into one string
+            $errMsg = implode("<br>", array_filter($inputErrors));
+        if ($errFlag == 0)
             {
                 // All the inputs have been validated so generate the ssh keys
                 list ($inputs["scpPrivKey"], $inputs["scpPubKey"]) = generateSSHKeys();
@@ -348,6 +351,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
 //end PHP input validation
 ?>
+
+    <!-- Modals for warning and error messages -->
+    <div id="successModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><p class="text-success">Success!</p></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="successModalText" class="text-success">Something good happened.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="warnModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Oops..</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="warnModalText" class="text-warning">Giving you a warning.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="errorModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Oops..</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="errorModalText" class="text-danger">Oh no an error occurred.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
@@ -431,6 +484,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 </div>
 </body>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="trmodals.js"></script>
+<script>
+     <?php
+        print "modalSetFormSrc(\"signUp\");";
+        print "signUpFormInfo(".$errFlag.", \"".$errMsg."\");";
+        print "console.log(\"".$_SERVER["REQUEST_METHOD"]."\");";
+    ?>   
+</script>
 </html>
     
