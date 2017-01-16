@@ -95,13 +95,13 @@ function logIn($username, $password)
     $queryResult = $stmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
     if (!$queryResult) //Did we find a match to the submitted username?
         {
-			print $errString;
+			return 1;
         }
     else //found a username match, time to see if the password is correct
         {
 			if (!password_verify($password, $queryResult["tr_password"])) //fail
                 {
-                    print $errString;
+                    return 1; //return 1 to notify password match failed
                 }
 			else //pass!
                 {
@@ -110,7 +110,8 @@ function logIn($username, $password)
                     $_SESSION["username"] = $queryResult["tr_username"];
                     $_SESSION["CID"] = $queryResult["cid"];
                     header("Location:http://". $_SERVER['SERVER_NAME'] ."/main.php");
-                    die();
+                    //die();
+                    return 0; //return 0 to notify password match success
                 }
         }
 }//END logIn
