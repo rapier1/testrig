@@ -263,6 +263,8 @@ function generateISORequestForm()
                             $count++;
                         }//END foreach checkedTests
 
+
+	////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
                     $inputs["username"] = scrubInput($_REQUEST["isoUsername"]);
                     $inputs["email"] = scrubInput($_REQUEST["isoEmail"]);
                     $inputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
@@ -271,6 +273,21 @@ function generateISORequestForm()
                     $date = scrubInput($_REQUEST["isoValidToDate"]);
                     $inputs["validToDate"] = date("Y-m-d", strtotime($date));
                     $inputs["testCSV"] = $testString;
+
+		    	$alert = "";
+			$alert = '<script type="text/javascript">';
+			$submissions = "";
+			$submissions .= 'Username: ' . $inputs["username"] . '\n';
+			$submissions .= 'Email: ' . $inputs["email"] . '\n';
+                        $submissions .= 'TroubleTicket: ' . $inputs["troubleTicket"] . '\n';
+                        $submissions .= 'Target: ' . $inputs["isoTestTargetIP"] . '\n';
+                        $submissions .= 'Max Runs: ' . $inputs["maxRun"] . '\n';
+                        $submissions .= 'Valid to date: ' . $inputs["validToDate"] . '\n';
+                        $submissions .= 'CSV of Tests: ' . $inputs["testCSV"] . '\n';
+			$alert .= 'window.alert(' . $sumbissions . ');</script>';
+			print $alert;
+	/////////////////////////////////////////// END WTF SECTION /////////////////////////////////
+
 
                     //everything is scrubbed and prepped for entry into the DB, so let's do this
                     if (insertNewISORequest($inputs)) {
@@ -328,22 +345,14 @@ function generateISORequestForm()
 			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name" value="' . $_REQUEST["isoAffiliation"] . '">' . $isoFormInputErrors["affiliation"] . '</div>
 
 			<div class="form-group"> <label for="queueName">RT Queue Name:</label>
-			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $isoFormInputErrors["queueName"]; ?> </div>
-			Tests to run*: <br>';
-    //break for assembling the checkbox list
-	$testlist = "";
-    //assemble the list of tests to choose from dynamically
-    foreach ($allTests as $val)
-        {
-            $testList = $testList . '<div class="checkbox"><label><input type="checkbox" name="testCheckbox_list[]" id="testCheckbox_list[]" value=' . $val . '>'. $val .'</label></div>';
-        }
-    $isoForm = $isoForm . $testList; //add it to the form
+
+			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $inputErrors["queueName"]; ?> </div>';
     //finish the form
     $isoForm = $isoForm . '<button type="submit" class="btn btn-primary">Generate New ISO</button></div></form>';
  
     return [$isoForm, $errFlag, $errMsg];
     
-}//END generateISORequestForm()    
+}///////////////////////////  END generateISORequestForm()    /////////////////////////////////////////////////////////////////////////////////
 
 function insertNewISORequest($cleanedInputs)
 {
