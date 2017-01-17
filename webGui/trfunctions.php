@@ -207,11 +207,11 @@ function generateISORequestForm()
                 }
             }
             
-            if (empty($_REQUEST["isoTroubleTicket"]))
-                {
-                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
-                    $errFlag = 1;
-                }
+//            if (empty($_REQUEST["isoTroubleTicket"]))
+//                {
+//                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
+//                    $errFlag = 1;
+//                }
             
             if (empty($_REQUEST["isoUsername"]))
                 {
@@ -239,10 +239,10 @@ function generateISORequestForm()
                                    $errFlag = 1;
                         }
                 }
-            if (empty($_REQUEST["queueName"]))
-                {
-                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
-                }
+//            if (empty($_REQUEST["queueName"]))
+//                {
+//                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
+//                }
            
             $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
@@ -351,7 +351,7 @@ function generateISORequestForm()
 			<div class="form-group"> <label for="isoValidToDate">ISO Valid Until:</label>
 			<input type="date" class="form-control" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '" >' . $isoFormInputErrors["validToDate"] . '</div>
 
-			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.*:</label>
+			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.:</label>
 			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #" value="' . $_REQUEST["isoTroubleTicket"] . '">' . $isoFormInputErrors["troubleTicket"] . '</div>
 
 			<div class="form-group"> <label for="isoUsername">Name*:</label>
