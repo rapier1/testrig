@@ -204,7 +204,14 @@ After the completion of the tests the packaged results will be securely transfer
 Each file contains the results of each test in ascii format. The exception to this is the tcpdump.tgz file which is in tcpdump format. Additionally, there will be a *-tcptrace file in the directory that contains a preliminary analysis of the tcpdump file using tcptrace. 
 <br><br>
 Interpretation of the results is dependent on the experience of the network engineer. Providing detailed guides to interpreting test results is outside of the scope of this document. The TestRig team is generally not available to help with the diagnostic interpretation of these results but exceptions will be made on a case by case basis.
-   </p> </div>
+   </p>
+
+       <br><h4>13. What if my question wasn't answered here?</h4><p>
+
+Email support at &#116;&#101;&#115;&#116;&#114;&#105;&#103;&#064;&#112;&#115;&#099;&#046;&#101;&#100;&#117;
+
+    </p>
+    </div>
   </div><!-- end row -->
   </div>
 
