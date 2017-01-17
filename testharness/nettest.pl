@@ -7,8 +7,8 @@
 
 #prevent the user from exiting the application
 #off for development
-#$SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
-#$SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+$SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+$SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
 #$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
 
 use strict;
@@ -525,7 +525,10 @@ sub runTests {
 	$test = lc($test);
 	switch($test) {
 	    case "traceroute" {
-		testTR();
+		testTraceroute();
+	    }
+	    case "tracepath" {
+		testTracepath();
 	    }
 	    case "iperf" {
 		testIperf();
@@ -552,9 +555,7 @@ sub runTests {
     }
 }
 
-sub testTR {
-    # we are actually going to run a numebr of different network
-    # mapping tools here
+sub testTraceroute {
     my $target = $config->{user}->{target};
     my $command = "/opt/bin/bwtraceroute -a -c $target";
     my $output = runSystem($command, 1, 1);
@@ -562,14 +563,23 @@ sub testTR {
 
     logger ("warn", "Running traceroute to $target");
     storeOutput($output, "traceroute");
-    logger ("warn", "Running tracepath to $target");
-    $command = "/opt/bin/bwtraceroute -a -T tracepath -c $target";
-    $output = runSystem($command, 1, 1);
-    storeOutput($output, "tracepath");
     if (length($output) <= 0) {
 	$pass = -1;
     }
     updateResultsDB("traceroute", $pass);
+}
+
+sub testTracepath {
+    my $target = $config->{user}->{target};
+    my $pass = 0;
+    logger ("warn", "Running tracepath to $target");
+    my $command = "/opt/bin/bwtraceroute -a -T tracepath -c $target";
+    my $output = runSystem($command, 1, 1);
+    storeOutput($output, "tracepath");
+    if (length($output) <= 0) {
+	$pass = -1;
+    }
+    updateResultsDB("tracepath", $pass);
 }
 
 sub testNuttcp {
@@ -720,6 +730,9 @@ sub testUDP {
 my $password = trmanagerAuth();
 mountEncfs($password);
 
+#make sure ntpd is up to date
+syncClock();
+
 #encfs is mounted we can start running tests
 if (confirmPath($config->{user}->{target}) == -1) {
     logger ("crit", "We have no path the test target.");
@@ -729,10 +742,6 @@ $currentRunNum = getCurrentRunNum($password);
 
 # get hardware data
 getHostData();
-
-#make sure ntpd is up to date
-syncClock();
-
 
 # run the tests
 # all error checking is done in the context of the tests
