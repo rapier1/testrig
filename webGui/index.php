@@ -25,10 +25,12 @@
 		session_start();
 		$navLoginLogoutButton = "";
 		if (!empty($_SESSION["username"]))
-		 {
+		 {   //Session is set, redirect to main page
+                     header("Location: http://". $_SERVER['SERVER_NAME']. "/main.php");
+                     die();
 			//Session is Set, LOG OUT should be visible option
-			$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/logout.php'";
-			$navLoginLogoutButton = '<button id="logout" onClick="'. $url . '" type="button" class="btn btn-sm btn-primary">Logout</button>';
+			//$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/logout.php'";
+			//$navLoginLogoutButton = '<button id="logout" onClick="'. $url . '" type="button" class="btn btn-sm btn-primary">Logout</button>';
 
 		 }
 		else
