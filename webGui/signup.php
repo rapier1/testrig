@@ -433,46 +433,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 <form id="contactInformation" role="form" class="form-horizontal col-md-8" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
     * required fields <br>
 	<div class="form-group"> <label for="fName"> First Name*:</label>
-	<input type="text" name="fName" id="fName" class="form-control" value="<?php echo $_REQUEST['fName']?>"> <?php echo $fNameError ?></div>
+	<input type="text" name="fName" id="fName" class="form-control" value="<?php echo $_REQUEST['fName']?>"> </div>
 
         <div class="form-group"> <label for="lName">Last Name*:</label>
-	<input type="text" name="lName" id="lName" class="form-control" value="<?php echo $_REQUEST['lName']?>"> <?php echo $lNameError ?></div>
+	<input type="text" name="lName" id="lName" class="form-control" value="<?php echo $_REQUEST['lName']?>"> </div>
 
         <div class="form-group"> <label for="email">Email*:</label>
-	<input type="email" name="email" id="email" class="form-control" value="<?php echo $_REQUEST['email']?>"> <?php echo $emailError ?> </div>
+	<input type="email" name="email" id="email" class="form-control" value="<?php echo $_REQUEST['email']?>">  </div>
 
         <div class="form-group"> <label for="testRigUsername">TestRig Username*:</label>
-	<input type="text" name="testRigUsername" id="testRigUsername" class="form-control" value="<?php echo $_REQUEST['testRigUsername']?>"> <?php echo $testRigUsernameError ?></div>
+	<input type="text" name="testRigUsername" id="testRigUsername" class="form-control" value="<?php echo $_REQUEST['testRigUsername']?>"> </div>
 
         <div class="form-group"> <label for="testRigPassword">TestRig Password*:</label>
-	<input type="password" name="testRigPassword" id="testRigPassword" class="form-control"> <?php echo $testRigPasswordError ?></div>
+	<input type="password" name="testRigPassword" id="testRigPassword" class="form-control"> </div>
 
         <div class="form-group"> <label for="testRigPasswordConfirm">repeat password:<label>
-	<input type="password" name="testRigPasswordConfirm" id="testRigPasswordConfirm" class="form-control"> <?php echo $testRigPasswordConfirmError ?></div>
+	<input type="password" name="testRigPasswordConfirm" id="testRigPasswordConfirm" class="form-control"></div>
 
         <div class="form-group"> <label for="phoneNumber">Phone Number*:</label>
-	<input type="text" name="phoneNumber" id="phoneNumber" class="form-control"  value="<?php echo $_REQUEST['phoneNumber']?>"> <?php echo $phoneNumberError ?> </div>
+	<input type="text" name="phoneNumber" id="phoneNumber" class="form-control"  value="<?php echo $_REQUEST['phoneNumber']?>"></div>
 
         <div class="form-group"> <label for="instName">Institution Name*:</label>
-	<input type="text" name="instName" id="instName" class="form-control" value="<?php echo $_REQUEST['instName']?>"> <?php echo $instNameError ?></div>
+	<input type="text" name="instName" id="instName" class="form-control" value="<?php echo $_REQUEST['instName']?>"> </div>
 
         <div class="form-group"> <label for="rtEmailAddress">RT Email Address:</label>
 	<input type="text" name="rtEmailAddress" id="rtEmailAddress" class="form-control" value="<?php echo $_REQUEST['rtEmailAddress']?>"> </div>
 
-        <div class="form-group"> <label for="scpUsername">SCP Username:</label>
-	<input type="text" name="scpUsername" id="scpUsername" class="form-control" value="<?php echo $_REQUEST['scpUsername']?>"> <?php echo $scpUsernameError ?></div>
+        <div class="form-group"> <label for="scpUsername">SCP Username*:</label>
+	<input type="text" name="scpUsername" id="scpUsername" class="form-control" value="<?php echo $_REQUEST['scpUsername']?>"></div>
 
-        <div class="form-group"> <label for="scpDstIp">SCP Dst IP:</label>
-	<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> <?php echo $scpDstIpError ?></div>
+        <div class="form-group"> <label for="scpDstIp">SCP Dst IP*:</label>
+	<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> </div>
 
 <!--        <div class="form-group"> <label for="scpPubKey">SCP Public Key*:</label>
-	<input type="textarea" name="scpPubKey" id="scpPubKey" class="form-control"> <?php echo $scpPubKeyError ?> </div>
+	<input type="textarea" name="scpPubKey" id="scpPubKey" class="form-control">  </div>
 
         <div class="form-group"> <label for="scpPrivKey">SCP Private Key*:</label>
-        <input type="textarea" name="scpPrivKey" id="scpPrivKey" class="form-control"> <?php echo $scpPrivKeyError ?> </div>
+        <input type="textarea" name="scpPrivKey" id="scpPrivKey" class="form-control">  </div>
 -->
         <div class="form-group"> <label for="scpHostPath">SCP Destination Absolute Path*:</label>
-        <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control"> <?php echo $hostPathError ?> </div>
+        <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control"></div>
 
 
 

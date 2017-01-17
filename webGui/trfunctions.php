@@ -208,11 +208,11 @@ function generateISORequestForm()
                 }
             }
             
-            if (empty($_REQUEST["isoTroubleTicket"]))
-                {
-                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
-                    $errFlag = 1;
-                }
+//            if (empty($_REQUEST["isoTroubleTicket"]))
+//                {
+//                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
+//                    $errFlag = 1;
+//                }
             
             if (empty($_REQUEST["isoUsername"]))
                 {
@@ -240,10 +240,10 @@ function generateISORequestForm()
                                    $errFlag = 1;
                         }
                 }
-            if (empty($_REQUEST["queueName"]))
-                {
-                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
-                }
+//            if (empty($_REQUEST["queueName"]))
+//                {
+//                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
+//                }
            
             $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
