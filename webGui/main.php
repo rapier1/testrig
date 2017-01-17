@@ -112,6 +112,7 @@
 				  <li><a id="menu-isolist" href="#isolist">ISO List</a></li>
 				  <li><a id="menu-geniso" href="#geniso">Generate New ISO</a></li>
 				  <li><a id="menu-admin" href="#admin">Administration</a></li>
+				  <li><a id="menu-faq" href="http://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
 				</ul>
 				<p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/logout.php'"  type="button" class="btn btn-sm btn-primary">Logout</button></p>
 			</div><!--/.nav-collapse -->

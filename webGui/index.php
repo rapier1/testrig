@@ -59,6 +59,7 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 				  <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
+				  <li><a id="menu-faq" href="http://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
