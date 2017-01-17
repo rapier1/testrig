@@ -92,7 +92,7 @@ function populatePsPickerForm(json){
     $('#psPickerDiv').html(json)
     
     // make div visible
-    $('#psPickerDiv').parent().removeClass('hidden');
+    $('#psPickerDiv').parent().parent().removeClass('hidden');
 }
 
 function isJsonString(str) {
@@ -111,7 +111,7 @@ function createHostNode(rawList,hostname)
     //we need to always include tcpdump because it's not part of bwctl-tools, so push it onto the list of tests
     rawList.push("tcpdump");
     rawList.push("udp");
-    var nodeList = '<div id="psNode" name="psNode" class="form-group col-2"><input type="radio" name="psNode" value="psNode1" checked><span class="col-2 label-success">' + hostname;
+    var nodeList = '<div id="psNode" name="psNode" class="form-group col-md-3"><input type="radio" name="psNode" value="psNode1" checked><span class="col-2 label-success">' + hostname;
     nodeList += '<ul title="Available Tests:">'
     for (var i=0; i<rawList.length; i++)
     {
@@ -124,7 +124,7 @@ function createHostNode(rawList,hostname)
 
     
     //CUSTOM "PICK YOUR OWN TEST NODE" SECTION //////////////////////////////
-    nodeList +='<div id="psNodeCustom" name="psNodeCustom" class="form-group col-2"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
+    nodeList +='<div id="psNodeCustom" name="psNodeCustom" class="form-group col-md-3"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
     nodeList += '<input type="text" name="psNodeCustomTarget" id="psNodeCustomTarget" placeholder="perfSonar Node">';
     nodeList += '<ul title="Available Tests:">'
     for (var i=0; i<testsWeSupport.length; i++)
