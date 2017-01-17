@@ -76,13 +76,14 @@
 
 
 <div id="container-main" class="container">
-  <div class="main-panels">
+  <div class="jumbotron">
   <div class="row">
     <h4 class="text-center">
     Welcome to TestRig 2.0 - a software as a service offering provided by the Pittsburgh Supercomputing Center made possible by a grant from the National Science Foundation. TestRig 2.0 is designed to be a straightforward way to collect valuable network diagnostic information using dynamically generated bootable live ISOs.
-    </h4><hr>
+    </h4>
   </div><!-- end row -->
-
+  </div>
+  <div class="main-panels">
   <div class="row">
     <div class="col-md-6">
       <h4 class="text-center">Why TestRig 2.0?<br><br>
