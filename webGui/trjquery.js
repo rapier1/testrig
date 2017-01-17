@@ -125,7 +125,7 @@ function createHostNode(rawList,hostname)
     
     //CUSTOM "PICK YOUR OWN TEST NODE" SECTION //////////////////////////////
     nodeList +='<div id="psNodeCustom" name="psNodeCustom" class="form-group col-2"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
-    nodeList += '<input type="text" name="psNodeCustomTarget" id="psNodeCustomTarget" placeholder="hostname/ip address">';
+    nodeList += '<input type="text" name="psNodeCustomTarget" id="psNodeCustomTarget" placeholder="perfSonar Node">';
     nodeList += '<ul title="Available Tests:">'
     for (var i=0; i<testsWeSupport.length; i++)
     {

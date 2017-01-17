@@ -198,11 +198,12 @@ function generateISORequestForm()
                 }
 		else {
                 $format ="Y-m-d";
-		$date = trim($_REQUEST["isoValidToDate"]);
-                $time = strtotime($date);
+		$date = scrubInput($_REQUEST["isoValidToDate"]);
+                $time = new DateTime($date);
+		$formattedDate = $time->format('Y-m-d');
 
-                if (date($format, $time) != $date) {
-                    $isoFormInputErrors["validToDate"] = "You entered and invalid date or date format.";
+                if (date($format, $date) != $formattedDate) {
+                    $isoFormInputErrors["validToDate"] = "You entered an invalid date format";
                     $errFlag = 1;
                 }
             }
@@ -325,7 +326,7 @@ function generateISORequestForm()
                 
         }//END request and empty var check
     
-    $valid_date = date("m/d/Y", strtotime("+7 days"));     
+    $valid_date = date("Y-m-d", strtotime("+7 days"));     
 
     //$isoForm will hold the entire new <div> element
     //we have to do this in a few steps due to the need for PHP_SELF to be in quotes for the redirection to work correctly
@@ -351,7 +352,7 @@ function generateISORequestForm()
 			<div class="form-group"> <label for="isoValidToDate">ISO Valid Until:</label>
 			<input type="date" class="form-control" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '" >' . $isoFormInputErrors["validToDate"] . '</div>
 
-			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.*:</label>
+			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.:</label>
 			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #" value="' . $_REQUEST["isoTroubleTicket"] . '">' . $isoFormInputErrors["troubleTicket"] . '</div>
 
 			<div class="form-group"> <label for="isoUsername">Name*:</label>
