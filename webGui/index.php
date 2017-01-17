@@ -24,7 +24,7 @@
 <?php
 		session_start();
 		$navLoginLogoutButton = "";
-		if (empty($_SESSION["username"]))
+		if (!empty($_SESSION["username"]))
 		 {
 			//Session is Set, LOG OUT should be visible option
 			$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/logout.php'";
@@ -54,15 +54,17 @@
 				  <span class="icon-bar"></span>
 				  <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Testrig 2.0</a>
+				<a class="navbar-brand" href="index.php">Testrig 2.0</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
-				  <ul class="nav navbar-nav">
-				  <li><a id="menu-isolist" href="#isolist">Home</a></li>
-				  <li><a id="menu-geniso" href="#geniso">About</a></li>
-				  <li><a id="menu-admin" href="#admin">Administration</a></li>
+				<ul class="nav navbar-nav">
+				  <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
 				</ul>
-				<p class="navbar-right navbar-btn"><?php print $navLoginLogoutButton ?></p>
+
+				<ul class="nav navbar-nav navbar-right">
+                                    <li class="navbar-btn"><?php print $navLoginLogoutButton ?></li>
+                                    <li class="navbar-btn"><button id="signup" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></li>
+                                </ul>
 			</div><!--/.nav-collapse -->
 		</div> <!-- END nav container -->
 	</nav>
@@ -72,21 +74,10 @@
 
 
 
-<div id="container-main" class="container">
-	<div id="container-home" class="starter-template hidden">
-
-
-	</div><!-- END home container -->
-
-	<div id="container-about" class="starter-template hidden">
-
-
-	</div><!-- END about container -->
-
-	<div id="container-help" class="starter-template hidden">
-
-
-	</div><!-- END help container -->
+<div id="container-main" class="main-panels">
+<h4 class="text-center">
+Welcome to TestRig 2.0 - a software as a service offering provided by the Pittsburgh Supercomputing Center made possible by a grant from the National Science Foundation. TestRig 2.0 is designed to be a straightforward way to collect valuable network diagnostic information using dynamically generated bootable live ISOs.
+</h4>
 
 
 </div> <!-- END MAIN container -->
@@ -94,7 +85,7 @@
 
 <!-- jquery stuff -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+<script src="trjquery.js"></script>
 <!-- END jquery stuff -->
 
 

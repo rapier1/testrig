@@ -145,12 +145,11 @@
                                   <span class="icon-bar"></span>
                                   <span class="icon-bar"></span>
                                 </button>
-                                <a class="navbar-brand" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php'">Testrig 2.0</a>
+                                <a class="navbar-brand" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php">Testrig 2.0</a>
                         </div>
                         <div id="navbar" class="collapse navbar-collapse">
                                   <ul class="nav navbar-nav">
-                                  <li><a id="menu-home" href="#home">Home</a></li>
-                                  <li><a id="menu-about" href="#about">About</a></li>
+                                  <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php">About</a></li>
                                 </ul>
 <p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></p>
                         </div><!--/.nav-collapse -->
