@@ -87,7 +87,7 @@ function logIn($username, $password)
     $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
     $errString = "Incorrect username/password combination";
 
-    $stmnt = $dbh->prepare('SELECT tr_username, tr_password, cid, inst_name 
+    $stmnt = $dbh->prepare('SELECT tr_username, tr_password, cid, inst_name, approved 
 					FROM customer 
 					WHERE tr_username = :username');
     $stmnt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -99,7 +99,7 @@ function logIn($username, $password)
         }
     else //found a username match, time to see if the password is correct
         {
-			if (!password_verify($password, $queryResult["tr_password"])) //fail
+			if (!password_verify($password, $queryResult["tr_password"]) || ($queryResult["approved"] == 0)) //fail
                 {
                     return 1; //return 1 to notify password match failed
                 }
@@ -233,23 +233,39 @@ function generateISORequestForm()
 
             if (empty($_REQUEST["testCheckbox_list"]))
                 {
-                    $isoFormInputErrors["testCSV"] = "You must select at least 1 test";
-                    $errFlag = 1;
+                    if(empty($_REQUEST["testCheckbox_listCustom"])) //are checkboxes filled in on either node selection?
+                        {
+                                   $isoFormInputErrors["testCSV"] = "You must select at least 1 test";
+                                   $errFlag = 1;
+                        }
                 }
             if (empty($_REQUEST["queueName"]))
-         	{
+                {
                     $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
-         	}
-
+                }
+           
             $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
             if ($errFlag != 1) //Has everything been successfully submitted?
                 {
+                    if ($_REQUEST["psNode"] == "psNode1") //they picked the automatically selected one
+                        {
+                            $checkedTests = $_REQUEST["testCheckbox_list"];
+                            $inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
+                        }
+                    else
+                        {
+                            $checkedTests = $_REQUEST["testCheckbox_listCustom"];
+                            $inputs["target"] = scrubInput($_REQUEST["psNodeCustomTarget"]);
+                        }
+
+
+                    
                     //have to assemble the tests in a csv
                     $count = 0;
                     $testString = "";
-                    $checkedTests = $_REQUEST["testCheckbox_list"];
+                    //$checkedTests = $_REQUEST["testCheckbox_list"];
                     foreach ($checkedTests as $val)
                         {
                             $val = scrubInput($val); //just in case someone does something funky to the form
@@ -268,12 +284,12 @@ function generateISORequestForm()
                     $inputs["username"] = scrubInput($_REQUEST["isoUsername"]);
                     $inputs["email"] = scrubInput($_REQUEST["isoEmail"]);
                     $inputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
-                    $inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
+                            //$inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
                     $inputs["maxRun"] = scrubInput($_REQUEST["isoMaxRun"]);
                     $date = scrubInput($_REQUEST["isoValidToDate"]);
                     $inputs["validToDate"] = date("Y-m-d", strtotime($date));
                     $inputs["testCSV"] = $testString;
-
+                    
             ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
                     /*
                     
