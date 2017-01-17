@@ -57,7 +57,7 @@ function buildDiv($divID, $dbTableName, $fields)
             {
                 $newDiv = $newDiv . "<th>$fields[$counter]</th>";
             }
-
+        
 		$newDiv = $newDiv . "</tr>";
 		//fill in the table with the results from the query
 		foreach ($results as $row) //go row-by-row through returned query
@@ -87,7 +87,7 @@ function logIn($username, $password)
     $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
     $errString = "Incorrect username/password combination";
 
-    $stmnt = $dbh->prepare('SELECT tr_username, tr_password, cid, inst_name 
+    $stmnt = $dbh->prepare('SELECT tr_username, tr_password, cid, inst_name, approved 
 					FROM customer 
 					WHERE tr_username = :username');
     $stmnt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -95,13 +95,13 @@ function logIn($username, $password)
     $queryResult = $stmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
     if (!$queryResult) //Did we find a match to the submitted username?
         {
-			print $errString;
+			return 1;
         }
     else //found a username match, time to see if the password is correct
         {
-			if (!password_verify($password, $queryResult["tr_password"])) //fail
+			if (!password_verify($password, $queryResult["tr_password"]) || ($queryResult["approved"] == 0)) //fail
                 {
-                    print $errString;
+                    return 1; //return 1 to notify password match failed
                 }
 			else //pass!
                 {
@@ -110,7 +110,8 @@ function logIn($username, $password)
                     $_SESSION["username"] = $queryResult["tr_username"];
                     $_SESSION["CID"] = $queryResult["cid"];
                     header("Location:http://". $_SERVER['SERVER_NAME'] ."/main.php");
-                    die();
+                    //die();
+                    return 0; //return 0 to notify password match success
                 }
         }
 }//END logIn
@@ -171,47 +172,46 @@ function generateISORequestForm()
                     $isoFormInputErrors["ipAddress"] = "You must provide an IP address";
                     $errFlag = 1;
                 }
-            
+
             if (empty($_REQUEST["isoMaxRun"]))
                 {
                     $isoFormInputErrors["maxRun"] = "You must enter a maximum number of runs";
                     $errFlag = 1;
                 }
-            
+
             if ($_REQUEST["isoMaxRun"] < 1)
                 {
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be at least 1";
                     $errFlag = 1;
                 }
-            
+
             if ($_REQUEST["isoMaxRun"] > 25)
                 {
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be 25 or less";
                     $errFlag = 1;
                 }
-            
+
             if (empty($_REQUEST["isoValidToDate"]))
                 {
                     $isoFormInputErrors["validToDate"] = "You must enter an expiration date for the ISO";
                     $errFlag = 1;
-                } else {
+                }
+		else {
                 $format ="Y-m-d";
-                $inputDate = trim($_REQUEST["isoValidToDate"]);
-                $date = new DateTime($inputDate);
-                $formatdate = $date->format($format);
-                //$time = strtotime($date);
-                
-                //if (date($format, $time) != $date) {
-                //    $isoFormInputErrors["validToDate"] = "You entered and invalid date or date format.";
-                //    $errFlag = 1;
-                //}
-            }
-            
-            if (empty($_REQUEST["isoTroubleTicket"]))
-                {
-                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
+		$date = trim($_REQUEST["isoValidToDate"]);
+                $time = strtotime($date);
+
+                if (date($format, $time) != $date) {
+                    $isoFormInputErrors["validToDate"] = "You entered and invalid date or date format.";
                     $errFlag = 1;
                 }
+            }
+            
+//            if (empty($_REQUEST["isoTroubleTicket"]))
+//                {
+//                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
+//                    $errFlag = 1;
+//                }
             
             if (empty($_REQUEST["isoUsername"]))
                 {
@@ -233,76 +233,99 @@ function generateISORequestForm()
 
             if (empty($_REQUEST["testCheckbox_list"]))
                 {
-                    $isoFormInputErrors["testCSV"] = "You must select at least 1 test";
-                    $errFlag = 1;
+                    if(empty($_REQUEST["testCheckbox_listCustom"])) //are checkboxes filled in on either node selection?
+                        {
+                                   $isoFormInputErrors["testCSV"] = "You must select at least 1 test";
+                                   $errFlag = 1;
+                        }
                 }
-            if (empty($_REQUEST["queueName"]))
-         	{
-                    $inputErrors["queueName"] = "Specify an RT Queue for RT integration";
-         	}
-
+//            if (empty($_REQUEST["queueName"]))
+//                {
+//                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
+//                }
+           
+            $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
             if ($errFlag != 1) //Has everything been successfully submitted?
                 {
-                    //have to assemble the tests in a csv
-                    $count = 0;
-                    $testString = "";
-                    $checkedTests = $_REQUEST["testCheckbox_list"];
-                    foreach ($checkedTests as $val)
+                    if ($_REQUEST["psNode"] == "psNode1") //they picked the automatically selected one
                         {
-                            $val = scrubInput($val); //just in case someone does something funky to the form
-                            if ($count == (count($checkedTests) - 1))
-                                {
-                                    $testString = $testString . $val;
-                                }
-                            else //slap a comma on that shit
-                                {
-                                    $testString = $testString . $val . ", ";
-                                }
-                            $count++;
-                        }//END foreach checkedTests
-                
-                    
-                    ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
-                    $isoFormInputs["username"] = scrubInput($_REQUEST["isoUsername"]);
-                    $isoFormInputs["email"] = scrubInput($_REQUEST["isoEmail"]);
-                    $isoFormInputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
-                    $isoFormInputs["target"] = scrubInput($_REQUEST["isoTestTargetIP"]);
-                    $isoFormInputs["maxRun"] = scrubInput($_REQUEST["isoMaxRun"]);
-                    $date = scrubInput($_REQUEST["isoValidToDate"]);
-                    $isoFormInputs["validToDate"] = date("Y-m-d", strtotime($date));
-                    $isoFormInputs["testCSV"] = $testString;
-
-			/////////////////////////////////////////// END WTF SECTION ///////////////////////////////// */
-
-            
-            //everything is scrubbed and prepped for entry into the DB, so let's do this
-            if (insertNewISORequest($isoFormInputs))
-                {
-                    if (!$_SESSION[CID] or !$_SESSION[UID]) 
-                        {
-                            echo "Missing necessary information (UID or CID) to build ISO.<p>";
+                            $checkedTests = $_REQUEST["testCheckbox_list"];
+                            $inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
                         }
                     else
                         {
+                            $checkedTests = $_REQUEST["testCheckbox_listCustom"];
+                            $inputs["target"] = scrubInput($_REQUEST["psNodeCustomTarget"]);
+                        }
+
+
+                    
+                    //have to assemble the tests in a csv
+                    $count = 0;
+                    $testString = "";
+                    //$checkedTests = $_REQUEST["testCheckbox_list"];
+                    foreach ($checkedTests as $val)
+                        {
+                            $val = scrubInput($val); //just in case someone does something funky to the form
+							if ($count == (count($checkedTests) - 1))
+                                {
+									$testString = $testString . $val;
+                                }
+							else //slap a comma on that shit
+                                {
+									$testString = $testString . $val . ", ";
+                                }
+                            $count++;
+                        }//END foreach checkedTests
+
+                    //Sanitize ISO Request Inputs
+                    $inputs["username"] = scrubInput($_REQUEST["isoUsername"]);
+                    $inputs["email"] = scrubInput($_REQUEST["isoEmail"]);
+                    $inputs["troubleTicket"] = scrubInput($_REQUEST["isoTroubleTicket"]);
+                            //$inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
+                    $inputs["maxRun"] = scrubInput($_REQUEST["isoMaxRun"]);
+                    $date = scrubInput($_REQUEST["isoValidToDate"]);
+                    $inputs["validToDate"] = date("Y-m-d", strtotime($date));
+                    $inputs["testCSV"] = $testString;
+                    
+            ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
+                    /*
+                    
+                    $alert = "";
+                    $alert = '<script type="text/javascript">';
+                    $submissions = "";
+                    $submissions .= 'Username: ' . $inputs["username"] . '\n';
+                    $submissions .= 'Email: ' . $inputs["email"] . '\n';
+                    $submissions .= 'TroubleTicket: ' . $inputs["troubleTicket"] . '\n';
+                    $submissions .= 'Target: ' . $inputs["isoTestTargetIP"] . '\n';
+                    $submissions .= 'Max Runs: ' . $inputs["maxRun"] . '\n';
+                    $submissions .= 'Valid to date: ' . $inputs["validToDate"] . '\n';
+                    $submissions .= 'CSV of Tests: ' . $inputs["testCSV"] . '\n';
+                    $alert .= 'window.alert(' . $sumbissions . ');</script>';
+                    print $alert; */
+            /////////////////////////////////////////// END WTF SECTION /////////////////////////////////
+
+
+                    //everything is scrubbed and prepped for entry into the DB, so let's do this
+                    if (insertNewISORequest($inputs)) {
+                        if (!$_SESSION[CID] or !$_SESSION[UID]) {
+                            echo "Missing necessary information (UID or CID) to build ISO.<p>";
+                        } else {
                             // It turns out that exec has an issue with some versions of bash which prevents it
                             // from properly redirecting STDIN and STDERR to a file. This prevents exec from going into
                             // the background. Turns out this proc_close(proc_open()) trick does work. 
                             proc_close (proc_open ("/usr/bin/sudo /home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
                         }
-                }
-            else
-                {
-
+                    } else {
                         echo "Failed to create new ISO!<p>";
-
-                 }
-             }//END successful submission if/then
-            
+                    }
+                }//END successful submission if/then
+                
         }//END request and empty var check
     
-    $valid_date = date("Y/m/d", strtotime("+7 days"));     
+    $valid_date = date("m/d/Y", strtotime("+7 days"));     
 
     //$isoForm will hold the entire new <div> element
     //we have to do this in a few steps due to the need for PHP_SELF to be in quotes for the redirection to work correctly
@@ -311,6 +334,7 @@ function generateISORequestForm()
 	$isoForm =	'<div id="isoRequestTitle"><h1 class="text-center">Generate New ISO Image</h1></div><form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
 	$isoForm = $isoForm . '" method="post">
 			<small>* required fields </small>
+            <input type="hidden" name="form_src" value="isoForm" />
 			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
 			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
 			<button type="button" class="btn btn-primary" id="hostSearchButton">Host Search</button></div>
@@ -327,7 +351,7 @@ function generateISORequestForm()
 			<div class="form-group"> <label for="isoValidToDate">ISO Valid Until:</label>
 			<input type="date" class="form-control" name="isoValidToDate" id="isoValidToDate" value="' . $valid_date . '" >' . $isoFormInputErrors["validToDate"] . '</div>
 
-			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.*:</label>
+			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.:</label>
 			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #" value="' . $_REQUEST["isoTroubleTicket"] . '">' . $isoFormInputErrors["troubleTicket"] . '</div>
 
 			<div class="form-group"> <label for="isoUsername">Name*:</label>
@@ -340,20 +364,14 @@ function generateISORequestForm()
 			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name" value="' . $_REQUEST["isoAffiliation"] . '">' . $isoFormInputErrors["affiliation"] . '</div>
 
 			<div class="form-group"> <label for="queueName">RT Queue Name:</label>
+
 			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $inputErrors["queueName"]; ?> </div>';
     //finish the form
     $isoForm = $isoForm . '<button type="submit" class="btn btn-primary">Generate New ISO</button></div></form>';
-
-    return $isoForm;
-
+ 
+    return [$isoForm, $errFlag, $errMsg];
+    
 }///////////////////////////  END generateISORequestForm()    /////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
 
 function insertNewISORequest($cleanedInputs)
 {
@@ -363,11 +381,12 @@ function insertNewISORequest($cleanedInputs)
     $username = "testrig";
     $password = "tinycats";
     $dbname = "testrig";
-
+    
 	//generate a timestamp for the ISO's creation date
 	date_default_timezone_set('UTC');
 	$creationTimestamp = date('YmdHs');
-
+    
+    
 	//actually attempt connecting to the database using PHP's PDO
     try
         {
@@ -394,7 +413,7 @@ function insertNewISORequest($cleanedInputs)
                                 $cleanedInputs["testCSV"],
                                 $creationTimestamp,
                                 $cleanedInputs["queueName"],
-                                $cleanedInputs["testTargetIP"],
+                                $cleanedInputs["target"],
                                 $cleanedInputs["maxRun"],
                                 $cleanedInputs["validToDate"]));
         }//END try
@@ -506,22 +525,24 @@ function generateAdminForm()
 
 
 	//We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
-	 $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
-	 $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
-	 $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
+    $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
+    $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPrivKey\">SCP Private Key:</label><input type=\"textarea\" name=\"admin-scpPrivKey\" id=\"admin-scpPrivKey\" class=\"form-control\"></div>";
+    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
+    $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
 
 
-return $adminForm;
+    return [$adminForm, 0, ""];
 
 }
 
