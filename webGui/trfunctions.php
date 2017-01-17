@@ -347,7 +347,7 @@ function generateISORequestForm()
 
 			<div class="form-group hidden"> PerfSONAR nodes near you
 
-			<div id="psPickerDiv"><div class="row"></div></div>
+			<div id="psPickerContainer" class="container"><div id="psPickerDiv" class="row"></div></div>
 
 			</div>
 

@@ -156,7 +156,7 @@ After logging into your account click the “Generate New ISO” tab at the top 
 </ol>
 
 Once you have submitted this information a new ISO will be automatically generated. After completion both the end user and account contact (you) will be informed that the ISO is ready for pickup. ISOs will remain available on the server for 4 days.
-
+<br><br>
 It’s important to note that TestRig 2.0 depends on DHCP for addressing and nameservice. The end user’s host must be in a network that can properly respond to DHCP requests.
 </p>
     </div>
@@ -189,17 +189,20 @@ When a TestRig 2.0 ISO is generated we create a unique public/private key pair f
       <br><h4>11. I’m going to be introducing TestRig 2.0 into my environment. How do I know it is secure?</h4><p>
 
 The TestRig team kept best security practices in mind during development. During normal operation the TestRig environment makes no changes to the host machine and no data is written to the host media. The environment, including the file system, runs entirely in memory. After booting the user is immediately placed into the network test control program. Standard methods of escaping an application (ctrl-c, ctrl-z, and ctrl-\) are disabled. However, it is possible that the control program may crash and put the user into an interactive shell. 
-
+<br><br>
 All network communications between the TestRig environment and the central TestRig management server take place over SSL. No private or public keys are stored on the TestRig ISO. Test results are only sent to the defined host account - no results or information are shared with PSC or stored on the central TestRig management server. Aside from necessary network test applications there are no servers found on the TestRig ISO; ssh, http, smtp, etc are not installed on the ISO. Likewise, ssh, scp, ftp, telnet, netcat, and the like are not installed on the ISO. Lastly, apt and dpkg are also not found on the ISO. While perl is, by necessity, on the ISO no other compiled or interpreted languages are present.
 </p>
       <br><h4>12. Where are the results? How do I interpret them? Can you provide support for this?</h4><p>
-After the completion of the tests the packaged results will be securely transferred to your designated host. The name structure of the results file is <UUID>-<N>.tgz where UUID is the unique universal identity string that corresponds to the ISO. You can match the UUID to the specific user and trouble ticket in the ISO list tab of your account on testrig.psc.edu. Untarring the package will create a ‘results’ directory. In that directory will be a number of files with that follow the <UUID>-<N>-<Test> pattern. For example:
-
-F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-hardware  F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-tcpdump.gz    F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-tcptrace      F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-iperf
-
+After the completion of the tests the packaged results will be securely transferred to your designated host. The name structure of the results file is &ltUUID&gt-&ltN&gt.tgz where UUID is the unique universal identity string that corresponds to the ISO. You can match the UUID to the specific user and trouble ticket in the ISO list tab of your account on testrig.psc.edu. Untarring the package will create a ‘results’ directory. In that directory will be a number of files with that follow the &ltUUID&gt-&ltN&gt-&ltTest&gt pattern. For example:
+<br>
+<br>F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-hardware
+<br>F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-tcpdump.gz
+<br>F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-tcptrace
+<br>F1F1BD16-C3D3-11E6-86F7-2B8E7D7DE884-1-iperf
+<br><br>
 
 Each file contains the results of each test in ascii format. The exception to this is the tcpdump.tgz file which is in tcpdump format. Additionally, there will be a *-tcptrace file in the directory that contains a preliminary analysis of the tcpdump file using tcptrace. 
-
+<br><br>
 Interpretation of the results is dependent on the experience of the network engineer. Providing detailed guides to interpreting test results is outside of the scope of this document. The TestRig team is generally not available to help with the diagnostic interpretation of these results but exceptions will be made on a case by case basis.
    </p> </div>
   </div><!-- end row -->
