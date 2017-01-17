@@ -156,7 +156,8 @@ function generateISORequestForm()
         'testCSV' => "",
         'maxRun' => "",
         'validToDate' => "",
-	'queueName' => "");
+	'queueName' => "",
+	'psNodeTarget' => "");
 
     //array of tests. We might be able to make this a little more
     //readable once we get a list of available tests(?) maybe read from DB(??)
@@ -170,7 +171,7 @@ function generateISORequestForm()
             if (empty($_REQUEST["isoTestTargetIP"]))
                 {
                     $isoFormInputErrors["ipAddress"] = "You must provide an IP address";
-                    $errFlag = 1;
+
                 }
 
             if (empty($_REQUEST["isoMaxRun"]))
@@ -226,11 +227,18 @@ if ($err['warning_count'] != 0 || $err['error_count'] != 0) {
                     $errFlag = 1;
                 }
             
+            if (empty($_REQUEST["psNodeCustomTarget"]) && (empty($_REQUEST["hiddenTestTarget"])))
+                {
+                    $isoFormInputErrors["psNodeTarget"] = "You must specify a PerfSONAR Node to test against";
+                    $errFlag = 1;
+                }
+
             if (empty($_REQUEST["isoAffiliation"]))
                 {
                     $isoFormInputErrors["affiliation"] = "You must list your affiliation";
                     $errFlag = 1;
                 }
+
 
             if (empty($_REQUEST["testCheckbox_list"]))
                 {
