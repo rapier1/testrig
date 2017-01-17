@@ -45,7 +45,6 @@ $( "#hostSearchButton" ).click(
     
     function()
     {
-	var bwctlTools = [];
 	var nodeList = [];
 	$.ajax({
 	    type: "POST",
@@ -57,24 +56,27 @@ $( "#hostSearchButton" ).click(
 		if (isJsonString(outputJson) == true) //valid
 		{
 		    var ps = JSON.parse(outputJson);
-		    var targetHostname = ps[0].host['host-name'][1];
-		    //iterate through all of the services this node has available
-		    for (var i=0; i < ps[0].services.length; i++)
-		    {
-			if('bwctl-tools' in ps[0].services[i]) //is bwctl-tools in there?
-			{
-			    //need to push all bwctl-tools tests onto array for checkbox creation
-			    for (var c=0; c < ps[0].services[i]['bwctl-tools'].length; c++)
-			    {
-				bwctlTools.push(ps[0].services[i]['bwctl-tools'][c]);
-			    }
-			}
-		    }//end iterate through services associated with that host
-		    
-		    //Now We have our list of bwctl-tools, make a checkbox list
-		    nodeList = createHostNode(bwctlTools,targetHostname);
-		    
-		    
+                    // for each PS Host
+                    for (var h=0; h<ps.length; h++){
+	                var bwctlTools = [];
+		        var targetHostname = ps[h].host['host-name'][1];
+		        //iterate through all of the services this node has available
+		        for (var i=0; i < ps[h].services.length; i++)
+		        {
+		            if('bwctl-tools' in ps[h].services[i]) //is bwctl-tools in there?
+		            {
+		                //need to push all bwctl-tools tests onto array for checkbox creation
+		                for (var c=0; c < ps[h].services[i]['bwctl-tools'].length; c++)
+		                {
+		            	bwctlTools.push(ps[h].services[i]['bwctl-tools'][c]);
+		                }
+		            }
+		        }//end iterate through services associated with that host
+		        
+		        //Now We have our list of bwctl-tools, make a checkbox list
+		        nodeList.push(createHostNode(bwctlTools,targetHostname));
+		    }//end for each host
+		    nodeList.push(createCustomHostNode());
 		}//end if valid json
 		
 		// if output is valid then use output data to populate #psPickerDiv
@@ -121,10 +123,15 @@ function createHostNode(rawList,hostname)
     }
     nodeList += '<div class="hidden form-check"> <label class="form-check-label label-success" for="hiddenTestTarget"><li class="label-success"><input class="form-check-input list-group-item" data-style="button" type="checkbox" value="'+ hostname +'" name="hiddenTestTarget" checked>' + hostname  + '</li></label</div>';
     nodeList += '</ul></span></div>';
-
+ 
+    return nodeList;
     
+}
+
+function createCustomHostNode(){
     //CUSTOM "PICK YOUR OWN TEST NODE" SECTION //////////////////////////////
-    nodeList +='<div id="psNodeCustom" style="display: inline-flex" name="psNodeCustom" class="form-group col-md-3"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
+    var testsWeSupport = [ "iperf", "iperf3", "nuttcp", "ping", "owamp", "tcpdump", "udp" ];
+    var nodeList ='<div id="psNodeCustom" style="display: inline-flex" name="psNodeCustom" class="form-group col-md-3"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
     nodeList += '<input type="text" name="psNodeCustomTarget" id="psNodeCustomTarget" placeholder="perfSonar Node">';
     nodeList += '<ul title="Available Tests:">'
     for (var i=0; i<testsWeSupport.length; i++)
@@ -137,5 +144,4 @@ function createHostNode(rawList,hostname)
 
     
     return nodeList;
-    
 }
