@@ -190,22 +190,27 @@ function generateISORequestForm()
                     $isoFormInputErrors["maxRun"] = "The maximum number of runs must be 25 or less";
                     $errFlag = 1;
                 }
-
+            
             if (empty($_REQUEST["isoValidToDate"]))
                 {
                     $isoFormInputErrors["validToDate"] = "You must enter an expiration date for the ISO";
                     $errFlag = 1;
                 }
-		else {
-			$date = DateTime::createFromFormat('Y-m-d', $_REQUEST["isoValidDate"]);
-			$err = $date->getLastErrors();
-			
-if ($err['warning_count'] != 0 || $err['error_count'] != 0) {
-                    		$isoFormInputErrors["validToDate"] = "You entered an invalid date format";
-		                $errFlag = 1;
-                	} else {
-				$_REQUEST["isoValidDate"] = $date->format('Y-m-d');
-			}
+            else {
+                print "input date is $_REQUEST[isoValidToDate]<p>";
+                $date = date_create($_REQUEST[isoValidToDate]);
+                if ($date == false) {
+                    $isoFormInputErrors["validToDate"] = "You did not enter a valid date";
+                    $errFlag = 1;
+                } else {
+                    $err = $date->getLastErrors();
+                    if ($err['warning_count'] != 0 || $err['error_count'] != 0) {
+                        $isoFormInputErrors["validToDate"] = "You entered an invalid date format";
+                        $errFlag = 1;
+                    } else {
+                        $_REQUEST["isoValidDate"] = $date->format('Y-m-d');
+                    }
+                }
             }
             
 //            if (empty($_REQUEST["isoTroubleTicket"]))
