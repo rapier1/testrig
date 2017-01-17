@@ -107,9 +107,10 @@ function isJsonString(str) {
 
 function createHostNode(rawList,hostname)
 {
-    var testsWeSupport = [ "iperf", "iperf3", "nuttcp", "ping", "owamp", "tcpdump" ];
+    var testsWeSupport = [ "iperf", "iperf3", "nuttcp", "ping", "owamp", "tcpdump", "udp" ];
     //we need to always include tcpdump because it's not part of bwctl-tools, so push it onto the list of tests
     rawList.push("tcpdump");
+    rawList.push("udp");
     var nodeList = '<div id="psNode" name="psNode" class="form-group col-2"><input type="radio" name="psNode" value="psNode1" checked><span class="col-2 label-success">' + hostname;
     nodeList += '<ul title="Available Tests:">'
     for (var i=0; i<rawList.length; i++)
