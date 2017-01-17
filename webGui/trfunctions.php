@@ -197,7 +197,6 @@ function generateISORequestForm()
                     $errFlag = 1;
                 }
             else {
-                print "input date is $_REQUEST[isoValidToDate]<p>";
                 $date = date_create($_REQUEST[isoValidToDate]);
                 if ($date == false) {
                     $isoFormInputErrors["validToDate"] = "You did not enter a valid date";
