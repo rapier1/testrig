@@ -459,10 +459,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="form-group"> <label for="rtEmailAddress">RT Email Address:</label>
 	<input type="text" name="rtEmailAddress" id="rtEmailAddress" class="form-control" value="<?php echo $_REQUEST['rtEmailAddress']?>"> </div>
 
-        <div class="form-group"> <label for="scpUsername">SCP Username:</label>
+        <div class="form-group"> <label for="scpUsername">SCP Username*:</label>
 	<input type="text" name="scpUsername" id="scpUsername" class="form-control" value="<?php echo $_REQUEST['scpUsername']?>"></div>
 
-        <div class="form-group"> <label for="scpDstIp">SCP Dst IP:</label>
+        <div class="form-group"> <label for="scpDstIp">SCP Dst IP*:</label>
 	<input type="text" name="scpDstIp" id="scpDstIp" class="form-control" value="<?php echo $_REQUEST['scpDstIp']?>"> </div>
 
 <!--        <div class="form-group"> <label for="scpPubKey">SCP Public Key*:</label>
