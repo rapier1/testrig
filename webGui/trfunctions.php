@@ -197,15 +197,15 @@ function generateISORequestForm()
                     $errFlag = 1;
                 }
 		else {
-                $format ="Y-m-d";
-		$date = scrubInput($_REQUEST["isoValidToDate"]);
-                $time = new DateTime($date);
-		$formattedDate = $time->format('Y-m-d');
-
-                if (date($format, $date) != $formattedDate) {
-                    $isoFormInputErrors["validToDate"] = "You entered an invalid date format";
-                    $errFlag = 1;
-                }
+			$date = DateTime::createFromFormat('Y-m-d', $_REQUEST["isoValidDate"]);
+			$err = $date->getLastErrors();
+			
+if ($err['warning_count'] != 0 || $err['error_count'] != 0) {
+                    		$isoFormInputErrors["validToDate"] = "You entered an invalid date format";
+		                $errFlag = 1;
+                	} else {
+				$_REQUEST["isoValidDate"] = $date->format('Y-m-d');
+			}
             }
             
 //            if (empty($_REQUEST["isoTroubleTicket"]))
