@@ -150,6 +150,7 @@
                         <div id="navbar" class="collapse navbar-collapse">
                                   <ul class="nav navbar-nav">
                                   <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php">About</a></li>
+				  <li><a id="menu-faq" href="http://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
                                 </ul>
 <p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></p>
                         </div><!--/.nav-collapse -->
