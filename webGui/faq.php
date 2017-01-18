@@ -27,14 +27,14 @@
 		if (!empty($_SESSION["username"]))
 		 {
 			//Session is Set, LOG OUT should be visible option
-			$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/logout.php'";
+			$url = "window.location='https://". $_SERVER['SERVER_NAME']. "/logout.php'";
 			$navLoginLogoutButton = '<button id="logout" onClick="'. $url . '" type="button" class="btn btn-sm btn-primary">Logout</button>';
 
 		 }
 		else
 		 {
 			//Session is NOT set, LOG IN should be visible option
-			$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/login.php'";
+			$url = "window.location='https://". $_SERVER['SERVER_NAME']. "/login.php'";
                         $navLoginLogoutButton = '<button id="logout" onClick="'. $url . '" type="button" class="btn btn-sm btn-primary">Log In</button>';
 		 }
 		include 'trfunctions.php';
@@ -58,13 +58,13 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-				  <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
-				  <li><a id="menu-faq" href="http://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
+				  <li><a id="menu-home" href="https://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
+				  <li><a id="menu-faq" href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
                                     <li class="navbar-btn"><?php print $navLoginLogoutButton ?></li>
-                                    <li class="navbar-btn"><button id="signup" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></li>
+                                    <li class="navbar-btn"><button id="signup" onClick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></li>
                                 </ul>
 			</div><!--/.nav-collapse -->
 		</div> <!-- END nav container -->
@@ -204,7 +204,14 @@ After the completion of the tests the packaged results will be securely transfer
 Each file contains the results of each test in ascii format. The exception to this is the tcpdump.tgz file which is in tcpdump format. Additionally, there will be a *-tcptrace file in the directory that contains a preliminary analysis of the tcpdump file using tcptrace. 
 <br><br>
 Interpretation of the results is dependent on the experience of the network engineer. Providing detailed guides to interpreting test results is outside of the scope of this document. The TestRig team is generally not available to help with the diagnostic interpretation of these results but exceptions will be made on a case by case basis.
-   </p> </div>
+   </p>
+
+       <br><h4>13. What if my question wasn't answered here?</h4><p>
+
+Email support at &#116;&#101;&#115;&#116;&#114;&#105;&#103;&#064;&#112;&#115;&#099;&#046;&#101;&#100;&#117;
+
+    </p>
+    </div>
   </div><!-- end row -->
   </div>
 

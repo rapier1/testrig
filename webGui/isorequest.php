@@ -11,7 +11,7 @@
 	session_start();
         if (empty($_SESSION["username"]))
          {
-                header("Location: http://testrig.psc.edu/login.php");
+                header("Location: https://testrig.psc.edu/login.php");
                 die();
          }
 
