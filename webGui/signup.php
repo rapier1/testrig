@@ -30,7 +30,7 @@
 //is the user currently signed in?
 if (!empty($_SESSION["username"]))
         {
-                header("Location:http://". $_SERVER['SERVER_NAME'] ."/main.php");
+                header("Location:https://". $_SERVER['SERVER_NAME'] ."/main.php");
 		
         }
 
@@ -411,13 +411,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                   <span class="icon-bar"></span>
                                   <span class="icon-bar"></span>
                                 </button>
-                                <a class="navbar-brand" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php">Testrig 2.0</a>
+                                <a class="navbar-brand" href="https://<?php echo $_SERVER['SERVER_NAME']?>/index.php">Testrig 2.0</a>
                         </div>
                         <div id="navbar" class="collapse navbar-collapse">
                                   <ul class="nav navbar-nav">
-                                  <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php">About</a></li>
+                                  <li><a id="menu-home" href="https://<?php echo $_SERVER['SERVER_NAME']?>/index.php">About</a></li>
                                 </ul>
-				<p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/login.php'"  type="button" class="btn btn-sm btn-primary">Log In</button></p>
+				<p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/login.php'"  type="button" class="btn btn-sm btn-primary">Log In</button></p>
                         </div><!--/.nav-collapse -->
                 </div> <!-- END nav container -->
         </nav>

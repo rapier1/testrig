@@ -26,17 +26,17 @@
 		$navLoginLogoutButton = "";
 		if (!empty($_SESSION["username"]))
 		 {   //Session is set, redirect to main page
-                     header("Location: http://". $_SERVER['SERVER_NAME']. "/main.php");
+                     header("Location: https://". $_SERVER['SERVER_NAME']. "/main.php");
                      die();
 			//Session is Set, LOG OUT should be visible option
-			//$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/logout.php'";
+			//$url = "window.location='https://". $_SERVER['SERVER_NAME']. "/logout.php'";
 			//$navLoginLogoutButton = '<button id="logout" onClick="'. $url . '" type="button" class="btn btn-sm btn-primary">Logout</button>';
 
 		 }
 		else
 		 {
 			//Session is NOT set, LOG IN should be visible option
-			$url = "window.location='http://". $_SERVER['SERVER_NAME']. "/login.php'";
+			$url = "window.location='https://". $_SERVER['SERVER_NAME']. "/login.php'";
                         $navLoginLogoutButton = '<button id="logout" onClick="'. $url . '" type="button" class="btn btn-sm btn-primary">Log In</button>';
 		 }
 		include 'trfunctions.php';
@@ -60,13 +60,13 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-				  <li><a id="menu-home" href="http://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
-				  <li><a id="menu-faq" href="http://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
+				  <li><a id="menu-home" href="https://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
+				  <li><a id="menu-faq" href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
                                     <li class="navbar-btn"><?php print $navLoginLogoutButton ?></li>
-                                    <li class="navbar-btn"><button id="signup" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></li>
+                                    <li class="navbar-btn"><button id="signup" onClick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></li>
                                 </ul>
 			</div><!--/.nav-collapse -->
 		</div> <!-- END nav container -->

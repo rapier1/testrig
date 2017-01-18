@@ -109,7 +109,7 @@ function logIn($username, $password)
                     $_SESSION["inst_name"] = $queryResult["inst_name"];
                     $_SESSION["username"] = $queryResult["tr_username"];
                     $_SESSION["CID"] = $queryResult["cid"];
-                    header("Location:http://". $_SERVER['SERVER_NAME'] ."/main.php");
+                    header("Location:https://". $_SERVER['SERVER_NAME'] ."/main.php");
                     //die();
                     return 0; //return 0 to notify password match success
                 }
@@ -230,10 +230,14 @@ function generateISORequestForm()
                     $isoFormInputErrors["email"] = "You must provide an email address";
                     $errFlag = 1;
                 }
-            
-            if (empty($_REQUEST["psNodeCustomTarget"]) && (empty($_REQUEST["hiddenTestTarget"])))
+            if (empty($_REQUEST["psNode"]))
+		{
+		    $isoFormInputErrors["psNodeCustomTarget"] = "You must specify a PerfSONAR Node to test against";
+		    $errFlag = 1;
+		}
+            if (($_REQUEST["psNode"] == "psNodeCustom") && (empty($_REQUEST["psNodeCustomTarget"])))
                 {
-                    $isoFormInputErrors["psNodeTarget"] = "You must specify a PerfSONAR Node to test against";
+                    $isoFormInputErrors["psNodeTarget"] = "You must specify your custom PerfSONAR Node's IP address or Hostname";
                     $errFlag = 1;
                 }
 
@@ -478,7 +482,7 @@ function logOut()
 	unset($_SESSION["UID"]);
     session_unset();
     session_destroy();
-    header("Location: http://". $_SERVER['SERVER_NAME']. "/login.php");
+    header("Location: https://". $_SERVER['SERVER_NAME']. "/login.php");
     die();
 }//END logOut()
 

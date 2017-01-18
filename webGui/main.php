@@ -26,7 +26,7 @@
 		session_start();
 		if (empty($_SESSION["username"]))
 		 {
-			header("Location: http://". $_SERVER['SERVER_NAME']. "/login.php");
+			header("Location: https://". $_SERVER['SERVER_NAME']. "/login.php");
 			die();
 		 }
 		include 'trfunctions.php';
@@ -105,16 +105,16 @@
 				  <span class="icon-bar"></span>
 				  <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://<?php echo $_SERVER['SERVER_NAME']?>/index.php">Testrig 2.0</a>
+				<a class="navbar-brand" href="https://<?php echo $_SERVER['SERVER_NAME']?>/index.php">Testrig 2.0</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				  <ul class="nav navbar-nav">
 				  <li><a id="menu-isolist" href="#isolist">ISO List</a></li>
 				  <li><a id="menu-geniso" href="#geniso">Generate New ISO</a></li>
 				  <li><a id="menu-admin" href="#admin">Administration</a></li>
-				  <li><a id="menu-faq" href="http://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
+				  <li><a id="menu-faq" href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
 				</ul>
-				<p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='http://<?php echo $_SERVER['SERVER_NAME']?>/logout.php'"  type="button" class="btn btn-sm btn-primary">Logout</button></p>
+				<p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/logout.php'"  type="button" class="btn btn-sm btn-primary">Logout</button></p>
 			</div><!--/.nav-collapse -->
 		</div> <!-- END nav container -->
 	</nav>
