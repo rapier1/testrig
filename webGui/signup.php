@@ -167,8 +167,16 @@ function triggerNotification ($input) {
     $to = "rapier@psc.edu, nate@psc.edu, blearn@psc.edu";
     $subject = "New Testrig User Request Received";
     $message = "We have recived a new user request the Testrig Service.\n";
-    $message .=  "Requestor information follows:\n";
-    $message .= print_r($input, true);
+    $message .= "Requestor information follows.\n\n";
+    $message .= "User: $input[fName] $input[lName]\n";
+    $message .= "Email: $input[email]\n";
+    $message .= "Username: $input[testRigUsername]\n";
+    $message .= "Institution: $input[instName]\n";
+    $message .= "Phone: $input[phoneNumber]\n";
+    $message .= "SCP host: $input[scpDstIp]\n";
+    $message .= "SCP path: $input[scpHostPath]\n";
+    $message .= "SCP user: $input[scpUsername]\n";
+    $message .= "RT address: $input[rtEmailAddress]\n";
     $headers = 'From: testrig@psc.edu' . "\r\n" .
     'Reply-To: rapier@psc.edu' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
