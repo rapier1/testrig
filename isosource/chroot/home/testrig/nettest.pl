@@ -531,10 +531,16 @@ sub runTests {
 		testTracepath();
 	    }
 	    case "iperf" {
-		testIperf(0);
+		testIperf(0,0);
 	    }
 	    case "iperf3" {
-		testIperf(1);
+		testIperf(1,0);
+	    }
+	    case "iperf-recv" {
+		testIperf(0,1);
+	    }
+	    case "iperf3-recv" {
+		testIperf(1,1);
 	    }
 	    case "ping" {
 		testPing();
@@ -564,12 +570,24 @@ sub testTraceroute {
     my $output = runSystem($command, 1, 1);
     my $pass = 0;
 
-    logger ("warn", "Running traceroute to $target\n");
+    logger ("warn", "Running traceroute to $target");
     storeOutput($output, "traceroute");
     if (length($output) <= 0) {
 	$pass = -1;
     }
     updateResultsDB("traceroute", $pass);
+
+    $command = "/opt/bin/bwtraceroute -T paris-traceroute -a 1 -c $target\n";
+    $output = runSystem($command, 1, 1);
+    $pass = 0;
+
+    logger ("warn", "Running paris-traceroute to $target\n");
+    storeOutput($output, "paris-traceroute");
+    if (length($output) <= 0) {
+	$pass = -1;
+    }
+    updateResultsDB("paris-traceroute", $pass);
+    
 }
 
 sub testTracepath {
@@ -614,37 +632,52 @@ sub testNuttcp {
 
 sub testIperf {
     my $run_iperf3 = shift @_;
+    my $direction = shift @_;
     my $iperf_type;
-    if ($run_iperf3 == 1) {
+    my $fromto;
+    my $command;
+    my $output;
+    my $iperf_suffix;
+    my $target = $config->{user}->{target};
+    my $uuid = $config->{user}->{uuid};
+    my $pass = 0;
+
+   if ($run_iperf3 == 1) {
 	$iperf_type = "iperf3";
     } else {
 	$iperf_type = "iperf"
     }
-    my $target = $config->{user}->{target};
-    my $uuid = $config->{user}->{uuid};
-    my $pass = 0;
+    if ($direction == 1) {
+	$direction = "-s";
+	$fromto = "from";
+    } else {
+	$direction = "-c";
+	$fromto = "to";
+    }
+
     #make sure ntpd is up to date
     syncClock();
 
-    if ($run_iperf3) {
-	logger ("warn", "Running 30 second Iperf3 test to $target\n");
-    } else {
-	logger ("warn", "Running 30 second Iperf test to $target\n");
-    }
-    
+    logger("warn", "Running 30 second $iperf_type test $fromto $target\n");
+
     # start the web10g-logger
-    my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-$iperf_type &";
-    runSystem ($command);
-    $command = "/opt/bin/bwctl -T $iperf_type -a 1 -f m -i 1 -c $target -t 30";
-    my $output = runSystem($command, 1);
-    storeOutput($output, $iperf_type);
+    if ($fromto eq "to") {
+	$command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-$iperf_type &";
+	runSystem ($command);
+    }
+    $command = "/opt/bin/bwctl -T $iperf_type -a 1 -f m -i 1 $direction $target -t 30";
+    $output = runSystem($command, 1);
+    $iperf_suffix = $iperf_type . "-" . $fromto;
+    storeOutput($output, $iperf_suffix);
     if (length($output) <= 0) {
 	$pass = -1;
     }
     
     #kill the web10g logger 
-    $command = "/usr/bin/killall web10g-logger";
-    runSystem($command);
+    if ($fromto eq "to") {
+	$command = "/usr/bin/killall web10g-logger";
+	runSystem($command);
+    }
     updateResultsDB($iperf_type, $pass)
 }
 
@@ -652,12 +685,12 @@ sub testIperf {
 sub testPing {
     my $target = $config->{user}->{target};
     my $command = "/opt/bin/bwping -N 20 -c $target";
-    my $output = runSystem ($command, 1, 1);
     my $pass = 0;
     #make sure ntpd is up to date
     syncClock();
-
     logger ("warn", "Running ping test to $target\n");
+    my $output = runSystem ($command, 1, 1);
+
     storeOutput($output, "ping");
     if (length($output) <= 0) {
 	$pass = -1;
@@ -668,12 +701,13 @@ sub testPing {
 sub testOwamp {
     my $target = $config->{user}->{target};
     my $command = "/opt/bin/bwping -N 20 -T owamp -c $target\n";
-    my $output = runSystem($command, 1, 1);
     my $pass = 0;
     #make sure ntpd is up to date
     syncClock();
 
     logger ("warn", "Running owamp ping test to $target\n");    
+    my $output = runSystem($command, 1, 1);
+
     storeOutput($output, "owping");
     if (length($output) <= 0) {
 	$pass = -1;

@@ -308,8 +308,8 @@ function generateISORequestForm()
                     $inputs["testCSV"] = $testString;
                     
             ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
-                    /*
                     
+                    /*
                     $alert = "";
                     $alert = '<script type="text/javascript">';
                     $submissions = "";

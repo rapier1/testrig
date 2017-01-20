@@ -107,20 +107,32 @@ function isJsonString(str) {
 
 function createHostNode(rawList,hostname)
 {
-    var testsWeSupport = [ "iperf", "iperf3", "nuttcp", "ping", "owamp", "tcpdump", "udp" ];
+    var testsWeSupport = [ "iperf", "iperf-recv", "iperf3", "iperf3-recv", "nuttcp", "ping", "owamp", "tcpdump", "udp", "tracepath", "traceroute" ];
     //we need to always include tcpdump because it's not part of bwctl-tools, so push it onto the list of tests
     rawList.push("tcpdump");
     rawList.push("udp");
+    for (var i = 0; i<rawList.length; i++) {
+	if (rawList[i] == "iperf") {
+	    rawList.push("iperf-recv");
+	}
+	if (rawList[i] == "iperf3") {
+	    rawList.push("iperf3-recv");
+	}
+    }
+    rawList.sort();
+    testsWeSupport.sort();
     var nodeList = '<div id="psNode" style="display: inline-flex" name="psNode" class="form-group col-md-3"><input type="radio" name="psNode" value="psNode1" checked><span class="col-2 label-success">' + hostname;
     nodeList += '<ul title="Available Tests:">'
     for (var i=0; i<rawList.length; i++)
     {
 	nodeList += '<div class="form-check"> <label class="form-check-label label-success" for="testCheckbox_list[]">';
-	nodeList += '<li class="label-success"><input class="form-check-input list-group-item" data-style="button" type="checkbox" value = "' + rawList[i] + '" name="testCheckbox_list[]" checked>' + rawList[i] + '</li>';
+	nodeList += '<input data-style="button" type="checkbox" value = "' + rawList[i] + '" name="testCheckbox_list[]" checked>' + rawList[i] + '</br>';
 	nodeList += '</label></div>';
+	
     }
     nodeList += '<div class="hidden form-check"> <label class="form-check-label label-success" for="hiddenTestTarget"><li class="label-success"><input class="form-check-input list-group-item" data-style="button" type="checkbox" value="'+ hostname +'" name="hiddenTestTarget" checked>' + hostname  + '</li></label</div>';
     nodeList += '</ul></span></div>';
+    //nodeList += '</span></div>';
 
     
     //CUSTOM "PICK YOUR OWN TEST NODE" SECTION //////////////////////////////
@@ -130,7 +142,7 @@ function createHostNode(rawList,hostname)
     for (var i=0; i<testsWeSupport.length; i++)
     {
 	nodeList += '<div class="form-check"> <label class="form-check-label label-success" for="testCheckbox_listCustom[]">';
-	nodeList += '<li class="label-success"><input class="form-check-input list-group-item" data-style="button" type="checkbox" value = "' + testsWeSupport[i] + '" name="testCheckbox_listCustom[]" checked>' + testsWeSupport[i] + '</li>';
+	nodeList += '<input data-style="button" type="checkbox" value = "' + testsWeSupport[i] + '" name="testCheckbox_listCustom[]" checked>' + testsWeSupport[i] + '</br>';
 	nodeList += '</label></div>';
     }
     nodeList += '</ul></span></div>'; //NOTE: No need for hidden field, as the hostname is given to us by the user and can be passed along
