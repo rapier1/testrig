@@ -526,42 +526,66 @@ function generateAdminForm()
                 'scpUsername' => "",
                 'rtEmailAddress' => "",
                 'scpHostPath' => "",
-                'scpPrivKey' => "");
+                'scpPrivKey' => "",
+                'admin-testRigPassword' => "");
+
+        $url = htmlspecialchars($_SERVER["PHP_SELF"]);
+        $errFlag = 0;
+
+        //let's see if the user wants to update their shit
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") { //did they submit something?
+                if (empty($_REQUEST["admin-testRigPassword"])) {
+                        $AdminInputErrors["admin-testRigPassword"] = "Provide your current TestRig password in order to make changes to your account!";
+                        $errFlag = 1;
+                    }    
+                if (empty($_REQUEST["admin-newTestRigPassword"])) { //did they fill out the first new password field? T = no. F = yes.
+                    
+                }elseif(empty($_REQUEST["admin-newTestRigPasswordConfirm"])) { //did they fill out the password confirmation field? T = no. F = yes.
+                            
+                }elseif($_REQUEST["admin-newTestRigPassword"] != $_REQUEST["admin-newTestRigPasswordConfirm"])
+                         { //at this point, the user has submitted a POST request, filled out both new password fields, but they don't match
+                             $AdminInputErrors["admin-testRigPassword"] = "New passwords do not match";
+                             $errFlag = 1;
+                         }
+                
+            }
 
 
-	$url = htmlspecialchars($_SERVER["PHP_SELF"]);
 
-/*<div class="form-group"> 
-                                <label for="testRigPassword">TestRig Password*:</label>
-                                <input type="password" name="testRigPassword" id="testRigPassword" class="form-control"> '. $testRigPasswordError .'
-                        </div> */
-
-
-
-
-
-
-	//We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
-    $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
-    $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPrivKey\">SCP Private Key:</label><input type=\"textarea\" name=\"admin-scpPrivKey\" id=\"admin-scpPrivKey\" class=\"form-control\"></div>";
-    $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
-    $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
+        
+        //We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
+        $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
+        $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
+        //$adminForm .= "<div class=\"row\">";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
+        //$adminForm .= "</div>"; //end row
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-newTestRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-newTestRigPasswordConfirm\">Confirm New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
+        $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">Current Password (to commit changes):</label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>";
+        $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
 
 
     return [$adminForm, 0, ""];
 
 }
+
+
+
+
+
+
+
+
 
 function runPSLocateJson($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
 {
