@@ -9,7 +9,7 @@
 #off for development
 $SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
 $SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
-#$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
 
 use strict;
 use warnings;
@@ -389,11 +389,11 @@ sub unmountEncfs {
 # we need to make sure the clock is synched via ntpd
 # or the tests via bwctl will fail
 sub syncClock {
-    logger("warn", "Synching local clock\n");
+    logger("warn", "Synching local clock");
     my $command = "/usr/sbin/ntpd";
     runSystem($command, 0, 1);
     #give it a moment to sync
-    sleep 2;
+    sleep 1;
 }
 
 sub runTcptrace {
@@ -531,10 +531,16 @@ sub runTests {
 		testTracepath();
 	    }
 	    case "iperf" {
-		testIperf();
+		testIperf(0,0);
 	    }
 	    case "iperf3" {
-		testIperf(1);
+		testIperf(1,0);
+	    }
+	    case "iperf-recv" {
+		testIperf(0,1);
+	    }
+	    case "iperf3-recv" {
+		testIperf(1,1);
 	    }
 	    case "ping" {
 		testPing();
@@ -557,7 +563,10 @@ sub runTests {
 
 sub testTraceroute {
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwtraceroute -a -c $target";
+    #make sure ntpd is up to date
+    syncClock();
+    
+    my $command = "/opt/bin/bwtraceroute -a 1 -c $target";
     my $output = runSystem($command, 1, 1);
     my $pass = 0;
 
@@ -567,13 +576,27 @@ sub testTraceroute {
 	$pass = -1;
     }
     updateResultsDB("traceroute", $pass);
+
+    $command = "/opt/bin/bwtraceroute -T paris-traceroute -a 1 -c $target\n";
+    $output = runSystem($command, 1, 1);
+    $pass = 0;
+
+    logger ("warn", "Running paris-traceroute to $target\n");
+    storeOutput($output, "paris-traceroute");
+    if (length($output) <= 0) {
+	$pass = -1;
+    }
+    updateResultsDB("paris-traceroute", $pass);
+    
 }
 
 sub testTracepath {
     my $target = $config->{user}->{target};
     my $pass = 0;
-    logger ("warn", "Running tracepath to $target");
-    my $command = "/opt/bin/bwtraceroute -a -T tracepath -c $target";
+    #make sure ntpd is up to date
+    syncClock();
+    logger ("warn", "Running tracepath to $target\n");
+    my $command = "/opt/bin/bwtraceroute -T tracepath -a 1 -c $target";
     my $output = runSystem($command, 1, 1);
     storeOutput($output, "tracepath");
     if (length($output) <= 0) {
@@ -586,12 +609,15 @@ sub testNuttcp {
     my $target = $config->{user}->{target};
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
+    #make sure ntpd is up to date
+    syncClock();
 
+    logger ("warn", "Running nuttcp to $target\n");
     # start the web10g-logger
     my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-nuttcp &";
     runSystem($command);
  
-    $command = "/opt/bin/bwctl -T nuttcp -f m -i 1 -t 30 -c $target";
+    $command = "/opt/bin/bwctl -T nuttcp -a 1 -f m -i 1 -t 30 -c $target";
     my $output = runSystem($command, 1);
     storeOutput($output, "nuttcp");
     if (length($output) <= 0) {
@@ -606,44 +632,65 @@ sub testNuttcp {
 
 sub testIperf {
     my $run_iperf3 = shift @_;
+    my $direction = shift @_;
     my $iperf_type;
-    if ($run_iperf3 == 1) {
+    my $fromto;
+    my $command;
+    my $output;
+    my $iperf_suffix;
+    my $target = $config->{user}->{target};
+    my $uuid = $config->{user}->{uuid};
+    my $pass = 0;
+
+   if ($run_iperf3 == 1) {
 	$iperf_type = "iperf3";
     } else {
 	$iperf_type = "iperf"
     }
-    my $target = $config->{user}->{target};
-    my $uuid = $config->{user}->{uuid};
-    my $pass = 0;
-    if ($run_iperf3) {
-	logger ("warn", "Running 30 second Iperf3 test to $target");
+    if ($direction == 1) {
+	$direction = "-s";
+	$fromto = "from";
     } else {
-	logger ("warn", "Running 30 second Iperf test to $target");
+	$direction = "-c";
+	$fromto = "to";
     }
-    
+
+    #make sure ntpd is up to date
+    syncClock();
+
+    logger("warn", "Running 30 second $iperf_type test $fromto $target\n");
+
     # start the web10g-logger
-    my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-$iperf_type &";
-    runSystem ($command);
-    $command = "/opt/bin/bwctl -T $iperf_type -a -c $target -t 30 -f m -i 1";
-    my $output = runSystem($command, 1);
-    storeOutput($output, $iperf_type);
+    if ($fromto eq "to") {
+	$command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-$iperf_type &";
+	runSystem ($command);
+    }
+    $command = "/opt/bin/bwctl -T $iperf_type -a 1 -f m -i 1 $direction $target -t 30";
+    $output = runSystem($command, 1);
+    $iperf_suffix = $iperf_type . "-" . $fromto;
+    storeOutput($output, $iperf_suffix);
     if (length($output) <= 0) {
 	$pass = -1;
     }
     
     #kill the web10g logger 
-    $command = "/usr/bin/killall web10g-logger";
-    runSystem($command);
+    if ($fromto eq "to") {
+	$command = "/usr/bin/killall web10g-logger";
+	runSystem($command);
+    }
     updateResultsDB($iperf_type, $pass)
 }
 
 
 sub testPing {
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwping -a -N 20 -c $target";
-    my $output = runSystem ($command, 1, 1);
+    my $command = "/opt/bin/bwping -N 20 -c $target";
     my $pass = 0;
-    logger ("warn", "Running ping test to $target");
+    #make sure ntpd is up to date
+    syncClock();
+    logger ("warn", "Running ping test to $target\n");
+    my $output = runSystem ($command, 1, 1);
+
     storeOutput($output, "ping");
     if (length($output) <= 0) {
 	$pass = -1;
@@ -653,10 +700,14 @@ sub testPing {
 
 sub testOwamp {
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwping -a -N 20 -T owamp -c $target";
-    my $output = runSystem($command, 1, 1);
+    my $command = "/opt/bin/bwping -N 20 -T owamp -c $target\n";
     my $pass = 0;
-    logger ("warn", "Running owamp ping test to $target");    
+    #make sure ntpd is up to date
+    syncClock();
+
+    logger ("warn", "Running owamp ping test to $target\n");    
+    my $output = runSystem($command, 1, 1);
+
     storeOutput($output, "owping");
     if (length($output) <= 0) {
 	$pass = -1;
@@ -670,8 +721,11 @@ sub testTcpdump {
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
 
+    #make sure ntpd is up to date
+    syncClock();
+
     #set up tcpdump to capture the data
-    logger ("warn", "Starting 30 second tcpdump capture");
+    logger ("warn", "Starting 30 second tcpdump capture\n");
     my $command = "/opt/sbin/tcpdump -i $iface -s 100 -w - host $target and portrange 5001-5300 2>/dev/null | /bin/gzip > /tmp/results/$uuid-tcpdump.gz &";
     my $output = runSystem($command, 0, 1); 
 
@@ -682,7 +736,7 @@ sub testTcpdump {
     sleep 2;
 
     # discard the outut from this iperf. we do not care about it.
-    $command = "bwctl -a -c $target -t 30";
+    $command = "bwctl -c $target -a 1 -t 30";
     $output = runSystem($command, 1);
 
     #shutdown tcpdump
@@ -708,8 +762,10 @@ sub testUDP {
     my @speeds = ("100", "450", "900");
     foreach my $speed (@speeds) {
 	$pass = 0;
-	logger ("warn", "Running UDP test to $target at $speed Mbps");
-	$command = "bwctl -a -c $target -i1 -u -b ". $speed . "M";
+	#make sure ntpd is up to date
+	syncClock();
+	logger ("warn", "Running UDP test to $target at $speed Mbps\n");
+	$command = "bwctl -c $target -a 1 -i1 -u -b ". $speed . "M";
 	$output = runSystem($command, 1);
 	storeOutput ($output, "UDP-$speed");
 	if (length($output) <= 0) {
@@ -729,9 +785,6 @@ sub testUDP {
 
 my $password = trmanagerAuth();
 mountEncfs($password);
-
-#make sure ntpd is up to date
-syncClock();
 
 #encfs is mounted we can start running tests
 if (confirmPath($config->{user}->{target}) == -1) {

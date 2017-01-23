@@ -308,8 +308,8 @@ function generateISORequestForm()
                     $inputs["testCSV"] = $testString;
                     
             ////////////////////// SECTION FOR DETERMINING WTF WE ARE SENDING TO THE SERVER FROM THE FORM //////////////////////////
-                    /*
                     
+                    /*
                     $alert = "";
                     $alert = '<script type="text/javascript">';
                     $submissions = "";
@@ -371,13 +371,13 @@ function generateISORequestForm()
 			<div class="form-group"> <label for="isoTroubleTicket">Trouble Ticket No.:</label>
 			<input type="text" class="form-control" name="isoTroubleTicket" id="isoTroubleTicket" placeholder="RT Ticket #" value="' . $_REQUEST["isoTroubleTicket"] . '">' . $isoFormInputErrors["troubleTicket"] . '</div>
 
-			<div class="form-group"> <label for="isoUsername">Name*:</label>
+			<div class="form-group"> <label for="isoUsername">User\'s Name*:</label>
 			<input type="text" class="form-control" name="isoUsername" id="isoUsername" placeholder="username" value="' . $_REQUEST["isoUsername"] . '">' . $isoFormInputErrors["username"] . '</div>
 
-			<div class="form-group"> <label for="isoEmail">Email*:</label>
+			<div class="form-group"> <label for="isoEmail">User\'s Email*:</label>
 			<input type="email" class="form-control" name="isoEmail" id="isoEmail" placeholder="user@emailaddress" value ="' . $_REQUEST["isoEmail"] . '">' . $isoFormInputErrors["email"] . '</div>
 
-			<div class="form-group"> <label for="isoAffiliation">Affiliation*:</label>
+			<div class="form-group"> <label for="isoAffiliation">User\'s Affiliation*:</label>
 			<input type="text" class="form-control" name="isoAffiliation" id="isoAffiliation" placeholder="Organization Name" value="' . $_REQUEST["isoAffiliation"] . '">' . $isoFormInputErrors["affiliation"] . '</div>
 
 			<div class="form-group"> <label for="queueName">RT Queue Name:</label>
