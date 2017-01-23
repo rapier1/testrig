@@ -531,11 +531,11 @@ function generateAdminForm()
 
         $url = htmlspecialchars($_SERVER["PHP_SELF"]);
         $errFlag = 0;
-
+        
         //let's see if the user wants to update their shit
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") { //did they submit something?
-                if (empty($_REQUEST["admin-testRigPassword"])) {
+            /*if (empty($_REQUEST["admin-testRigPassword"])) {
                         $AdminInputErrors["admin-testRigPassword"] = "Provide your current TestRig password in order to make changes to your account!";
                         $errFlag = 1;
                     }    
@@ -546,10 +546,26 @@ function generateAdminForm()
                 }elseif($_REQUEST["admin-newTestRigPassword"] != $_REQUEST["admin-newTestRigPasswordConfirm"])
                          { //at this point, the user has submitted a POST request, filled out both new password fields, but they don't match
                              $AdminInputErrors["admin-testRigPassword"] = "New passwords do not match";
+                             print "<h1>BALLLLLLLLLLS</h1>";
                              $errFlag = 1;
-                         }
-                
+                             } */
+            if (!empty($_REQUEST["admin-newTestRigPassword"])){
+
+                if ((!empty($_REQUEST["admin-newTestRigPasswordConfirm"])) && (!empty($_REQUEST["admin-testRigPassword"])))
+                {
+                    if ($_REQUEST["admin-newTestRigPasswordConfirm"] != ($_REQUEST["admin-newTestRigPassword"]))
+                        {
+                            $AdminInputErrors["admin-testRigPassword"] = "New passwords do not match";
+                            $errFlag = 1;
+                        }
+                    
+
+                    
+                }
+                                
             }
+        }
+                
 
 
 
@@ -574,8 +590,8 @@ function generateAdminForm()
         $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">Current Password (to commit changes):</label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>";
         $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
 
-
-    return [$adminForm, 0, ""];
+        $errMsg = implode("<br>", array_filter($adminInputErrors));
+    return [$adminForm, $errFlag, $errMsg];
 
 }
 
