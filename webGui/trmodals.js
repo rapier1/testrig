@@ -4,6 +4,27 @@ modalText = {'warn': "#warnModalText", 'error': "#errorModalText", 'success': "#
 
 var formSrc = "";
 
+$("form").submit(function(e) {
+    var ref = $(this).find("[monkey]");
+    $(ref).each(function(){
+        if ( $(this).val() == '' )
+        {
+            alert("Please enter information for all required fields.");
+            $(this).focus();
+            e.preventDefault();
+            return false;
+        }
+    });  return true;
+});
+
+function toggle_vis(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block')
+	e.style.display = 'none';
+    else
+	e.style.display = 'block';
+}
+
 function modalSetFormSrc(value){
     formSrc = value;
 }
@@ -35,16 +56,26 @@ function isoListInfo(flag, msg){
     }   
 }
 
-function adminFormInfo(flag, msg){
+function adminFormInfo(flag, msg, type){
     if( formSrc == "admin" ){ //if data sent from this form
         if(flag == 1){
             modalMessage('error', msg);
+	    if (type == 1)
+		toggle_vis('ud');
+	    if (type == 2)
+		toggle_vis('np');
+	    if (type == 3)
+		toggle_vis('nk');
         }
         else if(flag == 0){
-            modalMessage('success', "Admin form submitted.");
-        }
+	    if (type == 1)
+		modalMessage('success', "Admin form submitted.");
+	    if (type == 2)
+		modalMessage('success', "Password successfully changed.");
+	    if (type == 3)
+		modalMessage('success', "New SCP generated and emailed to contact.");        
+	}
     }
-    
 }
 
 function loginFormInfo(flag, msg){

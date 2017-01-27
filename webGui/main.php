@@ -128,11 +128,20 @@
 		<?php	print $isoRequestListDiv; ?>
 	</div>
 
-	<div id="container-isoform" class="main-panels">
+<?php
+if ($_REQUEST["form_src"] == "admin") {
+    $iso_hide = "hidden";
+    $admin_hide = "";
+} else {
+    $iso_hide = "";
+    $admin_hide = "hidden";
+}
+?>            
+	<div id="container-isoform" class="<?php echo $iso_hide;?> main-panels">
 		<?php	print $isoForm;?>
 	</div>
 
-	<div id="container-admin" class="hidden main-panels">
+	<div id="container-admin" class="<?php echo $admin_hide;?> main-panels">
 		<div id="adminFormTitle"><h1 class="text-center">Account Settings</h1></div>
 		<?php   print $adminForm; ?>
 	</div>
@@ -154,7 +163,7 @@
         print "modalSetFormSrc(\"".$_REQUEST['form_src']."\");";
         print "isoFormInfo(".$isoFormResult[1].", \"".$isoFormResult[2]."\");";
         //print "isoListInfo(".$isoFormResult[1].",".$isoFormResult[2].");";
-        print "adminFormInfo(".$adminFormResult[1].", \"".$adminFormResult[2]."\");";
+        print "adminFormInfo(".$adminFormResult[1].", \"".$adminFormResult[2]."\", $adminFormResult[3]);";
     ?>
 </script>
 <!-- END jquery stuff -->

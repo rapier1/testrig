@@ -24,11 +24,7 @@ function buildDiv($divID, $dbTableName, $fields)
     $htmlTableID = $divID . "Table";
 
     //Create our Database Handler, $dbh
-    $DB_HOST = "192.168.122.1"; //ionia's private IP
-    $DB_USERNAME = "testrig";
-    $DB_PASSWORD = "tinycats";
-    $DB_NAME = "testrig";
-    $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
+    $dbh = getDatabaseHandle();
 
     $fieldString = "";
     //Assemble list of fields to retrieve in our select statement (last field can't have a comma!)
@@ -45,7 +41,7 @@ function buildDiv($divID, $dbTableName, $fields)
                 }
         }//END field assembly
 
-    //now that we have a string of fields, assemble the query ******CID 5 IS A DUMMY VALUE FOR TESTING - CHANGE IT*****
+    //now that we have a string of fields, assemble the query 
     $stmnt = "SELECT " . $fieldString . " FROM " . $dbTableName . " WHERE cid = " . $_SESSION["CID"];
     $results = $dbh->query($stmnt);
     //create a div and html table with our query results
@@ -80,11 +76,7 @@ function buildDiv($divID, $dbTableName, $fields)
 function logIn($username, $password)
 {
     //Create our Database Handler, $dbh
-    $DB_HOST = "192.168.122.1"; //ionia's private IP
-    $DB_USERNAME = "testrig";
-    $DB_PASSWORD = "tinycats";
-    $DB_NAME = "testrig";
-    $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
+    $dbh = getDatabaseHandle();
     $errString = "Incorrect username/password combination";
 
     $stmnt = $dbh->prepare('SELECT tr_username, tr_password, cid, inst_name, approved 
@@ -213,12 +205,6 @@ function generateISORequestForm()
                 }
             }
             
-//            if (empty($_REQUEST["isoTroubleTicket"]))
-//                {
-//                    $isoFormInputErrors["troubleTicket"] = "You must provide a Trouble Ticket Number";
-//                    $errFlag = 1;
-//                }
-            
             if (empty($_REQUEST["isoUsername"]))
                 {
                     $isoFormInputErrors["username"] = "You must provide the recipient's name";
@@ -256,10 +242,6 @@ function generateISORequestForm()
                                    $errFlag = 1;
                         }
                 }
-//            if (empty($_REQUEST["queueName"]))
-//                {
-//                    $isoFormInputErrors["queueName"] = "Specify an RT Queue for RT integration";
-//                }
            
             $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
@@ -393,21 +375,15 @@ function generateISORequestForm()
 function insertNewISORequest($cleanedInputs)
 {
     //this function will insert parameters for an ISO into the test_parameters table
-    //database-related variables
-    $dbHost = "192.168.122.1"; //ionia's private IP
-    $username = "testrig";
-    $password = "tinycats";
-    $dbname = "testrig";
-    
+
 	//generate a timestamp for the ISO's creation date
 	date_default_timezone_set('UTC');
 	$creationTimestamp = date('YmdHs');
-    
-    
+
 	//actually attempt connecting to the database using PHP's PDO
     try
         {
-			$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+            $dbLink = getDatabaseHandle();
 			//error mode for PDO is exception
 			$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$cmd = "INSERT INTO testParameters
@@ -444,7 +420,7 @@ function insertNewISORequest($cleanedInputs)
 	//we need to add the UID of the recently created ISO to the session for the ISO creation to take place
     //since we have all of the other params for this iso, we can query for the combination of them and then get the UID
     //do we need a new db handle? -> yup, it wouldn't work unless I made a new one
-    $dbh = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+    $dbh = getDatabaseHandle();
     
     $sqlStmnt = $dbh->prepare('SELECT uid FROM testParameters 
 						 WHERE cid = :cid 
@@ -482,125 +458,226 @@ function logOut()
 	unset($_SESSION["UID"]);
     session_unset();
     session_destroy();
-    header("Location: https://". $_SERVER['SERVER_NAME']. "/login.php");
+    header("Location: https://". $_SERVER['SERVER_NAME']. "/index.php");
     die();
 }//END logOut()
 
+function getDatabaseHandle () {
+    //Create our Database Handler, $dbh
+    $DB_HOST = "192.168.122.1"; //ionia's private IP
+    $DB_USERNAME = "testrig";
+    $DB_PASSWORD = "tinycats";
+    $DB_NAME = "testrig";
+    $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
+    return $dbh;
+}
+
+function confirmPass($password) {
+    $dbh = getDatabaseHandle();
+    $stmnt = $dbh->prepare("SELECT tr_password
+                            FROM customer
+                            WHERE cid = :CID");
+    $stmnt->bindParam(":CID", $_SESSION["CID"], PDO::PARAM_STR);
+    $stmnt->execute();
+    $result = $stmnt->fetch(PDO::FETCH_ASSOC);
+    return (password_verify($password, $result["tr_password"]));
+}
 
 function generateAdminForm()
 {
 	//This panel is where the user can update their info that is saved into the database. They will need
 	// to provide their password in order for any changes to take effect
 
-
 	//Admin Panel variables
-        $AdminInputs = array(
-                'fName' => "",
-                'lName' => "",
-                'email' => "",
-                'testRigUsername' => "",
-                'testRigPassword' => "",
-                'phoneNumber' => "",
-                'instName' => "",
-                'scpPubKey' => "",
-                'scpPrivKey' => "",
-                'scpDstIp' => "",
-                'scpHostPath' => "",
-                'scpUsername' => "",
-                'rtEmailAddress' => "",
-                'scpHostPath' => "",
-                'scpPrivKey' => "");
-
-        $AdminInputErrors = array(
-                'fName' => "",
-                'lName' => "",
-                'email' => "",
-                'testRigUsername' => "",
-                'testRigPassword' => "",
-                'phoneNumber' => "",
-                'instName' => "",
-                'scpPubKey' => "",
-                'scpPrivKey' => "",
-                'scpDstIp' => "",
-                'scpHostPath' => "",
-                'scpUsername' => "",
-                'rtEmailAddress' => "",
-                'scpHostPath' => "",
-                'scpPrivKey' => "",
-                'admin-testRigPassword' => "");
-
-        $url = htmlspecialchars($_SERVER["PHP_SELF"]);
-        $errFlag = 0;
-        
-        //let's see if the user wants to update their shit
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") { //did they submit something?
-            /*if (empty($_REQUEST["admin-testRigPassword"])) {
-                        $AdminInputErrors["admin-testRigPassword"] = "Provide your current TestRig password in order to make changes to your account!";
-                        $errFlag = 1;
-                    }    
-                if (empty($_REQUEST["admin-newTestRigPassword"])) { //did they fill out the first new password field? T = no. F = yes.
-                    
-                }elseif(empty($_REQUEST["admin-newTestRigPasswordConfirm"])) { //did they fill out the password confirmation field? T = no. F = yes.
-                            
-                }elseif($_REQUEST["admin-newTestRigPassword"] != $_REQUEST["admin-newTestRigPasswordConfirm"])
-                         { //at this point, the user has submitted a POST request, filled out both new password fields, but they don't match
-                             $AdminInputErrors["admin-testRigPassword"] = "New passwords do not match";
-                             print "<h1>BALLLLLLLLLLS</h1>";
-                             $errFlag = 1;
-                             } */
-            if (!empty($_REQUEST["admin-newTestRigPassword"])){
-
-                if ((!empty($_REQUEST["admin-newTestRigPasswordConfirm"])) && (!empty($_REQUEST["admin-testRigPassword"])))
-                {
-                    if ($_REQUEST["admin-newTestRigPasswordConfirm"] != ($_REQUEST["admin-newTestRigPassword"]))
-                        {
-                            $AdminInputErrors["admin-testRigPassword"] = "New passwords do not match";
-                            $errFlag = 1;
-                        }
-                    
-
-                    
-                }
-                                
+    $AdminInputs = array(
+        'fName' => "",
+        'lName' => "",
+        'email' => "",
+        'testRigUsername' => "",
+        'testRigPassword' => "",
+        'phoneNumber' => "",
+        'instName' => "",
+        'scpPubKey' => "",
+        'scpPrivKey' => "",
+        'scpDstIp' => "",
+        'scpHostPath' => "",
+        'scpUsername' => "",
+        'rtEmailAddress' => "",
+        'scpHostPath' => "",
+        'scpPrivKey' => "");
+    
+    $AdminInputErrors = array(
+        'fName' => "",
+        'lName' => "",
+        'email' => "",
+        'testRigUsername' => "",
+        'testRigPassword' => "",
+        'phoneNumber' => "",
+        'instName' => "",
+        'scpPubKey' => "",
+        'scpPrivKey' => "",
+        'scpDstIp' => "",
+        'scpHostPath' => "",
+        'scpUsername' => "",
+        'rtEmailAddress' => "",
+        'scpHostPath' => "",
+        'scpPrivKey' => "",
+        'admin-testRigPassword' => "");
+    
+    $url = htmlspecialchars($_SERVER["PHP_SELF"]);
+    $errFlag = 0;
+    $errMsg = "";
+    $type = 0;
+    
+    $dbh = getDatabaseHandle();
+    
+    //let's see if the user wants to update their shit
+    
+    if ($_REQUEST["a"] == "ud") { //did they submit something?
+        $type = 1;
+        // scrub our inputs
+        foreach ($_REQUEST as $key => $value) {
+            if (preg_match ("/admin/", $key)) {
+                $_REQUEST[$key] = scrubInput($value);
             }
         }
-                
-
-
-
         
-        //We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
-        $adminForm = "<form id=\"updateContactInformation\" role=\"form\" class=\"form-horizontal col-8\" action=\"" . $url . "\" method=\"post\">\n";
-        $adminForm .= "<input type=\"hidden\" name=\"form_src\" value=\"admin\" />\n";
-        //$adminForm .= "<div class=\"row\">";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-fName\"> First Name:</label><input type=\"text\" id=\"admin-fName\" class=\"form-control\" value=\"" . $_REQUEST['admin-fName'] . "\"></div>\n";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-lName\"> Last Name:</label><input type=\"text\" id=\"admin-lName\" class=\"form-control\" value=\"" . $_REQUEST['admin-lName'] . "\"></div>\n";
-        //$adminForm .= "</div>"; //end row
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-email\"> Email Address:</label><input type=\"email\" id=\"admin-email\" class=\"form-control\" value=\"" . $_REQUEST['admin-email'] . "\"></div>\n";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-newTestRigPassword\">New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-newTestRigPasswordConfirm\">Confirm New Password:<label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>\n";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-phoneNumber\">Phone Number:</label><input type=\"text\" id=\"admin-phoneNumber\" class=\"form-control\"  value=\"" .  $_REQUEST['admin-phoneNumber'] . "\"></div>\n";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-instName\">Institution Name:</label><input type=\"text\" id=\"admin-instName\" class=\"form-control\" value=\"" . $_REQUEST['admin-instName'] . "\"></div>\n";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-rtEmailAddress\">RT Email Address:</label><input type=\"text\" name=\"admin-rtEmailAddress\" id=\"admin-rtEmailAddress\" class=\"form-control\" value=\"" . $_REQUEST['admin-rtEmailAddress'] . "\"></div>";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpUsername\">SCP Username:</label><input type=\"text\" name=\"admin-scpUsername\" id=\"admin-scpUsername\" class=\"form-control\" value=\"" .  $_REQUEST['admin-scpUsername'] . "\"></div>";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpDstIp\">SCP Dst IP:</label><input type=\"text\" name=\"admin-scpDstIp\" id=\"admin-scpDstIp\" class=\"form-control\" value=\"" . $_REQUEST['admin-scpDstIp'] . "\"></div>";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpPubKey\">SCP Public Key:</label><input type=\"textarea\" name=\"admin-scpPubKey\" id=\"admin-scpPubKey\" class=\"form-control\"></div>";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-scpHostPath\">SCP Destination (Absolute Path):</label><input type=\"textarea\" name=\"admin-scpHostPath\" id=\"admin-scpHostPath\" class=\"form-control\"></div>";
-        $adminForm .= "<div class=\"form-group\"><label for=\"admin-testRigPassword\">Current Password (to commit changes):</label><input type=\"password\" name=\"admin-testRigPassword\" id=\"admin-testRigPassword\" class=\"form-control\"></div>";
-        $adminForm .= "<button type=\"submit\" class=\"btn btn-lg btn-success\">Update  Account</button></form>";
+        $stmnt = $dbh->prepare("UPDATE customer 
+                                    SET inst_name = :iname,
+                                    contact_fname = :fname,
+                                    contact_lname = :lname, 
+                                    contact_phone = :phone,
+                                    contact_email = :email, 
+                                    inst_data_host = :host,
+                                    inst_host_uname = :uname, 
+                                    inst_host_path = :path,
+                                    tt_system = :tt 
+                                    WHERE cid = :CID");
+        $stmnt->bindParam(':iname', $_REQUEST['admin-instName'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':fname', $_REQUEST['admin-fName'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':lname', $_REQUEST['admin-lName'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':phone', $_REQUEST['admin-phoneNumber'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':email', $_REQUEST['admin-email'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':host',  $_REQUEST['admin-scpDstIp'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':uname', $_REQUEST['admin-scpUsername'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':path',  $_REQUEST['admin-scpHostPath'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':tt',    $_REQUEST['admin-rtEmailAddress'], PDO::PARAM_STR); 
+        $stmnt->bindParam(':CID',   $_SESSION['CID'], PDO::PARAM_STR);
+        $stmnt->execute();
+    }
+    // Do they want to change their password?
+    if ($_REQUEST["a"] == "np") { //did they submit something?
+        $type = 2;
+        if (confirmPass($_REQUEST["cpass"])) {
+            if ($_REQUEST["npass1"] == $_REQUEST["npass2"]) {
+                $hash = password_hash($_REQUEST["npass1"], PASSWORD_BCRYPT);
+                $stmnt = $dbh->prepare("UPDATE customer
+                                        SET tr_password = :hash
+                                        WHERE cid = :CID");
+                $stmnt->bindParam(':hash', $hash, PDO::PARAM_STR); 
+                $stmnt->bindParam(':CID',  $_SESSION["CID"], PDO::PARAM_STR);
+                $stmnt->execute();
+            } else {
+                //passwords do not match
+            $errFlag = 1;
+            $errMsg = "Your new passwords do not match. Please try again.";
+            }
+        } else {
+            // bad current password
+            $errFlag = 1;
+            $errMsg = "The password supplied does not match our records";
+        }
+    }
+            
+    // Do they want a new SCP key?
+    if ($_REQUEST["a"] == "nk") { //did they submit something?
+        $type = 3;
+        if (confirmPass($_REQUEST["cpass"])) {
+             // get the users email address so we can mail them the new public key
+            $stmnt = $dbh->prepare("SELECT contact_email 
+                                    FROM customer 
+                                    WHERE cid = :CID");
+            $stmnt->bindParam(':CID',  $_SESSION["CID"], PDO::PARAM_STR);
+            $stmnt->execute();
+            $queryResult = $stmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
+            if (!$queryResult) {
+                print "NO RESPONSE!";
+                // insert error here because we didn't get a result;
+            }
+            // generate the keys
+            list ($scpPrivKey, $scpPubKey) = generateSSHKeys();
 
-        $errMsg = implode("<br>", array_filter($adminInputErrors));
-    return [$adminForm, $errFlag, $errMsg];
+             // insert the new keys
+            $stmnt = $dbh->prepare("UPDATE customer
+                                    SET inst_pub_key = :pub,
+                                        inst_priv_key = :priv
+                                    WHERE cid = :CID");
+            $stmnt->bindParam(':pub',  $scpPubKey, PDO::PARAM_STR);
+            $stmnt->bindParam(':priv', $scpPrivKey, PDO::PARAM_STR);
+            $stmnt->bindParam(':CID',  $_SESSION["CID"], PDO::PARAM_STR);
+            $stmnt->execute();
+            // email the new public key
+            emailPubKey($scpPubKey, $queryResult["contact_email"]);
+        } else {
+            // bad current password
+            $errFlag = 1;
+            $errMsg = "The password supplied does not match our records";
+        }
+    }
+    
+    // lets get the initial values for this form. This has to be done
+    // after any changes ot the DB or they won't be reflected. 
+    $stmnt = $dbh->prepare("SELECT inst_name, contact_fname,
+                                   contact_lname, contact_phone,
+                                   contact_email, inst_data_host,
+                                   inst_host_uname, inst_host_path,
+                                   tt_system 
+                                   FROM customer WHERE cid = :CID");
+    $stmnt->bindParam(':CID', $_SESSION["CID"], PDO::PARAM_STR);
+    $stmnt->execute();
+    $queryResult = $stmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
+    if (!$queryResult) {
+        // insert error here because we didn't get a result;
+    }
+     
+    //We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
+    $adminForm = "<a href='#' onclick='toggle_vis(\"ud\");'>Change Account Information</a></p>";
+    $adminForm .= "<div id='ud' style='display: none;'>";
+    $adminForm .= "<form id='updateContactInformation' role='form' class='form-horizontal col-8' action='$url?a=ud' method='post'>\n";
+    $adminForm .= "<input type='hidden' name='form_src' value='admin' />\n";
+    $adminForm .= "<div class='form-group'><label for='admin-fName'> First Name:</label><input type='text' name='admin-fName' class='form-control' value='$queryResult[contact_fname]' required></div>\n";
+    $adminForm .= "<div class='form-group'><label for='admin-lName'> Last Name:</label><input type='text' name='admin-lName' class='form-control' value='$queryResult[contact_lname]' required ></div>\n";
+    $adminForm .= "<div class='form-group'><label for='admin-email'> Email Address:</label><input type='email' name='admin-email' class='form-control' value='$queryResult[contact_email]' required></div>\n";
+    $adminForm .= "<div class='form-group'><label for='admin-phoneNumber'>Phone Number:</label><input type='text' name='admin-phoneNumber' class='form-control'  value='$queryResult[contact_phone]' required></div>\n";
+    $adminForm .= "<div class='form-group'><label for='admin-instName'>Institution Name:</label><input type='text' name='admin-instName' class='form-control' value='$queryResult[inst_name]' required ></div>\n";
+    $adminForm .= "<div class='form-group'><label for='admin-rtEmailAddress'>RT Email Address:</label><input type='text' name='admin-rtEmailAddress' id='admin-rtEmailAddress' class='form-control' value='$queryResult[tt_system]'></div>";
+    $adminForm .= "<div class='form-group'><label for='admin-scpUsername'>SCP Username:</label><input type='text' name='admin-scpUsername' id='admin-scpUsername' class='form-control' value='$queryResult[inst_host_uname]' required></div>";
+    $adminForm .= "<div class='form-group'><label for='admin-scpDstIp'>SCP Host:</label><input type='text' name='admin-scpDstIp' id='admin-scpDstIp' class='form-control' value='$queryResult[inst_data_host]' required></div>";
+    $adminForm .= "<div class='form-group'><label for='admin-scpHostPath'>SCP Destination (Absolute Path):</label><input type='textarea' name='admin-scpHostPath' id='admin-scpHostPath' class='form-control' value='$queryResult[inst_host_path]' required></div>";
+    $adminForm .= "<button type='submit' class='btn btn-lg btn-success'>Update Account</button></form>";
+    $adminForm .= "</div>";
+    
+    $adminForm .= "<a href='#' onclick='toggle_vis(\"np\");'>Change Password</a></p>";
+    $adminForm .= "<div id='np' style='display: none;'>";
+    $adminForm .= "<form id='updatePassword' role='form' class='form-horizontal col-8' action='$url?a=np' method='post'>\n";
+    $adminForm .= "<input type='hidden' name='form_src' value='admin' />\n";
+    $adminForm .= "<div class='form-group'><label for='cpass'> Current Password:</label><input type='password' name='cpass' class='form-control' value='' required></div>\n";
+    $adminForm .= "<div class='form-group'><label for='npass1'> New Password:</label><input type='password' name='npass1' class='form-control' value='' required></div>\n";
+    $adminForm .= "<div class='form-group'><label for='npass2'> Confirm Password:</label><input type='password' name='npass2' class='form-control' value='' required></div>\n";
+    $adminForm .= "<button type='submit' class='btn btn-lg btn-success'>Update Password</button></form>";
+    $adminForm .= "</div>";
+   
+    $adminForm .= "<a href='#' onclick='toggle_vis(\"nk\");'>Generate New Keys</a>";
+    $adminForm .= "<div id='nk' style='display: none;'>";
+    $adminForm .= "<form id='updateKey' role='form' class='form-horizontal col-8' action='$url?a=nk' method='post'>\n";
+    $adminForm .= "<input type='hidden' name='form_src' value='admin' />\n";
+    $adminForm .= "<div class='form-group'><label for='cpass'> Password:</label><input type='password' name='cpass' class='form-control' value='' required></div>\n";
+    $adminForm .= "<button type='submit' class='btn btn-lg btn-success'>Request New SCP key</button></form>";
+    $adminForm .= "</div>";
 
+    #$errMsg = implode("<br>", array_filter($AdminInputErrors));
+    return [$adminForm, $errFlag, $errMsg, $type];
 }
-
-
-
-
-
-
-
 
 
 function runPSLocateJson($ip, $count) // ip: IP address to lookup, count: number of test hosts to return.
@@ -610,3 +687,53 @@ function runPSLocateJson($ip, $count) // ip: IP address to lookup, count: number
     return $jsonResponse;
 }
 
+// generate the public and private keys for use with the ISO
+function generateSSHKeys() {
+// generate private key
+    $privKey = openssl_pkey_new(array(
+        'private_key_bits' => 2048,
+        'private_key_type' => OPENSSL_KEYTYPE_RSA
+    ));
+    openssl_pkey_export($privKey, $pem); // convert to pem encoding
+    $pubKey = sshEncodePublicKey($privKey);
+    return array($pem, $pubKey);
+}
+
+// convert the private key into a openssh format publickey
+function sshEncodePublicKey($privKey)
+{
+    $keyInfo = openssl_pkey_get_details($privKey);
+
+    $buffer  = pack("N", 7) . "ssh-rsa" . 
+               sshEncodeBuffer($keyInfo['rsa']['e']) . 
+               sshEncodeBuffer($keyInfo['rsa']['n']);
+
+    return "ssh-rsa " . base64_encode($buffer); 
+}
+
+function sshEncodeBuffer($buffer)
+{
+    $len = strlen($buffer);
+    if (ord($buffer[0]) & 0x80) {
+        $len++;
+        $buffer = "\x00" . $buffer;
+    }
+
+    return pack("Na*", $len, $buffer);
+}
+
+function emailPubKey($pubKey, $email) {
+    $message = "Hello TestRig 2.0 Customer!\r\n\r\n";
+    $message .= "At the end of this message you will find a public openssh format key.\r\n";
+    $message .= "You will need to copy this key into a file named authorized_keys and place it\r\n";
+    $message .= "a directory named .ssh in the top level directory of the account\r\n";
+    $message .= "that will recieve the completed TestRig 2.0 diagnostic datasets.\r\n";
+    $message .= "\r\n\r\nOpenSSH Public Key:\r\n";
+    $message .= "$pubKey";
+    $subject = "TestRig 2.0 Public Key Enclosed";
+    $headers = 'From: testrig@psc.edu' . "\r\n" .
+    'Reply-To: testrig@psc.edu' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
+
+    mail($email, $subject, $message, $headers);
+}
