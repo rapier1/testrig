@@ -1,18 +1,25 @@
 #!/usr/bin/perl
-# Copyright (c) 2016 The Board of Trustees of Carnegie Mellon University.
-#
-#  Author: Chris Rapier <rapier@psc.edu>
-#
-# This code is free software; you can redistribute it and/or modify it
-# under the terms of the MIT License.
-#
-# This software is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-# FITNESS FOR A PARTICULAR PURPOSE.  See the MIT License for more details.
-#
-# You should have received a copy of the MIT License along with this library;
-# if not, see http://opensource.org/licenses/MIT.
 
+=begin comment
+  Copyright (c) 2017 The Board of Trustees of Carnegie Mellon University.
+ 
+   Authors: Chris Rapier <rapier@psc.edu> 
+           Nate Robinson <nate@psc.edu>
+           Bryan Learn <blearn@psc.edu>
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+    http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software 
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. *
+=end comment
+=cut 
 
 # Goal: An authentication manager to use with the TestRig 2.0 iso
 # Method: Incoming auth request from iso includes the
