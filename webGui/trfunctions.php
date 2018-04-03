@@ -335,7 +335,7 @@ function generateISORequestForm()
                         } else {
                             // It turns out that exec has an issue with some versions of bash which prevents it
                             // from properly redirecting STDIN and STDERR to a file. This prevents exec from going into
-                            // the background. Turns out this proc_close(proc_open()) trick does work. 
+                            // the background. Turns out this proc_close(proc_open()) trick does work.
                             proc_close (proc_open ("/usr/bin/sudo /home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
                         }
                     } else {

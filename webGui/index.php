@@ -102,7 +102,7 @@
   <div class="jumbotron">
   <div class="row">
     <h4 class="text-center">
-    Welcome to TestRig 2.0 - a software as a service offering provided by the Pittsburgh Supercomputing Center made possible by a grant from the National Science Foundation. TestRig 2.0 is designed to be a straightforward way to collect valuable network diagnostic information using dynamically generated bootable live ISOs.
+    Welcome to TestRig 2.0 - a software as a service offering provided by the Pittsburgh Supercomputing Center made possible by a grant from the National Science Foundation. TestRig 2.0 is designed to be a straightforward way to collect valuable network diagnostic information using dynamically generated bootable live ISOs. These can easily be burned to a CD or the user may download a self extracting application that will create a bootable thumb drive. 
     </h4>
   </div><!-- end row -->
   </div>

@@ -120,98 +120,47 @@ sub validateConfig {
 	logger( "crit", "Missing DB user infomation in config file. Exiting.");
 	exit;
     }
-#check path information
-    if (! defined $config->{paths}->{source}) {
-	logger( "crit", "Missing path for TestRig source files in config file. Exiting.");
-	exit;
-    } else {
-	if (! -r $config->{paths}->{source}) {
-	    logger( "crit", "TestRig source files missing or unreadable. Exiting.");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{enc_destination}) {
-	logger( "crit", "Missing path for TestRig destination in config file. Exiting.");
-	exit;
-    }
-    if (! defined $config->{paths}->{pub_destination}) {
-	logger( "crit", "Missing path for TestRig destination in config file. Exiting.");
-	exit;
-    }
-    if (! defined $config->{paths}->{config_directory}) {
-	logger( "crit", "Missing path for UUID destination in config file. Exiting.");
-	exit;
-    }
-    if (! defined $config->{paths}->{master_chroot}) {
-	logger( "crit", "Missing path to master chroot directory. Exiting");
-	exit;
-    } else { #make sure it exists
-	if (! -e $config->{paths}->{master_chroot}) {
-	    logger( "crit", "Master chroot directory not found at $config->{paths}->{master_chroot}");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{target_chroot}) {
-	logger( "crit", "Missing path to target chroot directory. Exiting.");
-	exit;
-    } else { #make sure it exists
-	if (! -e $config->{paths}->{target_chroot}) {
-	    logger( "crit", "Target chroot directory not found at $config->{paths}->{target_chroot}.");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{encfs}) {
-	logger( "crit", "Missing path to encfs binaries in config file. Exiting.");
-	exit;
-    } else { # make sure it's there
-	if (! -e $config->{paths}->{encfs}) {
-	    logger( "crit", "Absolute path to encfs binary is incorrect. Exiting.");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{fusermount}) {
-	logger( "crit", "Missing path to fusermount binary in config file. Exiting.");
-	exit;
-    } else { # make sure we can find it
-	if (! -e $config->{paths}->{fusermount}) {
-	    logger( "crit", "Absolute path to fusermount binary is incorrect. Exiting.");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{iso_path}) 
-    { #is the image path detailed in the config file?
-        logger( "crit", "Missing path to iso image output direcdtory in config file. Exiting.");
-	exit;
-    }
-    if (! defined $config->{paths}->{isolinux}) {
-	logger( "crit", "Missing path to isolinux binary in config file. Exiting.");
-	exit;
-    } else { # make sure we can find it
-	if (! -e $config->{paths}->{isolinux}) {
-	    logger( "crit", "isolinux.bin not found at location specified in config. Exiting.");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{memtest}) {
-	logger( "crit", "Missing path to memtest binary in config file. Exiting.");
-	exit;
-    } else { # make sure we can find it
-	if (! -e $config->{paths}->{memtest}) {
-	    logger( "crit", "memtest not found at location specified in config. Exiting.");
-	    exit;
-	}
-    }
-    if (! defined $config->{paths}->{manifest}) {
-	logger( "crit", "Missing path to filesystem.manifest in config file. Exiting.");
-	exit;
-    } else { # make sure we can find it
-	if (! -e $config->{paths}->{manifest}) {
-	    logger( "crit", "filesystem.manifest not found at location specified in config. Exiting.");
-	    exit;
-	}
-    }
+    #check path information
+    # config parameters that must be defined
+    my %pathdefs = ("enc_destination"  => "TestRig Encrypted Destination",
+		    "pub_destination"  => "TestRig Public Destination ",
+		    "config_directory" => "UUID destination",
+		    "iso_path"         => "ISO destination");
 
+    foreach my $path (keys %pathdefs) {
+	if (! defined $config->{paths}->{$path}) {
+	    logger( "crit", "Missing path to $pathdefs{$path} ($path) in config file. Exiting.");
+	    exit;
+	}
+    }   
     
+    # config parameters that have a file test component
+    my %tests = ("makeself"      => "makeself scripts",
+                 "7zr"           => "7zr application",
+		 "unbnwin"       => "Unetbootin for Windows",
+		 "unbnosx"       => "Unetbootin for OS X",
+		 "unbnlinux"     => "Unetbootin for Linux",
+		 "7zsfxwin"      => "7z SFX for Windows",
+		 "manifest"      => "filesystem.manifest",
+		 "memtest"       => "Memtest binary",
+		 "isolinux"      => "isolinux boot loader",
+		 "encfs"         => "encfs binary",
+		 "target_chroot" => "target chroot directory",
+		 "fusermount"    => "fusemount binary",
+		 "master_chroot" => "master chroot directory",
+		 "source"        => "TestRig source directory");
+
+    foreach my $test (keys %tests) {
+	if (! defined $config->{paths}->{$test}) {
+	    logger( "crit", "Missing path to $tests{$test} ($test) in config file. Exiting.");
+	    exit;
+	} else { # make sure we can find it
+	    if (! -e $config->{paths}->{makeself}) {
+		logger( "crit", "$tests{$test} ($test) not found at location specified in config. Exiting.");
+		exit;
+	    }
+	}
+    }
 }
 
 #----------Crypto Functions--------------#
@@ -593,7 +542,7 @@ sub isoAvailableMail {
     my $uuid = shift @_;
     my $passphrase = generatePassword();
     my $hash = sha256_hex($passphrase);
-    my $url = "http://testrig.psc.edu/isofetch.php?uuid=$uuid&known_hash=$hash";
+    my $url = "http://testrig.psc.edu/verifyclient.php?uuid=$uuid&known_hash=$hash";
     my $text = "Hello $config_out->{user}->{username},\n\n";
     $text .= "The Testrig 2.0 ISO that you have requested is now available for download.\n";
     $text .= "This ISO will only be available for 4 days from the following link.\n $url\n";
@@ -650,6 +599,8 @@ sub generateISO {
     my $imagePath = $config->{paths}->{iso_path} . "/" . $uuid;
     my $isolinuxPath = $config->{paths}->{isolinux}; #we need isolinux.bin
     my $memtestPath = $config->{paths}->{memtest};
+    my $ldlinuxc32Path = $config->{paths}->{ldlinuxc32};
+    my $ldlinuxsysPath = $config->{paths}->{ldlinuxsys};
     
     #var for holding string of commands to pass to system
     my $cmd;
@@ -675,11 +626,7 @@ DEFAULT live
 LABEL live
   menu label ^Start or install TestRig
   kernel /casper/vmlinuz
-  append boot=casper initrd=/casper/initrd.lz quiet 
-LABEL check
-  menu label ^Check CD for defects
-  kernel /casper/vmlinuz
-  append  boot=casper integrity-check initrd=/casper/initrd.lz quiet splash --
+  append boot=casper root=LABEL=TESTRIG2 initrd=/casper/initrd.gz quiet overlay=union -- 
 LABEL memtest
   menu label ^Memory test
   kernel /install/memtest
@@ -718,14 +665,13 @@ END_DISKDEFINES
     runSystem($cmd, $uuid);
     $cmd="mkdir $imagePath/install";
     runSystem($cmd, $uuid);
-
     
     #copy Web10G Kernel from chroot 
     $cmd="cp $chrootPath/boot/vmlinuz-$kernel $imagePath/casper/vmlinuz";
     runSystem($cmd, $uuid);
     
     #copy Web10G initrd from chroot
-    $cmd="cp $chrootPath/boot/initrd.img-$kernel $imagePath/casper/initrd.lz";
+    $cmd="cp $chrootPath/boot/initrd.img-$kernel $imagePath/casper/initrd.gz";
     runSystem($cmd, $uuid);
     
     #copy Isolinux from host machine
@@ -737,6 +683,28 @@ END_DISKDEFINES
 	$cmd="cp $isolinuxPath $imagePath/isolinux/";
 	runSystem($cmd, $uuid);
     }
+
+    #copy ldlinuxc32 from host machine
+    if (! -e $ldlinuxc32Path) #does it exist on this machine?
+    {
+	logger ("crit", "Unable to locate ldlinux.c32 at $isolinuxPath. Make sure it is installed. Exiting.");
+	return -1;
+    }else { 
+	$cmd="cp $ldlinuxc32Path $imagePath/isolinux/";
+	runSystem($cmd, $uuid);
+    }
+
+    #copy ldlinuxsys from host machine
+    if (! -e $ldlinuxsysPath) #does it exist on this machine?
+    {
+	logger ("crit", "Unable to locate ldlinux.sys at $isolinuxPath. Make sure it is installed. Exiting.");
+	return -1;
+    }else { 
+	$cmd="cp $ldlinuxsysPath $imagePath/isolinux/";
+	runSystem($cmd, $uuid);
+    }
+    
+    
     #copy Memtest from host machine
     if (! -e $memtestPath) #is memtest on this machine? 
     { logger("crit", "Unable to locate memtest86+.bin at $memtestPath. Make sure it is installed. Exiting.");
@@ -800,10 +768,120 @@ END_DISKDEFINES
     #
     # using two cmd variables because genisoimage does NOT
     # like absolute paths for -c and -b options
-    $cmd="cd $imagePath && genisoimage -r -V \"TestRig2.0\" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
+    $cmd="cd $imagePath && genisoimage -r -V TESTRIG2 -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
     runSystem($cmd, $uuid);
     
+    #run isohybrid against iso
+    $cmd="/usr/bin/isohybrid $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso";
+    runSystem($cmd, $uuid);
+
 } #### END ISO Generation Subroutine ####
+
+sub buildInstallers {
+    # variables - mostly renames from the config struct. Easier for me to read.
+    my $uuid = shift @_;
+    my $cmd ="";
+    my $isopath = $config->{paths}->{'iso_path'};
+    my $makeself = $config->{paths}->{'makeself'};
+    my $compress7zr = $config->{paths}->{'7zr'};
+    my $unbnwin = $config->{paths}->{'unbnwin'};
+    my $unbnosx = $config->{paths}->{'unbnosx'};
+    my $unbnlinux = $config->{paths}->{'unbnlinux'};
+    my $sfxwin = $config->{paths}->{'7zsfxwin'};
+    
+    # This is the message that will be displayed in unetbootin 
+    my $message = "This utility will install TestRig2.0 to a flash drive that you have provided. ";
+    $message .= "This drive must have at least 512MB of free space. " ;
+    $message .= "If you have not already inserted the flash drive please exit this program, insert the flash drive, and restart the installer. ";
+    $message .= "After Testrig2.0 is installed to your flash drive, insert the drive into host you wish to test. Ensure that it is ";
+    $message .= "configured to boot off of an external flash drive and restart the system. It should boot into a text interface which will prompt you to start the tests.";
+
+    #text for config.txt for windows installer
+    my $config_win = ";!\@Install@!UTF-8!\n";
+    $config_win .= "Directory=\".\"\n";
+    $config_win .= "RunProgram=\"unetbootin.exe method=diskimage isofile=TestRig2.0-$uuid.iso nodistro=y message='$message'\"\n";
+    $config_win .= ";!\@InstallEnd\@!\n";
+
+    #text for burn_testrig.sh for osx
+    # in OSX we can't let this script to end until the unetbootin process is complete
+    # which is how it goes. There is likely a more elegant way to do this.
+    # building a dmg is the right way but more complicated. 
+    my $burn_test_osx = "#!/bin/bash\n";
+    $burn_test_osx .= "./unetbootin-osx method=diskimage isofile=./TestRig2.0-$uuid.iso nodistro=y message='$message' &\n";
+    $burn_test_osx .= "echo\n";
+    $burn_test_osx .= "echo\n";
+    $burn_test_osx .= "echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\n";
+    $burn_test_osx .= "echo \* Press any key in this window AFTER the burning process completes \*\n";
+    $burn_test_osx .= "echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\n";
+    $burn_test_osx .= "read -n 1 anykey\n";
+
+    #text for burn_testrig.sh for linux
+    my $burn_test_linux = "#!/bin/bash\n";
+    $burn_test_linux .= "xhost local:root\n";
+    $burn_test_linux .= "sudo QT_X11_NO_MITSHM=1 ./unetbootin-linux.bin method=diskimage isofile=./TestRig2.0-5BC6E872-3202-11E8-93CD-C634AAABCA23.iso nodistro=y message='$message'\n";
+    
+    # make a directory to store all of the installers and the iso
+    # this will help with removing the items later as the cleaner can just remove the whole directory
+    my $installer_dir = "$isopath/$uuid";
+    mkdir ("$installer_dir");
+    
+    # we're going to make each of these installations sequentially. 
+    # I'm positive that I could tighten this up by creating an array with the
+    # os specific variables and put this in a loop. Right now this is clearer
+    # and easier to maintain. 
+
+    #build windows installer
+ 
+    $cmd = "$compress7zr -mx0 a $isopath/windows-installer-$uuid.7z $unbnwin $isopath/TestRig2.0-$uuid.iso";
+    print "$cmd\n";
+    runSystem ($cmd);
+    open (my $CONFIG, ">", "$isopath/config.txt"); #add exception handling here;
+    print $CONFIG $config_win;
+    close $CONFIG;
+    
+    $cmd = "cat $sfxwin $isopath/config.txt $isopath/windows-installer-$uuid.7z > $installer_dir/TestRig2.0-windows-installer-$uuid.exe";
+    print "$cmd\n";
+    runSystem ($cmd);
+    unlink ("$isopath/config.txt", "$isopath/windows-installer-$uuid.7z");
+
+    #build linux installer
+    my $tmpdir = "$isopath/linux-$uuid";
+    $cmd = "mkdir $tmpdir";
+    runSystem ($cmd);
+    $cmd = "ln $isopath/TestRig2.0-$uuid.iso $tmpdir";
+    runSystem ($cmd);
+    $cmd ="ln $unbnlinux $tmpdir";
+    runSystem ($cmd);
+    open (my $BURN, ">", "$tmpdir/burn_testrig.sh"); #add exception handling here;
+    print $BURN $burn_test_linux;
+    close $BURN;
+    $cmd = "$makeself $tmpdir $installer_dir/TestRig2.0-linux-installer-$uuid.bin \"Install Testrig 2.0 to USB Drive\" $tmpdir/burn-testrig.sh";
+    runSystem ($cmd);
+    $cmd = "chmod a+x $installer_dir/TestRig2.0-linux-installer-$uuid.bin";
+    runSystem ($cmd);
+    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/unetbootin-linux", "$tmpdir/burn_testrig.sh");
+    rmdir ("$tmpdir");
+
+    #build osx installer
+    $tmpdir = "$isopath/osx-$uuid";
+    $cmd = "mkdir $tmpdir";
+    runSystem ($cmd);
+    $cmd = "ln $isopath/TestRig2.0-$uuid.iso $tmpdir";
+    runSystem ($cmd);
+    $cmd ="ln $unbnosx $tmpdir";
+    runSystem ($cmd);
+    open ($BURN, ">", "$tmpdir/burn_testrig.sh"); #add exception handling here;
+    print $BURN $burn_test_osx;
+    close $BURN;
+    $cmd = "$makeself $tmpdir $installer_dir/TestRig2.0-osx-installer-$uuid \"Install Testrig 2.0 to USB Drive\" $tmpdir/burn-testrig.sh";
+    runSystem ($cmd);
+    $cmd = "chmod a+x $installer_dir/TestRig2.0-osx-installer-$uuid";
+    runSystem ($cmd);
+    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/unetbootin-osx", "$tmpdir/burn_testrig.sh");
+    rmdir ("$tmpdir");
+
+    move ("$isopath/TestRig2.0-$uuid.iso", "$installer_dir/TestRig2.0-$uuid.iso");
+}
 
 #------- Utility Functions ------------#
 
@@ -993,7 +1071,7 @@ if ($known_text_clear ne $test_text) {
 }
 
 # copy the master chroot directory to temporary chroot
-
+verbose("Copying chroot.");
 if (! copyMaster()) {
     logger ("crit", "Failed to copy master chroot directory");
     cleanUp($uuid);
@@ -1015,7 +1093,7 @@ if (mountENCFS($encfs_password, $uuid) != 1) {
 # we're going to copy everything from a target directory that holds
 # the testrig tree to the chroot. We also drop in the uuid and
 # a known text string encrypted with our public key
-
+verbose("Copying files.");
 if (! copyFiles()) {
     logger("crit", "File copy failed! Exiting.");
     cleanUp($uuid);
@@ -1048,6 +1126,7 @@ if (writeToDB($uuid, $public_key, $private_key, $encfs_password, $known_text_cle
     exit;
 }
 
+verbose ("Generating the ISO.");
 #generate the iso
 if (generateISO($uuid) == -1) {
     logger ("crit", "Problem generating ISO.");
@@ -1055,6 +1134,10 @@ if (generateISO($uuid) == -1) {
 
 #clean up the tempory directories
 cleanUp($uuid);
+
+verbose("Building the installers.");
+#build the various installers
+buildInstallers($uuid);
 
 verbose ("TestRig target ISO generation process completed.");
 
