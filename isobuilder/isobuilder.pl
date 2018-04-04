@@ -542,7 +542,7 @@ sub isoAvailableMail {
     my $uuid = shift @_;
     my $passphrase = generatePassword();
     my $hash = sha256_hex($passphrase);
-    my $url = "http://testrig.psc.edu/verifyclient.php?uuid=$uuid&known_hash=$hash";
+    my $url = "https://testrig.psc.edu/verifyclient.php?uuid=$uuid&known_hash=$hash";
     my $text = "Hello $config_out->{user}->{username},\n\n";
     $text .= "The Testrig 2.0 ISO that you have requested is now available for download.\n";
     $text .= "This ISO will only be available for 4 days from the following link.\n $url\n";
@@ -810,9 +810,9 @@ sub buildInstallers {
     $burn_test_osx .= "./unetbootin-osx method=diskimage isofile=./TestRig2.0-$uuid.iso nodistro=y message='$message' &\n";
     $burn_test_osx .= "echo\n";
     $burn_test_osx .= "echo\n";
-    $burn_test_osx .= "echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\n";
-    $burn_test_osx .= "echo \* Press any key in this window AFTER the burning process completes \*\n";
-    $burn_test_osx .= "echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\n";
+    $burn_test_osx .= "echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+    $burn_test_osx .= "echo % Press any key in this window AFTER the burning process completes %\n";
+    $burn_test_osx .= "echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
     $burn_test_osx .= "read -n 1 anykey\n";
 
     #text for burn_testrig.sh for linux
@@ -855,7 +855,9 @@ sub buildInstallers {
     open (my $BURN, ">", "$tmpdir/burn_testrig.sh"); #add exception handling here;
     print $BURN $burn_test_linux;
     close $BURN;
-    $cmd = "$makeself $tmpdir $installer_dir/TestRig2.0-linux-installer-$uuid.bin \"Install Testrig 2.0 to USB Drive\" $tmpdir/burn-testrig.sh";
+    $cmd = "chmod a+x $tmpdir/burn_testrig.sh";
+    runSystem ($cmd);
+    $cmd = "$makeself $tmpdir $installer_dir/TestRig2.0-linux-installer-$uuid.bin \"Install Testrig 2.0 to USB Drive\" ./burn_testrig.sh";
     runSystem ($cmd);
     $cmd = "chmod a+x $installer_dir/TestRig2.0-linux-installer-$uuid.bin";
     runSystem ($cmd);
@@ -873,11 +875,16 @@ sub buildInstallers {
     open ($BURN, ">", "$tmpdir/burn_testrig.sh"); #add exception handling here;
     print $BURN $burn_test_osx;
     close $BURN;
-    $cmd = "$makeself $tmpdir $installer_dir/TestRig2.0-osx-installer-$uuid \"Install Testrig 2.0 to USB Drive\" $tmpdir/burn-testrig.sh";
+    $cmd = "chmod a+x $tmpdir/burn_testrig.sh";
     runSystem ($cmd);
-    $cmd = "chmod a+x $installer_dir/TestRig2.0-osx-installer-$uuid";
+    $cmd = "$makeself $tmpdir $installer_dir/TestRig2.0-osx-installer-$uuid.command \"Install Testrig 2.0 to USB Drive\" ./burn_testrig.sh";
     runSystem ($cmd);
-    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/unetbootin-osx", "$tmpdir/burn_testrig.sh");
+    $cmd = "chmod a+x $installer_dir/TestRig2.0-osx-installer-$uuid.command";
+    runSystem ($cmd);
+    # after this we still need to repackage it as a dmg because Apple.
+    $cmd = "genisoimage -V TestRig2.0 -D -R -apple -no-pad -o $installer_dir/TestRig2.0-osx-installer-$uuid.dmg $installer_dir/TestRig2.0-osx-installer-$uuid.command";
+    runSystem ($cmd);
+    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/unetbootin-osx", "$tmpdir/burn_testrig.sh", "$installer_dir/TestRig2.0-osx-installer-$uuid.command");
     rmdir ("$tmpdir");
 
     move ("$isopath/TestRig2.0-$uuid.iso", "$installer_dir/TestRig2.0-$uuid.iso");

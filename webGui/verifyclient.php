@@ -125,16 +125,16 @@ function verify () {
 function loadDownloads($uuid) {
     $isopath = "./isos/$uuid";
     $iso = "$isopath/TestRig2.0-$uuid.iso";
-    $osx = "$isopath/TestRig2.0-osx-installer-$uuid";
+    $osx = "$isopath/TestRig2.0-osx-installer-$uuid.dmg";
     $windows = "$isopath/TestRig2.0-windows-installer-$uuid.exe";
-    $linux = "$isopath/TestRig2.0-linux-installer-$uuid";
+    $linux = "$isopath/TestRig2.0-linux-installer-$uuid.bin";
 
     printHeader();
     print ("<H2>TestRig2.0 Software Download</H2>");
     print ("<a href='$iso'><img width='120' src ='./images/icon-raw-iso.jpg'>Raw ISO</a><br>");
     print ("<a href='$windows'><img width='120' src ='./images/windows-installer.jpg'>Windows Installer</a><br>");
-    print ("<a href='$iso'><img width='120' src ='./images/osx-installer.jpg'>OS X Installer</a><br>");
-    print ("<a href='$iso'><img width='120' src ='./images/linux-installer.jpg'>Linux Installer</a><br>");
+    print ("<a href='$osx'><img width='120' src ='./images/osx-installer.jpg'>OS X Installer</a><br>");
+    print ("<a href='$linux'><img width='120' src ='./images/linux-installer.jpg'>Linux Installer</a><br>");
     print ("<B>Which one should I download?</B><br>
 You should choose the version that corresponds to the type of computer you'll be using to create the flash drive. This doesn't have to tbe the same 
 as the system or host you'll be testing. For example, if you have a Windows laptop you'll want to use the Windows Installer. However, you can use that 
@@ -143,7 +143,7 @@ preferred ISO to flash drive installation software or burn it directly to a CD o
 <B>I downloaded the installer. Now what do I do?</B><BR>
 Insert a flash drive into the USB port of your computer and double click (or otherwise run) the installer you downloaded. Make sure there isn't anything 
 importabt on this flash drive as it may be erased by the installer. After the installer starts click on 'OK' to start the process of installing the TestRig2.0 
-software to the flashdrive. This may take a couple of minutes so please be patient.<P>
+software to the flashdrive. This may take a couple of minutes so please be patient. <B><I>NOTE</I></B>: If you are using the OS X installer it is possible that a window will pop up that says TestRig2.0 \"can't be opened because it is from an unidentified developer\". In this case open System Preferences and then Security & Privacy. Then click the button that says \"Open Anyway\".<P>
 <B>I have TestRig 2.0 installed on the flash drive. What's my next step?</B><BR>
 Insert the flash drive into the system you need to test and then restart the system. Many computers are already configured to boot off of a flash drive if it
 available. If not you'll need to contact someone to determine how to make that happen. After the system boots off of the flash drive you should see a screen of text.
