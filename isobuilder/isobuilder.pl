@@ -148,7 +148,8 @@ sub validateConfig {
 		 "target_chroot" => "target chroot directory",
 		 "fusermount"    => "fusemount binary",
 		 "master_chroot" => "master chroot directory",
-		 "source"        => "TestRig source directory");
+		 "source"        => "TestRig source directory",
+	         "genisoimage"   => "genisoimage binary");
 
     foreach my $test (keys %tests) {
 	if (! defined $config->{paths}->{$test}) {
@@ -768,7 +769,7 @@ END_DISKDEFINES
     #
     # using two cmd variables because genisoimage does NOT
     # like absolute paths for -c and -b options
-    $cmd="cd $imagePath && genisoimage -r -V TESTRIG2 -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
+    $cmd="cd $imagePath && $config->{paths}->{genisoimage} -r -V TESTRIG2 -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o $config->{paths}->{iso_path}/TestRig2.0-$uuid.iso .";
     runSystem($cmd, $uuid);
     
     #run isohybrid against iso
@@ -882,7 +883,7 @@ sub buildInstallers {
     $cmd = "chmod a+x $installer_dir/TestRig2.0-osx-installer-$uuid.command";
     runSystem ($cmd);
     # after this we still need to repackage it as a dmg because Apple.
-    $cmd = "genisoimage -V TestRig2.0 -D -R -apple -no-pad -o $installer_dir/TestRig2.0-osx-installer-$uuid.dmg $installer_dir/TestRig2.0-osx-installer-$uuid.command";
+    $cmd = "$config->{paths}->{genisoimage} -V TestRig2.0 -D -R -apple -no-pad -o $installer_dir/TestRig2.0-osx-installer-$uuid.dmg $installer_dir/TestRig2.0-osx-installer-$uuid.command";
     runSystem ($cmd);
     unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/unetbootin-osx", "$tmpdir/burn_testrig.sh", "$installer_dir/TestRig2.0-osx-installer-$uuid.command");
     rmdir ("$tmpdir");
