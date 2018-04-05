@@ -147,15 +147,13 @@ software to the flashdrive. This may take a couple of minutes so please be patie
 <B>I have TestRig 2.0 installed on the flash drive. What's my next step?</B><BR>
 Insert the flash drive into the system you need to test and then restart the system. Many computers are already configured to boot off of a flash drive if it
 available. If not you'll need to contact someone to determine how to make that happen. After the system boots off of the flash drive you should see a screen of text.
-Please read the text and if you agree to the conditions laid out there please enter 'yes' at the prompt. TestRig 2.0 will then start conducting tests for 10 to 20 minutes.
-After the tests have completed remove the flash drive and reboot your system to return to normal operation.<P>
+Please read the text and if you agree to the conditions laid out there please enter 'yes' at the prompt. TestRig 2.0 will then start conducting tests for 10 to 20 minutes. After the tests have completed remove the flash drive and reboot your system to return to normal operation.<P>
 <B>I didn't use a flash drive, I made a CD/DVD.</B><BR>
 In that case insert the CD/DVD into the computer's optical drive and reboot the system. After the system boots to the text screen please enter 'yes' at the promp to begin testing.<P>
 <B>I can't get this thing to work! Can you help me?</B><BR>
 The staff at PSC can't directly provide you with help. However, the IT staff you are working with should be able to help you with this process.<P>
 <B>Can I just run the ISO as a virtual machine on the system I want to test?</B><BR>
-Yes. This should work but we don't recommend it. This is because any problems with the network stack on the host operating system will impact the test environment. Since the goal of 
-TestRig2.0 is to run these tests from a 'known good' and clean environment this can mask the results we are looking for.<P> 
+Yes. This should work but we don't recommend it. This is because any problems with the network stack on the host operating system will impact the test environment. Since the goal of TestRig2.0 is to run these tests from a 'known good' and clean environment this can mask the results we are looking for.<P> 
 ");
     printFooter();
 }       

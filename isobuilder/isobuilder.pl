@@ -93,7 +93,7 @@ openlog("TR-isobuilder", "nowait, pid", "user");
 sub readConfig {
     if (! -e $cfg_path) {
 	logger ("crit", "Config file not found at $cfg_path. Exiting.");
-	exit;
+	exit;    
     } else {
 	$config = Config::Tiny->read($cfg_path);
 	my $error = $config->errstr();
@@ -808,7 +808,7 @@ sub buildInstallers {
     # which is how it goes. There is likely a more elegant way to do this.
     # building a dmg is the right way but more complicated. 
     my $burn_test_osx = "#!/bin/bash\n";
-    $burn_test_osx .= "./unetbootin-osx method=diskimage isofile=./TestRig2.0-$uuid.iso nodistro=y message='$message' &\n";
+    $burn_test_osx .= "\$PWD/unetbootin.app/Contents/MacOS/unetbootin method=diskimage isofile=\$PWD/TestRig2.0-$uuid.iso nodistro=y message='$message' 2>/dev/null &\n";
     $burn_test_osx .= "echo\n";
     $burn_test_osx .= "echo\n";
     $burn_test_osx .= "echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
@@ -819,7 +819,7 @@ sub buildInstallers {
     #text for burn_testrig.sh for linux
     my $burn_test_linux = "#!/bin/bash\n";
     $burn_test_linux .= "xhost local:root\n";
-    $burn_test_linux .= "sudo QT_X11_NO_MITSHM=1 ./unetbootin-linux.bin method=diskimage isofile=./TestRig2.0-5BC6E872-3202-11E8-93CD-C634AAABCA23.iso nodistro=y message='$message'\n";
+    $burn_test_linux .= "sudo QT_X11_NO_MITSHM=1 \$PWD/unetbootin-linux.bin method=diskimage isofile=\$PWD/TestRig2.0-$uuid.iso nodistro=y message='$message'\n";
     
     # make a directory to store all of the installers and the iso
     # this will help with removing the items later as the cleaner can just remove the whole directory
@@ -871,7 +871,8 @@ sub buildInstallers {
     runSystem ($cmd);
     $cmd = "ln $isopath/TestRig2.0-$uuid.iso $tmpdir";
     runSystem ($cmd);
-    $cmd ="ln $unbnosx $tmpdir";
+    # we need the entire unetbootin app directory to make this work because Apple
+    $cmd ="/bin/tar xf $unbnosx -C $tmpdir";
     runSystem ($cmd);
     open ($BURN, ">", "$tmpdir/burn_testrig.sh"); #add exception handling here;
     print $BURN $burn_test_osx;
@@ -885,7 +886,9 @@ sub buildInstallers {
     # after this we still need to repackage it as a dmg because Apple.
     $cmd = "$config->{paths}->{genisoimage} -V TestRig2.0 -D -R -apple -no-pad -o $installer_dir/TestRig2.0-osx-installer-$uuid.dmg $installer_dir/TestRig2.0-osx-installer-$uuid.command";
     runSystem ($cmd);
-    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/unetbootin-osx", "$tmpdir/burn_testrig.sh", "$installer_dir/TestRig2.0-osx-installer-$uuid.command");
+    $cmd = "rm -r $tmpdir/unetbootin.app";
+    runSystem ($cmd);
+    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/._unetbootin.app", "$tmpdir/burn_testrig.sh", "$installer_dir/TestRig2.0-osx-installer-$uuid.command");
     rmdir ("$tmpdir");
 
     move ("$isopath/TestRig2.0-$uuid.iso", "$installer_dir/TestRig2.0-$uuid.iso");
