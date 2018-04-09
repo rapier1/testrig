@@ -19,29 +19,6 @@
  * limitations under the License. *
  */
 ?>
-<html lang="en">
-    <head>
-                            <meta charset="utf-8">
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                            <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-                                   <meta name="description" content="TestRig 2">
-                                                                                             <meta name="author" content="Pittsburgh Supercompuing Center">
-                                                                                             <link rel="icon" href="../../favicon.ico">
-                                                                          <title>TestRig 2</title>
-                                                                                          <!-- Bootstrap core CSS -->
-                                                                                              <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-                                                                                          <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-                                                                                              <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-                                                                                          <!-- Custom styles for this template -->
-                                                                                              <link href="trstylesheet.css" rel="stylesheet">
-                                                                                          <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-                                                                                              <!--[if lt IE 9]>
-                                                                                                  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-                                                                                                  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-                                                                                              <![endif]-->
-    </head>
-
 <?php
 
 // The user will be sent a link containing
@@ -130,25 +107,25 @@ function loadDownloads($uuid) {
     $linux = "$isopath/TestRig2.0-linux-installer-$uuid.bin";
 
     printHeader();
-    print ("<div id='container-main' class='container'>");
-    print ("<div class='jumobtron'>");
-    print ("<div class='row'>");
-    print ("<H2 class='text-center'>TestRig2.0 Software Download</H2>");
-    print ("<table width=75% align=center><tr>");
-    print ("<td align=center><a href='$iso'><img width='120' src ='./images/icon-raw-iso.jpg'><br>Raw ISO</a></td>");
-    print ("<td align=center><a href='$windows'><img width='120' src ='./images/windows-installer.jpg'><br>Windows Installer</a></td>");
-    print ("<td align=center><a href='$osx'><img width='120' src ='./images/osx-installer.jpg'><br>OS X Installer</a></td>");
-    print ("<td align=center><a href='$linux'><img width='100' src ='./images/linux-installer.jpg'><br>Linux Installer</a></td>");
-    print ("</tr></table></div></div><P>");
-print ("<div class='main-panels'>
-<B>Which one should I download?</B><br>
+    print ("<div id='container-main' class='container'>\n");
+    print ("<div class='jumobtron'>\n");
+    print ("<div class='row'>\n");
+    print ("<H2 class='text-center'>TestRig2.0 Software Download</H2>\n");
+    print ("<table width=75% align=center><tr>\n");
+    print ("<td align=center><a href='$iso'><img width='120' src ='./images/icon-raw-iso.jpg'><br>Raw ISO</a></td>\n");
+    print ("<td align=center><a href='$windows'><img width='120' src ='./images/windows-installer.jpg'><br>Windows Installer</a></td>\n");
+    print ("<td align=center><a href='$osx'><img width='120' src ='./images/osx-installer.jpg'><br>OS X Installer</a></td>\n");
+    print ("<td align=center><a href='$linux'><img width='100' src ='./images/linux-installer.jpg'><br>Linux Installer</a></td>\n");
+    print ("</tr>\n</table>\n</div>\n</div>\n<P>\n");
+    print ("<div class='main-panels'>\n
+<B>Which one should I download?</B><br>\n
 You should choose the version that corresponds to the type of computer you'll be using to create the flash drive. 
 This doesn't have to tbe the same as the system or host you'll be testing. For example, if you have a Windows 
 laptop you'll want to use the Windows Installer. However, you can use that flash drive to test any system that can 
 boot from a flash drive. If you want the ISO only (no installer) choose the 'Raw ISO' option and then use your 
-preferred ISO to flash drive installation software or burn it directly to a CD or DVD.<P><P>
+preferred ISO to flash drive installation software or burn it directly to a CD or DVD.<P><P>\n
 
-<B>I downloaded the installer. Now what do I do?</B><BR>
+<B>I downloaded the installer. Now what do I do?</B><BR>\n
 Insert a flash drive into the USB port of your computer and double click (or otherwise run) the installer you downloaded. 
 Make sure there isn't anything important on this flash drive as it may be erased by the installer. After the 
 installer starts click on 'OK' to start the process of installing the TestRig2.0 software to the flash drive. This may 
@@ -157,30 +134,30 @@ take a couple of minutes so please be patient.<br>
 \"can't be opened because it is from an unidentified developer\". In this case open System Preferences and 
 then Security & Privacy. Then click the button that says \"Open Anyway\".<br> 
 <B><I>Linux users:</I></B> After downloading the installer open a terminal window and change directories to 
-where the installer is located. The type <TT>sh testrig-installer-filename</TT> to start the application.<P>
+where the installer is located. Then enter <TT>'sh TestRig2.0-linux-installer-$uuid.bin'</TT> to start the application.<P>\n
 
-<B>I have TestRig 2.0 installed on the flash drive. What's my next step?</B><BR>
+<B>I have TestRig 2.0 installed on the flash drive. What's my next step?</B><BR>\n
 Insert the flash drive into the system you need to test and then restart the system. Many computers are 
 already configured to boot off of a flash drive if it available. If not you'll need to contact someone 
 to determine how to make that happen. After the system boots off of the flash drive you should see a screen of text.
 Please read the text and if you agree to the conditions laid out there please enter 'yes' at the prompt. 
 TestRig 2.0 will then start and run various tests for 10 to 20 minutes. After the tests have completed remove the 
-flash drive and reboot your system to return to normal operation.<P>
+flash drive and reboot your system to return to normal operation.<P>\n
 
-<B>I didn't use a flash drive, I made a CD/DVD.</B><BR>
+<B>I didn't use a flash drive, I made a CD/DVD.</B><BR>\n
 In that case insert the CD/DVD into the computer's optical drive and reboot the system. 
-After the system boots to the text screen please enter 'yes' at the promp to begin testing.<P>
+After the system boots to the text screen please enter 'yes' at the promp to begin testing.<P>\n
 
-<B>I can't get this thing to work! Can you help me?</B><BR>
+<B>I can't get this thing to work! Can you help me?</B><BR>\n
 The staff at PSC can't directly provide you with help. However, the IT staff you are working 
-with should be able to help you with this process.<P>
+with should be able to help you with this process.<P>\n
 
-<B>Can I just run the ISO as a virtual machine on the system I want to test?</B><BR>
+<B>Can I just run the ISO as a virtual machine on the system I want to test?</B><BR>\n
 Yes. This should work but we don't recommend it. This is because any problems with the network stack 
 on the host operating system will impact the test environment. Since the goal of TestRig2.0 is to run 
-these tests from a 'known good' and clean environment this can mask the results we are looking for.<P> 
-</div>
-</div>
+these tests from a 'known good' and clean environment this can mask the results we are looking for.<P>\n
+</div>\n
+</div>\n
 ");
     printFooter();
 }       
@@ -290,19 +267,19 @@ function loadPage () {
     }
     $uuid = $_REQUEST['uuid'];
 
-    print ("<div id='container-main' class='container'>");
-    print ("<div class='jumobtron'>");
-    print ("<div class='row'>");
-    print ("<H2 class='text-center'>Download the TestRig 2.0 Installer</H2>");
-    print ("</div><P>");
+    print ("<div id='container-main' class='container'>\n");
+    print ("<div class='jumobtron'>\n");
+    print ("<div class='row'>\n");
+    print ("<H2 class='text-center'>Download the TestRig 2.0 Installer</H2>\n");
+    print ("</div><P>\n");
     print ("<form method='post' action='$PHP_SELF'>\n");
-    print ("Please enter the claim code from the email:");
+    print ("Please enter the claim code from the email:\n");
     print ("<input type='text' size='25' maxlength='25' name='offer'>\n<br>\n");
     print ("<input type='hidden' name='uuid' value='$uuid'>\n");
     print ("<input type='hidden' name='known_hash' value='$known_hash'>\n");
     print ("<input type='hidden' name='verify' value='true'>\n");
     print ("<input type='submit' value='Submit Code'>\n");
-    print ("</div>");
+    print ("</div>\n");
     printFooter();
 }
 
@@ -313,10 +290,29 @@ function missing_data () {
 }
 
 function printHeader () {
-    print ("<html>\n");
-    print ("<head>\n");
-    print ("<title>TestRig 2.0 Downloads</title>\n");
-    print ("</head>\n");
+    print("
+    <html lang='en'>
+    <head>
+         <meta charset='utf-8'>
+         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+         <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+         <meta name='description' content='TestRig 2'>
+         <meta name='author' content='Pittsburgh Supercompuing Center'>
+         <link rel='icon' href='../../favicon.ico'>
+         <title>TestRig 2.0 Download</title>
+         <!-- Bootstrap core CSS -->
+         <link href='bootstrap/dist/css/bootstrap.min.css' rel='stylesheet'>
+         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+         <link href='bootstrap/assets/css/ie10-viewport-bug-workaround.css' rel='stylesheet'>
+         <!-- Custom styles for this template -->
+         <link href='trstylesheet.css' rel='stylesheet'>
+         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+         <!--[if lt IE 9]>
+         <script src='https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js'></script>
+         <script src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js'></script>
+         <![endif]-->
+    </head>");
     print ("<body>\n");
 }
 
@@ -325,19 +321,8 @@ function printFooter () {
     print ("</html>\n");
 }
 
-function complete () {
-    printHeader();
-    print ("Your download should be starting now. If not please wait a few moments. ");
-    print ("Once your have downloaded the TestRig 2.0 please go to the following link ");
-    print ("for instructions on creating the bootable CD/DVD or flash drive.<br>");
-    notifyPickup();
-    printFooter();
-}
-
 if ($_REQUEST['verify'] === "true") {
     verify();
-} else if ($_REQUEST['complete'] === "true") {
-    complete();
 } else {
     loadPage();
 }
