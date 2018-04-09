@@ -7,9 +7,9 @@
 
 #prevent the user from exiting the application
 #off for development
-#$SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
-#$SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
-#$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+$SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+$SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
 
 use strict;
 use warnings;

@@ -799,7 +799,6 @@ sub buildInstallers {
 
     #text for config.txt for windows installer
     my $config_win = ";!\@Install@!UTF-8!\n";
-    $config_win .= "Directory=\".\"\n";
     $config_win .= "RunProgram=\"unetbootin.exe method=diskimage isofile=TestRig2.0-$uuid.iso nodistro=y message='$message'\"\n";
     $config_win .= ";!\@InstallEnd\@!\n";
 
@@ -819,7 +818,7 @@ sub buildInstallers {
     #text for burn_testrig.sh for linux
     my $burn_test_linux = "#!/bin/bash\n";
     $burn_test_linux .= "xhost local:root\n";
-    $burn_test_linux .= "sudo QT_X11_NO_MITSHM=1 \$PWD/unetbootin-linux.bin method=diskimage isofile=\$PWD/TestRig2.0-$uuid.iso nodistro=y message='$message'\n";
+    $burn_test_linux .= "sudo QT_X11_NO_MITSHM=1 \$PWD/unetbootin-linux method=diskimage isofile=\$PWD/TestRig2.0-$uuid.iso nodistro=y message='$message'\n 2>/dev/null";
     
     # make a directory to store all of the installers and the iso
     # this will help with removing the items later as the cleaner can just remove the whole directory

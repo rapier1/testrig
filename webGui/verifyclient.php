@@ -130,30 +130,57 @@ function loadDownloads($uuid) {
     $linux = "$isopath/TestRig2.0-linux-installer-$uuid.bin";
 
     printHeader();
-    print ("<H2>TestRig2.0 Software Download</H2>");
-    print ("<a href='$iso'><img width='120' src ='./images/icon-raw-iso.jpg'>Raw ISO</a><br>");
-    print ("<a href='$windows'><img width='120' src ='./images/windows-installer.jpg'>Windows Installer</a><br>");
-    print ("<a href='$osx'><img width='120' src ='./images/osx-installer.jpg'>OS X Installer</a><br>");
-    print ("<a href='$linux'><img width='120' src ='./images/linux-installer.jpg'>Linux Installer</a><br>");
-    print ("<B>Which one should I download?</B><br>
-You should choose the version that corresponds to the type of computer you'll be using to create the flash drive. This doesn't have to tbe the same 
-as the system or host you'll be testing. For example, if you have a Windows laptop you'll want to use the Windows Installer. However, you can use that 
-flash drive to test any system that can boot from a flash drive. If you want the ISO only (no installer) choose the 'Raw ISO' option and then use your 
-preferred ISO to flash drive installation software or burn it directly to a CD or DVD.<P>
+    print ("<div id='container-main' class='container'>");
+    print ("<div class='jumobtron'>");
+    print ("<div class='row'>");
+    print ("<H2 class='text-center'>TestRig2.0 Software Download</H2>");
+    print ("<table width=75% align=center><tr>");
+    print ("<td align=center><a href='$iso'><img width='120' src ='./images/icon-raw-iso.jpg'><br>Raw ISO</a></td>");
+    print ("<td align=center><a href='$windows'><img width='120' src ='./images/windows-installer.jpg'><br>Windows Installer</a></td>");
+    print ("<td align=center><a href='$osx'><img width='120' src ='./images/osx-installer.jpg'><br>OS X Installer</a></td>");
+    print ("<td align=center><a href='$linux'><img width='100' src ='./images/linux-installer.jpg'><br>Linux Installer</a></td>");
+    print ("</tr></table></div></div><P>");
+print ("<div class='main-panels'>
+<B>Which one should I download?</B><br>
+You should choose the version that corresponds to the type of computer you'll be using to create the flash drive. 
+This doesn't have to tbe the same as the system or host you'll be testing. For example, if you have a Windows 
+laptop you'll want to use the Windows Installer. However, you can use that flash drive to test any system that can 
+boot from a flash drive. If you want the ISO only (no installer) choose the 'Raw ISO' option and then use your 
+preferred ISO to flash drive installation software or burn it directly to a CD or DVD.<P><P>
+
 <B>I downloaded the installer. Now what do I do?</B><BR>
-Insert a flash drive into the USB port of your computer and double click (or otherwise run) the installer you downloaded. Make sure there isn't anything 
-importabt on this flash drive as it may be erased by the installer. After the installer starts click on 'OK' to start the process of installing the TestRig2.0 
-software to the flashdrive. This may take a couple of minutes so please be patient. <B><I>NOTE</I></B>: If you are using the OS X installer it is possible that a window will pop up that says TestRig2.0 \"can't be opened because it is from an unidentified developer\". In this case open System Preferences and then Security & Privacy. Then click the button that says \"Open Anyway\".<P>
+Insert a flash drive into the USB port of your computer and double click (or otherwise run) the installer you downloaded. 
+Make sure there isn't anything important on this flash drive as it may be erased by the installer. After the 
+installer starts click on 'OK' to start the process of installing the TestRig2.0 software to the flash drive. This may 
+take a couple of minutes so please be patient.<br>
+<B><I>Mac Users</I></B>: If you are using the OS X installer it is possible that a window will pop up that says TestRig2.0 
+\"can't be opened because it is from an unidentified developer\". In this case open System Preferences and 
+then Security & Privacy. Then click the button that says \"Open Anyway\".<br> 
+<B><I>Linux users:</I></B> After downloading the installer open a terminal window and change directories to 
+where the installer is located. The type <TT>sh testrig-installer-filename</TT> to start the application.<P>
+
 <B>I have TestRig 2.0 installed on the flash drive. What's my next step?</B><BR>
-Insert the flash drive into the system you need to test and then restart the system. Many computers are already configured to boot off of a flash drive if it
-available. If not you'll need to contact someone to determine how to make that happen. After the system boots off of the flash drive you should see a screen of text.
-Please read the text and if you agree to the conditions laid out there please enter 'yes' at the prompt. TestRig 2.0 will then start conducting tests for 10 to 20 minutes. After the tests have completed remove the flash drive and reboot your system to return to normal operation.<P>
+Insert the flash drive into the system you need to test and then restart the system. Many computers are 
+already configured to boot off of a flash drive if it available. If not you'll need to contact someone 
+to determine how to make that happen. After the system boots off of the flash drive you should see a screen of text.
+Please read the text and if you agree to the conditions laid out there please enter 'yes' at the prompt. 
+TestRig 2.0 will then start and run various tests for 10 to 20 minutes. After the tests have completed remove the 
+flash drive and reboot your system to return to normal operation.<P>
+
 <B>I didn't use a flash drive, I made a CD/DVD.</B><BR>
-In that case insert the CD/DVD into the computer's optical drive and reboot the system. After the system boots to the text screen please enter 'yes' at the promp to begin testing.<P>
+In that case insert the CD/DVD into the computer's optical drive and reboot the system. 
+After the system boots to the text screen please enter 'yes' at the promp to begin testing.<P>
+
 <B>I can't get this thing to work! Can you help me?</B><BR>
-The staff at PSC can't directly provide you with help. However, the IT staff you are working with should be able to help you with this process.<P>
+The staff at PSC can't directly provide you with help. However, the IT staff you are working 
+with should be able to help you with this process.<P>
+
 <B>Can I just run the ISO as a virtual machine on the system I want to test?</B><BR>
-Yes. This should work but we don't recommend it. This is because any problems with the network stack on the host operating system will impact the test environment. Since the goal of TestRig2.0 is to run these tests from a 'known good' and clean environment this can mask the results we are looking for.<P> 
+Yes. This should work but we don't recommend it. This is because any problems with the network stack 
+on the host operating system will impact the test environment. Since the goal of TestRig2.0 is to run 
+these tests from a 'known good' and clean environment this can mask the results we are looking for.<P> 
+</div>
+</div>
 ");
     printFooter();
 }       
@@ -263,13 +290,19 @@ function loadPage () {
     }
     $uuid = $_REQUEST['uuid'];
 
+    print ("<div id='container-main' class='container'>");
+    print ("<div class='jumobtron'>");
+    print ("<div class='row'>");
+    print ("<H2 class='text-center'>Download the TestRig 2.0 Installer</H2>");
+    print ("</div><P>");
     print ("<form method='post' action='$PHP_SELF'>\n");
-    print ("Claim code from e-mail:");
+    print ("Please enter the claim code from the email:");
     print ("<input type='text' size='25' maxlength='25' name='offer'>\n<br>\n");
     print ("<input type='hidden' name='uuid' value='$uuid'>\n");
     print ("<input type='hidden' name='known_hash' value='$known_hash'>\n");
     print ("<input type='hidden' name='verify' value='true'>\n");
-    print ("<input type='submit'>\n");
+    print ("<input type='submit' value='Submit Code'>\n");
+    print ("</div>");
     printFooter();
 }
 
