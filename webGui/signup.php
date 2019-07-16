@@ -21,29 +21,36 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-                        <meta charset="utf-8">
-                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                        <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-                           <meta name="description" content="TestRig 2">
-                           <meta name="author" content="Pittsburgh Supercompuing Center">
-                           <link rel="icon" href="../../favicon.ico">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="TestRig 2">
+        <meta name="author" content="Pittsburgh Supercompuing Center">
+        <link rel="icon" href="../../favicon.ico">
         <title>TestRig 2 - Sign Up Today!</title>
-                        <!-- Bootstrap core CSS -->
-                            <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-                        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-                            <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-                        <!-- Custom styles for TestRig 2.0 template -->
-                            <link href="trstylesheet.css" rel="stylesheet">
-                        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-                            <!--[if lt IE 9]>
-                                <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-                                <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-                            <![endif]-->
-
-
-</head>
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <!-- Custom styles for TestRig 2.0 template -->
+        <link href="trstylesheet.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+	<script src="https://www.google.com/recaptcha/api.js?render=6LfV_a0UAAAAAPc7rsHAA6k8NkQ1fYQCekrBFIT7"></script>
+	<script>
+	 grecaptcha.ready(function() {
+	     grecaptcha.execute('6LfV_a0UAAAAAPc7rsHAA6k8NkQ1fYQCekrBFIT7', {action: 'signup'}).then(function(token) {
+		 var recaptchaResponse = document.getElementById('recaptchaResponse');
+                 recaptchaResponse.value = token;
+	     });
+	 });
+	</script>
+    </head>
 
 <body>
 <?php
@@ -76,7 +83,8 @@ $inputs = array(
 
 // initialize variables
 $inputErrors = array(
-	'fName' => "",
+        'recaptcha' => "",
+        'fName' => "",
 	'lName' => "",
 	'email' => "",
 	'testRigUsername' => "",
@@ -257,126 +265,139 @@ function emailPubKey($pubKey, $email) {
 }
 
 //check if required variables are empty. Empty? Alert user. Provided? Pass to input scrubber
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['recaptcha_response']))
     {
+        $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+        $recaptcha_secret = '6LfV_a0UAAAAAEFz-zSgKbOsRVJi2_TS77eoEeSE';
+        $recaptcha_response = $_POST['recaptcha_response'];
+        
+        // Make and decode POST request:
+        $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+        $recaptcha = json_decode($recaptcha);
+        
         $errFlag = 0; //assume success until error found.
+        
+        if ($recaptcha->score <= 0.5) {
+            $errFlag = 1;
+            $inputErrors["Recaptcha"] = "You're input failed ther recaptcha tests. Are you a bot?";
+        }
         if (empty($_REQUEST["fName"]))
-            {
-                $inputErrors["fName"] = "You must provide your first name";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["fName"] = "You must provide your first name";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["lName"]))
-            {
-                $inputErrors["lName"] = "You must provide your last name";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["lName"] = "You must provide your last name";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["email"]))
-            {
-                $inputErrors["email"] = "You must provide your email address";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["email"] = "You must provide your email address";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["phoneNumber"]))
-            {
-                $inputErrors["phoneNumber"] = "You must provide a phone number";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["phoneNumber"] = "You must provide a phone number";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["instName"]))
-            {
-                $inputErrors["instName"] = "You must provide your institution's name";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["instName"] = "You must provide your institution's name";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["scpUsername"]))
-            {
-                $inputErrors["scpUsername"] = "You must provide an SCP-only account username";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["scpUsername"] = "You must provide an SCP-only account username";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["scpDstIp"]))
-            {
-                $inputErrors["scpDstIp"] = "You must provide the IP of transfer host";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["scpDstIp"] = "You must provide the IP of transfer host";
+            $errFlag = 1;
+        }
         
-//        if (empty($_REQUEST["scpPubKey"])){
-//            $scpPubKeyError = "You must provide a public SCP key";
-//            $errFlag = 1;
-//        } elseif (verifyKey($_REQUEST["scpPubKey"]) != 1) {
-//            $scpPubKeyError = "The SCP public key you provided is not valid.";
-//            $errFlag = 1;
-//        }
+        //        if (empty($_REQUEST["scpPubKey"])){
+        //            $scpPubKeyError = "You must provide a public SCP key";
+        //            $errFlag = 1;
+        //        } elseif (verifyKey($_REQUEST["scpPubKey"]) != 1) {
+        //            $scpPubKeyError = "The SCP public key you provided is not valid.";
+        //            $errFlag = 1;
+        //        }
         
         if (empty($_REQUEST["testRigUsername"]))
-            {
-                $inputErrors["testRigUsername"] = "You must choose a username";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["testRigUsername"] = "You must choose a username";
+            $errFlag = 1;
+        }
         
         if (empty($_REQUEST["testRigPassword"]))
-            {
-                $inputErrors["testRigPassword"] = "You must provide a password";
-                $errFlag = 1;
-            }
+        {
+            $inputErrors["testRigPassword"] = "You must provide a password";
+            $errFlag = 1;
+        }
         
         if ($_REQUEST["testRigPassword"] != $_REQUEST["testRigPasswordConfirm"])
-            {
-                $inputErrors["testRigPassword"] = "Passwords do not match";
-                $errFlag = 1;
-            }
-
-
-	if (empty($_REQUEST["scpHostPath"]))
-            {
-                $inputErrors["scpHostPath"] = "You must provide a path for SCP data";
-                $errFlag = 1;
-            }
-
-//        if (empty($_REQUEST["scpPrivKey"]))
-//           {
-//                $scpPrivKeyError = "You must provide a private key";
-//                $errFlag = 1;
-//            }
-            // implode error messages into one string
-            $errMsg = implode("<br>", array_filter($inputErrors));
+        {
+            $inputErrors["testRigPassword"] = "Passwords do not match";
+            $errFlag = 1;
+        }
+        
+        
+        if (empty($_REQUEST["scpHostPath"]))
+        {
+            $inputErrors["scpHostPath"] = "You must provide a path for SCP data";
+            $errFlag = 1;
+        }
+        
+        //        if (empty($_REQUEST["scpPrivKey"]))
+        //           {
+        //                $scpPrivKeyError = "You must provide a private key";
+        //                $errFlag = 1;
+        //            }
+        // implode error messages into one string
+        $errMsg = implode("<br>", array_filter($inputErrors));
         if ($errFlag == 0)
-            {
-                // All the inputs have been validated so generate the ssh keys
-                list ($inputs["scpPrivKey"], $inputs["scpPubKey"]) = generateSSHKeys();
-                $inputs["fName"] = scrubInput($_REQUEST["fName"]);
-                $inputs["lName"] = scrubInput($_REQUEST["lName"]);
-                $inputs["email"] = scrubInput($_REQUEST["email"]);
-                $inputs["testRigUsername"] = scrubInput($_REQUEST["testRigUsername"]);
-                $inputs["phoneNumber"] = scrubInput($_REQUEST["phoneNumber"]);
-                $inputs["instName"] = scrubInput($_REQUEST["instName"]);
-                $inputs["scpUsername"] = scrubInput($_REQUEST["scpUsername"]);
-                $inputs["scpDstIp"] = scrubInput($_REQUEST["scpDstIp"]);
-                //$inputs["scpPubKey"] = scrubInput($_REQUEST["scpPubKey"]);
-                $inputs["rtEmailAddress"] = scrubInput($_REQUEST["rtEmailAddress"]);
-                //$inputs["scpPrivKey"] = scrubInput($_REQUEST["scpPrivKey"]);
-                $inputs["scpHostPath"] = scrubInput($_REQUEST["scpHostPath"]);
-                //hash the password
-                $inputs["testRigPassword"] =  password_hash($_REQUEST["testRigPassword"], PASSWORD_BCRYPT);
-                //echo "You entered:<hr>First Name:  ".$inputs["fName"]. "<br>Last Name:  " . $inputs["lName"]. "<br>Email:  " . $inputs["email"] . "<br>Phone:  " . $inputs["phoneNumber"] . "<br>Institution:  " . $inputs["instName"] . "<br>SCP Username:  " .$inputs["scpUsername"]. "<br>Dst IP:  " .$inputs["scpDstIp"]. "<br>Key:  " . $inputs["scpPubKey"] . "<br>" . "Password: " . $inputs["testRigPassword"] . "<br>" . $inputs["scpPrivKey"] . "<br>" . $inputs["scpHostPath"]. "<br>";
-
-
-                //insert this shit into the DB
-                if (insertIntoDB($inputs)) {
-                    if (triggerNotification($inputs)) {
-                        echo "Your subscription request to TestRig2.0 has been received. Please allow 1 ";
-                        echo "business day to process the request and receive approval notification.";
-                        echo "Your SSH public key will be mailed to the supplied contact address shortly.";
-                        emailPubKey($inputs["scpPubKey"], $inputs["email"]);
-                    } else {
-                        echo "The attempt to send notification of your request failed.";
-                    }
+        {
+            // All the inputs have been validated so generate the ssh keys
+            list ($inputs["scpPrivKey"], $inputs["scpPubKey"]) = generateSSHKeys();
+            $inputs["fName"] = scrubInput($_REQUEST["fName"]);
+            $inputs["lName"] = scrubInput($_REQUEST["lName"]);
+            $inputs["email"] = scrubInput($_REQUEST["email"]);
+            $inputs["testRigUsername"] = scrubInput($_REQUEST["testRigUsername"]);
+            $inputs["phoneNumber"] = scrubInput($_REQUEST["phoneNumber"]);
+            $inputs["instName"] = scrubInput($_REQUEST["instName"]);
+            $inputs["scpUsername"] = scrubInput($_REQUEST["scpUsername"]);
+            $inputs["scpDstIp"] = scrubInput($_REQUEST["scpDstIp"]);
+            //$inputs["scpPubKey"] = scrubInput($_REQUEST["scpPubKey"]);
+            $inputs["rtEmailAddress"] = scrubInput($_REQUEST["rtEmailAddress"]);
+            //$inputs["scpPrivKey"] = scrubInput($_REQUEST["scpPrivKey"]);
+            $inputs["scpHostPath"] = scrubInput($_REQUEST["scpHostPath"]);
+            //hash the password
+            $inputs["testRigPassword"] =  password_hash($_REQUEST["testRigPassword"], PASSWORD_BCRYPT);
+            //echo "You entered:<hr>First Name:  ".$inputs["fName"]. "<br>Last Name:  " . $inputs["lName"]. "<br>Email:  " . $inputs["email"] . "<br>Phone:  " . $inputs["phoneNumber"] . "<br>Institution:  " . $inputs["instName"] . "<br>SCP Username:  " .$inputs["scpUsername"]. "<br>Dst IP:  " .$inputs["scpDstIp"]. "<br>Key:  " . $inputs["scpPubKey"] . "<br>" . "Password: " . $inputs["testRigPassword"] . "<br>" . $inputs["scpPrivKey"] . "<br>" . $inputs["scpHostPath"]. "<br>";
+            
+            
+            //insert this shit into the DB
+            if (insertIntoDB($inputs)) {
+                if (triggerNotification($inputs)) {
+                    echo "Your subscription request to TestRig2.0 has been received. Please allow 1 ";
+                    echo "business day to process the request and receive approval notification.";
+                    echo "Your SSH public key will be mailed to the supplied contact address shortly.";
+                    emailPubKey($inputs["scpPubKey"], $inputs["email"]);
                 } else {
-                    echo "There was a problem processing your request.";
+                    echo "The attempt to send notification of your request failed.";
                 }
+            } else {
+                echo "There was a problem processing your request.";
             }
+        }
     }
 //end PHP input validation
 ?>
@@ -503,7 +524,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="form-group"> <label for="scpHostPath">SCP Destination Absolute Path*:</label>
         <input type="textarea" name="scpHostPath" id="scpHostPath" class="form-control"></div>
 
-
+	<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 
     <br> <button type="submit" class="btn btn-lg btn-success">Create Account</button>
 </form>
