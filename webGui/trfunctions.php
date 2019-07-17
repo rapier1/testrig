@@ -485,10 +485,7 @@ function logOut()
 
 function getDatabaseHandle () {
     //Create our Database Handler, $dbh
-    $DB_HOST = "192.168.122.1"; //ionia's private IP
-    $DB_USERNAME = "testrig";
-    $DB_PASSWORD = "tinycats";
-    $DB_NAME = "testrig";
+    include "./config.php";
     $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
     return $dbh;
 }

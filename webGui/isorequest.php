@@ -1,6 +1,6 @@
 <?php 
 /*
- * Copyright (c) 2017 The Board of Trustees of Carnegie Mellon University.
+ * Copyright (c) 2019 The Board of Trustees of Carnegie Mellon University.
  *
  *  Authors: Chris Rapier <rapier@psc.edu> 
  *          Nate Robinson <nate@psc.edu>
@@ -27,17 +27,13 @@
 
 <body>
 <?php
-
-	include 'trfunctions.php';
-	session_start();
+    include 'trfunctions.php';
+    session_start();
         if (empty($_SESSION["username"]))
          {
                 header("Location: https://testrig.psc.edu/login.php");
                 die();
          }
-
-//////////////////////////////////////////////////////////////////////////////
-
 
 	// hide notices
 	@ini_set('error_reporting', E_ALL & ~ E_NOTICE);
@@ -65,77 +61,10 @@
 		'testCSV' => "",
 		'queueName' => "");
 
-	//	array of tests. We might be able to make this a little more
-	//	readable once we get a list of available tests(?) maybe read from DB(??)
-	$allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute");
-	$errFlag = 0;
-
-
-    //function for inserting values into the database
-//    function insertNewISORequest($cleanedInputs)
-//     {
-//        //database-related variables
-//        $dbHost = "192.168.122.1"; //ionia's private IP
-//        $username = "testrig";
-//        $password = "tinycats";
-//        $dbname = "testrig";
-	//actually attempt connecting to the database using PHP's PDO
-//        try
-//         {
-//        	$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
-//        	//error mode for PDO is exception
-//        	$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//        	$cmd = "INSERT INTO testParameters
-//                          (cid,username,useremail,user_tt_id,requested_tests)
-//                        VALUES (?, ?, ?, ?, ?)";
-//        	$statement = $dbLink->prepare($cmd);
-//		$CID = scrubInput($_SESSION["CID"]);
-//        	$statement->execute(array( $CID,
-//					   $cleanedInputs["username"],
-//              		                   $cleanedInputs["email"],
-//                       		           $cleanedInputs["troubleTicket"],
-//                     		           $cleanedInputs["testCSV"]));
-//     	 }//END try
-//       catch(PDOException $e)
-//         {
-//        	echo "<h1> Oops! Something went wrong while interacting with the database:</h1> <br>"
-//		. $e->getMessage();
-//        	return 0;
-//         }
-//	$dbLink = null;
-	//we need to add the UID of the recently created ISO to the session for the ISO creation to take place
-	//since we have all of the other params for this iso, we can query for the combination of them and then get the UID
-		//do we need a new db handle? -> yup, it wouldn't work unless I made a new one
-//		$dbh = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
-//
-//		$sqlStmnt = $dbh->prepare('SELECT uid FROM testParameters 
-//			 WHERE cid = :cid 
-//			 AND username = :username 
-//			 AND useremail = :email 
-//			 AND user_tt_id = :troubleTicket 
-//			 AND requested_tests = :testCSV');
-//		$sqlStmnt->bindParam(':cid', $_SESSION["CID"], PDO::PARAM_STR);
-  //              $sqlStmnt->bindParam(':username', $cleanedInputs["username"], PDO::PARAM_STR);
-    //            $sqlStmnt->bindParam(':email', $cleanedInputs["email"], PDO::PARAM_STR);
-//                $sqlStmnt->bindParam(':troubleTicket', $cleanedInputs["troubleTicket"], PDO::PARAM_STR);
-//                $sqlStmnt->bindParam(':testCSV', $cleanedInputs["testCSV"], PDO::PARAM_STR);
-//
-//		$sqlStmnt->execute();
-//		$uidQueryResult = $sqlStmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result
-//		if (!$uidQueryResult)
-//		 {
-//			print "an error occurred interacting with the database!";
-//		 }
-//		else
-//		 {
-//			$_SESSION["UID"] = $uidQueryResult["uid"];
-//		 }
-//
-//
-  //     return 1;
-//     }//END insertNewISORequest();
-
-
+//	array of tests. We might be able to make this a little more
+//	readable once we get a list of available tests(?) maybe read from DB(??)
+$allTests = array("Iperf", "Owping", "Ping", "Tcpdump", "Tracepath", "Traceroute");
+$errFlag = 0;
 
   //are required variables empty?
     if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -217,10 +146,6 @@
             // the background. Turns out this proc_close(proc_open()) trick does work. 
             proc_close (proc_open ("/home/rapier/testrig/isobuilder/isobuilder.pl -f /home/rapier/testrig/isobuilder/isobuilder.cfg -c $_SESSION[CID] -u $_SESSION[UID] 2>&1 /dev/null &", Array (), $dummy_var));
 }//END successful submission if/then
-
-
-
-
 ?>
 
 	<div id="inputSection" name="inputSection">
