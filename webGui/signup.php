@@ -18,7 +18,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. *
  */
+
+//config variables
+include "./config.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,10 +45,10 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-	<script src="https://www.google.com/recaptcha/api.js?render=6LfV_a0UAAAAAPc7rsHAA6k8NkQ1fYQCekrBFIT7"></script>
+	<script src="https://www.google.com/recaptcha/api.js?render=<?php echo $RECAPTCHA_SITE_KEY ?>"></script>
 	<script>
 	 grecaptcha.ready(function() {
-	     grecaptcha.execute('6LfV_a0UAAAAAPc7rsHAA6k8NkQ1fYQCekrBFIT7', {action: 'signup'}).then(function(token) {
+	     grecaptcha.execute('<?php echo $RECAPTCHA_SITE_KEY ?>', {action: 'signup'}).then(function(token) {
 		 var recaptchaResponse = document.getElementById('recaptchaResponse');
                  recaptchaResponse.value = token;
 	     });
@@ -57,10 +61,9 @@
 
 //is the user currently signed in?
 if (!empty($_SESSION["username"]))
-        {
-                header("Location:https://". $_SERVER['SERVER_NAME'] ."/main.php");
-		
-        }
+    {
+        header("Location:https://". $_SERVER['SERVER_NAME'] ."/main.php");
+    }
 
 // hide notices
 @ini_set('error_reporting', E_ALL & ~ E_NOTICE);
@@ -100,12 +103,6 @@ $inputErrors = array(
 
 $errFlag = -1; //init as -1 to indicate page being loaded prior to form submission. (do not validate fields yet because they are all empty)
 $errMsg = "";
-
-//database-related variables
-$dbHost = "192.168.122.1"; //ionia's private IP
-$username = "testrig";
-$password = "tinycats";
-$dbname = "testrig";
 
 //input scrubber
 function scrubInput($data)
@@ -148,14 +145,10 @@ function verifyKey($key) {
 //function for inserting values into the database
 function insertIntoDB($cleanedInputs)
 {
-	//database-related variables
-	$dbHost = "192.168.122.1"; //ionia's private IP
-	$username = "testrig";
-	$password = "tinycats";
-	$dbname = "testrig";
+    include "./config.php";
     //this function is basically a giant try/catch
     try {
-	   	$dbLink = new PDO("mysql:host=$dbHost;dbname=$dbname", $username, $password);
+	   	$dbLink = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
 	   	//error mode for PDO is exception
 	   	$dbLink->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $cmd = "INSERT INTO customer
@@ -267,19 +260,18 @@ function emailPubKey($pubKey, $email) {
 //check if required variables are empty. Empty? Alert user. Provided? Pass to input scrubber
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['recaptcha_response']))
     {
-        $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-        $recaptcha_secret = '6LfV_a0UAAAAAEFz-zSgKbOsRVJi2_TS77eoEeSE';
+        $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';;
         $recaptcha_response = $_POST['recaptcha_response'];
         
         // Make and decode POST request:
-        $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+        $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $RECAPTCHA_SECRET_KEY . '&response=' . $recaptcha_response);
         $recaptcha = json_decode($recaptcha);
         
         $errFlag = 0; //assume success until error found.
         
-        if ($recaptcha->score <= 0.5) {
+        if ($recaptcha->score <= 0.5 && $recaptcha->action="signup") {
             $errFlag = 1;
-            $inputErrors["Recaptcha"] = "You're input failed ther recaptcha tests. Are you a bot?";
+            $inputErrors["Recaptcha"] = "You've input failed the recaptcha tests. Are you a bot?";
         }
         if (empty($_REQUEST["fName"]))
         {

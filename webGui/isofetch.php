@@ -124,11 +124,8 @@ function verify () {
 // contact data
 
 function notifyPickup () {
+    include "./config.php";
     $uuid = $_REQUEST['uuid'];
-    $DB_HOST = "192.168.122.1"; //ionia's private IP
-    $DB_USERNAME = "testrig";
-    $DB_PASSWORD = "tinycats";
-    $DB_NAME = "testrig";
     try {
         $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
     } catch (PDOException $e) {
