@@ -2872,6 +2872,7 @@ alias symbol:cfcnfg_del_phy_layer caif
 alias symbol:comedi_pci_disable comedi_pci
 alias symbol:drm_fb_helper_hotplug_event drm_kms_helper
 alias symbol:drm_mm_dump_table drm
+alias symbol:estats_max_index tcp_estats_nl
 alias symbol:i2c_pca_add_bus i2c_algo_pca
 alias symbol:il_setup_watchdog iwlegacy
 alias symbol:mpt_device_driver_deregister mptbase
@@ -4160,6 +4161,7 @@ alias symbol:dm_cache_policy_destroy dm_cache
 alias symbol:l1_event mISDN_core
 alias symbol:nvram_check_checksum nvram
 alias symbol:usb_gadget_deactivate udc_core
+alias symbol:estats_var_array tcp_estats_nl
 alias symbol:ieee80211_ie_split_ric cfg80211
 alias symbol:nvmem_device_read nvmem_core
 alias symbol:target_submit_cmd_map_sgls target_core_mod
