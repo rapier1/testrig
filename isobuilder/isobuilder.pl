@@ -1,3 +1,5 @@
+
+
 #!/usr/bin/perl -w
 =begin comment
   Copyright (c) 2017 The Board of Trustees of Carnegie Mellon University.
@@ -301,7 +303,7 @@ sub copyFiles {
     return(dircopy($source, $destination));
 }
 
-#there are individual configuration files unique
+# there are individual configuration files unique
 # to each iso that have to be written to the Chroot target
 sub writeConfigToChroot {
     my $uuid = shift @_;
@@ -442,8 +444,9 @@ sub readConfFromDB {
     # as the default valuies in the db are 0. 
     if (!$row->{username} 
 	or !$row->{useremail} 
-	or !$row->{requested_tests}) {
-        logger ("crit", "Missing user data! UID may not exist. Exiting.");
+	or !$row->{requested_tests}
+	or $row->{target} eq 'undefined') {
+        logger ("crit", "Missing user data! UID of $uid may not exist. Exiting.");
 	return -1;
     }
     # add data to the config out configuration struct
@@ -455,7 +458,7 @@ sub readConfFromDB {
     $config_out->{user}->{tests} = $row->{requested_tests};
     $config_out->{user}->{queue_name} = $row->{queue_name};
     $config_out->{user}->{target} = $row->{target};
-    # the uuuid is added to the config_out struct after it is generated
+    # the uuid is added to the config_out struct after it is generated
     # later on the config_out struct is written to the ISO as a Config::Tiny
     # format configuration file. 
     return 1;

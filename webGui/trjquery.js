@@ -78,6 +78,9 @@ $( "#hostSearchButton" ).click(
 		{
 		    var ps = JSON.parse(outputJson);
 		    var targetHostname = ps[0].host['host-name'][1];
+		    if (typeof targetHostname === 'undefined') {
+			targetHostname = ps[0].host['host-name'][0];
+		    }
 		    //iterate through all of the services this node has available
 		    for (var i=0; i < ps[0].services.length; i++)
 		    {

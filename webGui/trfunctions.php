@@ -447,13 +447,11 @@ function insertNewISORequest($cleanedInputs)
 						 WHERE cid = :cid 
 						 AND username = :username 
 						 AND useremail = :email 
-						 AND user_tt_id = :troubleTicket 
-						 AND requested_tests = :testCSV');
+						 AND creation_timestamp = :timestamp'); 
     $sqlStmnt->bindParam(':cid', $_SESSION["CID"], PDO::PARAM_STR);
     $sqlStmnt->bindParam(':username', $cleanedInputs["username"], PDO::PARAM_STR);
     $sqlStmnt->bindParam(':email', $cleanedInputs["email"], PDO::PARAM_STR);
-    $sqlStmnt->bindParam(':troubleTicket', $cleanedInputs["troubleTicket"], PDO::PARAM_STR);
-    $sqlStmnt->bindParam(':testCSV', $cleanedInputs["testCSV"], PDO::PARAM_STR);
+    $sqlStmnt->bindParam(':timestamp', $creationTimestamp);
     
     $sqlStmnt->execute();
     $uidQueryResult = $sqlStmnt->fetch(PDO::FETCH_ASSOC); //returns FALSE if empty result

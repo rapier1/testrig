@@ -127,7 +127,7 @@ TRManagerServer->run({
     syslog_ident => "TR2manager",
     syslog_logopt => "pid,nowait",
     proto => "ssl",
-    SSL_cert_file => "/home/rapier/testrig/trmanager/20180328.testrig.psc.edu.crt",
+    SSL_cert_file => "/home/rapier/testrig/trmanager/20190304.testrig.psc.edu.crt",
     SSL_key_file => "/home/rapier/testrig/trmanager/testrig.psc.edu.key"
 });
 use Crypt::PK::RSA;
