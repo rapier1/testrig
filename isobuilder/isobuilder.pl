@@ -1,5 +1,3 @@
-
-
 #!/usr/bin/perl -w
 =begin comment
   Copyright (c) 2017 The Board of Trustees of Carnegie Mellon University.
