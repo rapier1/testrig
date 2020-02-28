@@ -738,6 +738,7 @@ END_DISKDEFINES
     
     #put isolinux config in place
     my $isolinuxFile = "$imagePath/isolinux/isolinux.cfg";
+    print "$imagePath/isolinux/isolinux.cfg\n";
     open (FILE, ">", "$isolinuxFile") or die $!;
     print FILE $isolinuxCfg;
     close (FILE);
@@ -808,7 +809,7 @@ sub buildInstallers {
     # which is how it goes. There is likely a more elegant way to do this.
     # building a dmg is the right way but more complicated. 
     my $burn_test_osx = "#!/bin/bash\n";
-    $burn_test_osx .= "\$PWD/unetbootin.app/Contents/MacOS/unetbootin method=diskimage isofile=\$PWD/TestRig2.0-$uuid.iso nodistro=y message='$message' 2>/dev/null &\n";
+    $burn_test_osx .= "\$PWD/UNetBootin/unetbootin.app/Contents/MacOS/unetbootin method=diskimage isofile=\$PWD/TestRig2.0-$uuid.iso nodistro=y message='$message' 2>/dev/null &\n";
     $burn_test_osx .= "echo\n";
     $burn_test_osx .= "echo\n";
     $burn_test_osx .= "echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
