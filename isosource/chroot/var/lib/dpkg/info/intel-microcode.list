@@ -1,0 +1,8 @@
+/etc
+/etc/default
+/etc/default/intel-microcode
+/etc/kernel
+/etc/kernel/preinst.d
+/etc/kernel/preinst.d/intel-microcode
+/etc/modprobe.d
+/etc/modprobe.d/intel-microcode-blacklist.conf
