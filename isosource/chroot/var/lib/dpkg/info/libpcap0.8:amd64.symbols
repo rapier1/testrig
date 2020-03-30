@@ -24,6 +24,7 @@ libpcap.so.0.8 libpcap0.8 #MINVER#
  pcap_dump_fopen@Base 0.9.8
  pcap_dump_ftell@Base 0.9.8
  pcap_dump_open@Base 0.9.8
+ pcap_dump_open_append@Base 1.7.3
  pcap_ether_aton@Base 0.9.8
  pcap_ether_hostton@Base 0.9.8
  pcap_file@Base 0.9.8

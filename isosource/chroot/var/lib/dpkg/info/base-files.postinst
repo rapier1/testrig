@@ -9,7 +9,7 @@ install_local_dir() {
 
 install_from_default() {
   if [ ! -f $2 ]; then
-    cp -p $1 $2
+    cp -p /usr/share/base-files/$1 $2
   fi
 }
 
@@ -28,6 +28,18 @@ migrate_directory() {
   fi
 }
 
+update_to_current_default() {
+  if [ -f $2 ]; then
+    md5=`md5sum $2 | cut -f 1 -d " "`
+    if grep -q "$md5" /usr/share/base-files/$1.md5sums; then
+      if ! cmp -s /usr/share/base-files/$1 $2; then
+        cp -p /usr/share/base-files/$1 $2
+        echo Updating $2 to current default.
+      fi
+    fi
+  fi
+}
+
 if [ ! -e /etc/dpkg/origins/default ]; then
   if [ -e /etc/dpkg/origins/ubuntu ]; then
     ln -sf ubuntu /etc/dpkg/origins/default
@@ -35,11 +47,11 @@ if [ ! -e /etc/dpkg/origins/default ]; then
 fi
 
 if [ "$1" = "configure" ] && [ "$2" = "" ]; then
-  install_from_default /usr/share/base-files/nsswitch.conf /etc/nsswitch.conf
-  install_from_default /usr/share/base-files/dot.profile   /root/.profile
-  install_from_default /usr/share/base-files/dot.bashrc    /root/.bashrc
-  install_from_default /usr/share/base-files/profile       /etc/profile
-  install_from_default /usr/share/base-files/networks      /etc/networks
+  install_from_default dot.profile   /root/.profile
+  install_from_default dot.bashrc    /root/.bashrc
+  install_from_default profile       /etc/profile
+  install_from_default networks      /etc/networks
+  install_directory mnt       755 root
   install_directory srv       755 root
   install_directory opt       755 root
   install_directory etc/opt   755 root
@@ -86,18 +98,15 @@ fi
 
 if [ ! -d /var/lib/dpkg ]; then
   mkdir -m 755 -p /var/lib/dpkg
-  chown root:root /var/lib/dpkg
 fi
 if [ ! -f /var/lib/dpkg/status ]; then
   echo > /var/lib/dpkg/status
   chmod 644 /var/lib/dpkg/status
-  chown root:root /var/lib/dpkg/status
 fi
 
 if [ ! -f /usr/info/dir ] && [ ! -f /usr/share/info/dir ]; then
-  install_from_default /usr/share/base-files/info.dir /usr/share/info/dir
+  install_from_default info.dir /usr/share/info/dir
   chmod 644 /usr/share/info/dir
-  chown root:root /usr/share/info/dir
 fi
 
 if [ "$1" = "configure" ] && [ "$2" != "" ]; then
@@ -109,14 +118,47 @@ if [ "$1" = "configure" ] && [ "$2" != "" ]; then
     /usr/lib/update-manager/check-new-release -q > /var/lib/update-notifier/release-upgrade-available  &
   fi
 
-  if [ -f /etc/profile ]; then
-    md5=`md5sum /etc/profile | cut -f 1 -d " "`
-    if grep -q "$md5" /usr/share/base-files/profile.md5sums; then
-      if ! cmp -s /usr/share/base-files/profile /etc/profile; then
-        cp -p /usr/share/base-files/profile /etc/profile
-        echo Updating /etc/profile to current default.
-      fi
-    fi
+  update_to_current_default profile       /etc/profile
+  update_to_current_default dot.profile   /root/.profile
+  if dpkg --compare-versions "$2" lt-nl "7.7"; then
+    install_directory mnt 755 root
   fi
 fi
+
+# Automatically added by dh_systemd_enable/11.1.6ubuntu1
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ] ; then
+	# This will only remove masks created by d-s-h on package removal.
+	deb-systemd-helper unmask 'motd-news.timer' >/dev/null || true
+
+	# was-enabled defaults to true, so new installations run enable.
+	if deb-systemd-helper --quiet was-enabled 'motd-news.timer'; then
+		# Enables the unit on first installation, creates new
+		# symlinks on upgrades if the unit file has changed.
+		deb-systemd-helper enable 'motd-news.timer' >/dev/null || true
+	else
+		# Update the statefile to add new symlinks (if any), which need to be
+		# cleaned up on purge. Also remove old symlinks.
+		deb-systemd-helper update-state 'motd-news.timer' >/dev/null || true
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_systemd_start/11.1.6ubuntu1
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ] ; then
+	if [ -d /run/systemd/system ]; then
+		systemctl --system daemon-reload >/dev/null || true
+		deb-systemd-invoke start 'motd-news.timer' >/dev/null || true
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_systemd_start/11.1.6ubuntu1
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ] ; then
+	if [ -d /run/systemd/system ]; then
+		systemctl --system daemon-reload >/dev/null || true
+		deb-systemd-invoke start 'motd-news.service' >/dev/null || true
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_installdeb/11.1.6ubuntu1
+dpkg-maintscript-helper rm_conffile /etc/update-motd.d/50-news 9.6ubuntu11~ -- "$@"
+# End automatically added section
 

@@ -2,43 +2,46 @@
 
 set -e
 
-chrooted() {
-	# borrowed from udev's postinst
-	if [ "$(stat -c %d/%i /)" = "$(stat -Lc %d/%i /proc/1/root 2>/dev/null)" ]; then
-		# the devicenumber/inode pair of / is the same as that of
-		# /sbin/init's root, so we're *not* in a chroot and hence
-		# return false.
-		return 1
-	fi
-	return 0
+mvverbose=-v
+
+# from dpkg-maintscript-helper, modified
+ensure_package_owns_file() {
+	local PACKAGE="$1"
+	local FILE="$2"
+
+	dpkg-query -L "$PACKAGE" | grep -F -q -x "$FILE"
 }
 
-case "$1" in
-	install)
-		mkdir -p /etc/initramfs-tools/conf.d
+# from dpkg-maintscript-helper
+prepare_rm_conffile() {
+	local CONFFILE="$1"
+	local PACKAGE="$2"
 
-		# First time install.  Can we autodetect the RESUME partition?
-		if [ -r /proc/swaps ]; then
-			RESUME=$(tail -n $(($(wc -l /proc/swaps | awk ' { print $1 } ') - 1)) /proc/swaps | sort -rk3 | head -n 1 | awk ' { print $1 } ')
-			if command -v blkid >/dev/null 2>&1; then
-				UUID=$(blkid -s UUID -o value "$RESUME" || true)
-			# FIXME: post-Wheezy remove vol_id invocations
-			elif command -v vol_id >/dev/null 2>&1; then
-				UUID=$(vol_id -u "$RESUME" || true)
-			elif [ -x /lib/udev/vol_id ]; then
-				UUID=$(/lib/udev/vol_id -u "$RESUME" || true)
-			fi
-			if [ -n "$UUID" ]; then
-				RESUME="UUID=$UUID"
-			fi
-		fi
+	[ -e "$CONFFILE" ] || return 0
+	ensure_package_owns_file "$PACKAGE" "$CONFFILE" || return 0
 
-		# write conf.d/resume if not in a chroot
-		if [ -n "${RESUME}" ] && ! chrooted; then
-			echo "RESUME=${RESUME}" > /etc/initramfs-tools/conf.d/resume
-		fi
+	local md5sum="$(md5sum $CONFFILE | sed -e 's/ .*//')"
+	local old_md5sum="$(dpkg-query -W -f='${Conffiles}' $PACKAGE | \
+		sed -n -e "\' $CONFFILE ' { s/ obsolete$//; s/.* //; p }")"
+	if [ "$md5sum" != "$old_md5sum" ]; then
+		mv $mvverbose -f "$CONFFILE" "$CONFFILE.dpkg-backup"
+	else
+		mv $mvverbose -f "$CONFFILE" "$CONFFILE.dpkg-remove"
+	fi
+}
 
-	;;
-esac
+# When upgrading from <0.123, we need to move initramfs.conf away so
+# dpkg will stop remembering it as an 'obsolete' conffile for us.  The
+# postinst of either initramfs-tools or initramfs-tools-core will move
+# it back.
+if [ "$1" = upgrade ] && dpkg --compare-versions "$2" lt 0.123~; then
+	prepare_rm_conffile /etc/initramfs-tools/initramfs.conf initramfs-tools
+fi
 
+# Automatically added by dh_installdeb/11.1.6ubuntu2
+dpkg-maintscript-helper rm_conffile /etc/bash_completion.d/initramfs-tools 0.126~ -- "$@"
+# End automatically added section
+# Automatically added by dh_installdeb/11.1.6ubuntu2
+dpkg-maintscript-helper rm_conffile /etc/kernel/signed_postinst.d/initramfs-tools 0.126~ -- "$@"
+# End automatically added section
 

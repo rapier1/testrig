@@ -1,4 +1,4 @@
-52545c10db2dae51af012788a55fb38a  lib/x86_64-linux-gnu/libgpg-error.so.0.13.0
-0af78597861468ba0210aed7a0777de7  usr/share/doc/libgpg-error0/README.gz
-35b1e745c9d24dba5d0d740a7305ed19  usr/share/doc/libgpg-error0/changelog.Debian.gz
-619352e877df609e20596a620885cfdf  usr/share/doc/libgpg-error0/copyright
+17b62869e0fbd29b3c35746f8f1f3a14  lib/x86_64-linux-gnu/libgpg-error.so.0.22.0
+b08a3f5ed4df309b7a1ac9796a66e776  usr/share/doc/libgpg-error0/README.gz
+0e4be9f47be2d6d72aa53ae29d5d2514  usr/share/doc/libgpg-error0/changelog.Debian.gz
+60d5c5832d5b9ee26311b156540db1fb  usr/share/doc/libgpg-error0/copyright

@@ -1,3 +1,5 @@
+#  SPDX-License-Identifier: LGPL-2.1+
+#
 #  This file is part of systemd.
 #
 #  systemd is free software; you can redistribute it and/or modify it
@@ -17,3 +19,4 @@ Service=systemd-udevd.service
 ListenSequentialPacket=/run/udev/control
 SocketMode=0600
 PassCredentials=yes
+RemoveOnStop=yes

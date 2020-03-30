@@ -85,7 +85,9 @@ pidofproc () {
         pidfile="/var/run/$base.pid"
     fi
 
-    if [ -n "${pidfile:-}" -a -r "$pidfile" ]; then
+    if [ -n "${pidfile:-}" ]; then
+     if [ -e "$pidfile" ]; then
+      if [ -r "$pidfile" ]; then
         read pid < "$pidfile"
         if [ -n "${pid:-}" ]; then
             if $(kill -0 "${pid:-}" 2> /dev/null); then
@@ -98,21 +100,24 @@ pidofproc () {
                 return 1 # program is dead and /var/run pid file exists
             fi
         fi
+      else
+        return 4 # pid file not readable, hence status is unknown.
+      fi
+     else
+       # pid file doesn't exist, try to find the pid nevertheless
+       if [ -x /bin/pidof ] && [ ! "$specified" ]; then
+         status="0"
+         /bin/pidof -o %PPID -x $1 || status="$?"
+         if [ "$status" = 1 ]; then
+             return 3 # program is not running
+         fi
+         return 0
+       fi
+       return 3 # specified pid file doesn't exist, program probably stopped
+     fi
     fi
-    if [ -n "$specified" ]; then
-        if [ -e "$pidfile" -a ! -r "$pidfile" ]; then
-            return 4 # pidfile exists, but unreadable, return unknown
-        else
-            return 3 # pidfile specified, but contains no PID to test
-        fi
-    fi
-    if [ -x /bin/pidof ]; then
-        status="0"
-        /bin/pidof -o %PPID -x $1 || status="$?"
-        if [ "$status" = 1 ]; then
-            return 3 # program is not running
-        fi
-        return 0
+    if [ "$specified" ]; then
+        return 3 # almost certain it's not running
     fi
     return 4 # Unable to determine status
 }
@@ -255,7 +260,7 @@ get_lsb_header_val () {
         fi
         LSB_S="### BEGIN INIT INFO"
         LSB_E="### END INIT INFO"
-        sed -n "/$LSB_S/,/$LSB_E/ s/# $2: \(.*\)/\1/p" $1
+        sed -n "/$LSB_S/,/$LSB_E/ s/# $2: \+\(.*\)/\1/p" "$1"
 }
 
 # If the currently running init daemon is upstart, return zero; if the

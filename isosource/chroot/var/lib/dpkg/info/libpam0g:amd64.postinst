@@ -69,7 +69,7 @@ installed_services() {
 	    -e's/\bhylafax-server\b/hylafax/g' \
 	    -e's/\bpartimage-server\b/partimaged/g' \
 	    -e's/\bpostgresql-common\b/postgresql/g' \
-	    -e's/\bsamba\b/smbd/g' \
+	    -e's/\bsamba\b/smbd-ad-dc/g' \
 	    -e's/\bsasl2-bin\b/saslauthd/g' \
     )
 
@@ -156,7 +156,8 @@ then
 			case "$service" in
 			    gdm)
 				# If gdm isn't running, there's no need to reload it (LP: #745532)
-				if $idl status | grep -q stop/waiting; then
+				if ! $idl status | grep -q 'Active: active (running)'
+				then
 					echo "  $service: not running, no reload needed."
 					continue
 				fi
@@ -224,10 +225,5 @@ then
     fi # Upgrading
 fi
 
-# Automatically added by dh_makeshlibs
-if [ "$1" = "configure" ]; then
-	ldconfig
-fi
-# End automatically added section
 
 

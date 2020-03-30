@@ -1,3 +1,5 @@
+#  SPDX-License-Identifier: LGPL-2.1+
+#
 #  This file is part of systemd.
 #
 #  systemd is free software; you can redistribute it and/or modify it
@@ -10,3 +12,4 @@ Name=org.freedesktop.timedate1
 Exec=/lib/systemd/systemd-timedated
 User=root
 SystemdService=dbus-org.freedesktop.timedate1.service
+AssumedAppArmorLabel=unconfined

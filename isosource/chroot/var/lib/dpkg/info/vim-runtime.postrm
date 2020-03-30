@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-vimcur="vim74"
+vimcur="vim80"
 basedir=/usr/share/vim/$vimcur/doc
 
 rm_diversion() {

@@ -1,15 +1,13 @@
 # vim:syntax=apparmor
-# Last Modified: Fri Jul 17 11:46:19 2009
-# Author: Jamie Strandboge <jamie@canonical.com>
 #include <tunables/global>
 
-/sbin/dhclient {
+/sbin/dhclient flags=(attach_disconnected) {
   #include <abstractions/base>
   #include <abstractions/nameservice>
+  #include <abstractions/openssl>
 
   capability net_bind_service,
   capability net_raw,
-  capability sys_module,
   capability dac_override,
   capability net_admin,
 
@@ -88,7 +86,7 @@
   /usr/lib/NetworkManager/nm-dhcp-helper mr,
 
   /run/NetworkManager/private-dhcp rw,
-  signal (send) peer=/sbin/dhcient,
+  signal (send) peer=/sbin/dhclient,
 
   /var/lib/NetworkManager/*lease r,
   signal (receive) peer=/usr/sbin/NetworkManager,

@@ -267,7 +267,11 @@ function generateISORequestForm()
             $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
+            #print ("<pre>");
+            #print_r($_REQUEST);
+            #print ("</pre>");
             if ($errFlag != 1) //Has everything been successfully submitted?
+ 
                 {
                     if ($_REQUEST["psNode"] == "psNode1") //they picked the automatically selected one
                         {
@@ -280,8 +284,6 @@ function generateISORequestForm()
                             $inputs["target"] = scrubInput($_REQUEST["psNodeCustomTarget"]);
                         }
 
-
-                    
                     //have to assemble the tests in a csv
                     $count = 0;
                     $testString = "";
@@ -327,6 +329,11 @@ function generateISORequestForm()
                     print $alert; */
             /////////////////////////////////////////// END WTF SECTION /////////////////////////////////
 
+            #print ("<pre>");
+            #print_r($inputs);
+            #print_r($_SESSION);
+            #print ("</pre>");
+            
 
                     //everything is scrubbed and prepped for entry into the DB, so let's do this
                     if (insertNewISORequest($inputs)) {
@@ -401,6 +408,10 @@ function insertNewISORequest($cleanedInputs)
 	date_default_timezone_set('UTC');
 	$creationTimestamp = date('YmdHs');
 
+    #print ("<pre>");
+    #print_r($cleanedInputs);
+    #print ("</pre>");
+    
 	//actually attempt connecting to the database using PHP's PDO
     try
         {

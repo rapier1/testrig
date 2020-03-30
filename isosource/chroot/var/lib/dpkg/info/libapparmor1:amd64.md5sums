@@ -1,3 +1,4 @@
-86dcbf5e987702bc173b80c57017d091  lib/x86_64-linux-gnu/libapparmor.so.1.2.1
-b7194d28c0b93e0474e00ae745f2cc2a  usr/share/doc/libapparmor1/changelog.Debian.gz
-ac5b0ee124f72a4c1622f6aca084d16f  usr/share/doc/libapparmor1/copyright
+1e84b8a47c7677f345be2dfa31d49b08  lib/x86_64-linux-gnu/libapparmor.so.1.4.2
+2c574cb7dc200a7cbbe451877563d167  usr/share/doc/libapparmor1/changelog.Debian.gz
+4e4447150fa549ca1cc840181ddb38b4  usr/share/doc/libapparmor1/copyright
+7d2ea372ce17541863d9da4f4e225aa1  usr/share/lintian/overrides/libapparmor1

@@ -17,7 +17,4 @@ if [ "$1" = remove ] && [ "${DPKG_MAINTSCRIPT_PACKAGE_REFCOUNT:-1}" = 1 ]; then
     pam-auth-update --package --remove systemd
 fi
 
-# Automatically added by dh_installdeb
-dpkg-maintscript-helper rm_conffile /etc/init/systemd-logind.conf 204-9ubuntu1~ libpam-systemd -- "$@"
-# End automatically added section
 

@@ -44,11 +44,11 @@ Description-de.UTF-8: Welche Dienste sollen erneut gestartet werden, damit sie d
  .
  Falls andere Dienste nach diesem Upgrade ein merkwürdiges Fehlverhalten zeigen, könnte es nötig werden, sie ebenfalls neu zu starten. Es wird empfohlen, den Rechner neu zu starten, um Probleme mit SSL zu vermeiden.
 Description-es.UTF-8: Servicios que tienen que reiniciarse para que usen las nuevas bibliotecas:
- Esta versión de OpenSSL corrige algunos problemas de seguridad. Los servicios no usarán los arreglos hasta que se reinicien. Tenga en cuenta que reiniciar el servicio SSH (sshd) no debería afectar a ninguna de las conexiones existentes.
+ Esta versión de OpenSSL corrige algunos problemas de seguridad. Los servicios no aplicarán estas correcciones hasta que se reinicien. Tenga en cuenta que reiniciar el servicio SSH (sshd) no debería afectar a ninguna de las conexiones existentes.
  .
- Por favor, compruebe la lista de los servicios detectados que necesitan reiniciarse y corríjala si fuese necesario. Los nombres de los servicios deben ser idénticos a los nombres de los programas de inicio en «/etc/init.d» y deben estar separados por espacios. No se reiniciará ningún servicio si deja la lista en blanco.
+ Compruebe la lista de los servicios detectados que necesitan reiniciarse y corríjala si fuera necesario. Los nombres de los servicios deben ser idénticos a los nombres de los programas de inicio en «/etc/init.d» y deben estar separados por espacios. No se reiniciará ningún servicio si deja la lista en blanco.
  .
- Tras esta actualización, debería reiniciar más tarde cualquier servicio que falle inesperadamente. Se recomienda reiniciar el sistema para evitar cualquier problema relacionado con SSL.
+ Debería reiniciar cualquier servicio que tras haber actualizado, falle inesperadamente. Se recomienda reiniciar el sistema para evitar cualquier problema relacionado con SSL.
 Description-eu.UTF-8: Liburutegi berriak erabili ditzaten berrabiarazi behar diren zerbitzuak:
  OpenSSL bertsio honek zenbait segurtasun arazo konpontzen ditu. Zerbitzuak ez dituzte konponketa hauek erabiliko berrabiarazi arte. Kontutan izan SSH zerbitzua berrabiarazteak ez dituela sorturik dauden konexioei eragingo.
  .
@@ -216,11 +216,11 @@ Description-de.UTF-8: Neustarten einiger Dienste beim OpenSSL-Upgrade fehlgeschl
  .
  Sie werden sie manuell durch Aufruf von »/etc/init.d/<dienst> start« starten müssen.
 Description-es.UTF-8: Fallo al reiniciar algunos servicios por la actualización de OpenSSL
- No fue posible reiniciar los servicios indicados a continuación por la actualización de OpenSSL: 
+ No fue posible reiniciar los servicios indicados a continuación por la actualización de la biblioteca de OpenSSL: 
  .
  ${services}
  .
- Tendrá que iniciarlos manualmente ejecutando « /etc/init.d/<servicio> start »
+ Tendrá que iniciarlos manualmente ejecutando « /etc/init.d/<servicio> start ».
 Description-eu.UTF-8: Huts OpenSSL bertsio-berritzerako zerbitzu batzuek berrabiaraztean.
  Hurrengo zerbitzuak ezin izan dira berrabiarazi OpenSSL liburutegi bertsio-berritzerako:
  .

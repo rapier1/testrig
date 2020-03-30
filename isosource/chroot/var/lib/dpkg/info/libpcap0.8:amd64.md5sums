@@ -1,7 +1,7 @@
-72ece5640bd1c13af3e7e6b701f8b22d  usr/lib/x86_64-linux-gnu/libpcap.so.1.6.2
-2fa080363c98414b378c209bfe3830d6  usr/share/doc/libpcap0.8/CREDITS.gz
-d8808ba70922e2121ac77925bf30337d  usr/share/doc/libpcap0.8/README
+cbe04c96a3b86d9b2255b8e4ca36095c  usr/lib/x86_64-linux-gnu/libpcap.so.1.8.1
+b08be640d15ea67c184f0b268cb39d22  usr/share/doc/libpcap0.8/CREDITS.gz
+319f714192aa9d2ab7e0510f9a930795  usr/share/doc/libpcap0.8/README
 fa0211217f9aceceefd225ce879c9504  usr/share/doc/libpcap0.8/README.Debian
-956eaaf98407b6d4585d142441dae928  usr/share/doc/libpcap0.8/changelog.Debian.gz
-e2611cc397822ac6d63e905e9d7cd727  usr/share/doc/libpcap0.8/copyright
-4fc45e7f2702683207c99656b27bd3b0  usr/share/man/man7/pcap-filter.7.gz
+cded896540fda69a5fdb33193856ba25  usr/share/doc/libpcap0.8/changelog.Debian.gz
+1c138928e3c6bdcec9cb93a3252ffeff  usr/share/doc/libpcap0.8/copyright
+62e7cfd93998806554ed29d924388441  usr/share/man/man7/pcap-filter.7.gz

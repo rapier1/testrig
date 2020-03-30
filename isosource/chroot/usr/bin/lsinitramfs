@@ -4,7 +4,7 @@ set -eu
 
 usage()
 {
-	echo "Usage: $(basename $0) <initramfs file>"
+	echo "Usage: $(basename $0) [-l] <initramfs file>"
 }
 
 if [ "$#" -eq 0 ] ; then
@@ -12,7 +12,7 @@ if [ "$#" -eq 0 ] ; then
 	exit 1
 fi
 
-cpio_args="--extract --quiet --list"
+umi_opts="--list"
 
 OPTIONS=`getopt -o hl --long help,long -n "$0" -- "$@"`
 # Check for non-GNU getopt
@@ -27,7 +27,7 @@ while true; do
 		exit 0
 	;;
 	-l|--long)
-		cpio_args="${cpio_args:+${cpio_args} --verbose}"
+		umi_opts="${umi_opts:+${umi_opts} --verbose}"
 		shift
 	;;
 	--)
@@ -41,11 +41,5 @@ while true; do
 done
 
 for initramfs in "$@" ; do
-	if ! [ -r "${initramfs}" ] ; then
-		echo "Specified file could not be read." >&2
-		exit 1
-	else
-		echo "${initramfs}"
-		zcat "${initramfs}" | cpio ${cpio_args}
-		fi
+	unmkinitramfs $umi_opts -- "$initramfs"
 done

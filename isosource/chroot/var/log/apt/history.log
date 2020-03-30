@@ -1,366 +1,350 @@
 
-Start-Date: 2015-12-04  16:26:11
-Commandline: apt-get install --yes dbus
-Install: libisc-export95:amd64 (9.9.5.dfsg-9, automatic), isc-dhcp-common:amd64 (4.3.1-5ubuntu2, automatic), dbus:amd64 (1.8.12-1ubuntu5), iproute2:amd64 (3.16.0-2ubuntu1, automatic), netbase:amd64 (5.3, automatic), libcap-ng0:amd64 (0.7.4-2, automatic), libpam-systemd:amd64 (219-7ubuntu3, automatic), libdbus-1-3:amd64 (1.8.12-1ubuntu5, automatic), ifupdown:amd64 (0.7.48.1ubuntu10, automatic), libxtables10:amd64 (1.4.21-2ubuntu2, automatic), isc-dhcp-client:amd64 (4.3.1-5ubuntu2, automatic), libexpat1:amd64 (2.1.0-6ubuntu1, automatic), libatm1:amd64 (2.5.1-1.5, automatic), libisccfg-export90:amd64 (9.9.5.dfsg-9, automatic), libdns-export100:amd64 (9.9.5.dfsg-9, automatic), libirs-export91:amd64 (9.9.5.dfsg-9, automatic)
-End-Date: 2015-12-04  16:26:24
-
-Start-Date: 2015-12-04  16:27:36
-Commandline: apt-get install --yes laptop-detect os-prober
-Install: laptop-detect:amd64 (0.13.7ubuntu2), os-prober:amd64 (1.63ubuntu1), dmidecode:amd64 (2.12-3, automatic)
-End-Date: 2015-12-04  16:27:37
-
-Start-Date: 2015-12-04  16:53:49
-Commandline: apt-get install grub
-Install: gettext-base:amd64 (0.19.2-2ubuntu1, automatic), libpng12-0:amd64 (1.2.51-0ubuntu3, automatic), libfreetype6:amd64 (2.5.2-2ubuntu3, automatic), grub-common:amd64 (2.02~beta2-22ubuntu1, automatic), grub:amd64 (0.97-29ubuntu66), libasprintf0c2:amd64 (0.19.2-2ubuntu1, automatic), ucf:amd64 (3.0030, automatic), libfuse2:amd64 (2.9.2-4ubuntu4, automatic)
-End-Date: 2015-12-04  16:53:59
-
-Start-Date: 2015-12-04  17:09:40
-Commandline: apt-get install initramfs-tools
-Install: kmod:amd64 (18-3ubuntu1, automatic), initramfs-tools-bin:amd64 (0.103ubuntu15, automatic), cpio:amd64 (2.11+dfsg-4.1ubuntu1, automatic), busybox-initramfs:amd64 (1.22.0-9ubuntu1, automatic), klibc-utils:amd64 (2.0.3-0ubuntu1, automatic), initramfs-tools:amd64 (0.103ubuntu15), libklibc:amd64 (2.0.3-0ubuntu1, automatic), module-init-tools:amd64 (18-3ubuntu1, automatic)
-End-Date: 2015-12-04  17:09:46
-
-Start-Date: 2015-12-04  17:22:39
-Commandline: apt-get install casper
-Install: mime-support:amd64 (3.58ubuntu1, automatic), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13, automatic), python-crypto:amd64 (2.6.1-5, automatic), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3, automatic), python-samba:amd64 (4.1.13+dfsg-4ubuntu3, automatic), python-minimal:amd64 (2.7.9-1, automatic), libssl1.0.0:amd64 (1.0.1f-1ubuntu11, automatic), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3, automatic), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18, automatic), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libpopt0:amd64 (1.16-10, automatic), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), casper:amd64 (1.360), libkrb5-3:amd64 (1.12.1+dfsg-18, automatic), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libcups2:amd64 (2.0.2-1ubuntu3, automatic), sudo:amd64 (1.8.9p5-1ubuntu5, automatic), lzma:amd64 (9.22-2ubuntu2, automatic), libntdb1:amd64 (1.0-5, automatic), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-tdb:amd64 (1.3.4-1, automatic), file:amd64 (5.20-1ubuntu2, automatic), libmagic1:amd64 (5.20-1ubuntu2, automatic), python2.7:amd64 (2.7.9-2ubuntu3, automatic), libtevent0:amd64 (0.9.22-1, automatic), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12, automatic), libsqlite3-0:amd64 (3.8.7.4-1, automatic), eject:amd64 (2.1.5+deb1+cvs20081104-13.1, automatic), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3, automatic), krb5-locales:amd64 (1.12.1+dfsg-18, automatic), libldb1:amd64 (1.1.18-1, automatic), libavahi-common-data:amd64 (0.6.31-4ubuntu4, automatic), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libavahi-client3:amd64 (0.6.31-4ubuntu4, automatic), libtdb1:amd64 (1.3.4-1, automatic), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1, automatic), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3, automatic), uuid-runtime:amd64 (2.25.2-4ubuntu2, automatic), libpython2.7:amd64 (2.7.9-2ubuntu3, automatic), libhogweed2:amd64 (2.7.1-5, automatic), libp11-kit0:amd64 (0.20.7-1, automatic), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), keyutils:amd64 (1.5.9-5ubuntu1, automatic), python:amd64 (2.7.9-1, automatic), libplymouth4:amd64 (0.9.0-0ubuntu9, automatic), libavahi-common3:amd64 (0.6.31-4ubuntu4, automatic), libpython-stdlib:amd64 (2.7.9-1, automatic), libtalloc2:amd64 (2.1.1-2, automatic), libnettle4:amd64 (2.7.1-5, automatic), python2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), cifs-utils:amd64 (6.0-1ubuntu2, automatic), libbsd0:amd64 (0.7.0-2, automatic), python-talloc:amd64 (2.1.1-2, automatic), libsasl2-modules:amd64 (2.1.26.dfsg1-13, automatic), init-system-helpers:amd64 (1.22ubuntu11, automatic), libsasl2-2:amd64 (2.1.26.dfsg1-13, automatic), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-ldb:amd64 (1.1.18-1, automatic), libtasn1-6:amd64 (4.2-2ubuntu1, automatic), samba-common:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), localechooser-data:amd64 (2.49ubuntu5, automatic), libkeyutils1:amd64 (1.5.9-5ubuntu1, automatic), python-ntdb:amd64 (1.0-5, automatic), user-setup:amd64 (1.48ubuntu5, automatic), iso-codes:amd64 (3.57-1, automatic), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), libkrb5support0:amd64 (1.12.1+dfsg-18, automatic), libk5crypto3:amd64 (1.12.1+dfsg-18, automatic), libffi6:amd64 (3.2.1-2, automatic)
-End-Date: 2015-12-04  17:23:46
-
-Start-Date: 2015-12-04  17:24:32
-Commandline: apt-get remove casper
-Remove: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:24:32
-
-Start-Date: 2015-12-04  17:24:34
-Commandline: apt-get install casper
-Install: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:24:44
-
-Start-Date: 2015-12-04  17:26:45
-Commandline: apt-get remove casper
-Remove: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:26:46
-
-Start-Date: 2015-12-04  17:26:52
-Commandline: apt-get install casper
-Install: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:27:02
-
-Start-Date: 2015-12-04  17:27:40
-Commandline: apt-get remove casper
-Remove: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:27:41
-
-Start-Date: 2015-12-04  17:27:44
-Commandline: apt-get install casper
-Install: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:27:55
-
-Start-Date: 2015-12-04  17:29:26
-Commandline: apt-get remove casper
-Remove: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:29:27
-
-Start-Date: 2015-12-04  17:29:34
-Commandline: apt-get install casper
-Install: casper:amd64 (1.360)
-End-Date: 2015-12-04  17:29:44
-
-Start-Date: 2015-12-07  20:16:45
-Commandline: apt-get remove grub
-Remove: grub:amd64 (0.97-29ubuntu66)
-End-Date: 2015-12-07  20:16:47
-
-Start-Date: 2015-12-07  20:17:10
-Commandline: apt-get remove gettext-base grub-common libasprintf0c2 libfreetype6 libfuse2
-Remove: gettext-base:amd64 (0.19.2-2ubuntu1), libfreetype6:amd64 (2.5.2-2ubuntu3), grub-common:amd64 (2.02~beta2-22ubuntu1), libasprintf0c2:amd64 (0.19.2-2ubuntu1), libfuse2:amd64 (2.9.2-4ubuntu4)
-End-Date: 2015-12-07  20:17:23
-
-Start-Date: 2015-12-11  16:20:23
-Commandline: apt-get remove casper
-Remove: casper:amd64 (1.360)
-End-Date: 2015-12-11  16:20:25
-
-Start-Date: 2015-12-11  16:20:38
-Commandline: apt-get autoremove
-Remove: mime-support:amd64 (3.58ubuntu1), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13), python-crypto:amd64 (2.6.1-5), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3), python-samba:amd64 (4.1.13+dfsg-4ubuntu3), python-minimal:amd64 (2.7.9-1), libssl1.0.0:amd64 (1.0.1f-1ubuntu11), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9), libpopt0:amd64 (1.16-10), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9), libkrb5-3:amd64 (1.12.1+dfsg-18), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9), libcups2:amd64 (2.0.2-1ubuntu3), sudo:amd64 (1.8.9p5-1ubuntu5), lzma:amd64 (9.22-2ubuntu2), libntdb1:amd64 (1.0-5), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9), python-tdb:amd64 (1.3.4-1), file:amd64 (5.20-1ubuntu2), libmagic1:amd64 (5.20-1ubuntu2), python2.7:amd64 (2.7.9-2ubuntu3), libtevent0:amd64 (0.9.22-1), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12), libsqlite3-0:amd64 (3.8.7.4-1), eject:amd64 (2.1.5+deb1+cvs20081104-13.1), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3), krb5-locales:amd64 (1.12.1+dfsg-18), libldb1:amd64 (1.1.18-1), libavahi-common-data:amd64 (0.6.31-4ubuntu4), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9), libavahi-client3:amd64 (0.6.31-4ubuntu4), libtdb1:amd64 (1.3.4-1), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3), libpython2.7:amd64 (2.7.9-2ubuntu3), libhogweed2:amd64 (2.7.1-5), libp11-kit0:amd64 (0.20.7-1), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9), keyutils:amd64 (1.5.9-5ubuntu1), python:amd64 (2.7.9-1), libplymouth4:amd64 (0.9.0-0ubuntu9), libavahi-common3:amd64 (0.6.31-4ubuntu4), libpython-stdlib:amd64 (2.7.9-1), libtalloc2:amd64 (2.1.1-2), libnettle4:amd64 (2.7.1-5), python2.7-minimal:amd64 (2.7.9-2ubuntu3), cifs-utils:amd64 (6.0-1ubuntu2), libbsd0:amd64 (0.7.0-2), python-talloc:amd64 (2.1.1-2), libsasl2-modules:amd64 (2.1.26.dfsg1-13), ucf:amd64 (3.0030), libsasl2-2:amd64 (2.1.26.dfsg1-13), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9), python-ldb:amd64 (1.1.18-1), libtasn1-6:amd64 (4.2-2ubuntu1), samba-common:amd64 (4.1.13+dfsg-4ubuntu3), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9), localechooser-data:amd64 (2.49ubuntu5), libkeyutils1:amd64 (1.5.9-5ubuntu1), python-ntdb:amd64 (1.0-5), user-setup:amd64 (1.48ubuntu5), iso-codes:amd64 (3.57-1), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3), libkrb5support0:amd64 (1.12.1+dfsg-18), libk5crypto3:amd64 (1.12.1+dfsg-18), libffi6:amd64 (3.2.1-2)
-Error: Sub-process /usr/bin/dpkg returned an error code (1)
-End-Date: 2015-12-11  16:22:44
-
-Start-Date: 2015-12-11  20:25:10
-Commandline: apt-get remove os-prober
-Remove: os-prober:amd64 (1.63ubuntu1)
-End-Date: 2015-12-11  20:25:12
-
-Start-Date: 2015-12-11  21:14:15
-Commandline: apt-get remove libpng12-0:amd64
-Remove: libpng12-0:amd64 (1.2.51-0ubuntu3)
-End-Date: 2015-12-11  21:14:18
-
-Start-Date: 2016-11-29  19:11:28
-Commandline: apt-get install perl
-Install: liblog-message-perl:amd64 (0.8-1, automatic), libparams-util-perl:amd64 (1.07-2build1, automatic), perl:amd64 (5.20.2-2), rename:amd64 (0.20-3, automatic), libsoftware-license-perl:amd64 (0.103010-3, automatic), liblog-message-simple-perl:amd64 (0.10-2, automatic), libmodule-signature-perl:amd64 (0.73-1, automatic), libclass-c3-xs-perl:amd64 (0.13-2build1, automatic), libsub-install-perl:amd64 (0.928-1, automatic), libalgorithm-c3-perl:amd64 (0.09-1, automatic), libpod-readme-perl:amd64 (0.11-1, automatic), libmodule-build-perl:amd64 (0.421000-2, automatic), libclass-c3-perl:amd64 (0.26-1, automatic), libcgi-pm-perl:amd64 (4.09-2, automatic), libterm-ui-perl:amd64 (0.42-1, automatic), perl-modules:amd64 (5.20.2-2, automatic), libcpan-meta-perl:amd64 (2.142690-1, automatic), libsub-exporter-perl:amd64 (0.986-1, automatic), libgdbm3:amd64 (1.8.3-13.1, automatic), libpod-latex-perl:amd64 (0.61-1, automatic), libregexp-common-perl:amd64 (2013031301-1, automatic), libfcgi-perl:amd64 (0.77-1, automatic), libtext-soundex-perl:amd64 (3.4-1build2, automatic), libdata-optlist-perl:amd64 (0.109-1, automatic), libmodule-pluggable-perl:amd64 (5.1-1, automatic), libtext-template-perl:amd64 (1.46-1, automatic), libpackage-constants-perl:amd64 (0.04-1, automatic), libarchive-extract-perl:amd64 (0.72-1, automatic), libdata-section-perl:amd64 (0.200006-1, automatic), libmro-compat-perl:amd64 (0.12-1, automatic), libcgi-fast-perl:amd64 (2.04-1, automatic)
-End-Date: 2016-11-29  19:11:33
-
-Start-Date: 2016-11-29  19:14:39
-Commandline: apt-get install gcc
-Install: libisl13:amd64 (0.14-1, automatic), libasan1:amd64 (4.9.2-10ubuntu13, automatic), libquadmath0:amd64 (4.9.2-10ubuntu13, automatic), libmpc3:amd64 (1.0.3-1, automatic), libubsan0:amd64 (4.9.2-10ubuntu13, automatic), cpp-4.9:amd64 (4.9.2-10ubuntu13, automatic), libgomp1:amd64 (4.9.2-10ubuntu13, automatic), libtsan0:amd64 (4.9.2-10ubuntu13, automatic), libcilkrts5:amd64 (4.9.2-10ubuntu13, automatic), libc-dev-bin:amd64 (2.21-0ubuntu4, automatic), libatomic1:amd64 (4.9.2-10ubuntu13, automatic), libmpfr4:amd64 (3.1.2-3, automatic), binutils:amd64 (2.25-5ubuntu7, automatic), gcc:amd64 (4.9.2-2ubuntu2), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1, automatic), cpp:amd64 (4.9.2-2ubuntu2, automatic), gcc-4.9:amd64 (4.9.2-10ubuntu13, automatic), libcloog-isl4:amd64 (0.18.2-3, automatic), manpages-dev:amd64 (3.74-1ubuntu1, automatic), manpages:amd64 (3.74-1ubuntu1, automatic), libgcc-4.9-dev:amd64 (4.9.2-10ubuntu13, automatic), liblsan0:amd64 (4.9.2-10ubuntu13, automatic), libitm1:amd64 (4.9.2-10ubuntu13, automatic), libc6-dev:amd64 (2.21-0ubuntu4, automatic)
-End-Date: 2016-11-29  19:14:47
-
-Start-Date: 2016-11-29  19:14:54
-Commandline: apt-get install make
-Install: make:amd64 (4.0-8.1)
-End-Date: 2016-11-29  19:14:54
-
-Start-Date: 2016-11-29  19:16:33
-Commandline: apt-get install man
-Install: bsdmainutils:amd64 (9.0.6ubuntu1, automatic), man-db:amd64 (2.7.0.2-5), groff-base:amd64 (1.22.3-1, automatic), libpipeline1:amd64 (1.4.0-1, automatic)
-End-Date: 2016-11-29  19:17:09
-
-Start-Date: 2016-11-29  19:25:31
-Commandline: apt-get remove manpages
-Remove: manpages-dev:amd64 (3.74-1ubuntu1), manpages:amd64 (3.74-1ubuntu1)
-End-Date: 2016-11-29  19:25:32
-
-Start-Date: 2016-11-29  19:26:40
-Commandline: apt-get remove man-db
-Remove: man-db:amd64 (2.7.0.2-5)
-End-Date: 2016-11-29  19:26:40
-
-Start-Date: 2016-11-29  19:28:17
-Commandline: apt-get autoremove
-Remove: groff-base:amd64 (1.22.3-1), libpipeline1:amd64 (1.4.0-1)
-End-Date: 2016-11-29  19:28:17
-
-Start-Date: 2016-11-30  18:15:57
-Commandline: apt-get install wget
-Install: libssl1.0.0:amd64 (1.0.1f-1ubuntu11, automatic), libidn11:amd64 (1.28-1ubuntu2, automatic), wget:amd64 (1.16.1-1ubuntu1), ca-certificates:amd64 (20141019, automatic), openssl:amd64 (1.0.1f-1ubuntu11, automatic)
-End-Date: 2016-11-30  18:16:11
-
-Start-Date: 2016-11-30  18:19:20
-Commandline: apt-get install libssl-dev
-Install: zlib1g-dev:amd64 (1.2.8.dfsg-2ubuntu1, automatic), libssl-dev:amd64 (1.0.1f-1ubuntu11), libssl-doc:amd64 (1.0.1f-1ubuntu11, automatic)
-End-Date: 2016-11-30  18:19:21
-
-Start-Date: 2016-11-30  18:41:19
-Commandline: apt-get install libnet-ssleay-perl
-Install: libnet-ssleay-perl:amd64 (1.65-1build1)
-End-Date: 2016-11-30  18:41:19
-
-Start-Date: 2016-11-30  18:44:18
-Commandline: apt-get install libio-socket-ssl-perl
-Install: libio-socket-ssl-perl:amd64 (1.965-1ubuntu1), libnet-libidn-perl:amd64 (0.12.ds-2build1, automatic), libio-socket-inet6-perl:amd64 (2.72-1, automatic), libsocket6-perl:amd64 (0.25-1build1, automatic)
-End-Date: 2016-11-30  18:44:18
-
-Start-Date: 2016-12-01  15:20:01
-Commandline: apt-get install vim
-Install: mime-support:amd64 (3.58ubuntu1, automatic), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3, automatic), vim-common:amd64 (7.4.488-3ubuntu2, automatic), file:amd64 (5.20-1ubuntu2, automatic), libmagic1:amd64 (5.20-1ubuntu2, automatic), libsqlite3-0:amd64 (3.8.7.4-1, automatic), libpython2.7:amd64 (2.7.9-2ubuntu3, automatic), vim:amd64 (7.4.488-3ubuntu2), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), vim-runtime:amd64 (7.4.488-3ubuntu2, automatic), libgpm2:amd64 (1.20.4-6.1, automatic), libffi6:amd64 (3.2.1-2, automatic)
-End-Date: 2016-12-01  15:20:07
-
-Start-Date: 2016-12-01  22:15:32
-Commandline: apt-get install netcat
-Install: libbsd0:amd64 (0.7.0-2, automatic), netcat-openbsd:amd64 (1.105-7ubuntu1)
-End-Date: 2016-12-01  22:15:33
-
-Start-Date: 2016-12-01  22:16:58
-Commandline: apt-get install ping
-Install: libgnutls-openssl27:amd64 (3.3.8-3ubuntu3, automatic), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3, automatic), libhogweed2:amd64 (2.7.1-5, automatic), libp11-kit0:amd64 (0.20.7-1, automatic), iputils-ping:amd64 (20121221-5ubuntu2), libnettle4:amd64 (2.7.1-5, automatic), libtasn1-6:amd64 (4.2-2ubuntu1, automatic)
-End-Date: 2016-12-01  22:16:59
-
-Start-Date: 2016-12-06  21:49:37
-Commandline: apt-get install ntp
-Install: libedit2:amd64 (3.1-20140620-2, automatic), libopts25:amd64 (5.18.4-3, automatic), ntp:amd64 (4.2.6.p5+dfsg-3ubuntu6)
-End-Date: 2016-12-06  21:49:38
-
-Start-Date: 2016-12-07  18:20:42
-Commandline: apt-get install libmnl-dev
-Install: libmnl-dev:amd64 (1.0.3-5), libmnl0:amd64 (1.0.3-5, automatic)
-End-Date: 2016-12-07  18:20:43
-
-Start-Date: 2016-12-07  18:35:08
-Commandline: apt-get install automake autoconf
-Install: m4:amd64 (1.4.17-4, automatic), automake:amd64 (1.14.1-3ubuntu1), libsigsegv2:amd64 (2.10-4, automatic), autoconf:amd64 (2.69-8), autotools-dev:amd64 (20140911.1, automatic)
-End-Date: 2016-12-07  18:35:09
-
-Start-Date: 2016-12-07  18:44:19
-Commandline: apt-get remove automake
-Remove: automake:amd64 (1.14.1-3ubuntu1)
-End-Date: 2016-12-07  18:44:19
-
-Start-Date: 2016-12-07  18:44:24
-Commandline: apt-get remove autoconf
-Remove: autoconf:amd64 (2.69-8)
-End-Date: 2016-12-07  18:44:24
-
-Start-Date: 2016-12-07  18:45:25
-Commandline: apt-get autoremove
-Remove: m4:amd64 (1.4.17-4), libsigsegv2:amd64 (2.10-4), autotools-dev:amd64 (20140911.1)
-End-Date: 2016-12-07  18:45:25
-
-Start-Date: 2016-12-07  19:04:44
-Commandline: apt-get install openssh-client
-Install: libxau6:amd64 (1.0.8-1, automatic), libxext6:amd64 (1.3.3-1, automatic), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18, automatic), libkrb5-3:amd64 (1.12.1+dfsg-18, automatic), libx11-data:amd64 (1.6.2-2ubuntu2, automatic), libxcb1:amd64 (1.10-2ubuntu1, automatic), krb5-locales:amd64 (1.12.1+dfsg-18, automatic), libxdmcp6:amd64 (1.1.1-1build1, automatic), openssh-client:amd64 (6.7p1-5ubuntu1), libxmuu1:amd64 (1.1.2-1, automatic), xauth:amd64 (1.0.9-1ubuntu2, automatic), libkeyutils1:amd64 (1.5.9-5ubuntu1, automatic), libx11-6:amd64 (1.6.2-2ubuntu2, automatic), libkrb5support0:amd64 (1.12.1+dfsg-18, automatic), libk5crypto3:amd64 (1.12.1+dfsg-18, automatic)
-End-Date: 2016-12-07  19:04:47
-
-Start-Date: 2016-12-07  22:20:03
-Commandline: apt-get install casper lupin-casper
-Install: libsasl2-modules-db:amd64 (2.1.26.dfsg1-13, automatic), python-crypto:amd64 (2.6.1-5, automatic), python-samba:amd64 (4.1.13+dfsg-4ubuntu3, automatic), python-minimal:amd64 (2.7.9-1, automatic), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libpopt0:amd64 (1.16-10, automatic), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libpng12-0:amd64 (1.2.51-0ubuntu3, automatic), casper:amd64 (1.360), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libcups2:amd64 (2.0.2-1ubuntu3, automatic), lzma:amd64 (9.22-2ubuntu2, automatic), libntdb1:amd64 (1.0-5, automatic), lupin-casper:amd64 (0.55), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-tdb:amd64 (1.3.4-1, automatic), python2.7:amd64 (2.7.9-2ubuntu3, automatic), libtevent0:amd64 (0.9.22-1, automatic), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12, automatic), eject:amd64 (2.1.5+deb1+cvs20081104-13.1, automatic), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libldb1:amd64 (1.1.18-1, automatic), libavahi-common-data:amd64 (0.6.31-4ubuntu4, automatic), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libavahi-client3:amd64 (0.6.31-4ubuntu4, automatic), libtdb1:amd64 (1.3.4-1, automatic), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), keyutils:amd64 (1.5.9-5ubuntu1, automatic), python:amd64 (2.7.9-1, automatic), libplymouth4:amd64 (0.9.0-0ubuntu9, automatic), libavahi-common3:amd64 (0.6.31-4ubuntu4, automatic), libpython-stdlib:amd64 (2.7.9-1, automatic), libtalloc2:amd64 (2.1.1-2, automatic), python2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), cifs-utils:amd64 (6.0-1ubuntu2, automatic), python-talloc:amd64 (2.1.1-2, automatic), libsasl2-modules:amd64 (2.1.26.dfsg1-13, automatic), ucf:amd64 (3.0030, automatic), libsasl2-2:amd64 (2.1.26.dfsg1-13, automatic), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-ldb:amd64 (1.1.18-1, automatic), samba-common:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), localechooser-data:amd64 (2.49ubuntu5, automatic), python-ntdb:amd64 (1.0-5, automatic), user-setup:amd64 (1.48ubuntu5, automatic), iso-codes:amd64 (3.57-1, automatic)
-Error: Sub-process /usr/bin/dpkg returned an error code (1)
-End-Date: 2016-12-07  22:20:18
-
-Start-Date: 2016-12-07  22:21:34
-Commandline: apt-get install casper lupin-casper
-End-Date: 2016-12-07  22:22:04
-
-Start-Date: 2016-12-07  22:38:33
-Commandline: apt-get remove lupin-casper casper
-Remove: casper:amd64 (1.360), lupin-casper:amd64 (0.55)
-End-Date: 2016-12-07  22:38:33
-
-Start-Date: 2016-12-07  22:38:44
-Commandline: apt-get install lupin-casper casper
-Install: casper:amd64 (1.360), lupin-casper:amd64 (0.55)
-End-Date: 2016-12-07  22:39:14
-
-Start-Date: 2016-12-07  23:00:12
-Commandline: apt-get remove casper lupin-casper
-Remove: casper:amd64 (1.360), lupin-casper:amd64 (0.55)
-End-Date: 2016-12-07  23:00:13
-
-Start-Date: 2016-12-07  23:00:23
-Commandline: apt-get install casper lupin-casper
-Install: casper:amd64 (1.360), lupin-casper:amd64 (0.55)
-End-Date: 2016-12-07  23:00:58
-
-Start-Date: 2016-12-08  22:02:33
-Commandline: apt-get install tcpdump
-Install: tcpdump:amd64 (4.6.2-4ubuntu1), libpcap0.8:amd64 (1.6.2-2, automatic)
-End-Date: 2016-12-08  22:02:33
-
-Start-Date: 2016-12-14  21:40:09
-Commandline: apt-get install psmisc
-Install: psmisc:amd64 (22.21-2build1)
-End-Date: 2016-12-14  21:40:10
-
-Start-Date: 2017-01-04  18:49:28
-Commandline: apt-get purge vim
-Purge: vim:amd64 (7.4.488-3ubuntu2)
-End-Date: 2017-01-04  18:49:28
-
-Start-Date: 2017-01-04  18:49:35
-Commandline: apt-get autoremove
-Remove: vim-common:amd64 (7.4.488-3ubuntu2), vim-runtime:amd64 (7.4.488-3ubuntu2)
-End-Date: 2017-01-04  18:49:35
-
-Start-Date: 2017-01-04  18:52:19
-Commandline: apt-get remove openssh-client
-Remove: openssh-client:amd64 (6.7p1-5ubuntu1)
-End-Date: 2017-01-04  18:52:19
-
-Start-Date: 2017-01-04  18:52:31
-Commandline: apt-get autoremove
-Remove: libxau6:amd64 (1.0.8-1), libxext6:amd64 (1.3.3-1), libx11-data:amd64 (1.6.2-2ubuntu2), libxcb1:amd64 (1.10-2ubuntu1), libxdmcp6:amd64 (1.1.1-1build1), libxmuu1:amd64 (1.1.2-1), xauth:amd64 (1.0.9-1ubuntu2), libx11-6:amd64 (1.6.2-2ubuntu2)
-End-Date: 2017-01-04  18:52:31
-
-Start-Date: 2017-01-04  18:55:19
-Commandline: apt-get remove gcc
-Remove: gcc:amd64 (4.9.2-2ubuntu2)
-End-Date: 2017-01-04  18:55:19
-
-Start-Date: 2017-01-04  18:55:34
-Commandline: apt-get autoremove
-Remove: libasan1:amd64 (4.9.2-10ubuntu13), libquadmath0:amd64 (4.9.2-10ubuntu13), libubsan0:amd64 (4.9.2-10ubuntu13), libgomp1:amd64 (4.9.2-10ubuntu13), libtsan0:amd64 (4.9.2-10ubuntu13), libcilkrts5:amd64 (4.9.2-10ubuntu13), libatomic1:amd64 (4.9.2-10ubuntu13), gcc-4.9:amd64 (4.9.2-10ubuntu13), libgcc-4.9-dev:amd64 (4.9.2-10ubuntu13), liblsan0:amd64 (4.9.2-10ubuntu13), libitm1:amd64 (4.9.2-10ubuntu13)
-End-Date: 2017-01-04  18:55:35
-
-Start-Date: 2017-01-04  18:57:09
-Commandline: apt-get remove netcat-openbsd
-Remove: netcat-openbsd:amd64 (1.105-7ubuntu1)
-End-Date: 2017-01-04  18:57:10
-
-Start-Date: 2017-01-04  21:18:43
-Commandline: apt-get remove wget
-Remove: wget:amd64 (1.16.1-1ubuntu1)
-End-Date: 2017-01-04  21:18:43
-
-Start-Date: 2017-01-04  21:20:12
-Commandline: apt-get remove cpp
-Remove: cpp:amd64 (4.9.2-2ubuntu2)
-End-Date: 2017-01-04  21:20:13
-
-Start-Date: 2017-01-04  21:20:50
-Commandline: apt-get remove cpp-4.9
-Remove: cpp-4.9:amd64 (4.9.2-10ubuntu13)
-End-Date: 2017-01-04  21:20:50
-
-Start-Date: 2017-01-04  21:21:04
-Commandline: apt-get autoremove
-Remove: libisl13:amd64 (0.14-1), libmpc3:amd64 (1.0.3-1), libmpfr4:amd64 (3.1.2-3), ca-certificates:amd64 (20141019), libcloog-isl4:amd64 (0.18.2-3), openssl:amd64 (1.0.1f-1ubuntu11)
-End-Date: 2017-01-04  21:21:07
-
-Start-Date: 2017-01-04  21:21:21
-Commandline: apt-get install ca-certificates openssl
-Install: ca-certificates:amd64 (20141019), openssl:amd64 (1.0.1f-1ubuntu11)
-End-Date: 2017-01-04  21:21:41
-
-Start-Date: 2017-01-04  21:24:35
-Commandline: apt-get remove iputils-ping
-Remove: iputils-ping:amd64 (20121221-5ubuntu2)
-End-Date: 2017-01-04  21:24:36
-
-Start-Date: 2017-01-04  21:25:53
-Commandline: apt-get remove samba-common
-Remove: casper:amd64 (1.360), lupin-casper:amd64 (0.55), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3), cifs-utils:amd64 (6.0-1ubuntu2), samba-common:amd64 (4.1.13+dfsg-4ubuntu3)
-End-Date: 2017-01-04  21:25:53
-
-Start-Date: 2017-01-04  21:26:09
-Commandline: apt-get autoremove
-Remove: mime-support:amd64 (3.58ubuntu1), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13), libgnutls-openssl27:amd64 (3.3.8-3ubuntu3), python-crypto:amd64 (2.6.1-5), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3), python-samba:amd64 (4.1.13+dfsg-4ubuntu3), python-minimal:amd64 (2.7.9-1), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9), libpopt0:amd64 (1.16-10), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9), libkrb5-3:amd64 (1.12.1+dfsg-18), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9), libcups2:amd64 (2.0.2-1ubuntu3), lzma:amd64 (9.22-2ubuntu2), libntdb1:amd64 (1.0-5), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9), python-tdb:amd64 (1.3.4-1), file:amd64 (5.20-1ubuntu2), libmagic1:amd64 (5.20-1ubuntu2), python2.7:amd64 (2.7.9-2ubuntu3), libtevent0:amd64 (0.9.22-1), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12), libsqlite3-0:amd64 (3.8.7.4-1), eject:amd64 (2.1.5+deb1+cvs20081104-13.1), krb5-locales:amd64 (1.12.1+dfsg-18), libldb1:amd64 (1.1.18-1), libavahi-common-data:amd64 (0.6.31-4ubuntu4), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9), binutils:amd64 (2.25-5ubuntu7), libavahi-client3:amd64 (0.6.31-4ubuntu4), libtdb1:amd64 (1.3.4-1), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3), libpython2.7:amd64 (2.7.9-2ubuntu3), libhogweed2:amd64 (2.7.1-5), libp11-kit0:amd64 (0.20.7-1), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9), keyutils:amd64 (1.5.9-5ubuntu1), python:amd64 (2.7.9-1), libplymouth4:amd64 (0.9.0-0ubuntu9), libavahi-common3:amd64 (0.6.31-4ubuntu4), libpython-stdlib:amd64 (2.7.9-1), libtalloc2:amd64 (2.1.1-2), libnettle4:amd64 (2.7.1-5), python2.7-minimal:amd64 (2.7.9-2ubuntu3), libbsd0:amd64 (0.7.0-2), python-talloc:amd64 (2.1.1-2), libsasl2-modules:amd64 (2.1.26.dfsg1-13), ucf:amd64 (3.0030), libsasl2-2:amd64 (2.1.26.dfsg1-13), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9), python-ldb:amd64 (1.1.18-1), libtasn1-6:amd64 (4.2-2ubuntu1), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9), localechooser-data:amd64 (2.49ubuntu5), libkeyutils1:amd64 (1.5.9-5ubuntu1), python-ntdb:amd64 (1.0-5), user-setup:amd64 (1.48ubuntu5), iso-codes:amd64 (3.57-1), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3), libkrb5support0:amd64 (1.12.1+dfsg-18), libk5crypto3:amd64 (1.12.1+dfsg-18), libffi6:amd64 (3.2.1-2)
-End-Date: 2017-01-04  21:26:14
-
-Start-Date: 2017-01-04  21:28:31
-Commandline: apt-get remove linux-headers-4.1.0.web10g+
-Remove: linux-headers-4.1.0.web10g+:amd64 (4.1.0.web10g+-3)
-End-Date: 2017-01-04  21:28:32
-
-Start-Date: 2017-01-04  21:30:08
-Commandline: apt-get remove libc-dev-bin
-Remove: zlib1g-dev:amd64 (1.2.8.dfsg-2ubuntu1), libc-dev-bin:amd64 (2.21-0ubuntu4), libssl-dev:amd64 (1.0.1f-1ubuntu11), libc6-dev:amd64 (2.21-0ubuntu4)
-End-Date: 2017-01-04  21:30:08
-
-Start-Date: 2017-01-04  21:30:19
-Commandline: apt-get autoremove
-Remove: libssl-doc:amd64 (1.0.1f-1ubuntu11)
-End-Date: 2017-01-04  21:30:19
-
-Start-Date: 2017-01-04  21:30:50
-Commandline: apt-get remove make
-Remove: make:amd64 (4.0-8.1)
-End-Date: 2017-01-04  21:30:50
-
-Start-Date: 2017-01-04  21:32:16
-Commandline: apt-get remove tcpdump
-Remove: tcpdump:amd64 (4.6.2-4ubuntu1)
-End-Date: 2017-01-04  21:32:16
-
-Start-Date: 2017-01-04  21:32:31
-Commandline: apt-get autoremove
-Remove: libpcap0.8:amd64 (1.6.2-2)
-End-Date: 2017-01-04  21:32:31
-
-Start-Date: 2017-01-04  21:32:41
-Commandline: apt-get install libpcap0.8
-Install: libpcap0.8:amd64 (1.6.2-2)
-End-Date: 2017-01-04  21:32:42
-
-Start-Date: 2017-01-06  21:06:03
-Commandline: apt-get install casper
-Install: mime-support:amd64 (3.58ubuntu1, automatic), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13, automatic), python-crypto:amd64 (2.6.1-5, automatic), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3, automatic), python-samba:amd64 (4.1.13+dfsg-4ubuntu3, automatic), python-minimal:amd64 (2.7.9-1, automatic), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3, automatic), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18, automatic), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libpopt0:amd64 (1.16-10, automatic), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), casper:amd64 (1.360), libkrb5-3:amd64 (1.12.1+dfsg-18, automatic), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libcups2:amd64 (2.0.2-1ubuntu3, automatic), lzma:amd64 (9.22-2ubuntu2, automatic), libntdb1:amd64 (1.0-5, automatic), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-tdb:amd64 (1.3.4-1, automatic), file:amd64 (5.20-1ubuntu2, automatic), libmagic1:amd64 (5.20-1ubuntu2, automatic), python2.7:amd64 (2.7.9-2ubuntu3, automatic), libtevent0:amd64 (0.9.22-1, automatic), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12, automatic), libsqlite3-0:amd64 (3.8.7.4-1, automatic), eject:amd64 (2.1.5+deb1+cvs20081104-13.1, automatic), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3, automatic), krb5-locales:amd64 (1.12.1+dfsg-18, automatic), libldb1:amd64 (1.1.18-1, automatic), libavahi-common-data:amd64 (0.6.31-4ubuntu4, automatic), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), libavahi-client3:amd64 (0.6.31-4ubuntu4, automatic), libtdb1:amd64 (1.3.4-1, automatic), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1, automatic), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libpython2.7:amd64 (2.7.9-2ubuntu3, automatic), libhogweed2:amd64 (2.7.1-5, automatic), libp11-kit0:amd64 (0.20.7-1, automatic), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), keyutils:amd64 (1.5.9-5ubuntu1, automatic), python:amd64 (2.7.9-1, automatic), libplymouth4:amd64 (0.9.0-0ubuntu9, automatic), libavahi-common3:amd64 (0.6.31-4ubuntu4, automatic), libpython-stdlib:amd64 (2.7.9-1, automatic), libtalloc2:amd64 (2.1.1-2, automatic), libnettle4:amd64 (2.7.1-5, automatic), python2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), cifs-utils:amd64 (6.0-1ubuntu2, automatic), libbsd0:amd64 (0.7.0-2, automatic), python-talloc:amd64 (2.1.1-2, automatic), libsasl2-modules:amd64 (2.1.26.dfsg1-13, automatic), ucf:amd64 (3.0030, automatic), libsasl2-2:amd64 (2.1.26.dfsg1-13, automatic), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), python-ldb:amd64 (1.1.18-1, automatic), libtasn1-6:amd64 (4.2-2ubuntu1, automatic), samba-common:amd64 (4.1.13+dfsg-4ubuntu3, automatic), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9, automatic), localechooser-data:amd64 (2.49ubuntu5, automatic), libkeyutils1:amd64 (1.5.9-5ubuntu1, automatic), python-ntdb:amd64 (1.0-5, automatic), user-setup:amd64 (1.48ubuntu5, automatic), iso-codes:amd64 (3.57-1, automatic), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3, automatic), libkrb5support0:amd64 (1.12.1+dfsg-18, automatic), libk5crypto3:amd64 (1.12.1+dfsg-18, automatic), libffi6:amd64 (3.2.1-2, automatic)
-End-Date: 2017-01-06  21:06:54
-
-Start-Date: 2017-01-06  21:33:37
-Commandline: apt-get remove casper
-Remove: casper:amd64 (1.360)
-End-Date: 2017-01-06  21:33:38
-
-Start-Date: 2017-01-06  21:33:46
-Commandline: apt-get autoremove
-Remove: mime-support:amd64 (3.58ubuntu1), libsasl2-modules-db:amd64 (2.1.26.dfsg1-13), python-crypto:amd64 (2.6.1-5), libpython2.7-stdlib:amd64 (2.7.9-2ubuntu3), python-samba:amd64 (4.1.13+dfsg-4ubuntu3), python-minimal:amd64 (2.7.9-1), libgnutls-deb0-28:amd64 (3.3.8-3ubuntu3), libgssapi-krb5-2:amd64 (1.12.1+dfsg-18), libkrb5-26-heimdal:amd64 (1.6~rc2+dfsg-9), libpopt0:amd64 (1.16-10), libroken18-heimdal:amd64 (1.6~rc2+dfsg-9), libkrb5-3:amd64 (1.12.1+dfsg-18), libwind0-heimdal:amd64 (1.6~rc2+dfsg-9), libcups2:amd64 (2.0.2-1ubuntu3), lzma:amd64 (9.22-2ubuntu2), libntdb1:amd64 (1.0-5), libhcrypto4-heimdal:amd64 (1.6~rc2+dfsg-9), libheimntlm0-heimdal:amd64 (1.6~rc2+dfsg-9), python-tdb:amd64 (1.3.4-1), file:amd64 (5.20-1ubuntu2), libmagic1:amd64 (5.20-1ubuntu2), python2.7:amd64 (2.7.9-2ubuntu3), libtevent0:amd64 (0.9.22-1), libldap-2.4-2:amd64 (2.4.31-1+nmu2ubuntu12), libsqlite3-0:amd64 (3.8.7.4-1), eject:amd64 (2.1.5+deb1+cvs20081104-13.1), samba-common-bin:amd64 (4.1.13+dfsg-4ubuntu3), krb5-locales:amd64 (1.12.1+dfsg-18), libldb1:amd64 (1.1.18-1), libavahi-common-data:amd64 (0.6.31-4ubuntu4), libasn1-8-heimdal:amd64 (1.6~rc2+dfsg-9), libavahi-client3:amd64 (0.6.31-4ubuntu4), libtdb1:amd64 (1.3.4-1), libgmp10:amd64 (6.0.0+dfsg-6ubuntu1), samba-libs:amd64 (4.1.13+dfsg-4ubuntu3), libpython2.7:amd64 (2.7.9-2ubuntu3), libhogweed2:amd64 (2.7.1-5), libp11-kit0:amd64 (0.20.7-1), libheimbase1-heimdal:amd64 (1.6~rc2+dfsg-9), keyutils:amd64 (1.5.9-5ubuntu1), python:amd64 (2.7.9-1), libplymouth4:amd64 (0.9.0-0ubuntu9), libavahi-common3:amd64 (0.6.31-4ubuntu4), libpython-stdlib:amd64 (2.7.9-1), libtalloc2:amd64 (2.1.1-2), libnettle4:amd64 (2.7.1-5), python2.7-minimal:amd64 (2.7.9-2ubuntu3), cifs-utils:amd64 (6.0-1ubuntu2), libbsd0:amd64 (0.7.0-2), python-talloc:amd64 (2.1.1-2), libsasl2-modules:amd64 (2.1.26.dfsg1-13), ucf:amd64 (3.0030), libsasl2-2:amd64 (2.1.26.dfsg1-13), libwbclient0:amd64 (4.1.13+dfsg-4ubuntu3), libgssapi3-heimdal:amd64 (1.6~rc2+dfsg-9), python-ldb:amd64 (1.1.18-1), libtasn1-6:amd64 (4.2-2ubuntu1), samba-common:amd64 (4.1.13+dfsg-4ubuntu3), libhx509-5-heimdal:amd64 (1.6~rc2+dfsg-9), localechooser-data:amd64 (2.49ubuntu5), libkeyutils1:amd64 (1.5.9-5ubuntu1), python-ntdb:amd64 (1.0-5), user-setup:amd64 (1.48ubuntu5), iso-codes:amd64 (3.57-1), libpython2.7-minimal:amd64 (2.7.9-2ubuntu3), libkrb5support0:amd64 (1.12.1+dfsg-18), libk5crypto3:amd64 (1.12.1+dfsg-18), libffi6:amd64 (3.2.1-2)
-End-Date: 2017-01-06  21:33:50
+Start-Date: 2020-03-21  16:09:35
+Commandline: apt-get install -y systemd-sysv
+Install: libdevmapper1.02.1:amd64 (2:1.02.145-4.1ubuntu3.18.04.2, automatic), dmsetup:amd64 (2:1.02.145-4.1ubuntu3.18.04.2, automatic), libpython3.6-minimal:amd64 (3.6.9-1~18.04, automatic), libdbus-1-3:amd64 (1.12.2-1ubuntu1.1, automatic), networkd-dispatcher:amd64 (1.7-0ubuntu3.3, automatic), libgirepository-1.0-1:amd64 (1.56.1-1, automatic), libargon2-0:amd64 (0~20161029-1.1, automatic), xdg-user-dirs:amd64 (0.17-1ubuntu1, automatic), dbus:amd64 (1.12.2-1ubuntu1.1, automatic), libkmod2:amd64 (24-1ubuntu3.2, automatic), libsqlite3-0:amd64 (3.22.0-1ubuntu0.3, automatic), libpython3.6-stdlib:amd64 (3.6.9-1~18.04, automatic), libicu60:amd64 (60.2-3ubuntu3.1, automatic), python3.6:amd64 (3.6.9-1~18.04, automatic), python3:amd64 (3.6.7-1~18.04, automatic), mime-support:amd64 (3.60ubuntu1, automatic), readline-common:amd64 (7.0-3, automatic), libmagic1:amd64 (1:5.32-2ubuntu0.3, automatic), libmpdec2:amd64 (2.4.2-1ubuntu1, automatic), libexpat1:amd64 (2.2.5-3ubuntu0.2, automatic), libapparmor1:amd64 (2.12-4ubuntu5.1, automatic), python3.6-minimal:amd64 (3.6.9-1~18.04, automatic), python3-minimal:amd64 (3.6.7-1~18.04, automatic), libmagic-mgc:amd64 (1:5.32-2ubuntu0.3, automatic), gir1.2-glib-2.0:amd64 (1.56.1-1, automatic), libcap2:amd64 (1:2.25-1.2, automatic), libpython3-stdlib:amd64 (3.6.7-1~18.04, automatic), systemd-sysv:amd64 (237-3ubuntu10.39), libpam-systemd:amd64 (237-3ubuntu10.39, automatic), xz-utils:amd64 (5.2.2-1.3, automatic), shared-mime-info:amd64 (1.9-2, automatic), systemd:amd64 (237-3ubuntu10.39, automatic), libreadline7:amd64 (7.0-3, automatic), libnss-systemd:amd64 (237-3ubuntu10.39, automatic), bzip2:amd64 (1.0.6-8.1ubuntu0.2, automatic), python3-dbus:amd64 (1.2.6-1, automatic), libglib2.0-data:amd64 (2.56.4-0ubuntu0.18.04.4, automatic), libxml2:amd64 (2.9.4+dfsg1-6.1ubuntu1.3, automatic), file:amd64 (1:5.32-2ubuntu0.3, automatic), python3-gi:amd64 (3.26.1-2ubuntu1, automatic), libidn11:amd64 (1.33-2.1ubuntu1.2, automatic), libcryptsetup12:amd64 (2:2.0.2-1ubuntu1.1, automatic), libssl1.1:amd64 (1.1.1-1ubuntu2.1~18.04.5, automatic), libjson-c3:amd64 (0.12.1-1.3, automatic), libip4tc0:amd64 (1.6.1-2ubuntu2, automatic), libglib2.0-0:amd64 (2.56.4-0ubuntu0.18.04.4, automatic)
+Upgrade: libsystemd0:amd64 (237-3ubuntu10, 237-3ubuntu10.39), libbz2-1.0:amd64 (1.0.6-8.1, 1.0.6-8.1ubuntu0.2)
+End-Date: 2020-03-21  16:09:41
+
+Start-Date: 2020-03-21  16:11:39
+Commandline: apt-get install -y ubuntu-standard casper lupin-casper discover laptop-detect os-prober network-manager net-tools locales linux-generic
+Install: libgssapi3-heimdal:amd64 (7.5.0+dfsg-1, automatic), libxdmcp6:amd64 (1:1.1.2-3, automatic), info:amd64 (6.5.0.dfsg.1-2, automatic), manpages:amd64 (4.15-1, automatic), libqmi-proxy:amd64 (1.22.0-1.2~ubuntu18.04.1, automatic), libpolkit-gobject-1-0:amd64 (0.105-20ubuntu0.18.04.5, automatic), network-manager-pptp:amd64 (1.2.6-1, automatic), python3-distro-info:amd64 (0.18ubuntu0.18.04.1, automatic), iso-codes:amd64 (3.79-1, automatic), libusb-1.0-0:amd64 (2:1.0.21-2, automatic), libldb1:amd64 (2:1.2.3-1ubuntu0.1, automatic), python-tdb:amd64 (1.3.15-2, automatic), fuse:amd64 (2.9.7-1ubuntu1, automatic), libteamdctl0:amd64 (1.26-1, automatic), libkrb5-3:amd64 (1.16-2ubuntu0.1, automatic), dosfstools:amd64 (4.1-1, automatic), libgssapi-krb5-2:amd64 (1.16-2ubuntu0.1, automatic), linux-modules-extra-4.15.0-91-generic:amd64 (4.15.0-91.92, automatic), libnghttp2-14:amd64 (1.30.0-1ubuntu1, automatic), mtr-tiny:amd64 (0.92-1, automatic), libisccfg160:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), libpopt0:amd64 (1.16-11, automatic), libcups2:amd64 (2.2.7-1ubuntu2.7, automatic), intel-microcode:amd64 (3.20191115.1ubuntu0.18.04.2, automatic), irqbalance:amd64 (1.3.0-0.1ubuntu0.18.04.1, automatic), libwind0-heimdal:amd64 (7.5.0+dfsg-1, automatic), update-manager-core:amd64 (1:18.04.11.10, automatic), uuid-runtime:amd64 (2.31.1-0.4ubuntu3.5, automatic), linux-headers-generic:amd64 (4.15.0.91.83, automatic), publicsuffix:amd64 (20180223.1310-1, automatic), ureadahead:amd64 (0.100.0-21, automatic), iptables:amd64 (1.6.1-2ubuntu2, automatic), os-prober:amd64 (1.74ubuntu1), libpcsclite1:amd64 (1.8.23-1, automatic), ed:amd64 (1.10-2.1, automatic), libdiscover2:amd64 (2.1.2-8, automatic), friendly-recovery:amd64 (0.2.38ubuntu1.1, automatic), iw:amd64 (4.14-0.1, automatic), python-samba:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15, automatic), libsasl2-modules-db:amd64 (2.1.27~101-g0780600+dfsg-3ubuntu2.1, automatic), libapt-inst2.0:amd64 (1.6.12, automatic), libldap-2.4-2:amd64 (2.4.45+dfsg-1ubuntu1.4, automatic), openssl:amd64 (1.1.1-1ubuntu2.1~18.04.5, automatic), strace:amd64 (4.21-1ubuntu1, automatic), finalrd:amd64 (3~ubuntu18.04.0, automatic), ntfs-3g:amd64 (1:2017.3.23-2ubuntu0.18.04.2, automatic), libnl-genl-3-200:amd64 (3.2.29-0ubuntu3, automatic), libwbclient0:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15, automatic), laptop-detect:amd64 (0.16), grub-common:amd64 (2.02-2ubuntu8.15, automatic), linux-image-generic:amd64 (4.15.0.91.83, automatic), libheimntlm0-heimdal:amd64 (7.5.0+dfsg-1, automatic), libparted2:amd64 (3.2-20ubuntu0.2, automatic), iucode-tool:amd64 (2.3.1-1, automatic), libpsl5:amd64 (0.19.1-5build1, automatic), python2.7-minimal:amd64 (2.7.17-1~18.04, automatic), tcpdump:amd64 (4.9.3-0ubuntu0.18.04.1, automatic), libpam-cap:amd64 (1:2.25-1.2, automatic), casper:amd64 (1.394.3), libelf1:amd64 (0.170-0.4ubuntu0.1, automatic), libirs160:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), bsdmainutils:amd64 (11.1.2ubuntu1, automatic), iputils-arping:amd64 (3:20161105-1ubuntu3, automatic), libbsd0:amd64 (0.8.7-1ubuntu0.1, automatic), bind9-host:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), language-selector-common:amd64 (0.188.3, automatic), lupin-casper:amd64 (0.57build1), lshw:amd64 (02.18-0.1ubuntu6.18.04.1, automatic), libavahi-common-data:amd64 (0.7-3.1ubuntu1.2, automatic), lsof:amd64 (4.89+dfsg-0.1, automatic), libqmi-glib5:amd64 (1.22.0-1.2~ubuntu18.04.1, automatic), powermgmt-base:amd64 (1.33, automatic), pptp-linux:amd64 (1.9.0+ds-2, automatic), dnsutils:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), geoip-database:amd64 (20180315-1, automatic), libavahi-common3:amd64 (0.7-3.1ubuntu1.2, automatic), sudo:amd64 (1.8.21p2-3ubuntu1.2, automatic), libpython2.7:amd64 (2.7.17-1~18.04, automatic), python2.7:amd64 (2.7.17-1~18.04, automatic), dnsmasq-base:amd64 (2.79-1, automatic), ubuntu-standard:amd64 (1.417.4), libheimbase1-heimdal:amd64 (7.5.0+dfsg-1, automatic), nano:amd64 (2.9.3-2, automatic), linux-base:amd64 (4.5ubuntu1, automatic), netbase:amd64 (5.4, automatic), ftp:amd64 (0.17-34, automatic), libnuma1:amd64 (2.0.11-2.1ubuntu0.1, automatic), python-apt-common:amd64 (1.6.5ubuntu0.2, automatic), libpolkit-agent-1-0:amd64 (0.105-20ubuntu0.18.04.5, automatic), libk5crypto3:amd64 (1.16-2ubuntu0.1, automatic), grub2-common:amd64 (2.02-2ubuntu8.15, automatic), iputils-tracepath:amd64 (3:20161105-1ubuntu3, automatic), libisc169:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), libip6tc0:amd64 (1.6.1-2ubuntu2, automatic), udev:amd64 (237-3ubuntu10.39, automatic), locales:amd64 (2.27-3ubuntu1), discover-data:amd64 (2.2013.01.11, automatic), libnm0:amd64 (1.10.6-2ubuntu1.4, automatic), popularity-contest:amd64 (1.66ubuntu1, automatic), plymouth-theme-ubuntu-text:amd64 (0.9.3-1ubuntu7.18.04.2, automatic), libsasl2-2:amd64 (2.1.27~101-g0780600+dfsg-3ubuntu2.1, automatic), linux-image-4.15.0-91-generic:amd64 (4.15.0-91.92, automatic), libklibc:amd64 (2.0.4-9ubuntu2, automatic), linux-headers-4.15.0-91:amd64 (4.15.0-91.92, automatic), libpipeline1:amd64 (1.5.0-1, automatic), isc-dhcp-common:amd64 (4.3.5-3ubuntu7.1, automatic), amd64-microcode:amd64 (3.20191021.1+really3.20181128.1~ubuntu0.18.04.1, automatic), command-not-found-data:amd64 (18.04.5, automatic), network-manager:amd64 (1.10.6-2ubuntu1.4), python:amd64 (2.7.15~rc1-1, automatic), initramfs-tools-bin:amd64 (0.130ubuntu3.9, automatic), grub-pc:amd64 (2.02-2ubuntu8.15, automatic), libgudev-1.0-0:amd64 (1:232-2, automatic), libx11-6:amd64 (2:1.6.4-3ubuntu0.2, automatic), kmod:amd64 (24-1ubuntu3.2, automatic), net-tools:amd64 (1.60+git20161116.90da8a0-1ubuntu1), cifs-utils:amd64 (2:6.8-1, automatic), libtalloc2:amd64 (2.1.10-2ubuntu1, automatic), python-talloc:amd64 (2.1.10-2ubuntu1, automatic), libplymouth4:amd64 (0.9.3-1ubuntu7.18.04.2, automatic), krb5-locales:amd64 (1.16-2ubuntu0.1, automatic), libndp0:amd64 (1.6-1, automatic), localechooser-data:amd64 (2.71ubuntu3, automatic), samba-libs:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15, automatic), grub-pc-bin:amd64 (2.02-2ubuntu8.15, automatic), python-crypto:amd64 (2.6.1-8ubuntu2, automatic), libpython-stdlib:amd64 (2.7.15~rc1-1, automatic), libiptc0:amd64 (1.6.1-2ubuntu2, automatic), user-setup:amd64 (1.63ubuntu5, automatic), libnfnetlink0:amd64 (1.0.1-3, automatic), groff-base:amd64 (1.22.3-10, automatic), ppp:amd64 (2.4.7-2+2ubuntu1.2, automatic), libxau6:amd64 (1:1.0.8-1, automatic), librtmp1:amd64 (2.4+20151223.gitfa8646d.1-1, automatic), libisc-export169:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), busybox-static:amd64 (1:1.27.2-2ubuntu3.2, automatic), python3-distupgrade:amd64 (1:18.04.37, automatic), man-db:amd64 (2.8.3-2ubuntu0.1, automatic), libsasl2-modules:amd64 (2.1.27~101-g0780600+dfsg-3ubuntu2.1, automatic), libgeoip1:amd64 (1.6.12-1, automatic), python3-commandnotfound:amd64 (18.04.5, automatic), psmisc:amd64 (23.1-1ubuntu0.1, automatic), python3-update-manager:amd64 (1:18.04.11.10, automatic), libxcb1:amd64 (1.13-2~ubuntu18.04, automatic), grub-gfxpayload-lists:amd64 (0.7, automatic), ubuntu-release-upgrader-core:amd64 (1:18.04.37, automatic), libatm1:amd64 (1:2.5.1-2build1, automatic), libkrb5support0:amd64 (1.16-2ubuntu0.1, automatic), libnih1:amd64 (1.0.3-6ubuntu2, automatic), libusb-0.1-4:amd64 (2:0.1.12-31, automatic), whiptail:amd64 (0.52.20-1ubuntu1, automatic), libnewt0.52:amd64 (0.52.20-1ubuntu1, automatic), libfuse2:amd64 (2.9.7-1ubuntu1, automatic), dmidecode:amd64 (3.1-1ubuntu0.1, automatic), samba-common:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15, automatic), discover:amd64 (2.1.2-8), libcap2-bin:amd64 (1:2.25-1.2, automatic), libnl-3-200:amd64 (3.2.29-0ubuntu3, automatic), libldap-common:amd64 (2.4.45+dfsg-1ubuntu1.4, automatic), libgdbm5:amd64 (1.14.1-6, automatic), liblwres160:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), libntfs-3g88:amd64 (1:2017.3.23-2ubuntu0.18.04.2, automatic), libhcrypto4-heimdal:amd64 (7.5.0+dfsg-1, automatic), ucf:amd64 (3.0038, automatic), ufw:amd64 (0.36-0ubuntu0.18.04.1, automatic), libkeyutils1:amd64 (1.5.9-9.2ubuntu2, automatic), libxmuu1:amd64 (2:1.1.2-2, automatic), libnetfilter-conntrack3:amd64 (1.0.6-2, automatic), libmm-glib0:amd64 (1.10.0-1~ubuntu18.04.2, automatic), distro-info-data:amd64 (0.37ubuntu0.6, automatic), parted:amd64 (3.2-20ubuntu0.2, automatic), libdrm2:amd64 (2.4.99-1ubuntu1~18.04.2, automatic), libdbus-glib-1-2:amd64 (0.110-2, automatic), libmbim-proxy:amd64 (1.18.0-1~ubuntu18.04.1, automatic), wpasupplicant:amd64 (2:2.6-15ubuntu2.5, automatic), usb-modeswitch-data:amd64 (20170806-2, automatic), mlocate:amd64 (0.26-2ubuntu3.1, automatic), libpolkit-backend-1-0:amd64 (0.105-20ubuntu0.18.04.5, automatic), eject:amd64 (2.1.5+deb1+cvs20081104-13.2, automatic), libx11-data:amd64 (2:1.6.4-3ubuntu0.2, automatic), iproute2:amd64 (4.15.0-2ubuntu1, automatic), openssh-client:amd64 (1:7.6p1-4ubuntu0.3, automatic), samba-common-bin:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15, automatic), libdns-export1100:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), libtdb1:amd64 (1.3.15-2, automatic), time:amd64 (1.7-25.1build1, automatic), usbutils:amd64 (1:007-4build1, automatic), libunwind8:amd64 (1.2.1-8, automatic), plymouth:amd64 (0.9.3-1ubuntu7.18.04.2, automatic), ltrace:amd64 (0.7.3-6ubuntu1, automatic), libxtables12:amd64 (1.6.1-2ubuntu2, automatic), policykit-1:amd64 (0.105-20ubuntu0.18.04.5, automatic), thermald:amd64 (1.7.0-5ubuntu5, automatic), lsb-release:amd64 (9.20170808ubuntu1, automatic), logrotate:amd64 (3.11.0-0.1ubuntu1, automatic), pciutils:amd64 (1:3.5.2-1ubuntu1.1, automatic), libpython2.7-minimal:amd64 (2.7.17-1~18.04, automatic), multiarch-support:amd64 (2.27-3ubuntu1, automatic), cpio:amd64 (2.12+dfsg-6ubuntu0.18.04.1, automatic), libedit2:amd64 (3.1-20170329-1, automatic), libroken18-heimdal:amd64 (7.5.0+dfsg-1, automatic), libpcap0.8:amd64 (1.8.1-6ubuntu1.18.04.1, automatic), libfreetype6:amd64 (2.8.1-2ubuntu2, automatic), ca-certificates:amd64 (20180409, automatic), rsync:amd64 (3.1.2-2.1ubuntu1.1, automatic), xauth:amd64 (1:1.0.10-1, automatic), modemmanager:amd64 (1.10.0-1~ubuntu18.04.2, automatic), apparmor:amd64 (2.12-4ubuntu5.1, automatic), command-not-found:amd64 (18.04.5, automatic), dns-root-data:amd64 (2018013001, automatic), libasn1-8-heimdal:amd64 (7.5.0+dfsg-1, automatic), libisccc160:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), libkrb5-26-heimdal:amd64 (7.5.0+dfsg-1, automatic), wget:amd64 (1.19.4-1ubuntu2.2, automatic), crda:amd64 (3.18-1build1, automatic), telnet:amd64 (0.17-41, automatic), cron:amd64 (3.0pl1-128.1ubuntu1, automatic), usb-modeswitch:amd64 (2.5.2+repack0-2ubuntu1, automatic), linux-firmware:amd64 (1.173.16, automatic), libbind9-160:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), accountsservice:amd64 (0.6.45-1ubuntu1, automatic), libpci3:amd64 (1:3.5.2-1ubuntu1.1, automatic), python-ldb:amd64 (2:1.2.3-1ubuntu0.1, automatic), libjansson4:amd64 (2.11-1, automatic), libdns1100:amd64 (1:9.11.3+dfsg-1ubuntu1.11, automatic), libbluetooth3:amd64 (5.48-0ubuntu3.3, automatic), gettext-base:amd64 (0.19.8.1-6ubuntu0.3, automatic), libpython2.7-stdlib:amd64 (2.7.17-1~18.04, automatic), python3-gdbm:amd64 (3.6.9-1~18.04, automatic), libavahi-client3:amd64 (0.7-3.1ubuntu1.2, automatic), libhx509-5-heimdal:amd64 (7.5.0+dfsg-1, automatic), isc-dhcp-client:amd64 (4.3.5-3ubuntu7.1, automatic), libtevent0:amd64 (0.9.34-1, automatic), klibc-utils:amd64 (2.0.4-9ubuntu2, automatic), libmbim-glib4:amd64 (1.18.0-1~ubuntu18.04.1, automatic), linux-generic:amd64 (4.15.0.91.83), python-minimal:amd64 (2.7.15~rc1-1, automatic), wireless-regdb:amd64 (2018.05.09-0ubuntu1~18.04.1, automatic), install-info:amd64 (6.5.0.dfsg.1-2, automatic), libcurl3-gnutls:amd64 (7.58.0-2ubuntu3.8, automatic), initramfs-tools-core:amd64 (0.130ubuntu3.9, automatic), initramfs-tools:amd64 (0.130ubuntu3.9, automatic), libmnl0:amd64 (1.0.4-2, automatic), python3-apt:amd64 (1.6.5ubuntu0.2, automatic), libfribidi0:amd64 (0.19.7-2, automatic), libaccountsservice0:amd64 (0.6.45-1ubuntu1, automatic), hdparm:amd64 (9.54+ds-1, automatic), libssl1.0.0:amd64 (1.0.2n-1ubuntu5.3, automatic), linux-modules-4.15.0-91-generic:amd64 (4.15.0-91.92, automatic), bash-completion:amd64 (1:2.8-1ubuntu1, automatic), libxext6:amd64 (2:1.3.3-1, automatic), libdrm-common:amd64 (2.4.99-1ubuntu1~18.04.2, automatic), busybox-initramfs:amd64 (1:1.27.2-2ubuntu3.2, automatic), linux-headers-4.15.0-91-generic:amd64 (4.15.0-91.92, automatic), libslang2:amd64 (2.3.1a-3ubuntu1, automatic), libpng16-16:amd64 (1.6.34-1ubuntu0.18.04.2, automatic)
+Upgrade: apt:amd64 (1.6.1, 1.6.12), libapt-pkg5.0:amd64 (1.6.1, 1.6.12), libudev1:amd64 (237-3ubuntu10, 237-3ubuntu10.39)
+End-Date: 2020-03-21  16:12:51
+
+Start-Date: 2020-03-21  16:13:37
+Commandline: apt install less nano vim
+Install: vim-common:amd64 (2:8.0.1453-1ubuntu1.1, automatic), libpython3.6:amd64 (3.6.9-1~18.04, automatic), vim-runtime:amd64 (2:8.0.1453-1ubuntu1.1, automatic), vim:amd64 (2:8.0.1453-1ubuntu1.1), xxd:amd64 (2:8.0.1453-1ubuntu1.1, automatic), libgpm2:amd64 (1.20.7-5, automatic), less:amd64 (487-0.1)
+End-Date: 2020-03-21  16:13:38
+
+Start-Date: 2020-03-21  16:19:49
+Commandline: apt install build-essential
+Requested-By: testrig (1000)
+Install: libmpc3:amd64 (1.1.0-1, automatic), libgcc-7-dev:amd64 (7.5.0-3ubuntu1~18.04, automatic), libmpx2:amd64 (8.3.0-26ubuntu1~18.04, automatic), gnupg-utils:amd64 (2.2.4-1ubuntu1.2, automatic), linux-libc-dev:amd64 (4.15.0-91.92, automatic), gpg-wks-client:amd64 (2.2.4-1ubuntu1.2, automatic), libmpfr6:amd64 (4.0.1-1, automatic), gnupg-l10n:amd64 (2.2.4-1ubuntu1.2, automatic), libfakeroot:amd64 (1.22-2ubuntu1, automatic), libc6-dev:amd64 (2.27-3ubuntu1, automatic), libksba8:amd64 (1.3.5-2, automatic), cpp-7:amd64 (7.5.0-3ubuntu1~18.04, automatic), libalgorithm-diff-perl:amd64 (1.19.03-1, automatic), libalgorithm-merge-perl:amd64 (0.08-3, automatic), binutils:amd64 (2.30-21ubuntu1~18.04.2, automatic), cpp:amd64 (4:7.4.0-1ubuntu2.3, automatic), libitm1:amd64 (8.3.0-26ubuntu1~18.04, automatic), g++:amd64 (4:7.4.0-1ubuntu2.3, automatic), perl-modules-5.26:amd64 (5.26.1-6ubuntu0.3, automatic), gpg-wks-server:amd64 (2.2.4-1ubuntu1.2, automatic), gcc-7-base:amd64 (7.5.0-3ubuntu1~18.04, automatic), gcc:amd64 (4:7.4.0-1ubuntu2.3, automatic), liblocale-gettext-perl:amd64 (1.07-3build2, automatic), gpg:amd64 (2.2.4-1ubuntu1.2, automatic), libcilkrts5:amd64 (7.5.0-3ubuntu1~18.04, automatic), libasan4:amd64 (7.5.0-3ubuntu1~18.04, automatic), libquadmath0:amd64 (8.3.0-26ubuntu1~18.04, automatic), libassuan0:amd64 (2.5.1-2, automatic), libisl19:amd64 (0.19-1, automatic), build-essential:amd64 (12.4ubuntu1), libfile-fcntllock-perl:amd64 (0.22-3build2, automatic), dirmngr:amd64 (2.2.4-1ubuntu1.2, automatic), libperl5.26:amd64 (5.26.1-6ubuntu0.3, automatic), binutils-x86-64-linux-gnu:amd64 (2.30-21ubuntu1~18.04.2, automatic), libstdc++-7-dev:amd64 (7.5.0-3ubuntu1~18.04, automatic), libtsan0:amd64 (8.3.0-26ubuntu1~18.04, automatic), libubsan0:amd64 (7.5.0-3ubuntu1~18.04, automatic), g++-7:amd64 (7.5.0-3ubuntu1~18.04, automatic), make:amd64 (4.1-9.1ubuntu1, automatic), fakeroot:amd64 (1.22-2ubuntu1, automatic), gcc-7:amd64 (7.5.0-3ubuntu1~18.04, automatic), liblsan0:amd64 (8.3.0-26ubuntu1~18.04, automatic), libgomp1:amd64 (8.3.0-26ubuntu1~18.04, automatic), manpages-dev:amd64 (4.15-1, automatic), binutils-common:amd64 (2.30-21ubuntu1~18.04.2, automatic), libc-dev-bin:amd64 (2.27-3ubuntu1, automatic), libbinutils:amd64 (2.30-21ubuntu1~18.04.2, automatic), perl:amd64 (5.26.1-6ubuntu0.3, automatic), libatomic1:amd64 (8.3.0-26ubuntu1~18.04, automatic), gnupg:amd64 (2.2.4-1ubuntu1.2, automatic), libcc1-0:amd64 (8.3.0-26ubuntu1~18.04, automatic), libgdbm-compat4:amd64 (1.14.1-6, automatic), pinentry-curses:amd64 (1.1.0-1, automatic), libnpth0:amd64 (1.5-3, automatic), libdpkg-perl:amd64 (1.19.0.5ubuntu2.3, automatic), patch:amd64 (2.7.6-2ubuntu1.1, automatic), gpg-agent:amd64 (2.2.4-1ubuntu1.2, automatic), libalgorithm-diff-xs-perl:amd64 (0.04-5, automatic), gpgconf:amd64 (2.2.4-1ubuntu1.2, automatic), gpgsm:amd64 (2.2.4-1ubuntu1.2, automatic), dpkg-dev:amd64 (1.19.0.5ubuntu2.3, automatic)
+Upgrade: perl-base:amd64 (5.26.1-6, 5.26.1-6ubuntu0.3), gcc-8-base:amd64 (8-20180414-1ubuntu2, 8.3.0-26ubuntu1~18.04), libgcc1:amd64 (1:8-20180414-1ubuntu2, 1:8.3.0-26ubuntu1~18.04), gpgv:amd64 (2.2.4-1ubuntu1, 2.2.4-1ubuntu1.2), libstdc++6:amd64 (8-20180414-1ubuntu2, 8.3.0-26ubuntu1~18.04)
+End-Date: 2020-03-21  16:20:06
+
+Start-Date: 2020-03-21  16:27:43
+Commandline: apt install libssh2-1-dev
+Requested-By: testrig (1000)
+Install: libgcrypt20-dev:amd64 (1.8.1-4ubuntu1.2, automatic), libssh2-1:amd64 (1.8.0-1, automatic), libgpg-error-dev:amd64 (1.27-6, automatic), libssh2-1-dev:amd64 (1.8.0-1)
+Upgrade: libgcrypt20:amd64 (1.8.1-4ubuntu1, 1.8.1-4ubuntu1.2)
+End-Date: 2020-03-21  16:27:45
+
+Start-Date: 2020-03-21  16:29:30
+Commandline: apt install libz-dev
+Requested-By: testrig (1000)
+Install: zlib1g-dev:amd64 (1:1.2.11.dfsg-0ubuntu2)
+End-Date: 2020-03-21  16:29:30
+
+Start-Date: 2020-03-21  16:31:41
+Commandline: apt install libio-socket-ssl-perl
+Requested-By: testrig (1000)
+Install: libnet-libidn-perl:amd64 (0.12.ds-2build4, automatic), libnet-ssleay-perl:amd64 (1.84-1ubuntu0.2, automatic), libio-socket-ssl-perl:amd64 (2.060-3~ubuntu18.04.1), perl-openssl-defaults:amd64 (3build1, automatic)
+End-Date: 2020-03-21  16:31:41
+
+Start-Date: 2020-03-21  16:38:05
+Commandline: apt install encfs
+Requested-By: testrig (1000)
+Install: encfs:amd64 (1.9.2-2build2), libtinyxml2-6:amd64 (6.0.0+dfsg-1, automatic)
+End-Date: 2020-03-21  16:38:07
+
+Start-Date: 2020-03-21  19:23:09
+Commandline: apt remove vim
+Requested-By: testrig (1000)
+Remove: vim:amd64 (2:8.0.1453-1ubuntu1.1)
+End-Date: 2020-03-21  19:23:10
+
+Start-Date: 2020-03-21  19:23:37
+Commandline: apt remove build-essential
+Requested-By: testrig (1000)
+Remove: build-essential:amd64 (12.4ubuntu1)
+End-Date: 2020-03-21  19:23:37
+
+Start-Date: 2020-03-21  19:23:48
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: vim-common:amd64 (2:8.0.1453-1ubuntu1.1), g++:amd64 (4:7.4.0-1ubuntu2.3), libpython3.6:amd64 (3.6.9-1~18.04), libstdc++-7-dev:amd64 (7.5.0-3ubuntu1~18.04), g++-7:amd64 (7.5.0-3ubuntu1~18.04), vim-runtime:amd64 (2:8.0.1453-1ubuntu1.1), xxd:amd64 (2:8.0.1453-1ubuntu1.1)
+End-Date: 2020-03-21  19:23:49
+
+Start-Date: 2020-03-21  19:25:55
+Commandline: apt remove telnet
+Requested-By: testrig (1000)
+Remove: telnet:amd64 (0.17-41)
+End-Date: 2020-03-21  19:25:55
+
+Start-Date: 2020-03-21  19:26:03
+Commandline: apt remove tcpdump
+Requested-By: testrig (1000)
+Remove: tcpdump:amd64 (4.9.3-0ubuntu0.18.04.1)
+End-Date: 2020-03-21  19:26:03
+
+Start-Date: 2020-03-21  19:26:41
+Commandline: apt remove strace
+Requested-By: testrig (1000)
+Remove: strace:amd64 (4.21-1ubuntu1), ubuntu-standard:amd64 (1.417.4)
+End-Date: 2020-03-21  19:26:41
+
+Start-Date: 2020-03-21  19:27:23
+Commandline: apt remove rsync
+Requested-By: testrig (1000)
+Remove: rsync:amd64 (3.1.2-2.1ubuntu1.1)
+End-Date: 2020-03-21  19:27:23
+
+Start-Date: 2020-03-21  19:29:14
+Commandline: apt remove linux-generic
+Requested-By: testrig (1000)
+Remove: linux-generic:amd64 (4.15.0.91.83)
+End-Date: 2020-03-21  19:29:14
+
+Start-Date: 2020-03-21  19:29:25
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: linux-headers-generic:amd64 (4.15.0.91.83), libunwind8:amd64 (1.2.1-8)
+End-Date: 2020-03-21  19:29:26
+
+Start-Date: 2020-03-21  19:30:38
+Commandline: apt remove gcc-7 cpp-7
+Requested-By: testrig (1000)
+Remove: cpp-7:amd64 (7.5.0-3ubuntu1~18.04), cpp:amd64 (4:7.4.0-1ubuntu2.3), gcc:amd64 (4:7.4.0-1ubuntu2.3), gcc-7:amd64 (7.5.0-3ubuntu1~18.04)
+End-Date: 2020-03-21  19:30:39
+
+Start-Date: 2020-03-21  19:30:44
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: libmpc3:amd64 (1.1.0-1), libgcc-7-dev:amd64 (7.5.0-3ubuntu1~18.04), libmpx2:amd64 (8.3.0-26ubuntu1~18.04), libmpfr6:amd64 (4.0.1-1), libitm1:amd64 (8.3.0-26ubuntu1~18.04), gcc-7-base:amd64 (7.5.0-3ubuntu1~18.04), libcilkrts5:amd64 (7.5.0-3ubuntu1~18.04), libasan4:amd64 (7.5.0-3ubuntu1~18.04), libquadmath0:amd64 (8.3.0-26ubuntu1~18.04), libisl19:amd64 (0.19-1), libtsan0:amd64 (8.3.0-26ubuntu1~18.04), libubsan0:amd64 (7.5.0-3ubuntu1~18.04), liblsan0:amd64 (8.3.0-26ubuntu1~18.04), libgomp1:amd64 (8.3.0-26ubuntu1~18.04), libatomic1:amd64 (8.3.0-26ubuntu1~18.04), libcc1-0:amd64 (8.3.0-26ubuntu1~18.04)
+End-Date: 2020-03-21  19:30:44
+
+Start-Date: 2020-03-21  19:31:20
+Commandline: apt remove linux-modules-4.15.0-91-generic
+Requested-By: testrig (1000)
+Remove: linux-modules-extra-4.15.0-91-generic:amd64 (4.15.0-91.92), linux-image-generic:amd64 (4.15.0.91.83), linux-image-4.15.0-91-generic:amd64 (4.15.0-91.92), linux-modules-4.15.0-91-generic:amd64 (4.15.0-91.92)
+End-Date: 2020-03-21  19:31:21
+
+Start-Date: 2020-03-21  19:31:58
+Commandline: apt remove linux-headers-4.15.0-91
+Requested-By: testrig (1000)
+Remove: linux-headers-4.15.0-91:amd64 (4.15.0-91.92), linux-headers-4.15.0-91-generic:amd64 (4.15.0-91.92)
+End-Date: 2020-03-21  19:31:59
+
+Start-Date: 2020-03-21  20:04:16
+Commandline: apt-get install deborphan
+Install: deborphan:amd64 (1.7.28.8ubuntu2), dialog:amd64 (1.3-20171209-1, automatic)
+End-Date: 2020-03-21  20:04:17
+
+Start-Date: 2020-03-21  20:05:09
+Commandline: apt remove deborphan
+Requested-By: testrig (1000)
+Remove: deborphan:amd64 (1.7.28.8ubuntu2)
+End-Date: 2020-03-21  20:05:09
+
+Start-Date: 2020-03-21  20:05:45
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: intel-microcode:amd64 (3.20191115.1ubuntu0.18.04.2), iucode-tool:amd64 (2.3.1-1), grub2-common:amd64 (2.02-2ubuntu8.15), amd64-microcode:amd64 (3.20191021.1+really3.20181128.1~ubuntu0.18.04.1), grub-pc:amd64 (2.02-2ubuntu8.15), grub-pc-bin:amd64 (2.02-2ubuntu8.15), grub-gfxpayload-lists:amd64 (0.7), libdbus-glib-1-2:amd64 (0.110-2), thermald:amd64 (1.7.0-5ubuntu5)
+End-Date: 2020-03-21  20:05:45
+
+Start-Date: 2020-03-21  20:26:27
+Commandline: apt remove man-db
+Requested-By: testrig (1000)
+Remove: man-db:amd64 (2.8.3-2ubuntu0.1)
+End-Date: 2020-03-21  20:26:27
+
+Start-Date: 2020-03-21  20:26:39
+Commandline: apt remove linux-firmware
+Requested-By: testrig (1000)
+Remove: linux-firmware:amd64 (1.173.16)
+End-Date: 2020-03-21  20:26:39
+
+Start-Date: 2020-03-21  20:28:33
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: groff-base:amd64 (1.22.3-10)
+End-Date: 2020-03-21  20:28:33
+
+Start-Date: 2020-03-21  20:29:15
+Commandline: apt remove geoip-database
+Requested-By: testrig (1000)
+Remove: geoip-database:amd64 (20180315-1)
+End-Date: 2020-03-21  20:29:15
+
+Start-Date: 2020-03-21  20:49:58
+Commandline: apt remove curl wget
+Requested-By: testrig (1000)
+Remove: wget:amd64 (1.19.4-1ubuntu2.2)
+End-Date: 2020-03-21  20:49:59
+
+Start-Date: 2020-03-21  20:50:33
+Commandline: apt remove xauth
+Requested-By: testrig (1000)
+Remove: xauth:amd64 (1:1.0.10-1)
+End-Date: 2020-03-21  20:50:33
+
+Start-Date: 2020-03-21  20:51:19
+Commandline: apt remove whiptail ubuntu-release-upgrader-core
+Requested-By: testrig (1000)
+Remove: update-manager-core:amd64 (1:18.04.11.10), friendly-recovery:amd64 (0.2.38ubuntu1.1), ubuntu-release-upgrader-core:amd64 (1:18.04.37), whiptail:amd64 (0.52.20-1ubuntu1)
+End-Date: 2020-03-21  20:51:19
+
+Start-Date: 2020-03-21  20:51:28
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: libxdmcp6:amd64 (1:1.1.2-3), python3-distro-info:amd64 (0.18ubuntu0.18.04.1), libx11-6:amd64 (2:1.6.4-3ubuntu0.2), libxau6:amd64 (1:1.0.8-1), python3-distupgrade:amd64 (1:18.04.37), python3-update-manager:amd64 (1:18.04.11.10), libxcb1:amd64 (1.13-2~ubuntu18.04), libxmuu1:amd64 (2:1.1.2-2), libx11-data:amd64 (2:1.6.4-3ubuntu0.2), libxext6:amd64 (2:1.3.3-1)
+End-Date: 2020-03-21  20:51:28
+
+Start-Date: 2020-03-21  20:52:16
+Commandline: apt remove plymouth
+Requested-By: testrig (1000)
+Remove: plymouth-theme-ubuntu-text:amd64 (0.9.3-1ubuntu7.18.04.2), plymouth:amd64 (0.9.3-1ubuntu7.18.04.2)
+End-Date: 2020-03-21  20:52:16
+
+Start-Date: 2020-03-21  20:52:20
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: libdrm2:amd64 (2.4.99-1ubuntu1~18.04.2), libdrm-common:amd64 (2.4.99-1ubuntu1~18.04.2)
+End-Date: 2020-03-21  20:52:20
+
+Start-Date: 2020-03-21  20:53:06
+Commandline: apt remove manpages make
+Requested-By: testrig (1000)
+Remove: manpages:amd64 (4.15-1), make:amd64 (4.1-9.1ubuntu1), manpages-dev:amd64 (4.15-1), dpkg-dev:amd64 (1.19.0.5ubuntu2.3)
+End-Date: 2020-03-21  20:53:06
+
+Start-Date: 2020-03-21  20:53:12
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: libfakeroot:amd64 (1.22-2ubuntu1), libalgorithm-diff-perl:amd64 (1.19.03-1), libalgorithm-merge-perl:amd64 (0.08-3), libfile-fcntllock-perl:amd64 (0.22-3build2), fakeroot:amd64 (1.22-2ubuntu1), libdpkg-perl:amd64 (1.19.0.5ubuntu2.3), patch:amd64 (2.7.6-2ubuntu1.1), libalgorithm-diff-xs-perl:amd64 (0.04-5)
+End-Date: 2020-03-21  20:53:12
+
+Start-Date: 2020-03-21  20:54:13
+Commandline: apt remove patch parted
+Requested-By: testrig (1000)
+Remove: parted:amd64 (3.2-20ubuntu0.2)
+End-Date: 2020-03-21  20:54:13
+
+Start-Date: 2020-03-21  20:54:16
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: libparted2:amd64 (3.2-20ubuntu0.2)
+End-Date: 2020-03-21  20:54:16
+
+Start-Date: 2020-03-21  21:11:55
+Commandline: apt remove gnupg
+Requested-By: testrig (1000)
+Remove: gnupg:amd64 (2.2.4-1ubuntu1.2)
+End-Date: 2020-03-21  21:11:55
+
+Start-Date: 2020-03-21  21:12:00
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: gnupg-utils:amd64 (2.2.4-1ubuntu1.2), gpg-wks-client:amd64 (2.2.4-1ubuntu1.2), gnupg-l10n:amd64 (2.2.4-1ubuntu1.2), libksba8:amd64 (1.3.5-2), gpg-wks-server:amd64 (2.2.4-1ubuntu1.2), gpg:amd64 (2.2.4-1ubuntu1.2), libassuan0:amd64 (2.5.1-2), dirmngr:amd64 (2.2.4-1ubuntu1.2), pinentry-curses:amd64 (1.1.0-1), libnpth0:amd64 (1.5-3), gpg-agent:amd64 (2.2.4-1ubuntu1.2), gpgconf:amd64 (2.2.4-1ubuntu1.2), gpgsm:amd64 (2.2.4-1ubuntu1.2)
+End-Date: 2020-03-21  21:12:00
+
+Start-Date: 2020-03-21  21:15:23
+Commandline: apt remove ftp
+Requested-By: testrig (1000)
+Remove: ftp:amd64 (0.17-34)
+End-Date: 2020-03-21  21:15:23
+
+Start-Date: 2020-03-21  21:15:30
+Commandline: apt remove nano
+Requested-By: testrig (1000)
+Remove: nano:amd64 (2.9.3-2)
+End-Date: 2020-03-21  21:15:30
+
+Start-Date: 2020-03-21  21:16:45
+Commandline: apt remove command-not-found
+Requested-By: testrig (1000)
+Remove: command-not-found:amd64 (18.04.5)
+End-Date: 2020-03-21  21:16:46
+
+Start-Date: 2020-03-21  21:16:52
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: command-not-found-data:amd64 (18.04.5), python3-commandnotfound:amd64 (18.04.5), python3-gdbm:amd64 (3.6.9-1~18.04)
+End-Date: 2020-03-21  21:16:52
+
+Start-Date: 2020-03-21  21:17:38
+Commandline: apt remove dosfstools
+Requested-By: testrig (1000)
+Remove: dosfstools:amd64 (4.1-1)
+End-Date: 2020-03-21  21:17:38
+
+Start-Date: 2020-03-21  21:18:53
+Commandline: apt remove hdparm
+Requested-By: testrig (1000)
+Remove: hdparm:amd64 (9.54+ds-1)
+End-Date: 2020-03-21  21:18:53
+
+Start-Date: 2020-03-21  21:19:18
+Commandline: apt remove info
+Requested-By: testrig (1000)
+Remove: info:amd64 (6.5.0.dfsg.1-2)
+End-Date: 2020-03-21  21:19:18
+
+Start-Date: 2020-03-21  21:19:31
+Commandline: apt remove iptables
+Requested-By: testrig (1000)
+Remove: iptables:amd64 (1.6.1-2ubuntu2), ufw:amd64 (0.36-0ubuntu0.18.04.1)
+End-Date: 2020-03-21  21:19:31
+
+Start-Date: 2020-03-21  21:19:53
+Commandline: apt remove iputils-tracepath
+Requested-By: testrig (1000)
+Remove: iputils-tracepath:amd64 (3:20161105-1ubuntu3)
+End-Date: 2020-03-21  21:19:53
+
+Start-Date: 2020-03-21  21:20:24
+Commandline: apt remove krb5-locales
+Requested-By: testrig (1000)
+Remove: krb5-locales:amd64 (1.16-2ubuntu0.1)
+End-Date: 2020-03-21  21:20:24
+
+Start-Date: 2020-03-21  21:22:00
+Commandline: apt remove openssh-client
+Requested-By: testrig (1000)
+Remove: openssh-client:amd64 (1:7.6p1-4ubuntu0.3)
+End-Date: 2020-03-21  21:22:00
+
+Start-Date: 2020-03-21  21:22:23
+Commandline: apt autoremove
+Requested-By: testrig (1000)
+Remove: libip6tc0:amd64 (1.6.1-2ubuntu2), libiptc0:amd64 (1.6.1-2ubuntu2), libedit2:amd64 (3.1-20170329-1), libssl1.0.0:amd64 (1.0.2n-1ubuntu5.3)
+End-Date: 2020-03-21  21:22:23
+
+Start-Date: 2020-03-21  21:23:38
+Commandline: apt remove locales
+Requested-By: testrig (1000)
+Remove: locales:amd64 (2.27-3ubuntu1)
+End-Date: 2020-03-21  21:23:38
+
+Start-Date: 2020-03-21  21:24:43
+Commandline: apt remove openssl
+Requested-By: testrig (1000)
+Remove: openssl:amd64 (1.1.1-1ubuntu2.1~18.04.5), ca-certificates:amd64 (20180409)
+End-Date: 2020-03-21  21:24:43
+
+Start-Date: 2020-03-21  21:25:01
+Commandline: apt install ca-certificates
+Requested-By: testrig (1000)
+Install: openssl:amd64 (1.1.1-1ubuntu2.1~18.04.5, automatic), ca-certificates:amd64 (20180409)
+End-Date: 2020-03-21  21:25:03
+
+Start-Date: 2020-03-27  20:29:57
+Commandline: apt install openssh-client
+Install: libxdmcp6:amd64 (1:1.1.2-3, automatic), libx11-6:amd64 (2:1.6.4-3ubuntu0.2, automatic), libxau6:amd64 (1:1.0.8-1, automatic), libxcb1:amd64 (1.13-2~ubuntu18.04, automatic), libxmuu1:amd64 (2:1.1.2-2, automatic), libx11-data:amd64 (2:1.6.4-3ubuntu0.2, automatic), openssh-client:amd64 (1:7.6p1-4ubuntu0.3), libedit2:amd64 (3.1-20170329-1, automatic), xauth:amd64 (1:1.0.10-1, automatic), libssl1.0.0:amd64 (1.0.2n-1ubuntu5.3, automatic), libxext6:amd64 (2:1.3.3-1, automatic)
+End-Date: 2020-03-27  20:30:04
+
+Start-Date: 2020-03-27  20:30:26
+Commandline: apt remove xauth
+Remove: xauth:amd64 (1:1.0.10-1)
+End-Date: 2020-03-27  20:30:26
+
+Start-Date: 2020-03-27  20:30:44
+Commandline: apt autoremove
+Remove: libxdmcp6:amd64 (1:1.1.2-3), libx11-6:amd64 (2:1.6.4-3ubuntu0.2), libxau6:amd64 (1:1.0.8-1), libxcb1:amd64 (1.13-2~ubuntu18.04), libxmuu1:amd64 (2:1.1.2-2), libx11-data:amd64 (2:1.6.4-3ubuntu0.2), libxext6:amd64 (2:1.3.3-1)
+End-Date: 2020-03-27  20:30:45
+
+Start-Date: 2020-03-28  02:32:52
+Commandline: apt install deborphan
+Install: deborphan:amd64 (1.7.28.8ubuntu2)
+End-Date: 2020-03-28  02:32:53

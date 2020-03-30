@@ -41,7 +41,7 @@ is_ignored_file() {
 	return 1
 }
 
-VERSION="`basename $0` ver. 0.91-ubuntu1"
+VERSION="`basename $0` ver. 1.51"
 USAGE="Usage: `basename $0` < option > | --status-all | \
 [ service_name [ command | --full-restart ] ]"
 SERVICE=
@@ -81,7 +81,7 @@ while [ $# -gt 0 ]; do
               *)
                 if ! is_ignored_file "${SERVICE}" \
 		    && [ -x "${SERVICEDIR}/${SERVICE}" ]; then
-                        out=$(env -i LANG="$LANG" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" status 2>&1)
+                        out=$(env -i LANG="$LANG" LANGUAGE="$LANGUAGE" LC_CTYPE="$LC_CTYPE" LC_NUMERIC="$LC_NUMERIC" LC_TIME="$LC_TIME" LC_COLLATE="$LC_COLLATE" LC_MONETARY="$LC_MONETARY" LC_MESSAGES="$LC_MESSAGES" LC_PAPER="$LC_PAPER" LC_NAME="$LC_NAME" LC_ADDRESS="$LC_ADDRESS" LC_TELEPHONE="$LC_TELEPHONE" LC_MEASUREMENT="$LC_MEASUREMENT" LC_IDENTIFICATION="$LC_IDENTIFICATION" LC_ALL="$LC_ALL" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" status 2>&1)
                         retval=$?
                         if echo "$out" | egrep -iq "usage:"; then
                           #printf " %s %-60s %s\n" "[?]" "$SERVICE:" "unknown" 1>&2
@@ -98,7 +98,7 @@ while [ $# -gt 0 ]; do
                             continue
                           fi
                         fi
-                  #env -i LANG="$LANG" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" status
+                  #env -i LANG="$LANG" LANGUAGE="$LANGUAGE" LC_CTYPE="$LC_CTYPE" LC_NUMERIC="$LC_NUMERIC" LC_TIME="$LC_TIME" LC_COLLATE="$LC_COLLATE" LC_MONETARY="$LC_MONETARY" LC_MESSAGES="$LC_MESSAGES" LC_PAPER="$LC_PAPER" LC_NAME="$LC_NAME" LC_ADDRESS="$LC_ADDRESS" LC_TELEPHONE="$LC_TELEPHONE" LC_MEASUREMENT="$LC_MEASUREMENT" LC_IDENTIFICATION="$LC_IDENTIFICATION" LC_ALL="$LC_ALL" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" status
                 fi
                 ;;
             esac
@@ -112,8 +112,8 @@ while [ $# -gt 0 ]; do
              ACTION="restart"
           else
              if [ -x "${SERVICEDIR}/${SERVICE}" ]; then
-               env -i LANG="$LANG" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" stop
-               env -i LANG="$LANG" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" start
+               env -i LANG="$LANG" LANGUAGE="$LANGUAGE" LC_CTYPE="$LC_CTYPE" LC_NUMERIC="$LC_NUMERIC" LC_TIME="$LC_TIME" LC_COLLATE="$LC_COLLATE" LC_MONETARY="$LC_MONETARY" LC_MESSAGES="$LC_MESSAGES" LC_PAPER="$LC_PAPER" LC_NAME="$LC_NAME" LC_ADDRESS="$LC_ADDRESS" LC_TELEPHONE="$LC_TELEPHONE" LC_MEASUREMENT="$LC_MEASUREMENT" LC_IDENTIFICATION="$LC_IDENTIFICATION" LC_ALL="$LC_ALL" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" stop
+               env -i LANG="$LANG" LANGUAGE="$LANGUAGE" LC_CTYPE="$LC_CTYPE" LC_NUMERIC="$LC_NUMERIC" LC_TIME="$LC_TIME" LC_COLLATE="$LC_COLLATE" LC_MONETARY="$LC_MONETARY" LC_MESSAGES="$LC_MESSAGES" LC_PAPER="$LC_PAPER" LC_NAME="$LC_NAME" LC_ADDRESS="$LC_ADDRESS" LC_TELEPHONE="$LC_TELEPHONE" LC_MEASUREMENT="$LC_MEASUREMENT" LC_IDENTIFICATION="$LC_IDENTIFICATION" LC_ALL="$LC_ALL" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" start
                exit $?
              fi
           fi
@@ -129,33 +129,10 @@ while [ $# -gt 0 ]; do
    esac
 done
 
-# Operate against system upstart, not session
-unset UPSTART_SESSION
-if [ -r "/etc/init/${SERVICE}.conf" ] && which initctl >/dev/null \
-   && initctl version 2>/dev/null | grep -q upstart \
-   && initctl status ${SERVICE} 2>/dev/null 1>/dev/null
-then
-   # Upstart configuration exists for this job and we're running on upstart
-   case "${ACTION}" in
-      start|stop|status|reload)
-         # Action is a valid upstart action
-         exec ${ACTION} ${SERVICE} ${OPTIONS}
-      ;;
-      restart|force-reload)
-        # Map restart to the usual sysvinit behavior.
-        # Map force-reload to restart as per Debian policy 9.3.2,
-        # since there is no way to know if "reload" is supported
-         stop ${SERVICE} ${OPTIONS} || :
-         exec start ${SERVICE} ${OPTIONS}
-      ;;
-   esac
-fi
-
-
 run_via_sysvinit() {
    # Otherwise, use the traditional sysvinit
    if [ -x "${SERVICEDIR}/${SERVICE}" ]; then
-      exec env -i LANG="$LANG" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" ${ACTION} ${OPTIONS}
+      exec env -i LANG="$LANG" LANGUAGE="$LANGUAGE" LC_CTYPE="$LC_CTYPE" LC_NUMERIC="$LC_NUMERIC" LC_TIME="$LC_TIME" LC_COLLATE="$LC_COLLATE" LC_MONETARY="$LC_MONETARY" LC_MESSAGES="$LC_MESSAGES" LC_PAPER="$LC_PAPER" LC_NAME="$LC_NAME" LC_ADDRESS="$LC_ADDRESS" LC_TELEPHONE="$LC_TELEPHONE" LC_MEASUREMENT="$LC_MEASUREMENT" LC_IDENTIFICATION="$LC_IDENTIFICATION" LC_ALL="$LC_ALL" PATH="$PATH" TERM="$TERM" "$SERVICEDIR/$SERVICE" ${ACTION} ${OPTIONS}
    else
       echo "${SERVICE}: unrecognized service" >&2
       exit 1
@@ -189,12 +166,12 @@ then
    # the synchronous wait plus systemd's normal behaviour of
    # transactionally processing all dependencies first easily
    # causes dependency loops
-   if ! OUT=$(systemctl is-system-running 2>/dev/null) && [ "$OUT" != "degraded" ]; then
+   if ! systemctl --quiet is-active multi-user.target; then
        sctl_args="--job-mode=ignore-dependencies"
    fi
 
    case "${ACTION}" in
-      restart|status)
+      restart|status|try-restart)
          exec systemctl $sctl_args ${ACTION} ${UNIT}
       ;;
       start|stop)

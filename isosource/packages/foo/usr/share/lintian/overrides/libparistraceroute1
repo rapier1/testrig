@@ -1,0 +1,2 @@
+# Upstream uses the API version, not the full soname
+libparistraceroute1: package-name-doesnt-match-sonames libparistraceroute-0.9-1

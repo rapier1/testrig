@@ -29,9 +29,9 @@
 
 #prevent the user from exiting the application
 #off for development
-$SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
-$SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
-$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+#$SIG{INT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+#$SIG{TSTP} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
+#$SIG{QUIT} = sub { print "You are not allowed to stop the TestRig 2.0 application.\n";};
 
 use strict;
 use warnings;
@@ -45,6 +45,7 @@ use File::Find;
 use Switch;
 use Net::SSH2;
 use POSIX qw(strftime);
+use Data::Dumper;
 
 # settings and defaults
 my $cfg_path = "/usr/local/etc/testrig/tr2.cfg";
@@ -90,41 +91,162 @@ sub fetchUUID {
 }
 
 sub notice {
-    my $cmd = "/usr/bin/clear";
-    runSystem ($cmd, 0, 0);
-    print<<EOF;
+    my $supress_notice = shift @_;
+    if (!$supress_notice) {
+	my $cmd = "/usr/bin/clear";
+	runSystem ($cmd, 0, 0);
+	print<<EOF;
 The TestRig 2.0 automated network test suit will run a series of tests
 against a host a remote host. The goal is to establish a baseline set of
 metrics and collect data using an optimally configured client. This
 data will then be sent to a newtork operations center where it will 
-be analyzed by network engineers. *IMPORTANT* This test will use 
-tcpdump to 'sniff' network traffic between this client and the remote
-host. It will only collect data on this client and only network packets 
-being sent to or received from the remote host. Also, this data may 
-be used in non-identifiable ways in research projects. 
+be analyzed by network engineers.\n
+*IMPORTANT* This test will use tcpdump to 'sniff' network traffic between 
+this client and the remote host. It will only collect data on this client 
+and only network packets being sent to or received from the remote host. 
+Also, this data may be used in non-identifiable ways in research projects. 
 If you agree to this please type 'yes' at the prompt.
 EOF
-   print "Do you agree (yes/no)? ";
-   my $response = <>;
-   chomp $response;
-   if ($response =~ m/yes/i) {
-      return 1;
-   } else {
-      logger ("crit", "You have chosen to not continue the tests.");
-   }
+    }
+    print "Do you agree (yes/no)? ";
+    my $response = <>;
+    chomp $response;
+    if ($response =~ m/yes/i) {
+	return 1;
+    }
+    if ($response =~ m/no/i) {
+	logger ("crit", "You have chosen to not continue the tests.");
+    }
+    print "\nYou need to answer only 'yes' or 'no'. Please try again.\n\n";
+    sleep 2;
+    &notice(1);
 }
 
+# if we have multiple interfaces we need to ask the user
+# which interface they would like to use.
 sub getIPs {
    my $interface;
    my %IPs;
- 
+
+   # Currently doing this because the kernel isn't starting networking services on boot
+   # I have no idea why but I'll resolve it shortly
+   print "\nStarting network services all interfaces\n";
    foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
       $interface = $1 if /^(\S+?):?\s/;
       next unless defined $interface;
+      if ($interface eq "lo") {
+	  next;
+      }
+      my $command = "/sbin/dhclient $interface";
+      runSystem($command, 0, 1);      
+   }
+
+   foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
+      $interface = $1 if /^(\S+?):?\s/;
+      next unless defined $interface;
+      if ($interface eq "lo") {
+	  next;
+      }
       $IPs{$interface}->{STATE}=uc($1) if /\b(up|down)\b/i;
       $IPs{$interface}->{IP}=$1 if /inet\D+(\d+\.\d+\.\d+\.\d+)/i;
    }
-   return $IPs{eth0}{IP};
+
+   my $num_interfaces = keys %IPs;
+
+   print "\nInterfaces found: $num_interfaces\n";
+   #print Dumper(%IPs);
+
+   if ($num_interfaces == 1) {
+       my $key;
+       $key = (keys %IPs)[0]; #only one key so this returns that key
+       print "Using $IPs{$key}{IP} on interface $key\n";
+       return $IPs{$key}{IP};
+   }
+   
+   my $default = getDefault();
+   my $i = 1;
+   my $IP;
+   my @IFarray;
+   my $input;
+   print "\nAvailable Interfaces to test:\n";
+
+   foreach my $key (sort keys %IPs) {
+       $IFarray[$i] = $key;
+       print "$i)\t$key\t\t$IPs{$key}{IP}";
+       if ($key eq $default) {
+	   $IP = $IPs{$key}{IP};
+	   print "   <-- default ";
+       }
+       print "\n";
+       $i++;
+   }
+ USERENTRY: 
+   print "\nEnter the number of the interface you would like to test (enter for default): ";
+   eval{ # give the user 10 seconds to answer
+       local $SIG{ALRM} = sub { die "No user input. Using default.\n" };
+	alarm 10;
+	$input = <STDIN>;
+	alarm 0;
+	chomp $input;
+   };
+   if (!$input) {
+       return $IP;
+   }
+   if (exists($IFarray[$input])) {
+       $IP = $IPs{$IFarray[$input]}{IP};
+   } else {
+       print "Invalid entry. Please try again.\n";
+       goto USERENTRY;
+   }
+   return $IP;
+}
+
+sub enableJumboFrames {
+    my $ip =shift @_;
+    my $interface = getInterfaceFromIP ($ip);
+    my $input; 
+
+    print "\nUse 9k jumbo frames on $interface (system default is no)?\n";
+    print "[y/N]: ";
+    eval{ # give the user 10 seconds to answer
+	local $SIG{ALRM} = sub { die "No user input. Using system default.\n" };
+	alarm 10;
+	$input =<STDIN>;
+	alarm 0;
+	chomp $input;
+    };
+    if ($@) {
+	print $@;
+	return;
+    }
+    if ($input =~ /y/i) {
+	my $command = "/sbin/ip link set $interface mtu 9000";
+	runSystem($command, 0, 1);
+    }
+    return;
+}
+
+sub getInterfaceFromIP {
+    my $ip = shift @_;
+    my %IPs;
+    foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
+	my $interface = $1 if /^(\S+?):?\s/;
+	next unless defined $interface;
+	if ($interface eq "lo") {
+	    next;
+	}
+	$IPs{$interface}->{STATE}=uc($1) if /\b(up|down)\b/i;
+	$IPs{$interface}->{IP}=$1 if /inet\D+(\d+\.\d+\.\d+\.\d+)/i;
+    }
+    
+    foreach my $key (keys %IPs) {
+	if ($IPs{$key}{IP} eq $ip) {
+	    return $key;
+	}
+    }
+    # couldn't find anything. which is weird so return the interface
+    # for the default route
+    return &getDefault();
 }
 
 # get the default interface for the enjoyment of tcpdump
@@ -145,7 +267,12 @@ sub createDirectories {
     if (-e "/tmp/results") {
 	runSystem ("/bin/rm -rf /tmp/results");
     }
-    find (\&deltgz, "/tmp/");
+    # the preprocess filters out /tmp directories we don't have permission to look 
+    # at. Probably overkill.
+    find ({wanted => \&deltgz, 
+	   preprocess => sub { 
+	   	return grep { not (-d and (not -x or not -r)) } @_;}}, 
+	"/tmp/");
     runSystem ("/bin/mkdir /tmp/results");
 }
 
@@ -528,6 +655,7 @@ sub confirmPath {
 # This determines the tests to run and calls the appropriate
 # routines
 sub runTests {
+    my $ip = shift @_;
     use Switch;
     # config->{user}->{tests} holds a CSV of the
     # various tests we've been asked to run.
@@ -547,48 +675,49 @@ sub runTests {
 	$test = lc($test);
 	switch($test) {
 	    case "traceroute" {
-		testTraceroute();
+		testTraceroute($ip);
 	    }
 	    case "tracepath" {
-		testTracepath();
+		testTracepath($ip);
 	    }
 	    case "iperf" {
-		testIperf(0,0);
+		testIperf($ip,0,0);
 	    }
 	    case "iperf3" {
-		testIperf(1,0);
+		testIperf($ip,1,0);
 	    }
 	    case "iperf-recv" {
-		testIperf(0,1);
+		testIperf($ip,0,1);
 	    }
 	    case "iperf3-recv" {
-		testIperf(1,1);
+		testIperf($ip,1,1);
 	    }
 	    case "ping" {
-		testPing();
+		testPing($ip);
 	    }
 	    case "owamp" {
-		testOwamp();
+		testOwamp($ip);
 	    }
 	    case "tcpdump" {
-		testTcpdump();
+		testTcpdump($ip);
 	    }
 	    case "udp" {
-		testUDP();
+		testUDP($ip);
 	    }
 	    case "nuttcp" {
-		testNuttcp ();
+		testNuttcp ($ip);
 	    }
 	}
     }
 }
 
 sub testTraceroute {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
     #make sure ntpd is up to date
     syncClock();
     
-    my $command = "/opt/bin/bwtraceroute -a 1 -c $target";
+    my $command = "/opt/bin/bwtraceroute -B $ip -a 1 -c $target";
     my $output = runSystem($command, 1, 1);
     my $pass = 0;
 
@@ -599,7 +728,7 @@ sub testTraceroute {
     }
     updateResultsDB("traceroute", $pass);
 
-    $command = "/opt/bin/bwtraceroute -T paris-traceroute -a 1 -c $target\n";
+    $command = "/opt/bin/bwtraceroute -B $ip -T paris-traceroute -a 1 -c $target\n";
     $output = runSystem($command, 1, 1);
     $pass = 0;
 
@@ -613,12 +742,13 @@ sub testTraceroute {
 }
 
 sub testTracepath {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
     my $pass = 0;
     #make sure ntpd is up to date
     syncClock();
     logger ("warn", "Running tracepath to $target\n");
-    my $command = "/opt/bin/bwtraceroute -T tracepath -a 1 -c $target";
+    my $command = "/opt/bin/bwtraceroute -B $ip -T tracepath -a 1 -c $target";
     my $output = runSystem($command, 1, 1);
     storeOutput($output, "tracepath");
     if (length($output) <= 0) {
@@ -628,6 +758,7 @@ sub testTracepath {
 }
 
 sub testNuttcp {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
@@ -639,7 +770,7 @@ sub testNuttcp {
     my $command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-nuttcp &";
     runSystem($command);
  
-    $command = "/opt/bin/bwctl -T nuttcp -a 1 -f m -i 1 -t 30 -c $target";
+    $command = "/opt/bin/bwctl -B $ip -T nuttcp -a 1 -f m -i 1 -t 30 -c $target";
     my $output = runSystem($command, 1);
     storeOutput($output, "nuttcp");
     if (length($output) <= 0) {
@@ -653,6 +784,7 @@ sub testNuttcp {
 }
 
 sub testIperf {
+    my $ip = shift @_;
     my $run_iperf3 = shift @_;
     my $direction = shift @_;
     my $iperf_type;
@@ -687,7 +819,7 @@ sub testIperf {
 	$command = "/opt/bin/web10g-logger > /tmp/results/$uuid-web10g_stats-$iperf_type &";
 	runSystem ($command);
     }
-    $command = "/opt/bin/bwctl -T $iperf_type -a 1 -f m -i 1 $direction $target -t 30";
+    $command = "/opt/bin/bwctl -B $ip -T $iperf_type -a 1 -f m -i 1 $direction $target -t 30";
     $output = runSystem($command, 1);
     $iperf_suffix = $iperf_type . "-" . $fromto;
     storeOutput($output, $iperf_suffix);
@@ -705,8 +837,9 @@ sub testIperf {
 
 
 sub testPing {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwping -N 20 -c $target";
+    my $command = "/opt/bin/bwping -B $ip -N 20 -c $target";
     my $pass = 0;
     #make sure ntpd is up to date
     syncClock();
@@ -721,8 +854,9 @@ sub testPing {
 }
 
 sub testOwamp {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
-    my $command = "/opt/bin/bwping -N 20 -T owamp -c $target\n";
+    my $command = "/opt/bin/bwping -B $ip -N 20 -T owamp -c $target\n";
     my $pass = 0;
     #make sure ntpd is up to date
     syncClock();
@@ -738,8 +872,9 @@ sub testOwamp {
 }
 
 sub testTcpdump {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
-    my $iface = &getDefault();
+    my $iface = &getInterfaceFromIP($ip);
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
 
@@ -758,7 +893,7 @@ sub testTcpdump {
     sleep 2;
 
     # discard the outut from this iperf. we do not care about it.
-    $command = "bwctl -c $target -a 1 -t 30";
+    $command = "bwctl -B $ip -c $target -a 1 -t 30";
     $output = runSystem($command, 1);
 
     #shutdown tcpdump
@@ -777,6 +912,7 @@ sub testTcpdump {
 }
 
 sub testUDP {
+    my $ip = shift @_;
     my $target = $config->{user}->{target};
     my $command; 
     my $output;
@@ -787,7 +923,7 @@ sub testUDP {
 	#make sure ntpd is up to date
 	syncClock();
 	logger ("warn", "Running UDP test to $target at $speed Mbps\n");
-	$command = "bwctl -c $target -a 1 -i1 -u -b ". $speed . "M";
+	$command = "bwctl -B $ip -c $target -a 1 -i1 -u -b ". $speed . "M";
 	$output = runSystem($command, 1);
 	storeOutput ($output, "UDP-$speed");
 	if (length($output) <= 0) {
@@ -801,12 +937,25 @@ sub testUDP {
 
 #-------------MAIN------------------#
 &notice;
+
+print "\nOpening default interface\n";
+
+my $command = "/sbin/dhclient enp0s25";
+runSystem($command, 0, 1);
+
 &readConfig;
 &validateConfig;
 &createDirectories;
 
 my $password = trmanagerAuth();
 mountEncfs($password);
+
+# this has to come after the ENCFS paritition is mounted
+# as we are depending on ifconfig for that
+my $ip = &getIPs();
+
+#do we want jumbo frames?
+&enableJumboFrames($ip);
 
 #encfs is mounted we can start running tests
 if (confirmPath($config->{user}->{target}) == -1) {
@@ -817,10 +966,9 @@ $currentRunNum = getCurrentRunNum($password);
 
 # get hardware data
 getHostData();
-
 # run the tests
 # all error checking is done in the context of the tests
-runTests();
+runTests($ip);
 
 #build the tar package
 buildPackage();
@@ -840,10 +988,9 @@ runComplete($password);
 print "The Testrig 2.0 tests have completed successfully\n";
 print "and the results have been sent to the network engineers\n";
 print "helping you.\n";
-print "Please remove the bootable media you used to start\n";
-print "TestRig 2.0 and reboot to return to your system to\n";
-print "normal operation.\n";
-while (1) {
-    sleep 10;
-}
-
+print "Please press <ENTER> to shut down your system. Then remove the\n";
+print "bootable media and restart your system to return to normal\n";
+print "operation.\n";
+my $nothing = <STDIN>;
+$command = "/usr/sbin/shutdown now";
+runSystem($command, 0, 1);

@@ -1,11 +1,13 @@
 /etc
-/etc/manpath.config
+/etc/apparmor.d
+/etc/apparmor.d/usr.bin.man
 /etc/cron.daily
 /etc/cron.daily/man-db
 /etc/cron.weekly
 /etc/cron.weekly/man-db
+/etc/manpath.config
 /var
-/var/lib
-/var/lib/man-db
 /var/cache
 /var/cache/man
+/var/lib
+/var/lib/man-db

@@ -40,13 +40,15 @@ delca() {
 
 case "$1" in
     configure)
-        if [ ! -e /usr/local/share/ca-certificates ]
-        then
-            if mkdir /usr/local/share/ca-certificates 2>/dev/null
-            then
-                chown root:staff /usr/local/share/ca-certificates
-                chmod 2775 /usr/local/share/ca-certificates
+        if [ ! -e /usr/local/share/ca-certificates ]; then
+            if mkdir -m $(stat -c %a /usr/local) /usr/local/share/ca-certificates 2>/dev/null; then
+                chgrp $(stat -c %g /usr/local) /usr/local/share/ca-certificates
             fi
+        # Handle upgrades and allow local admin to override:
+        # e.g. dpkg-statoverride --add root staff 2775 /usr/local/share/ca-certificates
+        elif ! dpkg-statoverride --list /usr/local/share/ca-certificates >/dev/null; then
+            chmod $(stat -c %a /usr/local) /usr/local/share/ca-certificates || true
+            chown $(stat -c %u /usr/local):$(stat -c %g /usr/local) /usr/local/share/ca-certificates || true
         fi
 
         . /usr/share/debconf/confmodule
@@ -136,13 +138,16 @@ EOF
 	        -e 's/^[[:space:]]*1[[:space:]]*/!/' \
 	    >> /etc/ca-certificates.conf
 	fi
+	# update /etc/ssl/certs without running the hooks
 	# fix bogus symlink to ca-certificates.crt on upgrades; see
 	# Debian #643667; drop after wheezy
 	if dpkg --compare-versions "$2" lt-nl 20111025; then
-	    dpkg-trigger --no-await update-ca-certificates-fresh
+	    update-ca-certificates --hooksdir "" --fresh
 	else
-	    dpkg-trigger --no-await update-ca-certificates
+	    update-ca-certificates --hooksdir ""
 	fi
+	# deferred update of /etc/ssl/certs including running the hooks
+	dpkg-trigger --no-await update-ca-certificates
     ;;
 
     triggered)

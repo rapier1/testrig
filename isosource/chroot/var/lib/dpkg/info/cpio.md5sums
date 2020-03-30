@@ -1,8 +1,8 @@
-ac05db6940ffcd2d774762ecc65881cf  bin/cpio
-4723bb3e79dd7969fe67ef82c20bb5de  bin/mt-gnu
-09ecc408ffeb403f34276c573e90b6e4  usr/share/doc/cpio/changelog.Debian.gz
+9a25455d7b5d4bfa8b184ec655ae0a67  bin/cpio
+97e5b2eda2ddd0b51c7533866000316b  bin/mt-gnu
+6059d3aa463b2569ac3dfbf135c2946d  usr/share/doc/cpio/NEWS.gz
+ab1cbc191b89117cfae34e4b5259e1de  usr/share/doc/cpio/README.gz
+6e6345d1b3d3acb628304f7e55938c92  usr/share/doc/cpio/changelog.Debian.gz
 b1ba85ff5909b604ff9fa18ae7f0200b  usr/share/doc/cpio/copyright
-d48df3e3dfe5f34fe0c281b10922f4b4  usr/share/doc/cpio/README.gz
-cce2c0ca6b68e6ce23f7a7772514f9a1  usr/share/doc/cpio/NEWS.gz
-82570947987d97058a4c4a39700d7a40  usr/share/man/man1/cpio.1.gz
-5cda45b0d41ba5ebe23f1815a8f48c10  usr/share/man/man1/mt-gnu.1.gz
+9820f4f7cf77a19687b6a2cb9d9506c6  usr/share/man/man1/cpio.1.gz
+44d09ae3fd9e65e75e7db097629a087a  usr/share/man/man1/mt-gnu.1.gz

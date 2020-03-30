@@ -1,3 +1,5 @@
+#  SPDX-License-Identifier: LGPL-2.1+
+#
 #  This file is part of systemd.
 #
 #  systemd is free software; you can redistribute it and/or modify it
@@ -15,10 +17,9 @@ Before=shutdown.target
 
 [Service]
 Environment=HOME=/root
-WorkingDirectory=/root
-ExecStartPre=-/bin/plymouth quit
-ExecStartPre=-/bin/echo -e 'Welcome to emergency mode! After logging in, type "journalctl -xb" to view\\nsystem logs, "systemctl reboot" to reboot, "systemctl default" or ^D to\\nboot into default mode.'
-ExecStart=-/bin/sh -c "/sbin/sulogin; /bin/systemctl --fail --no-block default"
+WorkingDirectory=-/root
+ExecStartPre=-/bin/plymouth --wait quit
+ExecStart=-/lib/systemd/systemd-sulogin-shell rescue
 Type=idle
 StandardInput=tty-force
 StandardOutput=inherit

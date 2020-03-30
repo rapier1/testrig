@@ -1,2 +1,3 @@
-interest /etc/dbus-1/system.d
-interest /usr/share/dbus-1/system-services
+interest-noawait /etc/dbus-1/system.d
+interest-noawait /usr/share/dbus-1/system.d
+interest-noawait /usr/share/dbus-1/system-services

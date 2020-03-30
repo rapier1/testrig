@@ -1,2 +1,2 @@
-grub 	 /run/grub/menu.lst
 samba-common 	 /etc/samba/smb.conf
+grub-pc 	 /etc/default/grub

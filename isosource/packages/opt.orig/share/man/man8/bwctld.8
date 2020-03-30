@@ -1,0 +1,190 @@
+'\"t
+.\" The first line of this file must contain the '"[e][r][t][v] line
+.\" to tell man to run the appropriate filter "t" for table.
+.\"
+.\"	$Id: bwctld.man 530 2009-02-23 13:08:04Z aaron $
+.\"
+.\"######################################################################
+.\"#									#
+.\"#			   Copyright (C)  2004				#
+.\"#	     			Internet2				#
+.\"#			   All Rights Reserved				#
+.\"#									#
+.\"######################################################################
+.\"
+.\"	File:		bwctld.8
+.\"
+.\"	Author:		Jeff Boote
+.\"			Internet2
+.\"
+.\"	Date:		Tue Feb 10 22:23:30 MST 2004
+.\"
+.\"	Description:
+.\"
+.TH bwctld 8 "$Date: 2009\-02\-23 08:08:04 \-0500 (Mon, 23 Feb 2009) $"
+.SH NAME
+bwctld \- \fBB\fRand\fBw\fRidth \fBC\fRon\fBt\fRro\fBl\fR server.
+.SH SYNOPSIS
+.B bwctld
+[
+.BI \-a " auth_mode"
+] [
+.BI \-c " conf_dir"
+] [
+.BI \-e " facility"
+] [
+.BI \-f
+] [
+.BI \-G " group"
+] [
+.B \-h
+] [
+.BI \-R " var_dir"
+] [
+.BI \-S " nodename:port"
+] [
+.BI \-U " user"
+] [
+.B \-Z
+]
+.SH DESCRIPTION
+.B bwctld
+is a server program designed to schedule and run \fBIperf\fR, \fBThrulay\fR or
+\fBNuttcp\fR throughput tests. These tests can measure
+maximum TCP bandwidth, with various tunable options available, or, by doing a
+UDP test, he delay, jitter and datagram loss of a network.
+.PP
+Aside from actually running throughput tests, the main function of
+\fBbwctld\fR is to determine which tests are allowable based upon
+the policy restrictions configured by the system administrator.
+.PP
+\fBbwctld\fR was designed to be run as a stand-alone daemon process. It
+uses the classic accept/fork model of handling new requests.
+.PP
+Most of the command line options for \fBbwctld\fR have analogous options
+in the \fBbwctld.conf\fR file. The command line takes precedence.
+.SH OPTIONS
+.TP
+.BI \-a " auth_mode"
+Specify the authentication modes the server is willing to use for
+communication. \fIauth_mode\fR should be set as a character string with
+any or all of the characters "AEO". The modes are:
+.RS
+.IP \fBA\fR
+[\fBA\fR]uthenticated. This mode encrypts the control connection.
+.IP \fBE\fR
+[\fBE\fR]ncrypted. This mode encrypts the control connection. If the
+test supports encryption, this mode will additionally encrypt the test
+stream. (Encryption of the test stream is not currently supported, so
+this mode is currently identical to authenticated.)
+.IP \fBO\fR
+[\fBO\fR]pen. No encryption of any kind is done.
+.PP
+The server can specify all the modes with which it is willing to communicate. The
+most strict mode that both the server and the client are willing to use
+will be selected.
+.IP Default:
+"AEO".
+.RE
+.TP
+.BI \-c " conf_dir"
+Specify the directory that holds the \fBbwctld\fR configuration files.
+.RS
+.IP Default:
+Current working directory.
+.RE
+.TP
+.BI \-e " facility"
+Syslog \fIfacility\fR to which messages are logged.
+.RS
+.IP Default:
+LOG_DAEMON
+.RE
+.TP
+.B \-f
+Enables the \fBbwctld\fR daemon to run with \fIroot\fR permissions. There are
+legitimate reasons to run \fBbwctld\fR as root, but it is risky. Forcing this
+additional option will make it less likely root permissions are accidently
+used.
+.TP
+.BI \-G " group"
+Specify the gid for the \fBbwctld\fR process. \fIgroup\fR can
+be specified using a valid group name or by using \-gid. This option is
+only used if \fBbwctld\fR is started as root.
+.TP
+.B \-h
+Print a help message.
+.TP
+.BI \-R " var_dir"
+Specify the directory to hold the bwctld.pid file.
+.RS
+.IP Default:
+Current directory
+.RE
+.TP
+.BI \-S " nodename:port"
+Specify the address and port on which \fBbwctld\fR will listen for requests.
+\fInodename\fR can be specified using a DNS name or using the textual
+representation of the address. It is possible to set the source address
+without setting the \fIport\fR simply by leaving off the ':' and \fIport\fR
+specification. If an IPv6 address is specified, note that the accepted format
+contains \fInodename\fR in square brackets, such as: [fe80::fe9f:62d8]. This
+ensures the port number is distinct from the address specification.
+.RS
+.IP Default:
+\fInodename\fR is wildcarded as any currently available address.
+\fIport\fR is 4823.
+.RE
+.TP
+.BI \-U " user"
+Specify the uid for the \fBbwctld\fR process. \fIuser\fR can
+be specified using a valid user name or by using \-uid. This option is
+only used if \fBbwctld\fR is started as root.
+.TP
+.B \-Z
+Run the master \fBbwctld\fR process in the foreground. In this mode, error
+messages are printed to stderr as well as being sent to syslog. Also, normal
+terminal controls are available. (i.e., <Cntr\-C> will cause the daemon to
+kill it's child processes and exit.) This is useful for debugging.
+
+.SH REQUIREMENTS
+The \fBbwctld\fR daemon prefers a reasonably synchronized clock. It is
+scheduling tests and needs to be sure it has the same idea of when a test
+should take place as does the peer test system.
+Therefore, \fBbwctld\fR attempts to use NTP specific system calls to determine
+the accuracy of the local clock. If those system calls are unavailable, or
+the administrator has set the \fIallow_unsync\fR option in the \fBbwctld.conf\fR
+file, then \fBbwctld\fR will blindly accept tests assuming the clock is
+synchronized to within the \fIsync_fuzz\fR value that is also defined
+in the \fBbwctld.conf\fR file. If this assumption does not hold true, then
+the test will eventually fail. Unfortunately, because the time offset
+is not detected early, this test will have taken up a schedule slot.
+.SH FILES
+bwctld.pid
+.br
+bwctld.conf
+.br
+bwctld.limits
+.br
+bwctld.keys
+.SH SEE ALSO
+There are more details on configuring the \fBbwctld\fR daemon in the
+bwctld.conf(5) manual page. Details on configuring the policy
+is in the bwctld.limits(5) and bwctld.keys(5) manual pages.
+Information on the client is in the bwctl(1) manual page.
+For more of an overview of the full functionality and architecture see
+the \%http://e2epi.internet2.edu/bwctl/ web site.
+.PP
+For details on \fBIperf\fR, see the \%http://sourceforge.net/projects/iperf
+web site.
+.PP
+For details on \fBNuttcp\fR, see the \%http://www.wcisd.hpc.mil/nuttcp/Nuttcp\-HOWTO.html
+web site.
+.PP
+For details on \fBThrulay\fR, see the \%http://e2epi.internet2.edu/thrulay/
+web site.
+.SH ACKNOWLEDGMENTS
+This material is based in part on work supported by the National Science
+Foundation (NSF) under Grant No. ANI-0314723. Any opinions, findings and
+conclusions or recommendations expressed in this material are those of
+the author(s) and do not necessarily reflect the views of the NSF.

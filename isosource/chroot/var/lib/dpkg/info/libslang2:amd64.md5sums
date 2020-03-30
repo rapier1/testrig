@@ -1,7 +1,8 @@
-50b31d13b773195d6c00ce23917e77c2  lib/x86_64-linux-gnu/libslang.so.2.3.0
-bd27a0f8c7f709ff53c63ee3025dc76d  usr/share/doc/libslang2/NEWS.gz
+89ebda226a39f3ce19691979fa7b370f  lib/x86_64-linux-gnu/libslang.so.2.3.1
+9dda40759901efa22f7dde3d2ac66132  usr/share/doc/libslang2/NEWS.gz
 d5af9414143dbd915f13ed10dedba5b5  usr/share/doc/libslang2/README
-02f29f211dd385b890817171f97b4ead  usr/share/doc/libslang2/changelog.Debian.gz
+fa9cf619d588c5311900d0758b1bef7f  usr/share/doc/libslang2/changelog.Debian.gz
 61dd280d6e95363b627cdc79bade2a51  usr/share/doc/libslang2/copyright
-28a8e31148e2f7a6afb7beec2f31eb0a  usr/share/doc/libslang2/slang.txt.gz
-56fdd602c129fd270c2283d767a212d0  usr/share/doc/libslang2/slangfun.txt.gz
+c201384d166351a4c878e129ee431f96  usr/share/doc/libslang2/slang.txt.gz
+c488ed5020392ce3b7c2e4c318022064  usr/share/doc/libslang2/slangfun.txt.gz
+5ed2c967fb0a3b7ea9987f381dc653d2  usr/share/lintian/overrides/libslang2

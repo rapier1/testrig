@@ -1,4 +1,6 @@
-#!/bin/sh -e
+#!/bin/sh
+
+set -e
 
 if test "$1" = configure
 then
@@ -22,14 +24,6 @@ if [ "$1" = "configure" ]; then
 		chmod 644 /var/log/faillog
 	fi
 
-	# FIXME: Transition code, can be dropped after Ubuntu 13.10 goes EOL
-	if [ -e /etc/subuid.pre-upgrade ]; then
-		mv /etc/subuid.pre-upgrade /etc/subuid
-	fi
-	if [ -e /etc/subgid.pre-upgrade ]; then
-		mv /etc/subgid.pre-upgrade /etc/subgid
-	fi
-
 	# Create subuid/subgid if missing
 	if [ ! -e /etc/subuid ]; then
 		touch /etc/subuid
@@ -43,6 +37,19 @@ if [ "$1" = "configure" ]; then
 		chmod 644 /etc/subgid
 	fi
 fi
+
+        # Create subuid/subgid if missing
+        if [ ! -e /etc/subuid ]; then
+                touch /etc/subuid
+                chown root:root /etc/subuid
+                chmod 644 /etc/subuid
+        fi
+
+        if [ ! -e /etc/subgid ]; then
+                touch /etc/subgid
+                chown root:root /etc/subgid
+                chmod 644 /etc/subgid
+        fi
 
 
 

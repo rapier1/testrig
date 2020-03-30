@@ -96,6 +96,11 @@ if [ -n "$BROKEN_CLOCK" -a -n "$ROOTDEV" ]; then
         DATE="/bin/date -D%c"
         date -D%c 2>/dev/null || DATE=/bin/date
 
+        if [ "$MOUNTDATE" = "n/a" ]; then
+            # some versions of mkfs set n/a now, date is not happy with this so
+            # let us use some half way sane epoch instead
+            MOUNTDATE="Fri Jan 1 00:00:00 1999"
+        fi
         TIMESTR=$MOUNTDATE
         TIME=$(${DATE} --utc --date "${TIMESTR}" +%s)
 

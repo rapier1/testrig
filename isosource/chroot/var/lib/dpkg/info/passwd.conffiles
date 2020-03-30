@@ -1,6 +1,5 @@
 /etc/cron.daily/passwd
 /etc/default/useradd
-/etc/init/passwd.conf
 /etc/pam.d/chfn
 /etc/pam.d/chpasswd
 /etc/pam.d/chsh

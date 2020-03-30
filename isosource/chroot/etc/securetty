@@ -211,6 +211,12 @@ ttySC0
 ttySC1
 ttySC2
 ttySC3
+ttySC4
+ttySC5
+ttySC6
+ttySC7
+ttySC8
+ttySC9
 
 # ARM "AMBA" serial ports
 ttyAM0
@@ -398,3 +404,9 @@ duart1
 
 # s390 and s390x ports in LPAR mode
 ttysclp0
+
+# ODROID XU4 serial console
+ttySAC0
+ttySAC1
+ttySAC2
+ttySAC3

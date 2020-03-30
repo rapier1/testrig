@@ -39,7 +39,7 @@ my $blanktemplate = 'libpam-runtime/no_profiles_chosen';
 my $titletemplate = 'libpam-runtime/title';
 my $confdir = '/etc/pam.d';
 my $savedir = '/var/lib/pam';
-my (%profiles, @sorted, @enabled, @conflicts, @new, %removals);
+my (%profiles, @sorted, @enabled, @conflicts, @new, %removals, %to_enable);
 my $force = 0;
 my $package = 0;
 my $priority = 'high';
@@ -91,6 +91,13 @@ while ($#ARGV >= 0) {
 		}
 		# --remove implies --package
 		$package = 1 if (keys(%removals));
+	} elsif ($opt eq '--enable') {
+		while ($#ARGV >= 0) {
+			last if ($ARGV[0] =~ /^--/);
+			$to_enable{shift @ARGV} = 1;
+		}
+		# --enable implies --package
+		$package = 1 if (keys(%to_enable));
 	}
 }
 
@@ -137,6 +144,10 @@ if (!@enabled) {
 	%seen = ();
 	$priority = 'high' unless ($force);
 }
+
+# add configs to enable
+push(@enabled,
+     grep { $to_enable{$_} } @sorted);
 
 # add any previously-unseen configs
 push(@enabled,
@@ -673,7 +684,7 @@ sub parse_pam_profile
 	my %profile;
 	open(PROFILE, $profile) || die "could not read profile $profile: $!";
 	while (<PROFILE>) {
-		if (/^(\S+):\s+(.*)$/) {
+		if (/^(\S+):\s+(.*)\s*$/) {
 			$fieldname = $1;
 			# compatibility with the first implementation round;
 			# "Auth-Final" is now just called "Auth"
@@ -688,6 +699,7 @@ sub parse_pam_profile
 		} else {
 			chomp;
 			s/^\s+//;
+			s/\s+$//;
 			$profile{$fieldname} .= "\n$_" if ($_);
 			$profile{$fieldname} =~ s/^[\n\s]+//;
 		}

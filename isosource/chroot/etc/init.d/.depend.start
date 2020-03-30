@@ -1,5 +1,0 @@
-TARGETS = uuidd killprocs dbus ntp single ondemand rc.local
-INTERACTIVE =
-single: killprocs
-ondemand: uuidd dbus ntp
-rc.local: uuidd dbus ntp

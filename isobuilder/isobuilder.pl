@@ -73,7 +73,7 @@ use Sys::Syslog qw(:standard);
 use Capture::Tiny ':all';
 use MIME::Lite;
 
-#use Data::Dumper;
+use Data::Dumper;
 
 #globals
 my $config = Config::Tiny->new;
@@ -333,6 +333,7 @@ sub writeConfigToChroot {
     close ($FH);
 
     #write the configuration data
+    verbose(Dumper($config_out));
     if ( ! $config_out->write("$conf_dir/tr2.cfg")) {
 	logger ("crit", "Could not write tr2 config file to $conf_dir");
 	return -1;
@@ -887,9 +888,9 @@ sub buildInstallers {
     # after this we still need to repackage it as a dmg because Apple.
     $cmd = "$config->{paths}->{genisoimage} -V TestRig2.0 -D -R -apple -no-pad -o $installer_dir/TestRig2.0-osx-installer-$uuid.dmg $installer_dir/TestRig2.0-osx-installer-$uuid.command";
     runSystem ($cmd);
-    $cmd = "rm -r $tmpdir/unetbootin.app";
+    $cmd = "rm -r $tmpdir/UNetbootin";
     runSystem ($cmd);
-    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/._unetbootin.app", "$tmpdir/burn_testrig.sh", "$installer_dir/TestRig2.0-osx-installer-$uuid.command");
+    unlink ("$tmpdir/TestRig2.0-$uuid.iso", "$tmpdir/._UNetbootin", "$tmpdir/burn_testrig.sh", "$installer_dir/TestRig2.0-osx-installer-$uuid.command");
     rmdir ("$tmpdir");
 
     move ("$isopath/TestRig2.0-$uuid.iso", "$installer_dir/TestRig2.0-$uuid.iso");
