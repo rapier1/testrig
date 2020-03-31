@@ -130,16 +130,16 @@ sub getIPs {
 
    # Currently doing this because the kernel isn't starting networking services on boot
    # I have no idea why but I'll resolve it shortly
-   print "\nStarting network services all interfaces\n";
-   foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
-      $interface = $1 if /^(\S+?):?\s/;
-      next unless defined $interface;
-      if ($interface eq "lo") {
-	  next;
-      }
-      my $command = "/sbin/dhclient $interface";
-      runSystem($command, 0, 1);      
-   }
+   #print "\nStarting network services all interfaces\n";
+   #foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
+   #   $interface = $1 if /^(\S+?):?\s/;
+   #   next unless defined $interface;
+   #   if ($interface eq "lo") {
+   #	  next;
+   #     }
+   #   my $command = "/sbin/dhclient $interface";
+   #   runSystem($command, 0, 1);      
+   #}
 
    foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
       $interface = $1 if /^(\S+?):?\s/;
@@ -591,23 +591,61 @@ sub getPrivateKey {
 
 # we pass in the text of the private key and use that to create
 # an ssh connection back to the results repository
+
+# 3-27-2020 For some reason NET:SSH2 isn't working as expected and I need to 
+# get this rolled out. So for know we are going to invoke scp directly. This is
+# not the right way to do this long term.
+
 sub connectSCP {
+    use Env qw(HOME);
     my $private = shift @_;
+    my $public = $config->{customer}->{inst_pub_key};
     my $password = shift @_;
+    my $private_key = "$HOME/.ssh/id_rsa";
+    my $public_key = "$HOME/.ssh/id_rsa.pub";
+    open PRVKEY, "> $private_key";
+    print PRVKEY $private;
+    chmod 0600, $private_key;
+    close PRVKEY;
+    open PUBKEY, "> $public_key";
+    print PUBKEY $public . "\n";
+    close PUBKEY;
+    chmod 0644, $public_key;
+
+    my $command = "/usr/bin/ssh-add";
+    &runSystem($command, 0, 0);
+
+    my $host = $config->{customer}->{data_host};
+    my $user = $config->{customer}->{data_uname};
+    my $filepath = "/tmp/" . $config->{user}->{uuid} . ".tgz";
+    #currentRunNum is a global
+    my $destpath = $config->{customer}->{inst_host_path} . "/" .
+	$config->{user}->{uuid} . "-" . $currentRunNum . ".tgz";
+
+    print "\nTransferring results to $host\n";
+
+    $command = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $filepath $user\@$host:$destpath";
+    #print "$command\n";
+    &runSystem($command);
+
+    #remove the public and private keys
+    unlink $private_key;
+    unlink $public_key;
+=begin comment
     my $public = $config->{customer}->{inst_pub_key};
     my $host = $config->{customer}->{data_host};
     my $user = $config->{customer}->{data_uname};
     my $filepath = "/tmp/" . $config->{user}->{uuid} . ".tgz";
     #currentRunNum is a global
-    my $destpath = $config->{customer}->{inst_host_path} . "/" . 
+    my $destpath = $config->{customer}->{inst_host_path} . "/" .
 	$config->{user}->{uuid} . "-" . $currentRunNum . ".tgz";
     my $ssh2 = Net::SSH2->new(timeout => 5000); # create a new ssh2 handle with a 5 second timeout
-
     if (! $ssh2->connect($host)) { #connect to the host
 	logger ("crit", "Could not connect to remote server needed to tranfer test results.");
     }
     $ssh2->check_hostkey("LIBSSH2_HOSTKEY_POLICY_ADVISORY"); #always accept but don't store
-    $ssh2->auth_publickey_frommemory($user, $public, $private); #authenticate
+    $ssh2->auth_publickey("rapier", "~rapier/.ssh/id_rsa.pub", "~rapier/.ssh/id_rsa"); #authenticate
+    #$ssh2->auth_publickey_frommemory($user, $public, $private); #authenticate
     if (! $ssh2->auth_ok) {
 	logger ("crit", "Could not authenticate with remote server needed to transfer test results.");
     }
@@ -615,6 +653,8 @@ sub connectSCP {
 	logger ("crit", "File transfer to remote server failed.");
     }
     $ssh2->disconnect();
+=end comment
+=cut
 }
 
 #----------Test Routines------------#
@@ -706,6 +746,12 @@ sub runTests {
 	    }
 	    case "nuttcp" {
 		testNuttcp ($ip);
+	    }
+	    case "dublin" {
+		#we are passing the ip of the default
+		#interface even though it isn't used
+		#by dublin. Yet. 3/31/2020
+		testDublin ($ip);
 	    }
 	}
     }
@@ -933,25 +979,58 @@ sub testUDP {
     }
 }
 
-
+sub testDublin {
+    my $ip = shift @_;  #not currently used
+    my $target = $config->{user}->{target};
+    my $command; 
+    my $output;
+    my $pass = 0;
+    
+    my $filepath = "/tmp/results/" . $uuid . "-" . $currentRunNum . "-dublin-traceroute.json";
+    $command = "dublin-traceroute $target --output-file $filepath";
+    $ouput = runSystem($command, 1, 1); #needs to run as root
+    if (length($output) <= 0) {
+	$pass = -1;
+    }
+    updateResultsDB("dublin", $pass);
+}
 
 #-------------MAIN------------------#
-&notice;
+&notice; #print the notice and get informed consent
 
-print "\nOpening default interface\n";
+# in case the networking didn't come up correctly explicitly
+# get the default interface and apply dhclient
+#my $default_interface = getDefault;
+#print "\nOpening default interface ($default_interface)\n";
+#my $command = "/sbin/dhclient $default_interface";
+#runSystem($command, 0, 1);
 
-my $command = "/sbin/dhclient enp0s25";
+# OKAY the above doesn't work because router won't get the default interface if
+# the interafce isn't up and doesn't have an ip address. We need to get a full list of
+# the interafces and pick one to try and bring up. Which is stupid and sucks. We could grep
+# dmesg and look to see how eth0 is renamed. However, this is a problem when we only have
+# wireless connections. Which is the next this to figure out.
+
+#honestly now that networking is working as expected do we even need the above? 
+
+&readConfig; #read the local config file
+&validateConfig;  #calidate it
+&createDirectories; #create the necessary directories 
+
+my $password = trmanagerAuth(); # get the encfs password
+mountEncfs($password); #mount the encfs filesystem
+
+#we have mounted the encrypted filesystem. Now we need to rerun ldconfig
+# in order to ensure that we get all the library paths found in /opt
+
+print "\nLoading application libraries\n";
+$command = "/sbin/ldconfig";
 runSystem($command, 0, 1);
 
-&readConfig;
-&validateConfig;
-&createDirectories;
-
-my $password = trmanagerAuth();
-mountEncfs($password);
-
+# if we have multiple interafces which one should we test on
+# the default is the default interface
 # this has to come after the ENCFS paritition is mounted
-# as we are depending on ifconfig for that
+# as we are depending on ifconfig for that.
 my $ip = &getIPs();
 
 #do we want jumbo frames?
