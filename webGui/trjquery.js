@@ -130,10 +130,11 @@ function isJsonString(str) {
 
 function createHostNode(rawList,hostname)
 {
-    var testsWeSupport = [ "iperf", "iperf-recv", "iperf3", "iperf3-recv", "nuttcp", "ping", "owamp", "tcpdump", "udp", "tracepath", "traceroute" ];
+    var testsWeSupport = [ "iperf", "iperf-recv", "iperf3", "iperf3-recv", "nuttcp", "ping", "owamp", "tcpdump", "udp", "tracepath", "traceroute", "dublin-traceroute" ];
     //we need to always include tcpdump because it's not part of bwctl-tools, so push it onto the list of tests
     rawList.push("tcpdump");
     rawList.push("udp");
+    rawList.push("dublin-traceroute");
     for (var i = 0; i<rawList.length; i++) {
 	if (rawList[i] == "iperf") {
 	    rawList.push("iperf-recv");

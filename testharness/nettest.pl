@@ -37,7 +37,7 @@ use strict;
 use warnings;
 use Config::Tiny; # read config file
 use File::Copy; # copy files
-use Try::Tiny; #try and catch
+use Try::Tiny; # try and catch
 use Capture::Tiny qw(capture); #capture output from commands
 use Crypt::PK::RSA;
 use IO::Socket::SSL;
@@ -345,12 +345,12 @@ sub updateResultsDB {
 	# this will indicate a failed test
 	$pass = "1001-01-01 00:00:00";
     }
-    #currentRunNum and firstFlag are globals
+    # currentRunNum and firstFlag are globals
     print $sock "INCTEST:" . $config->{user}->{uuid}. ":" 
 	. $pass . ":" . $test . ":" . $currentRunNum 
 	. ":" . $firstFlag . "\n";
 
-    #if firstFlag is true it indicates to the trmanager that it needs
+    # if firstFlag is true it indicates to the trmanager that it needs
     # to create a row in testParameters rather than updating an existing one
     $firstFlag = 0;
 
@@ -478,28 +478,28 @@ sub trmanagerAuth {
     chomp $response;
     switch($response) {
 	case "NODBH" {
-	    logger ("crit", "The authentication manager could not connect to the database.");
+	    logger ("crit", "\nThe authentication manager could not connect to the database.");
 	} 
 	case "NOUUIDMATCH" {
-	    logger ("crit", "The serial number of this ISO coul not be found in the database.");
+	    logger ("crit", "\nThe serial number of this ISO coul not be found in the database.");
 	}
 	case "NOMORERUNS" {
-	    logger ("crit", "This ISO has been used the maximum number of times.");
+	    logger ("crit", "\nThis ISO has been used the maximum number of times.");
 	}
 	case "EXPIREDISO" {
-	    logger ("crit", "This ISO is too old and has expired.");
+	    logger ("crit", "\nThis ISO is too old and has expired.");
 	}
 	case "BADCHALLENGE" {
-	    logger ("crit", "The authentication challenge was reject by the authentication manager.");
+	    logger ("crit", "\nThe authentication challenge was reject by the authentication manager.");
 	}
 	case "FAILAUTH" {
-	    logger ("crit", "The ISO has encountered a general authentication failure.");
+	    logger ("crit", "\nThe ISO has encountered a general authentication failure.");
 	}
 	case "TIMEOUT" {
-	    logger ("crit", "The authentication manager timed out.");
+	    logger ("crit", "\nThe authentication manager timed out.");
 	}
 	else {
-	    logger ("warn", "ISO authenticated.");
+	    logger ("warn", "\nISO authenticated.");
 	    return $response;
 	}
     }
@@ -511,8 +511,8 @@ sub mountEncfs {
     my $enc_dir = "/var/local/.testrig";
     my $target_dir = "/opt";
     my %sig;
-    #we need to make sure the directories exist or encfs might hang waiting
-    #for user input
+    # we need to make sure the directories exist or encfs might hang waiting
+    # for user input
     if ((! -e $enc_dir) || (! -e $target_dir)) {
 	logger ("crit", "The necessary directories to mount the file system do not exist.");
     }
@@ -541,7 +541,7 @@ sub syncClock {
     logger("warn", "Synching local clock");
     my $command = "/usr/sbin/ntpd";
     runSystem($command, 0, 1);
-    #give it a moment to sync
+    # give it a moment to sync
     sleep 1;
 }
 
@@ -659,8 +659,8 @@ sub connectSCP {
 
 #----------Test Routines------------#
 
-#get system information
-#interfaces, etc.
+# get system information
+# interfaces, etc.
 sub getHostData {
     logger ("warn", "Gathering host information");
     my $command = "/opt/bin/ifconfig -a";
@@ -748,9 +748,9 @@ sub runTests {
 		testNuttcp ($ip);
 	    }
 	    case "dublin" {
-		#we are passing the ip of the default
-		#interface even though it isn't used
-		#by dublin. Yet. 3/31/2020
+		# we are passing the ip of the default
+		# interface even though it isn't used
+		# by dublin. Yet. 3/31/2020
 		testDublin ($ip);
 	    }
 	}
@@ -791,7 +791,7 @@ sub testTracepath {
     my $ip = shift @_;
     my $target = $config->{user}->{target};
     my $pass = 0;
-    #make sure ntpd is up to date
+    # make sure ntpd is up to date
     syncClock();
     logger ("warn", "Running tracepath to $target\n");
     my $command = "/opt/bin/bwtraceroute -B $ip -T tracepath -a 1 -c $target";
@@ -808,7 +808,7 @@ sub testNuttcp {
     my $target = $config->{user}->{target};
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
-    #make sure ntpd is up to date
+    # make sure ntpd is up to date
     syncClock();
 
     logger ("warn", "Running nuttcp to $target\n");
@@ -823,7 +823,7 @@ sub testNuttcp {
 	$pass = -1;
     }
 
-    #kill the web10g logger 
+    # kill the web10g logger 
     $command = "/usr/bin/killall web10g-logger";
     runSystem($command);
     updateResultsDB("nuttcp", $pass)    
@@ -855,7 +855,7 @@ sub testIperf {
 	$fromto = "to";
     }
 
-    #make sure ntpd is up to date
+    # make sure ntpd is up to date
     syncClock();
 
     logger("warn", "Running 30 second $iperf_type test $fromto $target\n");
@@ -873,7 +873,7 @@ sub testIperf {
 	$pass = -1;
     }
     
-    #kill the web10g logger 
+    # kill the web10g logger 
     if ($fromto eq "to") {
 	$command = "/usr/bin/killall web10g-logger";
 	runSystem($command);
@@ -887,7 +887,7 @@ sub testPing {
     my $target = $config->{user}->{target};
     my $command = "/opt/bin/bwping -B $ip -N 20 -c $target";
     my $pass = 0;
-    #make sure ntpd is up to date
+    # make sure ntpd is up to date
     syncClock();
     logger ("warn", "Running ping test to $target\n");
     my $output = runSystem ($command, 1, 1);
@@ -904,7 +904,7 @@ sub testOwamp {
     my $target = $config->{user}->{target};
     my $command = "/opt/bin/bwping -B $ip -N 20 -T owamp -c $target\n";
     my $pass = 0;
-    #make sure ntpd is up to date
+    # make sure ntpd is up to date
     syncClock();
 
     logger ("warn", "Running owamp ping test to $target\n");    
@@ -924,15 +924,15 @@ sub testTcpdump {
     my $uuid = $config->{user}->{uuid};
     my $pass = 0;
 
-    #make sure ntpd is up to date
+    # make sure ntpd is up to date
     syncClock();
 
-    #set up tcpdump to capture the data
+    # set up tcpdump to capture the data
     logger ("warn", "Starting 30 second tcpdump capture\n");
     my $command = "/opt/sbin/tcpdump -i $iface -s 100 -w - host $target and portrange 5001-5300 2>/dev/null | /bin/gzip > /tmp/results/$uuid-tcpdump.gz &";
     my $output = runSystem($command, 0, 1); 
 
-    #make sure that the tcpdump worked
+    # make sure that the tcpdump worked
     if (grep /no\ suitable/, $output) {
 	logger ("crit", "tcpdump command failed. Possible sudo falure. Please contact your NOC");
     }
@@ -942,11 +942,11 @@ sub testTcpdump {
     $command = "bwctl -B $ip -c $target -a 1 -t 30";
     $output = runSystem($command, 1);
 
-    #shutdown tcpdump
+    # shutdown tcpdump
     $command = "/usr/bin/killall tcpdump";
     runSystem ($command, 0, 1);
 
-    #run tcptrace
+    # run tcptrace
     &runTcptrace();
     
     # it's tough to determine if tcpdump actually captured packets so
@@ -966,7 +966,7 @@ sub testUDP {
     my @speeds = ("100", "450", "900");
     foreach my $speed (@speeds) {
 	$pass = 0;
-	#make sure ntpd is up to date
+	# make sure ntpd is up to date
 	syncClock();
 	logger ("warn", "Running UDP test to $target at $speed Mbps\n");
 	$command = "bwctl -B $ip -c $target -a 1 -i1 -u -b ". $speed . "M";
@@ -980,15 +980,19 @@ sub testUDP {
 }
 
 sub testDublin {
-    my $ip = shift @_;  #not currently used
+    my $ip = shift @_;  # not currently used
     my $target = $config->{user}->{target};
-    my $command; 
-    my $output;
+    my $uuid = $config->{user}->{uuid};
     my $pass = 0;
     
     my $filepath = "/tmp/results/" . $uuid . "-" . $currentRunNum . "-dublin-traceroute.json";
-    $command = "dublin-traceroute $target --output-file $filepath";
-    $ouput = runSystem($command, 1, 1); #needs to run as root
+    my $command = "dublin-traceroute $target --output-file $filepath";
+
+    # Make sure ntpd is up to date
+    syncClock();
+
+    logger ("warn", "Running dublin-traceroute to $target\n";
+    my $output = runSystem($command, 1, 1); # needs to run as root
     if (length($output) <= 0) {
 	$pass = -1;
     }
@@ -1000,10 +1004,10 @@ sub testDublin {
 
 # in case the networking didn't come up correctly explicitly
 # get the default interface and apply dhclient
-#my $default_interface = getDefault;
-#print "\nOpening default interface ($default_interface)\n";
-#my $command = "/sbin/dhclient $default_interface";
-#runSystem($command, 0, 1);
+# my $default_interface = getDefault;
+# print "\nOpening default interface ($default_interface)\n";
+# my $command = "/sbin/dhclient $default_interface";
+# runSystem($command, 0, 1);
 
 # OKAY the above doesn't work because router won't get the default interface if
 # the interafce isn't up and doesn't have an ip address. We need to get a full list of
@@ -1011,8 +1015,9 @@ sub testDublin {
 # dmesg and look to see how eth0 is renamed. However, this is a problem when we only have
 # wireless connections. Which is the next this to figure out.
 
-#honestly now that networking is working as expected do we even need the above? 
-
+# honestly now that networking is working as expected do we even need the above? 3/22/2020
+# I say no. 3/31/2020
+    
 &readConfig; #read the local config file
 &validateConfig;  #calidate it
 &createDirectories; #create the necessary directories 
@@ -1020,11 +1025,11 @@ sub testDublin {
 my $password = trmanagerAuth(); # get the encfs password
 mountEncfs($password); #mount the encfs filesystem
 
-#we have mounted the encrypted filesystem. Now we need to rerun ldconfig
+# we have mounted the encrypted filesystem. Now we need to rerun ldconfig
 # in order to ensure that we get all the library paths found in /opt
 
 print "\nLoading application libraries\n";
-$command = "/sbin/ldconfig";
+my $command = "/sbin/ldconfig";
 runSystem($command, 0, 1);
 
 # if we have multiple interafces which one should we test on
@@ -1033,7 +1038,7 @@ runSystem($command, 0, 1);
 # as we are depending on ifconfig for that.
 my $ip = &getIPs();
 
-#do we want jumbo frames?
+# do we want jumbo frames?
 &enableJumboFrames($ip);
 
 #encfs is mounted we can start running tests
@@ -1049,20 +1054,19 @@ getHostData();
 # all error checking is done in the context of the tests
 runTests($ip);
 
-#build the tar package
+# build the tar package
 buildPackage();
 
-#get the private key
+# get the private key
 my $pkey = getPrivateKey($password);
 
-#transfer the data
+# transfer the data
 connectSCP($pkey, $password);
 
-#increment the number of successful runs in the database
+# increment the number of successful runs in the database
 runComplete($password);
-#clean up will go here if necessary
 
-#finish
+# finish
 &unmountEncfs;
 print "The Testrig 2.0 tests have completed successfully\n";
 print "and the results have been sent to the network engineers\n";
