@@ -747,7 +747,7 @@ sub runTests {
 	    case "nuttcp" {
 		testNuttcp ($ip);
 	    }
-	    case "dublin" {
+	    case "dublin-traceroute" {
 		# we are passing the ip of the default
 		# interface even though it isn't used
 		# by dublin. Yet. 3/31/2020
