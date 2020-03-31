@@ -1075,5 +1075,5 @@ print "Please press <ENTER> to shut down your system. Then remove the\n";
 print "bootable media and restart your system to return to normal\n";
 print "operation.\n";
 my $nothing = <STDIN>;
-$command = "/usr/sbin/shutdown now";
+$command = "/sbin/shutdown now";
 runSystem($command, 0, 1);
