@@ -662,7 +662,7 @@ sub connectSCP {
 # get system information
 # interfaces, etc.
 sub getHostData {
-    logger ("warn", "Gathering host information");
+    logger ("warn", "\nGathering host information");
     my $command = "/opt/bin/ifconfig -a";
     my $output = runSystem($command, 1);
     storeOutput ($output, "ifconfig");
@@ -991,7 +991,7 @@ sub testDublin {
     # Make sure ntpd is up to date
     syncClock();
 
-    logger ("warn", "Running dublin-traceroute to $target\n";
+    logger ("warn", "Running dublin-traceroute to $target\n");
     my $output = runSystem($command, 1, 1); # needs to run as root
     if (length($output) <= 0) {
 	$pass = -1;
