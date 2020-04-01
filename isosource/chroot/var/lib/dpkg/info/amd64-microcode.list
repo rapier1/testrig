@@ -1,5 +1,0 @@
-/etc
-/etc/default
-/etc/default/amd64-microcode
-/etc/modprobe.d
-/etc/modprobe.d/amd64-microcode-blacklist.conf
