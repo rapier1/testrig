@@ -986,7 +986,7 @@ sub testDublin {
     my $pass = 0;
     
     my $filepath = "/tmp/results/" . $uuid . "-" . $currentRunNum . "-dublin-traceroute.json";
-    my $command = "dublin-traceroute $target --output-file $filepath";
+    my $command = "/opt/usr/bin/dublin-traceroute $target --output-file $filepath";
 
     # Make sure ntpd is up to date
     syncClock();
