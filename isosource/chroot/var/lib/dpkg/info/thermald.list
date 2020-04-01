@@ -1,0 +1,7 @@
+/etc
+/etc/dbus-1
+/etc/dbus-1/system.d
+/etc/dbus-1/system.d/org.freedesktop.thermald.conf
+/etc/thermald
+/etc/thermald/thermal-conf.xml
+/etc/thermald/thermal-cpu-cdev-order.xml
