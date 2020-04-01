@@ -1,6 +1,0 @@
-/etc
-/etc/kernel
-/etc/kernel/postinst.d
-/etc/kernel/postinst.d/zz-update-grub
-/etc/kernel/postrm.d
-/etc/kernel/postrm.d/zz-update-grub

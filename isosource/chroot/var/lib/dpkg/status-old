@@ -292,23 +292,6 @@ Description: Interactive high-level object-oriented language (standard library, 
  used on its own, but as a dependency of python3.6.
 Original-Maintainer: Matthias Klose <doko@debian.org>
 
-Package: lupin-casper
-Status: install ok installed
-Priority: extra
-Section: misc
-Installed-Size: 31
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Source: lupin
-Version: 0.57build1
-Depends: initramfs-tools (>= 0.40ubuntu11), casper (>= 0.98)
-Description: Add support for loop-mount installations to casper
- The Wubi installer provides a means for installing Ubuntu into a
- loop-mounted filesystem image hosted on a Windows filesystem. lupin-casper
- provides hooks to find an ISO image on a hard disk and to read a preseed
- file from a hard disk, which are used in the early part of this process.
-Original-Maintainer: Agostino Russo <agostino.russo@gmail.com>
-
 Package: libisc169
 Status: install ok installed
 Priority: optional
@@ -329,32 +312,6 @@ Description: ISC Shared Library used by BIND
  clients.
 Homepage: https://www.isc.org/downloads/bind/
 Original-Maintainer: Debian DNS Packaging <pkg-dns-devel@lists.alioth.debian.org>
-
-Package: intel-microcode
-Status: deinstall ok config-files
-Priority: standard
-Section: non-free/admin
-Installed-Size: 2959
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 3.20191115.1ubuntu0.18.04.2
-Config-Version: 3.20191115.1ubuntu0.18.04.2
-Depends: iucode-tool (>= 1.0)
-Recommends: initramfs-tools (>= 0.113~)
-Conflicts: microcode.ctl (<< 0.18~0)
-Conffiles:
- /etc/default/intel-microcode 6a68a0e6e2d2ef001f1a374ece3c8558
- /etc/kernel/preinst.d/intel-microcode 4324b7d12701909b3a76bb5c6468a571
- /etc/modprobe.d/intel-microcode-blacklist.conf 71327241f6583b34944e638a955aba91
-Description: Processor microcode firmware for Intel CPUs
- This package contains updated system processor microcode for
- Intel i686 and Intel X86-64 processors.  Intel releases microcode
- updates to correct processor behavior as documented in the
- respective processor specification updates.
- .
- For AMD processors, please refer to the amd64-microcode package.
-Homepage: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files
-Original-Maintainer: Henrique de Moraes Holschuh <hmh@debian.org>
 
 Package: libtinfo5
 Status: install ok installed
@@ -528,50 +485,6 @@ Description: low level cryptographic library (symmetric and one-way cryptos)
 Original-Maintainer: Magnus Holmgren <holmgren@debian.org>
 Homepage: http://www.lysator.liu.se/~nisse/nettle/
 
-Package: libtdb1
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 115
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: tdb
-Version: 1.3.15-2
-Depends: libc6 (>= 2.14)
-Description: Trivial Database - shared library
- This is a simple database API. It is modelled after the structure
- of GDBM. TDB features, unlike GDBM, multiple writers support with
- appropriate locking and transactions.
- .
- This package contains the shared library file.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: http://tdb.samba.org/
-
-Package: ufw
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 823
-Maintainer: Jamie Strandboge <jamie@ubuntu.com>
-Architecture: all
-Version: 0.36-0ubuntu0.18.04.1
-Config-Version: 0.36-0ubuntu0.18.04.1
-Depends: iptables, lsb-base (>= 3.0-6), ucf, python3:any (>= 3.3.2-2~), debconf (>= 0.5) | debconf-2.0
-Suggests: rsyslog
-Conffiles:
- /etc/default/ufw 9ff8f2998c343cab9f6908cf5b27d708
- /etc/init.d/ufw 4156943ab8a824fcf4b04cc1362eb230
- /etc/logrotate.d/ufw 12b1fb7cee76fc46f161e1ead1a22ce6
- /etc/rsyslog.d/20-ufw.conf 98e2f72c9c65ca8d6299886b524e80d1
- /etc/ufw/sysctl.conf 7723079fc108eda8f57eddab3079c70a
-Description: program for managing a Netfilter firewall
- The Uncomplicated FireWall is a front-end for iptables, to make managing a
- Netfilter firewall easier. It provides a command line interface with syntax
- similar to OpenBSD's Packet Filter. It is particularly well-suited as a
- host-based firewall.
-Homepage: https://launchpad.net/ufw
-
 Package: cpio
 Status: install ok installed
 Priority: important
@@ -617,28 +530,6 @@ Description: lib for parsing cmdline parameters
 Original-Maintainer: Michael Jeanson <mjeanson@debian.org>
 Homepage: http://rpm5.org/
 
-Package: libwbclient0
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 203
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: samba
-Version: 2:4.7.6+dfsg~ubuntu-0ubuntu2.15
-Depends: libbsd0 (>= 0.0), libc6 (>= 2.14)
-Pre-Depends: dpkg (>= 1.15.6~)
-Description: Samba winbind client library
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file and printer sharing with
- Microsoft Windows, OS X, and other Unix systems.
- .
- This package provides a library for client applications that interact
- via the winbind pipe protocol with a Samba winbind server.
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-
 Package: powermgmt-base
 Status: install ok installed
 Priority: optional
@@ -656,32 +547,6 @@ Description: common utils for power management
  simple sysfs check, ConditionACPower or other ad-hoc methods which
  notoriously fail to account for unobvious quirks, both old and new.
 Original-Maintainer: Adam Borowski <kilobyte@angband.pl>
-
-Package: kmod
-Status: install ok installed
-Priority: important
-Section: admin
-Installed-Size: 232
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 24-1ubuntu3.2
-Depends: libc6 (>= 2.17), libkmod2 (= 24-1ubuntu3.2), lsb-base
-Breaks: oss-compat (= 4)
-Conffiles:
- /etc/depmod.d/ubuntu.conf 7c8439ef36b12e5f226b5dbfa20b8c2d
- /etc/init.d/kmod 82698019c962069b438bd2a82d9fa1e7
- /etc/modprobe.d/blacklist-ath_pci.conf d1da9bb08c2b0f56f3be93fd0e37946b
- /etc/modprobe.d/blacklist-firewire.conf 9cc07a17e8e64f9cd35ff59c29debe69
- /etc/modprobe.d/blacklist-framebuffer.conf 662be7eaefa6b67fcddb5d90981e1c29
- /etc/modprobe.d/blacklist-rare-network.conf 8fb4b96124e461f53adceba9ca91f09a
- /etc/modprobe.d/blacklist.conf 46378b3789cf6d2ea9da9276e1106f2c
- /etc/modprobe.d/iwlwifi.conf f27bc645e93e20c8e532325d190ac8ee
-Description: tools for managing Linux kernel modules
- This package contains a set of programs for loading, inserting, and
- removing kernel modules for Linux.
- It replaces module-init-tools.
-Original-Maintainer: Marco d'Itri <md@linux.it>
 
 Package: libattr1
 Status: install ok installed
@@ -787,29 +652,6 @@ Description: Command Channel Library used by BIND
 Homepage: https://www.isc.org/downloads/bind/
 Original-Maintainer: Debian DNS Packaging <pkg-dns-devel@lists.alioth.debian.org>
 
-Package: cifs-utils
-Status: install ok installed
-Priority: optional
-Section: otherosfs
-Installed-Size: 226
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 2:6.8-1
-Replaces: smbfs (<< 2:4.0~rc1-1)
-Depends: samba-common, libc6 (>= 2.17), libcap-ng0, libkeyutils1 (>= 1.4), libkrb5-3 (>= 1.13~alpha1+dfsg), libpam0g (>= 0.99.7.1), libtalloc2 (>= 2.0.4~git20101213), libwbclient0 (>= 2:4.0.3+dfsg1)
-Suggests: keyutils, smbclient, winbind
-Conffiles:
- /etc/request-key.d/cifs.idmap.conf 4c95734a68b45b65a5dc7b108836427b
- /etc/request-key.d/cifs.spnego.conf db5289bad3063aea58e1814380259a28
-Description: Common Internet File System utilities
- The SMB/CIFS protocol provides support for cross-platform file sharing with
- Microsoft Windows, OS X, and other Unix systems.
- .
- This package provides utilities for managing mounts of CIFS network
- file systems.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: http://www.samba.org/~jlayton/cifs-utils/
-
 Package: libexpat1
 Status: install ok installed
 Priority: optional
@@ -894,26 +736,6 @@ Description: XZ-format compression library
 Original-Maintainer: Jonathan Nieder <jrnieder@gmail.com>
 Homepage: http://tukaani.org/xz/
 
-Package: klibc-utils
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 390
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: klibc
-Version: 2.0.4-9ubuntu2
-Depends: libklibc (= 2.0.4-9ubuntu2)
-Breaks: initramfs-tools (<< 0.103)
-Description: small utilities built with klibc for early boot
- This package contains a collection of programs that are linked
- against klibc. These duplicate some of the functionality of a
- regular Linux toolset, but are typically much smaller than their
- full-function counterparts.  They are intended for inclusion in
- initramfs images and embedded systems.
-Homepage: https://git.kernel.org/cgit/libs/klibc/klibc.git
-Original-Maintainer: maximilian attems <maks@debian.org>
-
 Package: libidn2-0
 Status: install ok installed
 Priority: important
@@ -932,31 +754,6 @@ Description: Internationalized domain names (IDNA2008/TR46) library
  This package contains runtime libraries.
 Original-Maintainer: Debian Libidn team <help-libidn@gnu.org>
 Homepage: https://www.gnu.org/software/libidn/#libidn2
-
-Package: python-crypto
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 1374
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 2.6.1-8ubuntu2
-Provides: python2.7-crypto
-Depends: python (<< 2.8), python (>= 2.7~), python:any (<< 2.8), python:any (>= 2.7.5-5~), libc6 (>= 2.14), libgmp10
-Suggests: python-crypto-doc
-Description: cryptographic algorithms and protocols for Python
- A collection of cryptographic algorithms and protocols, implemented
- for use from Python. Among the contents of the package:
- .
-  * Hash functions: HMAC, MD2, MD4, MD5, RIPEMD160, SHA, SHA256.
-  * Block encryption algorithms: AES, ARC2, Blowfish, CAST, DES, Triple-DES.
-  * Stream encryption algorithms: ARC4, simple XOR.
-  * Public-key algorithms: RSA, DSA, ElGamal.
-  * Protocols: All-or-nothing transforms, chaffing/winnowing.
-  * Miscellaneous: RFC1751 module for converting 128-bit keys
-    into a set of English words, primality testing, random number generation.
-Homepage: http://www.pycrypto.org/
-Original-Maintainer: Sebastian Ramacher <sramacher@debian.org>
 
 Package: libnetfilter-conntrack3
 Status: install ok installed
@@ -1008,28 +805,6 @@ Description: Support library to use the MBIM protocol
  libmbim is a glib-based library for talking to WWAN modems and devices
  which speak the Mobile Interface Broadband Model (MBIM) protocol.
 Homepage: https://www.freedesktop.org/wiki/Software/libmbim/
-
-Package: samba-libs
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 22278
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: samba
-Version: 2:4.7.6+dfsg~ubuntu-0ubuntu2.15
-Replaces: samba (<< 2:4.3.3+dfsg-1)
-Depends: libacl1 (>= 2.2.51-8), libattr1 (>= 1:2.4.46-8), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libbsd0 (>= 0.5.0), libc6 (>= 2.15), libcap2 (>= 1:2.10), libcups2 (>= 1.6.0), libgnutls30 (>= 3.5.6), libjansson4 (>= 2.0.1), libldap-2.4-2 (>= 2.4.7), libldb1 (>= 2:1.2.2), libpam0g (>= 0.99.7.1), libpopt0 (>= 1.14), libpython2.7 (>= 2.7), libsystemd0, libtalloc2 (>= 2.1.0), libtdb1 (>= 1.3.11), libtevent0 (>= 0.9.31), libwbclient0 (= 2:4.7.6+dfsg~ubuntu-0ubuntu2.15), python-talloc (>= 2.1.9), zlib1g (>= 1:1.1.4)
-Description: Samba core libraries
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file sharing with Microsoft Windows, OS X,
- and other Unix systems.  Samba can also function as a domain controller
- or member server in both NT4-style and Active Directory domains.
- .
- This package contains the shared libraries.
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 
 Package: libpam-systemd
 Status: install ok installed
@@ -1200,30 +975,6 @@ Description: GNU grep, egrep and fgrep
  will run more slowly, however.)
 Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 Homepage: http://www.gnu.org/software/grep/
-
-Package: info
-Status: deinstall ok config-files
-Priority: important
-Section: doc
-Installed-Size: 585
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Source: texinfo
-Version: 6.5.0.dfsg.1-2
-Config-Version: 6.5.0.dfsg.1-2
-Replaces: texinfo (<< 4.7-2)
-Provides: info-browser
-Depends: libc6 (>= 2.15), libtinfo5 (>= 6), install-info
-Suggests: texinfo-doc-nonfree
-Description: Standalone GNU Info documentation browser
- The Info file format is an easily-parsable representation for online
- documents. This program allows you to view Info documents, like the
- ones stored in /usr/share/info.
- .
- Much of the software in Debian comes with its online documentation in
- the form of Info files, so it is most likely you will want to install it.
-Original-Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 
 Package: libcryptsetup12
 Status: install ok installed
@@ -1406,52 +1157,6 @@ Description: GNU time program for measuring CPU resource usage
  printf-style format string to include various resource measurements.
 Original-Maintainer: Bob Proulx <bob@proulx.com>
 Homepage: http://www.gnu.org/software/time
-
-Package: libxext6
-Status: deinstall ok config-files
-Priority: optional
-Section: libs
-Installed-Size: 122
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: libxext
-Version: 2:1.3.3-1
-Config-Version: 2:1.3.3-1
-Depends: libc6 (>= 2.14), libx11-6 (>= 2:1.6.0)
-Pre-Depends: multiarch-support
-Description: X11 miscellaneous extension library
- libXext provides an X Window System client interface to several extensions to
- the X protocol.
- .
- The supported protocol extensions are:
-  - DOUBLE-BUFFER (DBE), the Double Buffer extension;
-  - DPMS, the VESA Display Power Management System extension;
-  - Extended-Visual-Information (EVI), an extension for gathering extra
-    information about the X server's visuals;
-  - LBX, the Low Bandwidth X extension;
-  - MIT-SHM, the MIT X client/server shared memory extension;
-  - MIT-SUNDRY-NONSTANDARD, a miscellaneous extension by MIT;
-  - Multi-Buffering, the multi-buffering and stereo display extension;
-  - SECURITY, the X security extension;
-  - SHAPE, the non-rectangular shaped window extension;
-  - SYNC, the X synchronization extension;
-  - TOG-CUP, the Open Group's Colormap Utilization extension;
-  - XC-APPGROUP, the X Consortium's Application Group extension;
-  - XC-MISC, the X Consortium's resource ID querying extension;
-  - XTEST, the X test extension (this is one of two client-side
-    implementations; the other is in the libXtst library, provided by the
-    libxtst6 package);
- .
- libXext also provides a small set of utility functions to aid authors of
- client APIs for X protocol extensions.
- .
- More information about X.Org can be found at:
- <URL:http://www.X.org>
- .
- This module can be found at
- git://anongit.freedesktop.org/git/xorg/lib/libXext
-Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 
 Package: dialog
 Status: install ok installed
@@ -1690,26 +1395,6 @@ Description: PNG library - runtime (version 1.6)
 Homepage: http://libpng.org/pub/png/libpng.html
 Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 
-Package: python-tdb
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 51
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: tdb
-Version: 1.3.15-2
-Provides: python2.7-tdb
-Depends: libtdb1 (= 1.3.15-2), python (<< 2.8), python (>= 2.7~), python:any (<< 2.8), python:any (>= 2.7.5-5~), libc6 (>= 2.2.5), libpython2.7 (>= 2.7)
-Description: Python bindings for TDB
- This is a simple database API. It is modelled after the structure
- of GDBM. TDB features, unlike GDBM, multiple writers support with
- appropriate locking and transactions.
- .
- This package contains the Python bindings.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: http://tdb.samba.org/
-
 Package: libncursesw5
 Status: install ok installed
 Priority: required
@@ -1788,24 +1473,6 @@ Description: GNU Bourne Again SHell
  The Programmable Completion Code, by Ian Macdonald, is now found in
  the bash-completion package.
 Homepage: http://tiswww.case.edu/php/chet/bash/bashtop.html
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: libbinutils
-Status: install ok installed
-Priority: optional
-Section: devel
-Installed-Size: 3039
-Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: binutils
-Version: 2.30-21ubuntu1~18.04.2
-Replaces: binutils (<< 2.29-6)
-Depends: libc6 (>= 2.14), zlib1g (>= 1:1.2.0), binutils-common (= 2.30-21ubuntu1~18.04.2)
-Breaks: binutils (<< 2.29-6)
-Description: GNU binary utilities (private shared library)
- This package includes the private shared libraries libbfd and libopcodes.
-Homepage: https://www.gnu.org/software/binutils/
 Original-Maintainer: Matthias Klose <doko@debian.org>
 
 Package: isc-dhcp-common
@@ -1934,28 +1601,6 @@ Description: Berkeley v5.3 Database Libraries [runtime]
 Homepage: http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
 Original-Maintainer: Debian Berkeley DB Group <pkg-db-devel@lists.alioth.debian.org>
 
-Package: thermald
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 612
-Maintainer: Colin King <colin.king@ubuntu.com>
-Architecture: amd64
-Version: 1.7.0-5ubuntu5
-Config-Version: 1.7.0-5ubuntu5
-Depends: libc6 (>= 2.16), libdbus-1-3 (>= 1.9.14), libdbus-glib-1-2 (>= 0.88), libgcc1 (>= 1:3.0), libglib2.0-0 (>= 2.37.3), libstdc++6 (>= 5.2), libxml2 (>= 2.7.4), lsb-base (>= 3.0-6)
-Conffiles:
- /etc/dbus-1/system.d/org.freedesktop.thermald.conf e18f949bffe6e39d0362377908d44188
- /etc/thermald/thermal-conf.xml 44437e985216ab918a6d2362c8dd1905
- /etc/thermald/thermal-cpu-cdev-order.xml 6bbb6d648ba2c70b9635e843818beebb
-Description: Thermal monitoring and controlling daemon
- Thermal Daemon is a Linux daemon for monitoring and
- controlling platform temperatures. Once the system
- temperature reaches a certain threshold, the Linux daemon
- activates various cooling methods to try to cool the system.
-Homepage: https://github.com/01org/thermal_daemon
-Original-Maintainer: Colin King <colin.king@canonical.com>
-
 Package: libnet-ssleay-perl
 Status: install ok installed
 Priority: optional
@@ -1993,29 +1638,6 @@ Description: OpenLDAP common files for libraries
  (Lightweight Directory Access Protocol) servers and clients.
 Homepage: http://www.openldap.org/
 Original-Maintainer: Debian OpenLDAP Maintainers <pkg-openldap-devel@lists.alioth.debian.org>
-
-Package: initramfs-tools-core
-Status: install ok installed
-Priority: optional
-Section: utils
-Installed-Size: 269
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Source: initramfs-tools
-Version: 0.130ubuntu3.9
-Replaces: initramfs-tools (<< 0.121~)
-Depends: busybox-initramfs (>= 1:1.22.0-17~), initramfs-tools-bin (= 0.130ubuntu3.9), klibc-utils (>= 2.0.4-8~), cpio, kmod | module-init-tools, udev, coreutils (>= 8.24)
-Suggests: bash-completion
-Breaks: busybox-initramfs (<< 1:1.22.0-17~), initramfs-tools (<< 0.121~)
-Conffiles:
- /etc/initramfs-tools/initramfs.conf 1f4c9bc107b078479d0c5303ba477548
-Description: generic modular initramfs generator (core tools)
- This package contains the mkinitramfs program that can be used to
- create a bootable initramfs for a Linux kernel.  The initramfs should
- be loaded along with the kernel and is then responsible for mounting
- the root filesystem and starting the main init system.
-Original-Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 
 Package: network-manager-pptp
 Status: install ok installed
@@ -2173,31 +1795,6 @@ Description: version compatibility baseline for Perl OpenSSL packages
  Tools are also provided for generating this dependency with minimum
  hassle. See the instructions in README.Debian.
 Original-Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
-
-Package: plymouth-theme-ubuntu-text
-Status: deinstall ok config-files
-Priority: optional
-Section: misc
-Installed-Size: 54
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: plymouth
-Version: 0.9.3-1ubuntu7.18.04.2
-Config-Version: 0.9.3-1ubuntu7.18.04.2
-Provides: plymouth-theme
-Depends: libc6 (>= 2.2.5), libplymouth4 (>= 0.9.2), plymouth (= 0.9.3-1ubuntu7.18.04.2), lsb-release
-Description: boot animation, logger and I/O multiplexer - ubuntu text theme
- Plymouth provides a boot-time I/O multiplexing framework - the most obvious
- use for which is to provide an attractive graphical animation in place of
- the text messages that normally get shown during boot. (The messages are
- instead redirected to a logfile for later viewing.) However, in event-driven
- boot systems Plymouth can also usefully handle user interaction such as
- password prompts for encrypted file systems.
- .
- This package contains the default ubuntu-text text theme used when no
- support for a graphical theme is found on your system.
-Homepage: http://www.freedesktop.org/wiki/Software/Plymouth
-Original-Maintainer: Laurent Bigonville <bigon@debian.org>
 
 Package: libisc-export169
 Status: install ok installed
@@ -2414,42 +2011,6 @@ Description: programmable completion for the bash shell
 Homepage: https://github.com/scop/bash-completion
 Original-Maintainer: Gabriel F. T. Gomes <gabriel@inconstante.eti.br>
 
-Package: grub-pc
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 563
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Source: grub2
-Version: 2.02-2ubuntu8.15
-Config-Version: 2.02-2ubuntu8.15
-Replaces: grub, grub-common (<= 1.97~beta2-1), grub-coreboot, grub-efi-amd64, grub-efi-ia32, grub-ieee1275, grub-legacy, grub2 (<< 2.02-2ubuntu8.15)
-Depends: debconf (>= 0.5) | debconf-2.0, grub-common (= 2.02-2ubuntu8.15), grub2-common (= 2.02-2ubuntu8.15), grub-pc-bin (= 2.02-2ubuntu8.15), ucf, grub-gfxpayload-lists
-Conflicts: grub (<< 0.97-54), grub-coreboot, grub-efi-amd64, grub-efi-ia32, grub-ieee1275, grub-legacy, grub-xen
-Conffiles:
- /etc/kernel/postinst.d/zz-update-grub 536d9d45e3e547638db3c5d58a925b6c
- /etc/kernel/postrm.d/zz-update-grub 536d9d45e3e547638db3c5d58a925b6c
-Description: GRand Unified Bootloader, version 2 (PC/BIOS version)
- GRUB is a portable, powerful bootloader.  This version of GRUB is based on a
- cleaner design than its predecessors, and provides the following new features:
- .
-  - Scripting in grub.cfg using BASH-like syntax.
-  - Support for modern partition maps such as GPT.
-  - Modular generation of grub.cfg via update-grub.  Packages providing GRUB
-    add-ons can plug in their own script rules and trigger updates by invoking
-    update-grub.
-  - VESA-based graphical mode with background image support and complete 24-bit
-    color set.
-  - Support for extended charsets.  Users can write UTF-8 text to their menu
-    entries.
- .
- This package contains a version of GRUB that has been built for use with
- traditional PC/BIOS architecture.
-Homepage: http://www.gnu.org/software/grub/
-Original-Maintainer: GRUB Maintainers <pkg-grub-devel@lists.alioth.debian.org>
-
 Package: libnuma1
 Status: install ok installed
 Priority: optional
@@ -2484,23 +2045,6 @@ Description: Transitional package to ensure multiarch compatibility
  be removed once nothing on the system depends on it.
 Homepage: https://www.gnu.org/software/libc/libc.html
 Original-Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
-
-Package: libklibc
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 109
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: klibc
-Version: 2.0.4-9ubuntu2
-Description: minimal libc subset for use with initramfs
- klibc is intended to be a minimalistic libc subset for use with
- initramfs.  It is deliberately written for small size, minimal
- entanglement, and portability, not speed.  It is definitely a work in
- progress, and a lot of things are still missing.
-Homepage: https://git.kernel.org/cgit/libs/klibc/klibc.git
-Original-Maintainer: maximilian attems <maks@debian.org>
 
 Package: systemd-sysv
 Status: install ok installed
@@ -2682,61 +2226,6 @@ Description: GObject-based client library for NetworkManager
  NetworkManager.
 Homepage: https://wiki.gnome.org/Projects/NetworkManager
 Original-Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-
-Package: groff-base
-Status: deinstall ok config-files
-Priority: important
-Section: text
-Installed-Size: 3298
-Maintainer: Colin Watson <cjwatson@debian.org>
-Architecture: amd64
-Multi-Arch: foreign
-Source: groff
-Version: 1.22.3-10
-Config-Version: 1.22.3-10
-Replaces: groff (<< 1.20.1-6), jgroff (<< 1.17-1)
-Depends: libc6 (>= 2.14), libgcc1 (>= 1:4.0), libstdc++6 (>= 4.1.1)
-Suggests: groff
-Breaks: groff (<< 1.17-1), jgroff (<< 1.17-1), pmake (<< 1.45-7), troffcvt (<< 1.04-14)
-Conffiles:
- /etc/groff/man.local e6591616404c7c443f71ff21d27430d7
- /etc/groff/mdoc.local 4bc6267468942826b757fa2f868c8237
-Description: GNU troff text-formatting system (base system components)
- This package contains the traditional UN*X text formatting tools
- troff, nroff, tbl, eqn, and pic. These utilities, together with the
- man-db package, are essential for displaying the on-line manual pages.
- .
- groff-base is a stripped-down package containing the necessary components
- to read manual pages in ASCII, Latin-1, and UTF-8, plus the PostScript
- device (groff's default). Users who want a full groff installation, with
- the standard set of devices, fonts, macros, and documentation, should
- install the groff package.
-Homepage: https://www.gnu.org/software/groff/
-
-Package: libldb1
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 388
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: ldb
-Version: 2:1.2.3-1ubuntu0.1
-Replaces: libldb0
-Depends: libc6 (>= 2.14), libldap-2.4-2 (>= 2.4.7), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtevent0 (>= 0.9.9)
-Breaks: ldb-tools (<< 1.1.30~), libldb0, libsamdb0 (<< 4.0.0~alpha17~git20110724.dfsg1-1), python-samba (<< 2:4.7.0~), samba (<< 2:4.7.0~), samba-dsdb-modules (<< 2:4.7.0~), samba-libs (<< 2:4.7.0~), samba-testsuite (<< 2:4.7.0~)
-Description: LDAP-like embedded database - shared library
- ldb is a LDAP-like embedded database built on top of TDB.
- .
- It provides a fast database with an LDAP-like API designed
- to be used within an application. In some ways it can be seen as a
- intermediate solution between key-value pair databases and a real LDAP
- database.
- .
- This package contains the shared library file.
-Homepage: http://ldb.samba.org/
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 
 Package: language-selector-common
 Status: install ok installed
@@ -2936,28 +2425,6 @@ Description: Cyrus SASL - pluggable authentication modules (DB)
 Homepage: https://www.cyrusimap.org/
 Original-Maintainer: Debian Cyrus SASL Team <pkg-cyrus-sasl2-debian-devel@lists.alioth.debian.org>
 
-Package: python-samba
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 14359
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: samba
-Version: 2:4.7.6+dfsg~ubuntu-0ubuntu2.15
-Provides: python2.7-samba
-Depends: python-crypto, python-ldb (>= 1.1.2~), python-tdb, samba-libs (= 2:4.7.6+dfsg~ubuntu-0ubuntu2.15), python (<< 2.8), python (>= 2.7~), python:any (<< 2.8), python:any (>= 2.7.5-5~), libattr1 (>= 1:2.4.46-8), libbsd0 (>= 0.0), libc6 (>= 2.14), libldb1 (>= 0.9.21), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213), libtevent0 (>= 0.9.16), python-talloc (>= 2.1.9)
-Suggests: python-gpgme
-Description: Python bindings for Samba
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file sharing with Microsoft Windows, OS X,
- and other Unix systems.  Samba can also function as a domain controller
- or member server in both NT4-style and Active Directory domains.
- .
- This package contains Python bindings for most Samba libraries.
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-
 Package: libbind9-160
 Status: install ok installed
 Priority: optional
@@ -3001,21 +2468,6 @@ Description: C library for encoding, decoding and manipulating JSON data
   * Extensive test suite
 Original-Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Homepage: http://www.digip.org/jansson/
-
-Package: linux-base
-Status: install ok installed
-Priority: optional
-Section: kernel
-Installed-Size: 57
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Version: 4.5ubuntu1
-Depends: debconf (>= 0.5) | debconf-2.0
-Description: Linux image base package
- This package contains files and support scripts for all Linux
- images.
-Original-Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
 
 Package: libbluetooth3
 Status: install ok installed
@@ -3229,41 +2681,6 @@ Description: fast lossless compression algorithm
 Homepage: https://github.com/facebook/zstd
 Original-Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
 
-Package: gpg-agent
-Status: deinstall ok config-files
-Priority: optional
-Section: utils
-Installed-Size: 855
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Source: gnupg2
-Version: 2.2.4-1ubuntu1.2
-Config-Version: 2.2.4-1ubuntu1.2
-Replaces: gnupg-agent (<< 2.1.21-4)
-Provides: gnupg-agent
-Depends: gpgconf (= 2.2.4-1ubuntu1.2), pinentry-curses | pinentry, libassuan0 (>= 2.5.1), libc6 (>= 2.17), libgcrypt20 (>= 1.8.0), libgpg-error0 (>= 1.14), libnpth0 (>= 0.90)
-Recommends: gnupg (= 2.2.4-1ubuntu1.2)
-Suggests: dbus-user-session, libpam-systemd, pinentry-gnome3, scdaemon
-Breaks: gnupg-agent (<< 2.1.21-4)
-Conffiles:
- /etc/X11/Xsession.d/90gpg-agent fbb9ce5e8e4ba5727090f0aa51b61a82
- /etc/logcheck/ignore.d.server/gpg-agent 040d545c7f33c0581fd2ae198dab1d7a
-Description: GNU privacy guard - cryptographic agent
- GnuPG is GNU's tool for secure communication and data storage.
- It can be used to encrypt data and to create digital signatures.
- It includes an advanced key management facility and is compliant
- with the proposed OpenPGP Internet standard as described in RFC4880.
- .
- This package contains the agent program gpg-agent which handles all
- secret key material for OpenPGP and S/MIME use.  The agent also
- provides a passphrase cache, which is used by pre-2.1 versions of
- GnuPG for OpenPGP operations.  Without this package, trying to do
- secret-key operations with any part of the modern GnuPG suite will
- fail.
-Homepage: https://www.gnupg.org/
-Original-Maintainer: Debian GnuPG Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
-
 Package: python3.6-minimal
 Status: install ok installed
 Priority: optional
@@ -3336,26 +2753,6 @@ Description: client support for WPA and WPA2 (IEEE 802.11i)
 Homepage: http://w1.fi/wpa_supplicant/
 Original-Maintainer: Debian wpasupplicant Maintainers <wpa@packages.debian.org>
 
-Package: python2.7
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 382
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: allowed
-Version: 2.7.17-1~18.04
-Replaces: python-profiler (<= 2.7.1-2), python2.7-minimal (<< 2.7.3-7~)
-Depends: python2.7-minimal (= 2.7.17-1~18.04), libpython2.7-stdlib (= 2.7.17-1~18.04), mime-support
-Suggests: python2.7-doc, binutils
-Breaks: python-virtualenv (<< 1.7.1.2-2~), vim-athena (<< 2:7.3.547-4), vim-gnome (<< 2:7.3.547-4), vim-gtk (<< 2:7.3.547-4), vim-nox (<< 2:7.3.547-4)
-Conflicts: python-profiler (<= 2.7.1-2)
-Description: Interactive high-level object-oriented language (version 2.7)
- Python is a high-level, interactive, object-oriented language. Its 2.7 version
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
 Package: mlocate
 Status: install ok installed
 Priority: standard
@@ -3420,32 +2817,6 @@ Description: Data lists for Discover hardware detection system
  often convenient to have a set of Discover XML data files on one's system;
  thus, this package.
 Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
-
-Package: samba-common
-Status: install ok installed
-Priority: optional
-Section: net
-Installed-Size: 285
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Source: samba
-Version: 2:4.7.6+dfsg~ubuntu-0ubuntu2.15
-Depends: ucf, debconf (>= 0.5) | debconf-2.0
-Pre-Depends: dpkg (>= 1.15.6~)
-Recommends: samba-common-bin
-Conffiles:
- /etc/dhcp/dhclient-enter-hooks.d/samba 947d036dcbbabe2e829c8ad74acfb46b
- /etc/pam.d/samba a69b859744494a52ecf10bb604544093
- /etc/samba/gdbcommands 898c523d1c11feeac45538a65d00c838
-Description: common files used by both the Samba server and client
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file and printer sharing with
- Microsoft Windows, OS X, and other Unix systems.
- .
- This package contains common files used by all parts of Samba.
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 
 Package: libnl-genl-3-200
 Status: install ok installed
@@ -3725,30 +3096,6 @@ Description: Heimdal Kerberos - roken support library
 Original-Maintainer: Brian May <bam@debian.org>
 Homepage: http://www.h5l.org/
 
-Package: initramfs-tools
-Status: install ok installed
-Priority: optional
-Section: utils
-Installed-Size: 137
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Version: 0.130ubuntu3.9
-Provides: linux-initramfs-tool
-Depends: initramfs-tools-core (= 0.130ubuntu3.9), linux-base
-Suggests: bash-completion
-Breaks: console-setup (<< 1.72), cryptsetup (<< 2:1.6.6-4~), e2fsprogs (<< 1.42.13), elilo (<< 3.12-3.1~), initscripts (<< 2.88dsf-59.3~), isc-dhcp-client (<< 4.3.3-5ubuntu14), lilo (<< 22.8-8.2~), lvm2 (<< 2.02.111-2.1~), netplan.io (<< 0.36.2), s390-tools (<< 1.8.3-2~), systemd-sysv (<< 186)
-Conflicts: linux-initramfs-tool, usplash (<< 0.5.50)
-Conffiles:
- /etc/initramfs-tools/update-initramfs.conf e2026d4603e7161efaccca519aeb1297
- /etc/kernel/postinst.d/initramfs-tools f9dcd9b9d4b6aa84c18407f2aeecb096
- /etc/kernel/postrm.d/initramfs-tools f57d0b03f79fd46dd1a1fa3b00206070
-Description: generic modular initramfs generator (automation)
- This package builds a bootable initramfs for Linux kernel packages.  The
- initramfs is loaded along with the kernel and is responsible for
- mounting the root filesystem and starting the main init system.
-Original-Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
-
 Package: libssh2-1-dev
 Status: install ok installed
 Priority: optional
@@ -3929,70 +3276,6 @@ Description: encrypted virtual filesystem
  EncFS uses the FUSE kernel driver and library as a backend.
 Homepage: http://www.arg0.net/encfs
 Original-Maintainer: Eduard Bloch <blade@debian.org>
-
-Package: command-not-found
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 35
-Maintainer: Michael Vogt <michael.vogt@ubuntu.com>
-Architecture: all
-Version: 18.04.5
-Config-Version: 18.04.5
-Depends: python3-commandnotfound (= 18.04.5)
-Suggests: snapd
-Conffiles:
- /etc/apt/apt.conf.d/50command-not-found 9bf399a111915919e5c6952f64a6f5eb
- /etc/zsh_command_not_found 373832ecdbbde52cf4610789e940f10f
-Description: Suggest installation of packages in interactive bash sessions
- This package will install a handler for command_not_found that looks up
- programs not currently installed but available from the repositories.
-Original-Maintainer: Zygmunt Krynicki <zkrynicki@gmail.com>
-
-Package: hdparm
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 235
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 9.54+ds-1
-Config-Version: 9.54+ds-1
-Depends: libc6 (>= 2.14), lsb-base
-Recommends: powermgmt-base
-Suggests: apmd
-Conffiles:
- /etc/apm/event.d/20hdparm 69c0a826b29c8f40b7ca5e56e53d7f83
- /etc/hdparm.conf 4af0e8f7db24f9a99d49070165c17cde
-Description: tune hard disk parameters for high performance
- Get/set device parameters for Linux SATA/IDE drives.
- Provides a command line interface to various kernel interfaces supported by
- the Linux SATA/PATA/SAS "libata" subsystem and the older IDE driver subsystem.
- Many newer (2008 and later) USB drive enclosures now also support "SAT"
- (SCSI-ATA Command Translation) and therefore may also work with hdparm.
-Original-Maintainer: Alexandre Mestiashvili <alex@biotec.tu-dresden.de>
-Homepage: http://sourceforge.net/projects/hdparm/
-
-Package: ubuntu-release-upgrader-core
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 336
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Source: ubuntu-release-upgrader
-Version: 1:18.04.37
-Config-Version: 1:18.04.37
-Replaces: update-manager (<< 1:0.165), update-manager-core (<< 1:0.165)
-Depends: python3:any (>= 3.2~), python3-distupgrade (= 1:18.04.37), ca-certificates
-Recommends: libpam-modules (>= 1.0.1-9ubuntu3)
-Breaks: software-properties (<< 0.9.27), update-manager (<< 1:0.165), update-manager-core (<< 1:0.165)
-Conffiles:
- /etc/update-manager/meta-release 25ba16c3215bff43f0272d3d93103f15
- /etc/update-manager/release-upgrades 1c12282c9ad6dc93dcba041d9d88766c
- /etc/update-motd.d/91-release-upgrade 51540d8467fcf35f65e2873454746e54
-Description: manage release upgrades
- This is the core of the Ubuntu Release Upgrader
 
 Package: libgdbm5
 Status: install ok installed
@@ -4431,47 +3714,6 @@ Description: high-quality block-sorting file compressor library - runtime
 Homepage: http://www.bzip.org/
 Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 
-Package: ucf
-Status: install ok installed
-Priority: standard
-Section: utils
-Installed-Size: 183
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Version: 3.0038
-Depends: debconf (>= 1.5.19), coreutils (>= 5.91), sensible-utils
-Conffiles:
- /etc/ucf.conf 5565b8b26108c49ba575ba452cd69b3e
-Description: Update Configuration File(s): preserve user changes to config files
- Debian policy mandates that user changes to configuration files must be
- preserved during package upgrades. The easy way to achieve this behavior
- is to make the configuration file a 'conffile', in which case dpkg
- handles the file specially during upgrades, prompting the user as
- needed.
- .
- This is appropriate only if it is possible to distribute a default
- version that will work for most installations, although some system
- administrators may choose to modify it. This implies that the
- default version will be part of the package distribution, and must
- not be modified by the maintainer scripts during installation (or at
- any other time).
- .
- This script attempts to provide conffile-like handling for files that
- may not be labelled conffiles, and are not shipped in a Debian package,
- but handled by the postinst instead. This script allows one to
- maintain files in /etc, preserving user changes and in general
- offering the same facilities while upgrading that dpkg normally
- provides for 'conffiles'.
- .
- Additionally, this script provides facilities for transitioning a
- file that had not been provided with conffile-like protection to come
- under this schema, and attempts to minimize questions asked at
- installation time. Indeed, the transitioning facility is better than the
- one offered by dpkg while transitioning a file from a non-conffile to
- conffile status.
-Original-Maintainer: Manoj Srivastava <srivasta@debian.org>
-
 Package: libgirepository-1.0-1
 Status: install ok installed
 Priority: optional
@@ -4514,14 +3756,13 @@ Description: libkmod shared library
 Original-Maintainer: Marco d'Itri <md@linux.it>
 
 Package: deborphan
-Status: install ok unpacked
+Status: install ok installed
 Priority: optional
 Section: admin
 Installed-Size: 342
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Version: 1.7.28.8ubuntu2
-Config-Version: 1.7.28.8ubuntu2
 Depends: libc6 (>= 2.14)
 Recommends: apt, dialog, gettext-base
 Conffiles:
@@ -4585,51 +3826,6 @@ Description: GNOME XML library
  such XML data files.
 Homepage: http://xmlsoft.org
 Original-Maintainer: Debian XML/SGML Group <debian-xml-sgml-pkgs@lists.alioth.debian.org>
-
-Package: tcpdump
-Status: deinstall ok config-files
-Priority: optional
-Section: net
-Installed-Size: 1066
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 4.9.3-0ubuntu0.18.04.1
-Config-Version: 4.9.3-0ubuntu0.18.04.1
-Replaces: apparmor-profiles-extra (<< 1.12~)
-Depends: libc6 (>= 2.14), libpcap0.8 (>= 1.5.1), libssl1.1 (>= 1.1.0)
-Suggests: apparmor (>= 2.3)
-Breaks: apparmor-profiles-extra (<< 1.12~)
-Conffiles:
- /etc/apparmor.d/usr.sbin.tcpdump 5a035d8c496c7891c76882d2be28ff7f
-Description: command-line network traffic analyzer
- This program allows you to dump the traffic on a network. tcpdump
- is able to examine IPv4, ICMPv4, IPv6, ICMPv6, UDP, TCP, SNMP, AFS
- BGP, RIP, PIM, DVMRP, IGMP, SMB, OSPF, NFS and many other packet
- types.
- .
- It can be used to print out the headers of packets on a network
- interface, filter packets that match a certain expression. You can
- use this tool to track down network problems, to detect attacks
- or to monitor network activities.
-Homepage: http://www.tcpdump.org/
-Original-Maintainer: Romain Francoise <rfrancoise@debian.org>
-
-Package: casper
-Status: install ok installed
-Priority: extra
-Section: misc
-Installed-Size: 238
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 1.394.3
-Depends: libc6 (>= 2.14), libplymouth4 (>= 0.9.2), initramfs-tools (>= 0.92bubuntu55), busybox-initramfs (>= 1:1.1.3-4ubuntu3), dmsetup, user-setup, sudo, eject, uuid-runtime, localechooser-data (>= 2.65ubuntu1), util-linux (>= 2.15-1), file, lzma, udev (>= 174), cifs-utils, finalrd
-Breaks: genext2fs (<< 1.4.1)
-Conflicts: live-initramfs, usplash (<< 0.4-43)
-Conffiles:
- /etc/casper.conf 873654121350964ec51b3ccd8c0186cd
-Description: Run a "live" preinstalled system from read-only media
-Tag: admin::boot, admin::filesystem, implemented-in::shell, protocol::smb, role::plugin, scope::utility, special::completely-tagged, works-with-format::iso9660
 
 Package: libblkid1
 Status: install ok installed
@@ -4757,29 +3953,6 @@ Description: File type determination library using "magic" numbers (compiled mag
  at its absolute path.
 Homepage: http://www.darwinsys.com/file/
 Original-Maintainer: Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
-
-Package: python-minimal
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 145
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: allowed
-Source: python-defaults
-Version: 2.7.15~rc1-1
-Replaces: python (<= 2.7.3-1~)
-Depends: python2.7-minimal (>= 2.7.15~rc1-1~), dpkg (>= 1.13.20)
-Recommends: python
-Breaks: idle (<< 2.6), python (<= 2.7.3-1~), python-all (<< 2.6), python-all-dbg (<< 2.6), python-all-dev (<< 2.6), python-dbg (<< 2.6), python-dev (<< 2.6), python-examples (<< 2.6), python-support (<< 1.0.10ubuntu2), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2)
-Conflicts: python-central (<< 0.5.5)
-Description: minimal subset of the Python language (default version)
- This package contains the interpreter and some essential modules.  It's used
- in the boot process for some basic tasks.
- See /usr/share/doc/python2.7-minimal/README.Debian for a list of the modules
- contained in this package.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-Homepage: http://www.python.org/
 
 Package: isc-dhcp-client
 Status: install ok installed
@@ -4946,36 +4119,6 @@ Description: low level cryptographic library (public-key cryptos)
  their large integer computations.
 Original-Maintainer: Magnus Holmgren <holmgren@debian.org>
 Homepage: http://www.lysator.liu.se/~nisse/nettle/
-
-Package: rsync
-Status: deinstall ok config-files
-Priority: optional
-Section: net
-Installed-Size: 704
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 3.1.2-2.1ubuntu1.1
-Config-Version: 3.1.2-2.1ubuntu1.1
-Depends: libacl1 (>= 2.2.51-8), libattr1 (>= 1:2.4.46-8), libc6 (>= 2.15), libpopt0 (>= 1.14), lsb-base (>= 3.2-14), base-files (>= 4.0.1), init-system-helpers (>= 1.18~)
-Suggests: openssh-client, openssh-server
-Breaks: duplicity (<< 0.6.11)
-Conffiles:
- /etc/default/rsync b8fd9efa75e2bda2583b0d7c0892a073
- /etc/init.d/rsync c5d89677f904551f5b192f35ad98d73c
-Description: fast, versatile, remote (and local) file-copying tool
- rsync is a fast and versatile file-copying tool which can copy locally
- and to/from a remote host. It offers many options to control its behavior,
- and its remote-update protocol can minimize network traffic to make
- transferring updates between machines fast and efficient.
- .
- It is widely used for backups and mirroring and as an improved copy
- command for everyday use.
- .
- This package provides both the rsync command line tool and optional
- daemon functionality.
-Homepage: http://rsync.samba.org/
-Original-Maintainer: Paul Slootman <paul@debian.org>
 
 Package: procps
 Status: install ok installed
@@ -5174,36 +4317,6 @@ Description: library for common error values and messages in GnuPG components
 Original-Maintainer: Debian GnuPG Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
 Homepage: https://www.gnupg.org/related_software/libgpg-error/
 
-Package: plymouth
-Status: deinstall ok config-files
-Priority: optional
-Section: misc
-Installed-Size: 453
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 0.9.3-1ubuntu7.18.04.2
-Config-Version: 0.9.3-1ubuntu7.18.04.2
-Replaces: plymouth-drm (<< 0.9.0-6~), plymouth-themes (<< 0.9.0-8~)
-Depends: init-system-helpers (>= 1.18), lsb-base (>= 3.0-6), systemd (>= 232-8~), udev (>= 232-8~), libc6 (>= 2.14), libdrm2 (>= 2.4.17), libplymouth4 (>= 0.9.3-1ubuntu7.18.04.2)
-Recommends: plymouth-theme-ubuntu-text | plymouth-theme
-Suggests: desktop-base, plymouth-themes
-Breaks: plymouth-drm (<< 0.9.0-6~), plymouth-themes (<< 0.9.0-8~)
-Conflicts: console-common
-Conffiles:
- /etc/init.d/plymouth 7603d0f581e54fdbe31ad62cbb4cfd22
- /etc/init.d/plymouth-log 0f1be14b21796a952e115c03a86787e0
-Description: boot animation, logger and I/O multiplexer
- Plymouth provides a boot-time I/O multiplexing framework - the most obvious
- use for which is to provide an attractive graphical animation in place of
- the text messages that normally get shown during boot. (The messages are
- instead redirected to a logfile for later viewing.) However, in event-driven
- boot systems Plymouth can also usefully handle user interaction such as
- password prompts for encrypted file systems.
- .
- This package provides the basic framework, enabling a text-mode animation.
-Homepage: http://www.freedesktop.org/wiki/Software/Plymouth
-Original-Maintainer: Laurent Bigonville <bigon@debian.org>
-
 Package: libpython3.6-minimal
 Status: install ok installed
 Priority: optional
@@ -5223,69 +4336,6 @@ Description: Minimal subset of the Python language (version 3.6)
  This package contains some essential modules. It is normally not
  used on it's own, but as a dependency of python3.6-minimal.
 Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: libpython-stdlib
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 37
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: python-defaults
-Version: 2.7.15~rc1-1
-Depends: libpython2.7-stdlib (>= 2.7.15~rc1-1~)
-Description: interactive high-level object-oriented language (default python version)
- Python, the high-level, interactive object oriented language,
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
- .
- This package is a dependency package, which depends on Debian's default
- Python version (currently v2.7).
-Original-Maintainer: Matthias Klose <doko@debian.org>
-Homepage: http://www.python.org/
-
-Package: binutils-common
-Status: install ok installed
-Priority: optional
-Section: devel
-Installed-Size: 416
-Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: binutils
-Version: 2.30-21ubuntu1~18.04.2
-Replaces: binutils (<< 2.29.1-3.1~)
-Breaks: binutils (<< 2.29.1-3.1~)
-Description: Common files for the GNU assembler, linker and binary utilities
- This package contains the localization files used by binutils packages for
- various target architectures and parts of the binutils documentation. It is
- not useful on its own.
-Homepage: https://www.gnu.org/software/binutils/
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: libtevent0
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 83
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: tevent
-Version: 0.9.34-1
-Depends: libc6 (>= 2.14), libtalloc2 (>= 2.1.0)
-Description: talloc-based event loop library - shared library
- tevent is a simple library that can handle the main event loop for an
- application. It supports three kinds of events: timed events, file
- descriptors becoming readable or writable and signals.
- .
- Talloc is used for memory management, both internally and for private
- data provided by users of the library.
- .
- This package provides the shared library file.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: https://tevent.samba.org/
 
 Package: libisccfg160
 Status: install ok installed
@@ -5308,30 +4358,6 @@ Description: Config File Handling Library used by BIND
  and rndc.conf.
 Homepage: https://www.isc.org/downloads/bind/
 Original-Maintainer: Debian DNS Packaging <pkg-dns-devel@lists.alioth.debian.org>
-
-Package: busybox-initramfs
-Status: install ok installed
-Priority: optional
-Section: shells
-Installed-Size: 345
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: busybox
-Version: 1:1.27.2-2ubuntu3.2
-Depends: libc6 (>= 2.11)
-Description: Standalone shell setup for initramfs
- BusyBox combines tiny versions of many common UNIX utilities into a single
- small executable. It provides minimalist replacements for the most common
- utilities you would usually find on your desktop system (i.e., ls, cp, mv,
- mount, tar, etc.). The utilities in BusyBox generally have fewer options than
- their full-featured GNU cousins; however, the options that are included
- provide the expected functionality and behave very much like their GNU
- counterparts.
- .
- busybox-initramfs provides a simple stand alone shell that provides
- only the basic utilities needed for the initramfs.
-Homepage: http://www.busybox.net
-Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
 
 Package: network-manager
 Status: install ok installed
@@ -5447,35 +4473,6 @@ Description: Utilities for sensible alternative selection
  The specific utilities included are: sensible-browser sensible-editor
  sensible-pager
 Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
-
-Package: dpkg-dev
-Status: deinstall ok config-files
-Priority: optional
-Section: utils
-Installed-Size: 1928
-Origin: debian
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Bugs: debbugs://bugs.debian.org
-Architecture: all
-Multi-Arch: foreign
-Source: dpkg
-Version: 1.19.0.5ubuntu2.3
-Config-Version: 1.19.0.5ubuntu2.3
-Depends: perl:any, libdpkg-perl (= 1.19.0.5ubuntu2.3), tar (>= 1.28-1), bzip2, xz-utils, patch (>= 2.7), make, binutils
-Recommends: build-essential, gcc | c-compiler, fakeroot, gnupg | gnupg2, gpgv | gpgv2, libalgorithm-merge-perl
-Suggests: debian-keyring
-Breaks: debhelper (<< 10.10.1~)
-Conffiles:
- /etc/dpkg/shlibs.default 1a2b9d0a869e2aa885ae3621c557fb95
- /etc/dpkg/shlibs.override 84b1e69080569cc5c613a50887af5200
-Description: Debian package development tools
- This package provides the development tools (including dpkg-source)
- required to unpack, build and upload Debian source packages.
- .
- Most Debian source packages will require additional tools to build;
- for example, most packages need make and the C compiler gcc.
-Homepage: https://wiki.debian.org/Teams/Dpkg
-Original-Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
 
 Package: gir1.2-glib-2.0
 Status: install ok installed
@@ -5633,23 +4630,6 @@ Description: helper tools for all init systems
  include their helpers in this package.
 Original-Maintainer: Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
 
-Package: localechooser-data
-Status: install ok installed
-Priority: optional
-Section: devel
-Installed-Size: 45
-Maintainer: Ubuntu Installer Team <ubuntu-installer@lists.ubuntu.com>
-Architecture: all
-Source: localechooser
-Version: 2.71ubuntu3
-Depends: iso-codes
-Breaks: casper (<< 1.361), system-config-kickstart (<< 2.5.20-0ubuntu24)
-Description: Lists of locales supported by the installer
- This package contains lists of languages, countries, and locales supported
- by the installer, for use by programs that create automatic installation
- scripts.
-Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
-
 Package: libusb-1.0-0
 Status: install ok installed
 Priority: optional
@@ -5716,7 +4696,7 @@ Original-Maintainer: Craig Small <csmall@debian.org>
 
 Package: libc-bin
 Essential: yes
-Status: install ok installed
+Status: install ok triggers-pending
 Priority: required
 Section: libs
 Installed-Size: 3631
@@ -5743,6 +4723,7 @@ Description: GNU C Library: Binaries
   * ldd, ldconfig: print/configure shared library dependencies
   * locale, localedef: show/generate locale definitions
   * tzselect, zdump, zic: select/dump/compile time zones
+Triggers-Pending: ldconfig
 Homepage: https://www.gnu.org/software/libc/libc.html
 Original-Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 
@@ -5968,21 +4949,6 @@ Description: changehat AppArmor library
 Homepage: http://apparmor.net/
 Original-Maintainer: Debian AppArmor Team <pkg-apparmor-team@lists.alioth.debian.org>
 
-Package: user-setup
-Status: install ok installed
-Priority: extra
-Section: admin
-Installed-Size: 535
-Maintainer: Ubuntu Installer Team <ubuntu-installer@lists.ubuntu.com>
-Architecture: all
-Version: 1.63ubuntu5
-Depends: debconf (>= 0.5) | debconf-2.0, passwd, adduser
-Description: Set up initial user and password
- This package creates an initial user, using the same code as is
- responsible for creating the initial user in the installer. It is only
- likely to be of any use if your system has no non-system users at all.
-Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
-
 Package: libldap-2.4-2
 Status: install ok installed
 Priority: standard
@@ -6116,33 +5082,6 @@ Description: XZ-format compression utilities
 Original-Maintainer: Jonathan Nieder <jrnieder@gmail.com>
 Homepage: http://tukaani.org/xz/
 
-Package: telnet
-Status: deinstall ok config-files
-Priority: standard
-Section: net
-Installed-Size: 161
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: netkit-telnet
-Version: 0.17-41
-Config-Version: 0.17-41
-Replaces: netstd
-Provides: telnet-client
-Depends: netbase, libc6 (>= 2.15), libstdc++6 (>= 5)
-Description: basic telnet client
- The telnet command is used for interactive communication with another host
- using the TELNET protocol.
- .
- For the purpose of remote login, the present client executable should be
- depreciated in favour of an ssh-client, or in some cases with variants like
- telnet-ssl or Kerberized TELNET clients.  The most important reason is that
- this implementation exchanges user name and password in clear text.
- .
- On the other hand, the present program does satisfy common use cases of
- network diagnostics, like protocol testing of SMTP services, so it can
- become handy enough.
-Original-Maintainer: Mats Erik Andersson <mats.andersson@gisladisker.se>
-
 Package: libheimbase1-heimdal
 Status: install ok installed
 Priority: optional
@@ -6192,32 +5131,6 @@ Description: Common files for SELinux policy management libraries
 Homepage: http://userspace.selinuxproject.org/
 Original-Maintainer: Debian SELinux maintainers <selinux-devel@lists.alioth.debian.org>
 
-Package: libfakeroot
-Status: deinstall ok config-files
-Priority: optional
-Section: utils
-Installed-Size: 149
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: fakeroot
-Version: 1.22-2ubuntu1
-Config-Version: 1.22-2ubuntu1
-Replaces: fakeroot (<< 1.20-2~)
-Depends: libc6 (>= 2.14)
-Breaks: fakeroot (<< 1.20-2~)
-Conffiles:
- /etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf f9f2331782e9078d5472c77e1d9cd869
-Description: tool for simulating superuser privileges - shared libraries
- fakeroot provides a fake "root environment" by means of LD_PRELOAD and
- SysV IPC (or TCP) trickery. It puts wrappers around getuid(), chown(),
- stat(), and other file-manipulation functions, so that unprivileged
- users can (for instance) populate .deb archives with root-owned files;
- various build tools use fakeroot for this by default.
- .
- This package contains the LD_PRELOAD libraries.
-Original-Maintainer: Clint Adams <clint@debian.org>
-
 Package: libp11-kit0
 Status: install ok installed
 Priority: important
@@ -6263,13 +5176,14 @@ Homepage: https://www.python.org/
 Original-Maintainer: Matthias Klose <doko@debian.org>
 
 Package: ntfs-3g
-Status: install ok installed
+Status: deinstall ok config-files
 Priority: optional
 Section: otherosfs
 Installed-Size: 1367
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Architecture: amd64
 Version: 1:2017.3.23-2ubuntu0.18.04.2
+Config-Version: 1:2017.3.23-2ubuntu0.18.04.2
 Depends: libc6 (>= 2.17), libgcrypt20 (>= 1.8.0), libgnutls30 (>= 3.5.0), libntfs-3g88 (= 1:2017.3.23-2ubuntu0.18.04.2)
 Pre-Depends: fuse
 Description: read/write NTFS driver for FUSE
@@ -6399,27 +5313,6 @@ Description: Full screen ncurses traceroute tool
 Original-Maintainer: Robert Woodcock <rcw@debian.org>
 Homepage: http://www.bitwizard.nl/mtr/
 
-Package: libpython2.7
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 3485
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: python2.7
-Version: 2.7.17-1~18.04
-Replaces: python2.7 (<< 2.6)
-Depends: libpython2.7-stdlib (= 2.7.17-1~18.04), libc6 (>= 2.15), zlib1g (>= 1:1.2.0)
-Description: Shared Python runtime library (version 2.7)
- Python is a high-level, interactive, object-oriented language. Its 2.7 version
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
- .
- This package contains the shared runtime library, normally not needed
- for programs using the statically linked interpreter.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
 Package: dpkg
 Essential: yes
 Status: install ok installed
@@ -6513,51 +5406,6 @@ Description: Secure Sockets Layer toolkit - cryptographic utility
   * handling S/MIME signed or encrypted mail.
 Homepage: https://www.openssl.org/
 Original-Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
-
-Package: libplymouth4
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 297
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: plymouth
-Version: 0.9.3-1ubuntu7.18.04.2
-Replaces: plymouth (<< 0.9.2-1~)
-Depends: libc6 (>= 2.14), libpng16-16 (>= 1.6.2-1), libudev1 (>= 183)
-Breaks: plymouth (<< 0.9.2-1~)
-Description: graphical boot animation and logger - shared libraries
- Plymouth is an application that runs very early in the boot process
- (even before the root filesystem is mounted!) that provides a graphical
- boot animation while the boot process happens in the background.
- .
- This package contains the shared libraries.
-Homepage: http://www.freedesktop.org/wiki/Software/Plymouth
-Original-Maintainer: Laurent Bigonville <bigon@debian.org>
-
-Package: vim-common
-Status: deinstall ok config-files
-Priority: important
-Section: editors
-Installed-Size: 329
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Source: vim
-Version: 2:8.0.1453-1ubuntu1.1
-Config-Version: 2:8.0.1453-1ubuntu1.1
-Depends: xxd
-Recommends: vim | vim-gtk | vim-gtk3 | vim-athena | vim-nox | vim-tiny
-Conffiles:
- /etc/vim/vimrc 8a8f58567e1a68b71d61164a4e039fdc
-Description: Vi IMproved - Common files
- Vim is an almost compatible version of the UNIX editor Vi.
- .
- This package contains files shared by all non GUI-enabled vim variants
- available in Debian.  Examples of such shared files are: manpages and
- configuration files.
-Homepage: https://vim.sourceforge.io/
-Original-Maintainer: Debian Vim Maintainers <pkg-vim-maintainers@lists.alioth.debian.org>
 
 Package: libsqlite3-0
 Status: install ok installed
@@ -6744,38 +5592,6 @@ Description: File comparison utilities
 Original-Maintainer: Santiago Vila <sanvila@debian.org>
 Homepage: http://www.gnu.org/software/diffutils/
 
-Package: man-db
-Status: deinstall ok config-files
-Priority: important
-Section: doc
-Installed-Size: 2428
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 2.8.3-2ubuntu0.1
-Config-Version: 2.8.3-2ubuntu0.1
-Replaces: man, manpages-de (<< 0.5-4), manpages-tr (<< 1.0.5.1-3), manpages-zh (<< 1.5.2-1.1), nlsutils
-Provides: man, man-browser
-Depends: bsdmainutils, debconf (>= 1.2.0) | debconf-2.0, groff-base (>= 1.18.1.1-15), libc6 (>= 2.17), libgdbm5 (>= 1.12), libpipeline1 (>= 1.5.0), libseccomp2 (>= 2.1.0), zlib1g (>= 1:1.1.4)
-Pre-Depends: dpkg (>= 1.16.1~)
-Suggests: apparmor, groff, less, www-browser
-Breaks: manpages-tr (<< 1.0.5.1-3), manpages-zh (<< 1.5.2-1.1)
-Conflicts: man, suidmanager (<< 0.50)
-Conffiles:
- /etc/apparmor.d/usr.bin.man 74990e7751467337f9a8eb64aa621606
- /etc/cron.daily/man-db 66756dda467471df4f38b71a69a10393
- /etc/cron.weekly/man-db 40fa232bff2326e0f82837a360d0055f
- /etc/manpath.config 6945cded2bf5630e953a5a12aaca5232
-Description: on-line manual pager
- This package provides the man command, the primary way of examining the
- on-line help files (manual pages). Other utilities provided include the
- whatis and apropos commands for searching the manual page database, the
- manpath utility for determining the manual page search path, and the
- maintenance utilities mandb, catman and zsoelim. man-db uses the groff
- suite of programs to format and display the manual pages.
-Homepage: http://man-db.nongnu.org/
-Original-Maintainer: Colin Watson <cjwatson@debian.org>
-
 Package: shared-mime-info
 Status: install ok installed
 Priority: optional
@@ -6834,54 +5650,6 @@ Description: GObject-based wrapper library for libudev
 Original-Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
 Homepage: https://wiki.gnome.org/Projects/libgudev
 
-Package: vim-runtime
-Status: deinstall ok config-files
-Priority: optional
-Section: editors
-Installed-Size: 28420
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Multi-Arch: foreign
-Source: vim
-Version: 2:8.0.1453-1ubuntu1.1
-Config-Version: 2:8.0.1453-1ubuntu1.1
-Recommends: vim | vim-gtk | vim-gtk3 | vim-athena | vim-nox | vim-tiny
-Breaks: vim-tiny (<< 2:8.0.1453-1ubuntu1.1)
-Enhances: vim-tiny
-Description: Vi IMproved - Runtime files
- Vim is an almost compatible version of the UNIX editor Vi.
- .
- This package contains vimtutor and the architecture independent runtime
- files, used, if available, by all vim variants available in Debian.
- Example of such runtime files are: online documentation, rules for
- language-specific syntax highlighting and indentation, color schemes,
- and standard plugins.
-Homepage: https://vim.sourceforge.io/
-Original-Maintainer: Debian Vim Maintainers <pkg-vim-maintainers@lists.alioth.debian.org>
-
-Package: libavahi-client3
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 124
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: avahi
-Version: 0.7-3.1ubuntu1.2
-Depends: libavahi-common3 (>= 0.6.22), libc6 (>= 2.4), libdbus-1-3 (>= 1.9.14)
-Description: Avahi client library
- Avahi is a fully LGPL framework for Multicast DNS Service Discovery.
- It allows programs to publish and discover services and hosts
- running on a local network with no specific configuration. For
- example you can plug into a network and instantly find printers to
- print to, files to look at and people to talk to.
- .
- This package contains the library for Avahi's C API which  allows you
- to integrate mDNS/DNS-SD functionality into your application.
-Homepage: http://avahi.org/
-Original-Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-
 Package: libpam-modules
 Status: install ok installed
 Priority: required
@@ -6936,23 +5704,6 @@ Description: GNU Standard C++ Library v3
 Homepage: http://gcc.gnu.org/
 Original-Maintainer: Debian GCC Maintainers <debian-gcc@lists.debian.org>
 
-Package: libtalloc2
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 106
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: talloc
-Version: 2.1.10-2ubuntu1
-Depends: libc6 (>= 2.16)
-Description: hierarchical pool based memory allocator
- A hierarchical pool based memory allocator with destructors. It uses
- reference counting to determine when memory should be freed.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: https://talloc.samba.org/
-
 Package: libkrb5-3
 Status: install ok installed
 Priority: optional
@@ -6979,43 +5730,6 @@ Description: MIT Kerberos runtime libraries
  used by applications and Kerberos clients.
 Homepage: http://web.mit.edu/kerberos/
 Original-Maintainer: Sam Hartman <hartmans@debian.org>
-
-Package: binutils
-Status: install ok installed
-Priority: optional
-Section: devel
-Installed-Size: 102
-Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 2.30-21ubuntu1~18.04.2
-Provides: binutils-gold, elf-binutils
-Depends: libc6 (>= 2.27), zlib1g (>= 1:1.1.4), binutils-common (= 2.30-21ubuntu1~18.04.2), libbinutils (= 2.30-21ubuntu1~18.04.2), binutils-x86-64-linux-gnu (= 2.30-21ubuntu1~18.04.2)
-Suggests: binutils-doc (>= 2.30-21ubuntu1~18.04.2)
-Conflicts: binutils-mingw-w64-i686 (<< 2.23.52.20130612-1+3), binutils-mingw-w64-x86-64 (<< 2.23.52.20130612-1+3), binutils-multiarch (<< 2.27-8), modutils (<< 2.4.19-1)
-Description: GNU assembler, linker and binary utilities
- The programs in this package are used to assemble, link and manipulate
- binary and object files.  They may be used in conjunction with a compiler
- and various libraries to build programs.
-Homepage: https://www.gnu.org/software/binutils/
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: libntfs-3g88
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 349
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: ntfs-3g
-Version: 1:2017.3.23-2ubuntu0.18.04.2
-Depends: libc6 (>= 2.17)
-Description: read/write NTFS driver for FUSE (runtime library)
- NTFS-3G uses FUSE (Filesystem in Userspace) to provide support for the NTFS
- filesystem used by Microsoft Windows.
- .
- This package contains the actual library.
-Original-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
-Homepage: http://www.tuxera.com/community/ntfs-3g-advanced/
 
 Package: libffi6
 Status: install ok installed
@@ -7106,44 +5820,6 @@ Description: Standalone rescue shell with tons of builtin utilities
 Built-Using: glibc (= 2.27-3ubuntu1)
 Homepage: http://www.busybox.net
 Original-Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
-
-Package: libavahi-common3
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 105
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: avahi
-Version: 0.7-3.1ubuntu1.2
-Depends: libc6 (>= 2.14), libavahi-common-data
-Description: Avahi common library
- Avahi is a fully LGPL framework for Multicast DNS Service Discovery.
- It allows programs to publish and discover services and hosts
- running on a local network with no specific configuration. For
- example you can plug into a network and instantly find printers to
- print to, files to look at and people to talk to.
- .
- This package contains the Avahi common library, which is a set of common
- functions used by many of Avahis components and client applications.
-Homepage: http://avahi.org/
-Original-Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-
-Package: initramfs-tools-bin
-Status: install ok installed
-Priority: optional
-Section: utils
-Installed-Size: 114
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: initramfs-tools
-Version: 0.130ubuntu3.9
-Depends: libc6 (>= 2.4), libudev1 (>= 183)
-Description: binaries used by initramfs-tools
- This package contains binaries used inside the initramfs images generated
- by initramfs-tools.
-Original-Maintainer: Debian kernel team <debian-kernel@lists.debian.org>
 
 Package: libkrb5-26-heimdal
 Status: install ok installed
@@ -7299,22 +5975,6 @@ Description: An alternate POSIX capabilities library
  This package contains header files and libraries for libcap-ng.
 Original-Maintainer: Pierre Chifflier <pollux@debian.org>
 Homepage: http://people.redhat.com/sgrubb/libcap-ng
-
-Package: friendly-recovery
-Status: deinstall ok config-files
-Priority: optional
-Section: admin
-Installed-Size: 45
-Maintainer: Dimitri John Ledkov <xnox@ubuntu.com>
-Architecture: all
-Version: 0.2.38ubuntu1.1
-Config-Version: 0.2.38ubuntu1.1
-Depends: systemd-sysv, whiptail
-Recommends: gettext-base, update-manager-core
-Breaks: grub2 (<< 1.99-12ubuntu4), initramfs-tools (<< 0.99ubuntu4), upstart (<< 1.3-0ubuntu9)
-Description: Make recovery boot mode more user-friendly
- Make the recovery boot mode more user-friendly by providing a menu
- with pluggable options.
 
 Package: dbus
 Status: install ok installed
@@ -7551,50 +6211,6 @@ Description: library for dealing with netlink sockets
  netlink family specific interfaces.
 Homepage: http://www.infradead.org/~tgr/libnl/
 Original-Maintainer: Heiko Stuebner <mmind@debian.org>
-
-Package: libpython2.7-minimal
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 2782
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: python2.7
-Version: 2.7.17-1~18.04
-Replaces: libpython2.7-stdlib (<< 2.7.8-7), python2.7 (<< 2.7.4-2), python2.7-minimal (<< 2.7.3-10)
-Recommends: libpython2.7-stdlib
-Breaks: python2.7-minimal (<< 2.7.4~rc1-1~)
-Conflicts: binfmt-support (<< 1.1.2)
-Conffiles:
- /etc/python2.7/sitecustomize.py d6b276695157bde06a56ba1b2bc53670
-Description: Minimal subset of the Python language (version 2.7)
- This package contains some essential modules. It is normally not
- used on it's own, but as a dependency of python2.7-minimal.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: samba-common-bin
-Status: install ok installed
-Priority: optional
-Section: net
-Installed-Size: 1494
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: samba
-Version: 2:4.7.6+dfsg~ubuntu-0ubuntu2.15
-Depends: python, python-samba, samba-common (= 2:4.7.6+dfsg~ubuntu-0ubuntu2.15), samba-libs (= 2:4.7.6+dfsg~ubuntu-0ubuntu2.15), python2.7:any, libbsd0 (>= 0.0), libc6 (>= 2.14), libldap-2.4-2 (>= 2.4.7), libncurses5 (>= 6), libpopt0 (>= 1.14), libreadline7 (>= 6.0), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtevent0 (>= 0.9.12), libtinfo5 (>= 6), libwbclient0 (>= 2:4.0.3+dfsg1)
-Suggests: heimdal-clients
-Description: Samba common files used by both the server and the client
- Samba is an implementation of the SMB/CIFS protocol for Unix systems,
- providing support for cross-platform file sharing with Microsoft Windows, OS X,
- and other Unix systems.  Samba can also function as a domain controller
- or member server in both NT4-style and Active Directory domains.
- .
- This package contains the common files that are used by both the server
- (provided in the samba package) and the client (provided in the samba-clients
- package).
-Homepage: http://www.samba.org
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 
 Package: libpci3
 Status: install ok installed
@@ -7853,55 +6469,6 @@ Description: terminal-related programs and man pages
 Homepage: https://invisible-island.net/ncurses/
 Original-Maintainer: Craig Small <csmall@debian.org>
 
-Package: dirmngr
-Status: deinstall ok config-files
-Priority: optional
-Section: utils
-Installed-Size: 852
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Source: gnupg2
-Version: 2.2.4-1ubuntu1.2
-Config-Version: 2.2.4-1ubuntu1.2
-Replaces: gnupg2 (<< 2.1.10-2)
-Depends: adduser, gpgconf (= 2.2.4-1ubuntu1.2), lsb-base (>= 3.2-13), libassuan0 (>= 2.4.0), libc6 (>= 2.15), libgcrypt20 (>= 1.8.0), libgnutls30 (>= 3.5.6), libgpg-error0 (>= 1.21), libksba8 (>= 1.3.4), libldap-2.4-2 (>= 2.4.7), libnpth0 (>= 0.90)
-Recommends: gnupg (= 2.2.4-1ubuntu1.2)
-Suggests: dbus-user-session, libpam-systemd, pinentry-gnome3, tor
-Breaks: gnupg2 (<< 2.1.10-2)
-Enhances: gpg, gpgsm, squid
-Description: GNU privacy guard - network certificate management service
- dirmngr is a server for managing and downloading OpenPGP and X.509
- certificates, as well as updates and status signals related to those
- certificates.  For OpenPGP, this means pulling from the public
- HKP/HKPS keyservers, or from LDAP servers.  For X.509 this includes
- Certificate Revocation Lists (CRLs) and Online Certificate Status
- Protocol updates (OCSP).  It is capable of using tor for network
- access.
- .
- dirmngr is used for network access by gpg, gpgsm, and dirmngr-client,
- among other tools.  Unless this package is installed, the parts of
- the GnuPG suite that try to interact with the network will fail.
-Homepage: https://www.gnupg.org/
-Original-Maintainer: Debian GnuPG Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
-
-Package: finalrd
-Status: install ok installed
-Priority: optional
-Section: utils
-Installed-Size: 25
-Maintainer: Dimitri John Ledkov <xnox@ubuntu.com>
-Architecture: all
-Version: 3~ubuntu18.04.0
-Depends: initramfs-tools-core
-Description: final runtime directory for shutdown
- Generates a systemd compatible shutdown runtime directory. This
- enables to execute scripts and binaries to clean up shutdown. Sample
- hooks and shutdown scripts are provided to unmount filesystems,
- dissamble dm, cleanly shutdown mdadm raid arrays, and perform iscsi
- logout. Approximate tmpfs RAM requirement is 14MB on shutdown.
-Homepage: https://launchpad.net/finalrd
-
 Package: irqbalance
 Status: install ok installed
 Priority: optional
@@ -7968,26 +6535,6 @@ Description: S-Lang programming library - runtime version
 Built-Using: unicode-data (= 10.0.0-3)
 Homepage: http://www.jedsoft.org/slang/
 Original-Maintainer: Alastair McKinstry <mckinstry@debian.org>
-
-Package: linux-image-4.15.0-91-generic
-Status: deinstall ok config-files
-Priority: optional
-Section: kernel
-Installed-Size: 8209
-Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
-Architecture: amd64
-Source: linux-signed
-Version: 4.15.0-91.92
-Config-Version: 4.15.0-91.92
-Provides: aufs-dkms, fuse-module, ivtv-modules, kvm-api-4, linux-image, redhat-cluster-modules, spl-dkms, spl-modules, virtualbox-guest-modules, zfs-dkms, zfs-modules
-Depends: kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-4.15.0-91-generic
-Recommends: grub-pc | grub-efi-amd64 | grub-efi-ia32 | grub | lilo, initramfs-tools | linux-initramfs-tool
-Suggests: fdutils, linux-doc-4.15.0 | linux-source-4.15.0, linux-tools, linux-headers-4.15.0-91-generic
-Conflicts: linux-image-unsigned-4.15.0-91-generic
-Description: Signed kernel image generic
- A kernel image for generic.  This version of it is signed with
- Canonical's UEFI/Opal signing key.
-Built-Using: linux (= 4.15.0-91.92)
 
 Package: cron
 Status: install ok installed
@@ -8069,29 +6616,6 @@ Description: minimalistic Netlink communication library
 Original-Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 Homepage: http://netfilter.org/projects/libmnl/
 
-Package: amd64-microcode
-Status: deinstall ok config-files
-Priority: standard
-Section: non-free/admin
-Installed-Size: 76
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Version: 3.20191021.1+really3.20181128.1~ubuntu0.18.04.1
-Config-Version: 3.20191021.1+really3.20181128.1~ubuntu0.18.04.1
-Recommends: initramfs-tools (>= 0.113~) | dracut (>= 044) | tiny-initramfs
-Breaks: intel-microcode (<< 2)
-Conffiles:
- /etc/default/amd64-microcode eaa8a5fa3fb59af4f0f55e851a6e9b20
- /etc/modprobe.d/amd64-microcode-blacklist.conf 71327241f6583b34944e638a955aba91
-Description: Processor microcode firmware for AMD CPUs
- This package contains microcode patches for all AMD AMD64
- processors.  AMD releases microcode patches to correct
- processor behavior as documented in the respective processor
- revision guides.
- .
- For Intel processors, please refer to the intel-microcode package.
-Original-Maintainer: Henrique de Moraes Holschuh <hmh@debian.org>
-
 Package: xdg-user-dirs
 Status: install ok installed
 Priority: optional
@@ -8140,33 +6664,6 @@ Description: userspace USB programming library
  library.
 Original-Maintainer: Aurelien Jarno <aurel32@debian.org>
 Homepage: http://www.linux-usb.org/
-
-Package: locales
-Status: deinstall ok config-files
-Priority: standard
-Section: localization
-Installed-Size: 14128
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: all
-Source: glibc
-Version: 2.27-3ubuntu1
-Config-Version: 2.27-3ubuntu1
-Replaces: libc-bin (<< 2.23), manpages-fr-extra (<< 20141022)
-Depends: libc-bin (>> 2.27), debconf (>= 0.5) | debconf-2.0
-Breaks: libc-bin (<< 2.23)
-Conffiles:
- /etc/locale.alias d7a66c8ca60c85abc6f2db2b43209105
-Description: GNU C Library: National Language (locale) data [support]
- Machine-readable data files, shared objects and programs used by the
- C library for localization (l10n) and internationalization (i18n) support.
- .
- This package contains tools to generate locale definitions from source
- files (included in this package). It allows you to customize which
- definitions actually get generated. This is a space-saver over how this
- package used to be, with all locales generated by default. This created
- a package that unpacked to an excess of 30 megs.
-Homepage: https://www.gnu.org/software/libc/libc.html
-Original-Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 
 Package: libnih1
 Status: install ok installed
@@ -8281,58 +6778,6 @@ Description: SELinux library for manipulating binary security policies
 Original-Maintainer: Debian SELinux maintainers <selinux-devel@lists.alioth.debian.org>
 Homepage: http://userspace.selinuxproject.org/
 
-Package: libpython2.7-stdlib
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 8777
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: python2.7
-Version: 2.7.17-1~18.04
-Replaces: libpython2.7-testsuite (<< 2.7.13-4), python2.7 (<< 2.7.5-0~)
-Provides: python-argparse, python2.7-argparse, python2.7-celementtree, python2.7-cjkcodecs, python2.7-ctypes, python2.7-elementtree, python2.7-profiler, python2.7-wsgiref
-Depends: libpython2.7-minimal (= 2.7.17-1~18.04), libssl1.1 (>= 1.1.1), mime-support, libbz2-1.0, libc6 (>= 2.15), libdb5.3, libexpat1 (>= 2.1~beta3), libffi6 (>= 3.0.4), libncursesw5 (>= 6), libreadline7 (>= 7.0~beta), libsqlite3-0 (>= 3.5.9), libtinfo5 (>= 6)
-Breaks: cython (<< 0.25.2-2build3), python-lxml (<< 3.8.0-2), python-numpy (<< 1:1.12.1-3.1ubuntu1), python-scipy (<< 0.18.1-2ubuntu3), python-tk (<< 2.7.14~rc1-1~), python-urllib3 (<< 1.9.1-3)
-Description: Interactive high-level object-oriented language (standard library, version 2.7)
- Python is a high-level, interactive, object-oriented language. Its 2.7 version
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
- .
- This package contains Python 2.7's standard library. It is normally not
- used on its own, but as a dependency of python2.7.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: python
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 624
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: allowed
-Source: python-defaults
-Version: 2.7.15~rc1-1
-Replaces: python-dev (<< 2.6.5-2)
-Provides: python-ctypes, python-email, python-importlib, python-profiler, python-wsgiref
-Depends: python2.7 (>= 2.7.15~rc1-1~), libpython-stdlib (= 2.7.15~rc1-1)
-Pre-Depends: python-minimal (= 2.7.15~rc1-1)
-Suggests: python-doc (= 2.7.15~rc1-1), python-tk (>= 2.7.15~rc1-1~)
-Breaks: update-manager-core (<< 0.200.5-2)
-Conflicts: python-central (<< 0.5.5)
-Description: interactive high-level object-oriented language (default version)
- Python, the high-level, interactive object oriented language,
- includes an extensive class library with lots of goodies for
- network programming, system administration, sounds and graphics.
- .
- This package is a dependency package, which depends on Debian's default
- Python version (currently v2.7).
-Original-Maintainer: Matthias Klose <doko@debian.org>
-Homepage: http://www.python.org/
-Cnf-Extra-Commands: python
-Cnf-Priority-Bonus: 3
-
 Package: libteamdctl0
 Status: install ok installed
 Priority: optional
@@ -8362,31 +6807,6 @@ Description: library for communication with `teamd` process
  Libteam requires Linux kernel 3.3 or higher.
 Original-Maintainer: Dmitry Smirnov <onlyjob@debian.org>
 Homepage: http://libteam.org
-
-Package: libxau6
-Status: deinstall ok config-files
-Priority: optional
-Section: libs
-Installed-Size: 50
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: libxau
-Version: 1:1.0.8-1
-Config-Version: 1:1.0.8-1
-Depends: libc6 (>= 2.4)
-Pre-Depends: multiarch-support
-Description: X11 authorisation library
- This package provides the main interface to the X11 authorisation handling,
- which controls authorisation for X connections, both client-side and
- server-side.
- .
- More information about X.Org can be found at:
- <URL:http://www.X.org>
- .
- This module can be found at
- git://anongit.freedesktop.org/git/xorg/lib/libXau
-Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 
 Package: networkd-dispatcher
 Status: install ok installed
@@ -8578,73 +6998,6 @@ Description: miscellaneous system utilities
  interface with real time clock, etc.
 Original-Maintainer: LaMont Jones <lamont@debian.org>
 
-Package: python2.7-minimal
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 3685
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: allowed
-Source: python2.7
-Version: 2.7.17-1~18.04
-Replaces: python2.7 (<< 2.7.8-7~)
-Depends: libpython2.7-minimal (= 2.7.17-1~18.04)
-Pre-Depends: libc6 (>= 2.15), zlib1g (>= 1:1.2.0)
-Recommends: python2.7
-Suggests: binfmt-support
-Conflicts: binfmt-support (<< 1.1.2)
-Description: Minimal subset of the Python language (version 2.7)
- This package contains the interpreter and some essential modules.  It can
- be used in the boot process for some basic tasks.
- See /usr/share/doc/python2.7-minimal/README.Debian for a list of the modules
- contained in this package.
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: libavahi-common-data
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 112
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: avahi
-Version: 0.7-3.1ubuntu1.2
-Description: Avahi common data files
- Avahi is a fully LGPL framework for Multicast DNS Service Discovery.
- It allows programs to publish and discover services and hosts
- running on a local network with no specific configuration. For
- example you can plug into a network and instantly find printers to
- print to, files to look at and people to talk to.
- .
- This package contains common data files for avahi.
-Homepage: http://avahi.org/
-Original-Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-
-Package: eject
-Status: install ok installed
-Priority: optional
-Section: utils
-Installed-Size: 160
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Version: 2.1.5+deb1+cvs20081104-13.2
-Depends: libc6 (>= 2.8), libdevmapper1.02.1 (>= 2:1.02.97)
-Suggests: cdtool, setcd
-Description: ejects CDs and operates CD-Changers under Linux
- This little program will eject CD-ROMs (assuming your drive supports
- the CDROMEJECT ioctl). It also allows setting the autoeject feature.
- .
- On supported ATAPI/IDE multi-disc CD-ROM changers, it allows changing
- the active disc.
- .
- You can also use eject to properly disconnect external mass-storage
- devices like digital cameras or portable music players.
-Original-Maintainer: Frank Lichtenheld <djpig@debian.org>
-Homepage: http://www.pobox.com/~tranter/eject.html
-
 Package: sed
 Essential: yes
 Status: install ok installed
@@ -8663,29 +7016,6 @@ Description: GNU stream editor for filtering/transforming text
  output.
 Original-Maintainer: Clint Adams <clint@debian.org>
 Homepage: https://www.gnu.org/software/sed/
-
-Package: libcups2
-Status: install ok installed
-Priority: optional
-Section: libs
-Installed-Size: 709
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: cups
-Version: 2.2.7-1ubuntu2.7
-Depends: libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libc6 (>= 2.17), libgnutls30 (>= 3.5.6), libgssapi-krb5-2 (>= 1.14+dfsg), zlib1g (>= 1:1.2.0)
-Suggests: cups-common
-Breaks: cups (<< 1.5.0)
-Description: Common UNIX Printing System(tm) - Core library
- The Common UNIX Printing System (or CUPS(tm)) is a printing system and
- general replacement for lpd and the like.  It supports the Internet
- Printing Protocol (IPP), and has its own filtering driver model for
- handling various document types.
- .
- This package provides the base shared libraries for CUPS.
-Homepage: https://www.cups.org/
-Original-Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 
 Package: libsmartcols1
 Status: install ok installed
@@ -8812,66 +7142,4 @@ Description: compression library - development
  files.
 Homepage: http://zlib.net/
 Original-Maintainer: Mark Brown <broonie@debian.org>
-
-Package: python-talloc
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 53
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Source: talloc
-Version: 2.1.10-2ubuntu1
-Provides: python2.7-talloc
-Depends: libc6 (>= 2.2.5), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213)
-Breaks: python-samba (<< 2:4.3.6+dfsg-2)
-Description: hierarchical pool based memory allocator - Python bindings
- A hierarchical pool based memory allocator with destructors. It uses
- reference counting to determine when memory should be freed.
- .
- This package contains the Python bindings.
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
-Homepage: https://talloc.samba.org/
-
-Package: binutils-x86-64-linux-gnu
-Status: install ok installed
-Priority: optional
-Section: devel
-Installed-Size: 11758
-Maintainer: Ubuntu Core developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: foreign
-Source: binutils
-Version: 2.30-21ubuntu1~18.04.2
-Replaces: binutils (<< 2.29-6)
-Depends: binutils-common (= 2.30-21ubuntu1~18.04.2), libbinutils (= 2.30-21ubuntu1~18.04.2), libc6 (>= 2.27), zlib1g (>= 1:1.1.4)
-Suggests: binutils-doc (= 2.30-21ubuntu1~18.04.2)
-Breaks: binutils (<< 2.29-6)
-Description: GNU binary utilities, for x86-64-linux-gnu target
- This package provides GNU assembler, linker and binary utilities
- for the x86-64-linux-gnu target.
- .
- You don't need this package unless you plan to cross-compile programs
- for x86-64-linux-gnu and x86-64-linux-gnu is not your native platform.
-Homepage: https://www.gnu.org/software/binutils/
-Original-Maintainer: Matthias Klose <doko@debian.org>
-
-Package: python-ldb
-Status: install ok installed
-Priority: optional
-Section: python
-Installed-Size: 132
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Architecture: amd64
-Multi-Arch: same
-Source: ldb
-Version: 2:1.2.3-1ubuntu0.1
-Provides: python2.7-ldb
-Depends: libldb1 (= 2:1.2.3-1ubuntu0.1), python (<< 2.8), python (>= 2.7~), python:any (<< 2.8), python:any (>= 2.7.5-5~), libc6 (>= 2.2.5), libpython2.7 (>= 2.7), libtalloc2 (>= 2.0.4~git20101213)
-Description: Python bindings for LDB
- ldb is a LDAP-like embedded database built on top of TDB.
- .
- This package contains the Python bindings.
-Homepage: http://ldb.samba.org/
-Original-Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 
