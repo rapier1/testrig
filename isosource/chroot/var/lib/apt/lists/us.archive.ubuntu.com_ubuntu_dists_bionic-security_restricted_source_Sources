@@ -1,0 +1,387 @@
+Package: linux-restricted-modules
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-4.15.0-91-generic, linux-modules-nvidia-390-4.15.0-91-lowlatency, linux-modules-nvidia-390-generic, linux-modules-nvidia-390-lowlatency
+Architecture: amd64
+Version: 4.15.0-91.92
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, curl, gawk, linux-headers-4.15.0-91-generic (>= 4.15.0-91.92), linux-buildinfo-4.15.0-91-generic (>= 4.15.0-91.92), linux-headers-4.15.0-91-lowlatency (>= 4.15.0-91.92), linux-buildinfo-4.15.0-91-lowlatency (>= 4.15.0-91.92)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules/+git/bionic
+Directory: pool/restricted/l/linux-restricted-modules
+Package-List:
+ linux-modules-nvidia-390-4.15.0-91-generic deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-4.15.0-91-lowlatency deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-generic deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-lowlatency deb kernel optional arch=amd64 profile=!stage1
+Files:
+ 96ded4200955aaed78bda212fa7db05d 2035 linux-restricted-modules_4.15.0-91.92.dsc
+ 2e655c3c8aa47c6af73c14a38c63a183 17912 linux-restricted-modules_4.15.0-91.92.tar.xz
+Checksums-Sha1:
+ a73ab8a0deb95c51da89535b0e22ada04bc8a720 2035 linux-restricted-modules_4.15.0-91.92.dsc
+ 37e9f71b18f3cbafbbbe174cf5f460c2bc95b043 17912 linux-restricted-modules_4.15.0-91.92.tar.xz
+Checksums-Sha256:
+ aa25f4edcbc01970c5f7411324ab325cd2d733238de09036d902d8736de4e440 2035 linux-restricted-modules_4.15.0-91.92.dsc
+ 1aa6bf2becb4e3ece755e1db69a14ad90a0cc89ae4a245570b707c98cfba56f7 17912 linux-restricted-modules_4.15.0-91.92.tar.xz
+
+Package: linux-restricted-modules-aws
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-4.15.0-1063-aws, linux-modules-nvidia-390-aws
+Architecture: amd64
+Version: 4.15.0-1063.67
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, curl, gawk, linux-headers-4.15.0-1063-aws (>= 4.15.0-1063.67), linux-buildinfo-4.15.0-1063-aws (>= 4.15.0-1063.67)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-aws/+git/bionic
+Directory: pool/restricted/l/linux-restricted-modules-aws
+Package-List:
+ linux-modules-nvidia-390-4.15.0-1063-aws deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-aws deb kernel optional arch=amd64 profile=!stage1
+Files:
+ 3bc188ab54fca0110474127f42a0bb34 1987 linux-restricted-modules-aws_4.15.0-1063.67.dsc
+ 089360ac4884f0dac806d179f6b9ef6e 17704 linux-restricted-modules-aws_4.15.0-1063.67.tar.xz
+Checksums-Sha1:
+ 8420d146512c5a27c606671ce76d43254349cfa5 1987 linux-restricted-modules-aws_4.15.0-1063.67.dsc
+ 58287fe7369a2a8161aa948afb8de94cc5e7f661 17704 linux-restricted-modules-aws_4.15.0-1063.67.tar.xz
+Checksums-Sha256:
+ 60fb5dc7310f3c5b03e680765e0761d9dac58e7b3edb44f2fcd36ca798f03b11 1987 linux-restricted-modules-aws_4.15.0-1063.67.dsc
+ 07ccff3145a4164e599c556849565960f1e7c8021410bdc57a09036559c54c60 17704 linux-restricted-modules-aws_4.15.0-1063.67.tar.xz
+
+Package: linux-restricted-modules-aws-5.0
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.0.0-1027-aws, linux-modules-nvidia-418-5.0.0-1027-aws, linux-modules-nvidia-390-aws-edge, linux-modules-nvidia-418-aws-edge
+Architecture: amd64
+Version: 5.0.0-1027.30
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.0.0-1027-aws (>= 5.0.0-1027.30), linux-buildinfo-5.0.0-1027-aws (>= 5.0.0-1027.30)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-aws/+git/bionic -b aws-5.0
+Directory: pool/restricted/l/linux-restricted-modules-aws-5.0
+Package-List:
+ linux-modules-nvidia-390-5.0.0-1027-aws deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-aws-edge deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-5.0.0-1027-aws deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-aws-edge deb kernel optional arch=amd64 profile=!stage1
+Files:
+ 444e4cfecd7578e594f209404b20245c 2260 linux-restricted-modules-aws-5.0_5.0.0-1027.30.dsc
+ a8986ba8eeb3dda68c55e0295bb2f684 17936 linux-restricted-modules-aws-5.0_5.0.0-1027.30.tar.xz
+Checksums-Sha1:
+ d93c05013673c3d0550d7be3d4873411b0a13377 2260 linux-restricted-modules-aws-5.0_5.0.0-1027.30.dsc
+ fd18b9e6b80f61e26d7edd45a72f3a657e0c8242 17936 linux-restricted-modules-aws-5.0_5.0.0-1027.30.tar.xz
+Checksums-Sha256:
+ 3c248431f5b7c209220c19b125f5b6072c03622563cf43e3c34e5c8e9e0d734f 2260 linux-restricted-modules-aws-5.0_5.0.0-1027.30.dsc
+ d1905038ef745540be4cc273bf6204ffadbf1d95f374b0feac5945df6d5ca3a4 17936 linux-restricted-modules-aws-5.0_5.0.0-1027.30.tar.xz
+
+Package: linux-restricted-modules-azure
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.0.0-1032-azure, linux-modules-nvidia-390-azure, linux-modules-nvidia-418-5.0.0-1032-azure, linux-modules-nvidia-418-azure
+Architecture: amd64
+Version: 5.0.0-1032.34
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.0.0-1032-azure (>= 5.0.0-1032.34), linux-buildinfo-5.0.0-1032-azure (>= 5.0.0-1032.34)
+Vcs-Git: git://git.launchpad.net/~canonical-kernel/ubuntu/+source/linux-restricted-modules-azure/+git/bionic
+Directory: pool/restricted/l/linux-restricted-modules-azure
+Package-List:
+ linux-modules-nvidia-390-5.0.0-1032-azure deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-azure deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-5.0.0-1032-azure deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-azure deb kernel optional arch=amd64 profile=!stage1
+Files:
+ ba2df0da152de76f40f8cb57592eed59 2112 linux-restricted-modules-azure_5.0.0-1032.34.dsc
+ 84387625bc74f023ad22f3940dcfd3f9 18016 linux-restricted-modules-azure_5.0.0-1032.34.tar.xz
+Checksums-Sha1:
+ a23e7ffdd2c3e2427d20cdd56944ef3c33ea55a4 2112 linux-restricted-modules-azure_5.0.0-1032.34.dsc
+ e1e208ef3163a1f06a3261833b27cd4eb56b077a 18016 linux-restricted-modules-azure_5.0.0-1032.34.tar.xz
+Checksums-Sha256:
+ 03b9f92386db6230cffddb36705f75d91cc136600cc31927cf8d18bbad3bb470 2112 linux-restricted-modules-azure_5.0.0-1032.34.dsc
+ ad0f9edd45a6130ef82a1b08999086f5db7f0765ea226a24b88c01a19880a65d 18016 linux-restricted-modules-azure_5.0.0-1032.34.tar.xz
+
+Package: linux-restricted-modules-azure-5.3
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.3.0-1013-azure, linux-modules-nvidia-430-5.3.0-1013-azure, linux-modules-nvidia-390-azure-edge, linux-modules-nvidia-430-azure-edge
+Architecture: amd64
+Version: 5.3.0-1013.14~18.04.1
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.3.0-1013-azure (>= 5.3.0-1013.14~18.04.1), linux-buildinfo-5.3.0-1013-azure (>= 5.3.0-1013.14~18.04.1)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-azure/+git/bionic -b azure-5.3
+Directory: pool/restricted/l/linux-restricted-modules-azure-5.3
+Package-List:
+ linux-modules-nvidia-390-5.3.0-1013-azure deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-azure-edge deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-5.3.0-1013-azure deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-azure-edge deb kernel optional arch=amd64 profile=!stage1
+Files:
+ e41cfab1eb886e26b788a244cb93679c 2206 linux-restricted-modules-azure-5.3_5.3.0-1013.14~18.04.1.dsc
+ 7b953f8e6578357acb0583ca9005094b 18436 linux-restricted-modules-azure-5.3_5.3.0-1013.14~18.04.1.tar.xz
+Checksums-Sha1:
+ 9d66019f438f8dd8a8c723c3873d0f52c18e1517 2206 linux-restricted-modules-azure-5.3_5.3.0-1013.14~18.04.1.dsc
+ 73fa874c9bac884079c400dadfcec05b86e1cd8f 18436 linux-restricted-modules-azure-5.3_5.3.0-1013.14~18.04.1.tar.xz
+Checksums-Sha256:
+ 5c597de71c1fcd496e87a8edd566693927ace1845558baf7ebf9c5aab0165abb 2206 linux-restricted-modules-azure-5.3_5.3.0-1013.14~18.04.1.dsc
+ 2ab6386cb3e24f55142a489877896528023092dedfae7d053f8b0865882dc851 18436 linux-restricted-modules-azure-5.3_5.3.0-1013.14~18.04.1.tar.xz
+
+Package: linux-restricted-modules-gcp
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.0.0-1033-gcp, linux-modules-nvidia-390-gcp, linux-modules-nvidia-418-5.0.0-1033-gcp, linux-modules-nvidia-418-gcp
+Architecture: amd64
+Version: 5.0.0-1033.34
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.0.0-1033-gcp (>= 5.0.0-1033.34), linux-buildinfo-5.0.0-1033-gcp (>= 5.0.0-1033.34)
+Vcs-Git: git://git.launchpad.net/~canonical-kernel/ubuntu/+source/linux-restricted-modules-gcp/+git/bionic
+Directory: pool/restricted/l/linux-restricted-modules-gcp
+Package-List:
+ linux-modules-nvidia-390-5.0.0-1033-gcp deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-gcp deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-5.0.0-1033-gcp deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-gcp deb kernel optional arch=amd64 profile=!stage1
+Files:
+ bc6264a318b5b7d82d1fc20876e04cca 2216 linux-restricted-modules-gcp_5.0.0-1033.34.dsc
+ b92c757823b8ad357da883375ddb6676 17952 linux-restricted-modules-gcp_5.0.0-1033.34.tar.xz
+Checksums-Sha1:
+ 9ef75e2f98b7a0f7b89907ddb852ab260b9f77e1 2216 linux-restricted-modules-gcp_5.0.0-1033.34.dsc
+ f47356ca8d703723acb00a9b14619c58fbebf7e5 17952 linux-restricted-modules-gcp_5.0.0-1033.34.tar.xz
+Checksums-Sha256:
+ 736f4fbdcd73c3dc43f0af79d1fcdb65867a3f1b9f7c459c2ae42225825fd490 2216 linux-restricted-modules-gcp_5.0.0-1033.34.dsc
+ 80903678daff36633127f53e7b4c29a96794483b9ea1addf75bc571ec80d7bef 17952 linux-restricted-modules-gcp_5.0.0-1033.34.tar.xz
+
+Package: linux-restricted-modules-gcp-5.3
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.3.0-1014-gcp, linux-modules-nvidia-430-5.3.0-1014-gcp, linux-modules-nvidia-390-gcp-edge, linux-modules-nvidia-430-gcp-edge
+Architecture: amd64
+Version: 5.3.0-1014.15~18.04.1
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.3.0-1014-gcp (>= 5.3.0-1014.15~18.04.1), linux-buildinfo-5.3.0-1014-gcp (>= 5.3.0-1014.15~18.04.1)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-gcp/+git/bionic -b gcp-5.3
+Directory: pool/restricted/l/linux-restricted-modules-gcp-5.3
+Package-List:
+ linux-modules-nvidia-390-5.3.0-1014-gcp deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-gcp-edge deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-5.3.0-1014-gcp deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-gcp-edge deb kernel optional arch=amd64 profile=!stage1
+Files:
+ e0f5a5d9bb4b9efa16c145747a76f03d 2308 linux-restricted-modules-gcp-5.3_5.3.0-1014.15~18.04.1.dsc
+ cbfcacf582ef6362756bef96b763520e 18348 linux-restricted-modules-gcp-5.3_5.3.0-1014.15~18.04.1.tar.xz
+Checksums-Sha1:
+ 4762fbe8d9b090771e48bf6ec4b12af0715c02e1 2308 linux-restricted-modules-gcp-5.3_5.3.0-1014.15~18.04.1.dsc
+ 59af442182ef0de137a01ca2c795194e926c60ae 18348 linux-restricted-modules-gcp-5.3_5.3.0-1014.15~18.04.1.tar.xz
+Checksums-Sha256:
+ 5a85a33fb622d30d8290e5c1c74637170102810aff567a57cbccf24d5d497aeb 2308 linux-restricted-modules-gcp-5.3_5.3.0-1014.15~18.04.1.dsc
+ 6b4ea3d5d044164bee722b33ef3672412e212f63cec6880f90087712bc1a1316 18348 linux-restricted-modules-gcp-5.3_5.3.0-1014.15~18.04.1.tar.xz
+
+Package: linux-restricted-modules-hwe
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.3.0-42-generic, linux-modules-nvidia-390-5.3.0-42-lowlatency, linux-modules-nvidia-430-5.3.0-42-generic, linux-modules-nvidia-430-5.3.0-42-lowlatency, linux-modules-nvidia-435-5.3.0-42-generic, linux-modules-nvidia-435-5.3.0-42-lowlatency, linux-modules-nvidia-390-generic-hwe-18.04, linux-modules-nvidia-430-generic-hwe-18.04, linux-modules-nvidia-435-generic-hwe-18.04, linux-modules-nvidia-390-lowlatency-hwe-18.04, linux-modules-nvidia-430-lowlatency-hwe-18.04, linux-modules-nvidia-435-lowlatency-hwe-18.04
+Architecture: amd64
+Version: 5.3.0-42.34~18.04.1
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.3.0-42-generic (>= 5.3.0-42.34~18.04.1), linux-buildinfo-5.3.0-42-generic (>= 5.3.0-42.34~18.04.1), linux-headers-5.3.0-42-lowlatency (>= 5.3.0-42.34~18.04.1), linux-buildinfo-5.3.0-42-lowlatency (>= 5.3.0-42.34~18.04.1)
+Vcs-Git: git://git.launchpad.net/~canonical-kernel/ubuntu/+source/linux-restricted-modules/+git/bionic -b hwe
+Directory: pool/restricted/l/linux-restricted-modules-hwe
+Package-List:
+ linux-modules-nvidia-390-5.3.0-42-generic deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-5.3.0-42-lowlatency deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-generic-hwe-18.04 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-lowlatency-hwe-18.04 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-5.3.0-42-generic deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-5.3.0-42-lowlatency deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-generic-hwe-18.04 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-lowlatency-hwe-18.04 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-435-5.3.0-42-generic deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-435-5.3.0-42-lowlatency deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-435-generic-hwe-18.04 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-435-lowlatency-hwe-18.04 deb kernel optional arch=amd64 profile=!stage1
+Files:
+ b9a6cb00de712a5b0ebf55f754e68248 3245 linux-restricted-modules-hwe_5.3.0-42.34~18.04.1.dsc
+ d1d724a44b4f60b256cca9d20e6e1376 18756 linux-restricted-modules-hwe_5.3.0-42.34~18.04.1.tar.xz
+Checksums-Sha1:
+ d8a4d598c0a8401ef7f7a295ce8e292ced304397 3245 linux-restricted-modules-hwe_5.3.0-42.34~18.04.1.dsc
+ 285610958e7606670def98e8196201eb62394007 18756 linux-restricted-modules-hwe_5.3.0-42.34~18.04.1.tar.xz
+Checksums-Sha256:
+ f3a1f1e311bde8688e37e6e32c340cba696244f3df564f3d80af1e9fbc81cd21 3245 linux-restricted-modules-hwe_5.3.0-42.34~18.04.1.dsc
+ ad82de027987c629b1710555bc2e22fab6e59e74203d57af3ea7f0becc176109 18756 linux-restricted-modules-hwe_5.3.0-42.34~18.04.1.tar.xz
+
+Package: linux-restricted-modules-oem
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-4.15.0-1076-oem, linux-modules-nvidia-390-oem
+Architecture: amd64
+Version: 4.15.0-1076.86+1
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, curl, gawk, linux-headers-4.15.0-1076-oem (>= 4.15.0-1076.86), linux-buildinfo-4.15.0-1076-oem (>= 4.15.0-1076.86)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-oem/+git/bionic
+Directory: pool/restricted/l/linux-restricted-modules-oem
+Package-List:
+ linux-modules-nvidia-390-4.15.0-1076-oem deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-oem deb kernel optional arch=amd64 profile=!stage1
+Files:
+ 3e3df4dcc00ec373a7a80f70fa931f1f 1646 linux-restricted-modules-oem_4.15.0-1076.86+1.dsc
+ f8e43f9f0b612991525d40945b1edca6 17824 linux-restricted-modules-oem_4.15.0-1076.86+1.tar.xz
+Checksums-Sha1:
+ 666f5440520019ea1a48a259eebc9c90de3f30f3 1646 linux-restricted-modules-oem_4.15.0-1076.86+1.dsc
+ 0a9c9a6db3e34f624c52151d920b2152cee1ebed 17824 linux-restricted-modules-oem_4.15.0-1076.86+1.tar.xz
+Checksums-Sha256:
+ 8e5142669ecfb62378e544ca23afba06efce18c87810c327e746a140ccfdc9c6 1646 linux-restricted-modules-oem_4.15.0-1076.86+1.dsc
+ d91ff0787b1f22c2d2f70e567d2b8bc8c5ba2fd654ddca664d2f270a2cff5a35 17824 linux-restricted-modules-oem_4.15.0-1076.86+1.tar.xz
+
+Package: linux-restricted-modules-oracle
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-oracle-lts-18.04, linux-modules-nvidia-390-4.15.0-1035-oracle
+Architecture: amd64
+Version: 4.15.0-1035.39
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, curl, gawk, linux-headers-4.15.0-1035-oracle (>= 4.15.0-1035.39), linux-buildinfo-4.15.0-1035-oracle (>= 4.15.0-1035.39)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-oracle/+git/bionic
+Directory: pool/restricted/l/linux-restricted-modules-oracle
+Package-List:
+ linux-modules-nvidia-390-4.15.0-1035-oracle deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-oracle-lts-18.04 deb kernel optional arch=amd64 profile=!stage1
+Files:
+ 297fae39a5562542965147a17ce54ba2 1732 linux-restricted-modules-oracle_4.15.0-1035.39.dsc
+ 5ad726b7eb1f552cb9ada9e76b9d9c7c 18300 linux-restricted-modules-oracle_4.15.0-1035.39.tar.xz
+Checksums-Sha1:
+ 47c1a3c75830b2d7b83efe0e6e6da498e245e8c2 1732 linux-restricted-modules-oracle_4.15.0-1035.39.dsc
+ ad1e4488ca18993d68da021c5b40d0a6442fc69c 18300 linux-restricted-modules-oracle_4.15.0-1035.39.tar.xz
+Checksums-Sha256:
+ 329c64ae3f0fc787da8e4c0044cae646b31a9b064e19e8e922ba7a07af426cb2 1732 linux-restricted-modules-oracle_4.15.0-1035.39.dsc
+ d990b197fbd4bfc6a551ba6c7f80b9b53e512c9dca5f3c2d4da10c0180f841c6 18300 linux-restricted-modules-oracle_4.15.0-1035.39.tar.xz
+
+Package: linux-restricted-modules-oracle-5.0
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-oracle, linux-modules-nvidia-418-oracle, linux-modules-nvidia-390-5.0.0-1013-oracle, linux-modules-nvidia-418-5.0.0-1013-oracle
+Architecture: amd64
+Version: 5.0.0-1013.18
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.0.0-1013-oracle (>= 5.0.0-1013.18), linux-buildinfo-5.0.0-1013-oracle (>= 5.0.0-1013.18)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-oracle/+git/bionic -b oracle-5.0
+Directory: pool/restricted/l/linux-restricted-modules-oracle-5.0
+Package-List:
+ linux-modules-nvidia-390-5.0.0-1013-oracle deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-oracle deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-5.0.0-1013-oracle deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-oracle deb kernel optional arch=amd64 profile=!stage1
+Files:
+ c8df7c984d7af5b339977b086a5ff9d2 2288 linux-restricted-modules-oracle-5.0_5.0.0-1013.18.dsc
+ 6cf89753f11632ed4870d7950a9b3a6b 18420 linux-restricted-modules-oracle-5.0_5.0.0-1013.18.tar.xz
+Checksums-Sha1:
+ 6d97ac54f7b45318b55278a70ddcb8bfa41891ac 2288 linux-restricted-modules-oracle-5.0_5.0.0-1013.18.dsc
+ 2198e56a1647f9b60a875624bfdb1f4a83d1b7fe 18420 linux-restricted-modules-oracle-5.0_5.0.0-1013.18.tar.xz
+Checksums-Sha256:
+ f85dbfb4c036b14a2371a9a3e801d82c4bdb901b67a263e5d63b8ab45d72e123 2288 linux-restricted-modules-oracle-5.0_5.0.0-1013.18.dsc
+ e2de2f4c45db404453daadbffc866864c1942e69235c25c1fe95072146b95a13 18420 linux-restricted-modules-oracle-5.0_5.0.0-1013.18.tar.xz
+
+Package: linux-restricted-modules-oracle-5.3
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-oracle-edge, linux-modules-nvidia-430-oracle-edge, linux-modules-nvidia-390-5.3.0-1011-oracle, linux-modules-nvidia-430-5.3.0-1011-oracle
+Architecture: amd64
+Version: 5.3.0-1011.12~18.04.1
+Priority: optional
+Section: restricted/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.3.0-1011-oracle (>= 5.3.0-1011.12~18.04.1), linux-buildinfo-5.3.0-1011-oracle (>= 5.3.0-1011.12~18.04.1)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-oracle/+git/bionic -b oracle-5.3
+Directory: pool/restricted/l/linux-restricted-modules-oracle-5.3
+Package-List:
+ linux-modules-nvidia-390-5.3.0-1011-oracle deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-oracle-edge deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-5.3.0-1011-oracle deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-430-oracle-edge deb kernel optional arch=amd64 profile=!stage1
+Files:
+ e76de405e043cffcff431cf25694faee 2356 linux-restricted-modules-oracle-5.3_5.3.0-1011.12~18.04.1.dsc
+ e003b28f0075540602682d90ffbe5233 18664 linux-restricted-modules-oracle-5.3_5.3.0-1011.12~18.04.1.tar.xz
+Checksums-Sha1:
+ 25da11ca87ff837a6d0a0b8f76fdaec5b81ab8ee 2356 linux-restricted-modules-oracle-5.3_5.3.0-1011.12~18.04.1.dsc
+ 0b2f5c308996bbead268fa6be2b61a906f8d21bf 18664 linux-restricted-modules-oracle-5.3_5.3.0-1011.12~18.04.1.tar.xz
+Checksums-Sha256:
+ b5d686bad0ad8676c52d9793fd17be566ebdb9168d2ee25753d4ddb2f41d46dc 2356 linux-restricted-modules-oracle-5.3_5.3.0-1011.12~18.04.1.dsc
+ a1b1602ab270815e28ce565edb245df0ed56c340d68270aac72e7e2518b961b3 18664 linux-restricted-modules-oracle-5.3_5.3.0-1011.12~18.04.1.tar.xz
+
+Package: nvidia-graphics-drivers-390
+Format: 3.0 (quilt)
+Binary: nvidia-driver-390, nvidia-kernel-source-390, nvidia-dkms-390, nvidia-utils-390, libnvidia-compute-390, nvidia-compute-utils-390, nvidia-headless-no-dkms-390, nvidia-headless-390, nvidia-kernel-common-390, libnvidia-gl-390, libnvidia-common-390, xserver-xorg-video-nvidia-390, libnvidia-cfg1-390, libnvidia-ifr1-390, libnvidia-fbc1-390, libnvidia-decode-390, libnvidia-encode-390, nvidia-384, nvidia-384-dev, nvidia-libopencl1-384, nvidia-opencl-icd-384, libcuda1-384
+Architecture: i386 amd64 armhf all
+Version: 390.116-0ubuntu0.18.04.1
+Priority: optional
+Section: restricted/libs
+Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Uploaders:  Alberto Milone <alberto.milone@canonical.com>,
+Standards-Version: 4.1.1
+Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.17), xz-utils, dkms, libwayland-client0, libwayland-server0, libxext6 [!ppc64el], quilt, po-debconf, execstack, dh-modaliases, xserver-xorg-dev (>= 2:1.4), libglvnd-dev
+Homepage: http://www.nvidia.com
+Vcs-Browser: https://github.com/tseliot/nvidia-graphics-drivers/tree/390
+Vcs-Git: git://github.com/tseliot/nvidia-graphics-drivers.git
+Directory: pool/restricted/n/nvidia-graphics-drivers-390
+Package-List:
+ libcuda1-384 deb non-free/libs optional arch=i386,amd64,armhf
+ libnvidia-cfg1-390 deb non-free/libs optional arch=i386,amd64,armhf
+ libnvidia-common-390 deb non-free/libs optional arch=all
+ libnvidia-compute-390 deb non-free/libs optional arch=i386,amd64,armhf
+ libnvidia-decode-390 deb non-free/libs optional arch=i386,amd64
+ libnvidia-encode-390 deb non-free/libs optional arch=i386,amd64
+ libnvidia-fbc1-390 deb non-free/libs optional arch=i386,amd64,armhf
+ libnvidia-gl-390 deb non-free/libs optional arch=i386,amd64,armhf
+ libnvidia-ifr1-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-384 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-384-dev deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-compute-utils-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-dkms-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-driver-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-headless-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-headless-no-dkms-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-kernel-common-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-kernel-source-390 deb non-free/libs optional arch=i386,amd64,armhf
+ nvidia-libopencl1-384 deb non-free/libs optional arch=i386,amd64
+ nvidia-opencl-icd-384 deb non-free/libs optional arch=i386,amd64
+ nvidia-utils-390 deb non-free/libs optional arch=i386,amd64,armhf
+ xserver-xorg-video-nvidia-390 deb non-free/x11 optional arch=i386,amd64,armhf
+Files:
+ 73650508fdf03a78585b239c4a26ce4f 5253 nvidia-graphics-drivers-390_390.116-0ubuntu0.18.04.1.dsc
+ 8bcb1421c578663b42440decc552d22c 47101684 nvidia-graphics-drivers-390_390.116.orig-amd64.tar.gz
+ 5d0549908b39a31dbb097826dadb5b2b 28813417 nvidia-graphics-drivers-390_390.116.orig-armhf.tar.gz
+ ad9f6e8f7100b35e4b4146a4a210ca5a 47672347 nvidia-graphics-drivers-390_390.116.orig-i386.tar.gz
+ 4a6d30a736920818741ce501c795e9eb 136 nvidia-graphics-drivers-390_390.116.orig.tar.gz
+ 915220ee207f01e1726cb9344b77e6e8 36928 nvidia-graphics-drivers-390_390.116-0ubuntu0.18.04.1.debian.tar.xz
+Checksums-Sha1:
+ a23a4f42725ca02d73e69766dfbe5253122697fc 5253 nvidia-graphics-drivers-390_390.116-0ubuntu0.18.04.1.dsc
+ c073b150f299b3e1fd6217c87eeda5d4d1148587 47101684 nvidia-graphics-drivers-390_390.116.orig-amd64.tar.gz
+ 3fab9bad2ffb1efd6f88134b33a5abcd8d313fda 28813417 nvidia-graphics-drivers-390_390.116.orig-armhf.tar.gz
+ 3987be84d9e4e84826ca4e1a86444dd90750a63c 47672347 nvidia-graphics-drivers-390_390.116.orig-i386.tar.gz
+ 6178f14789160225a9cd49537b690b889410c76f 136 nvidia-graphics-drivers-390_390.116.orig.tar.gz
+ 1da4c047930d6c94614b048cb0837cadfe3d9339 36928 nvidia-graphics-drivers-390_390.116-0ubuntu0.18.04.1.debian.tar.xz
+Checksums-Sha256:
+ 7461d834530449d0455c35c1bf3c1445a960e6849830315badc8fda12b6f0c7b 5253 nvidia-graphics-drivers-390_390.116-0ubuntu0.18.04.1.dsc
+ a2cc59a96d3cd3b95e890ba5b539f3b8e91acdf90cca6e8c746d7478865cc2bc 47101684 nvidia-graphics-drivers-390_390.116.orig-amd64.tar.gz
+ a74d4f75555a897cdfacc3b9ce629c902e2fc634b0cea2f6b6f224b5e55c6036 28813417 nvidia-graphics-drivers-390_390.116.orig-armhf.tar.gz
+ 60e858c0c681a5416117c549c798bbf27274bc497aa2fe8f3f4a02ee2270087b 47672347 nvidia-graphics-drivers-390_390.116.orig-i386.tar.gz
+ aaaafbd7d8771b9c532bcf67898b45ce461bb22a5155b50bc597bbcb71baaac7 136 nvidia-graphics-drivers-390_390.116.orig.tar.gz
+ 2d729113534d386e511e607804515247a9c5f239c251c24dfa8e4c13712c1953 36928 nvidia-graphics-drivers-390_390.116-0ubuntu0.18.04.1.debian.tar.xz
+Autobuild: yes
+

@@ -1,0 +1,154 @@
+Package: flashplugin-nonfree
+Format: 1.0
+Binary: flashplugin-installer, flashplugin-downloader
+Architecture: i386 amd64
+Version: 32.0.0.344ubuntu0.18.04.1
+Priority: optional
+Section: multiverse/web
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Bart Martens <bartm@knars.be>
+Standards-Version: 3.9.8
+Build-Depends: debhelper (>= 9)
+Homepage: http://www.adobe.com/products/flashplayer.html
+Directory: pool/multiverse/f/flashplugin-nonfree
+Package-List:
+ flashplugin-downloader deb contrib/web optional arch=i386
+ flashplugin-installer deb contrib/web optional arch=i386,amd64
+Files:
+ 251f3bfa0108c629074731ca53c74dfa 1461 flashplugin-nonfree_32.0.0.344ubuntu0.18.04.1.dsc
+ a37b1a63d180e07b3a207a76eb39179b 31287 flashplugin-nonfree_32.0.0.344ubuntu0.18.04.1.tar.gz
+Checksums-Sha1:
+ 940fc3cfc1545d60748ff25ddb684b6b7dbf2f7e 1461 flashplugin-nonfree_32.0.0.344ubuntu0.18.04.1.dsc
+ 7d5f774d929e5287ca2039ffce0947d7828d73fd 31287 flashplugin-nonfree_32.0.0.344ubuntu0.18.04.1.tar.gz
+Checksums-Sha256:
+ 382be7825498ea4ac2c7066fa788996521320f631d001e7f808fe7acb0caa6f8 1461 flashplugin-nonfree_32.0.0.344ubuntu0.18.04.1.dsc
+ 20d3db927230fe45886bdbccd6ac5a13288a458b26ac190a4302dabc99faba9c 31287 flashplugin-nonfree_32.0.0.344ubuntu0.18.04.1.tar.gz
+
+Package: jhove
+Format: 3.0 (quilt)
+Binary: jhove
+Architecture: all
+Version: 1.20.1-5~18.04.1ubuntu1
+Priority: optional
+Section: multiverse/utils
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Uploaders: Jeff Breidenbach <jab@debian.org>
+Standards-Version: 4.3.0
+Build-Depends: debhelper (>= 11), default-jdk, libjaxb-api-java, maven-debian-helper (>= 2.1)
+Homepage: https://github.com/openpreserve/jhove/
+Vcs-Browser: https://salsa.debian.org/java-team/jhove
+Vcs-Git: https://salsa.debian.org/java-team/jhove.git
+Directory: pool/multiverse/j/jhove
+Package-List:
+ jhove deb non-free/utils optional arch=all
+Files:
+ 8d05344cb642a1ff8b835a95c728535b 2133 jhove_1.20.1-5~18.04.1ubuntu1.dsc
+ 0e394f3696b8d5162115c13754045cd0 131445228 jhove_1.20.1.orig.tar.xz
+ 800bad2625a164d2cc3d1d4a9b9eb191 7960 jhove_1.20.1-5~18.04.1ubuntu1.debian.tar.xz
+Checksums-Sha1:
+ 265016a88956a3edad9f131dbd603b79d7007cd6 2133 jhove_1.20.1-5~18.04.1ubuntu1.dsc
+ 9c507da7a106e7e55dedfeb346f06306de491961 131445228 jhove_1.20.1.orig.tar.xz
+ 5addb187922919a5effc5aba6b608aa0519276a1 7960 jhove_1.20.1-5~18.04.1ubuntu1.debian.tar.xz
+Checksums-Sha256:
+ 0c9af381c48a9674bb8b2e97521d371e53e50e2e68f855f775b7ffa1829c4745 2133 jhove_1.20.1-5~18.04.1ubuntu1.dsc
+ 104ac0204dd1895f0f6a4400fbb66164ff7e4940a03b2db41fe1669e285428cf 131445228 jhove_1.20.1.orig.tar.xz
+ 03f31ed684e165d23280623f9cfb738b09f65883af540a20cb27ac1f33f10f57 7960 jhove_1.20.1-5~18.04.1ubuntu1.debian.tar.xz
+
+Package: libclamunrar
+Format: 3.0 (quilt)
+Binary: libclamunrar9
+Architecture: any
+Version: 0.101.2-1~ubuntu0.18.04.1
+Priority: optional
+Section: multiverse/libs
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: ClamAV Team <pkg-clamav-devel@lists.alioth.debian.org>
+Uploaders: Michael Tautschnig <mt@debian.org>, Stephen Gran <sgran@debian.org>, Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+Standards-Version: 4.3.0
+Build-Depends: debhelper (>= 11), zlib1g-dev, libbz2-dev, libssl-dev, pkg-config
+Homepage: https://www.clamav.net/
+Vcs-Browser: https://salsa.debian.org/clamav-team/libclamunrar
+Vcs-Git: https://salsa.debian.org/clamav-team/libclamunrar.git -b unstable
+Directory: pool/multiverse/libc/libclamunrar
+Package-List:
+ libclamunrar9 deb non-free/libs optional arch=any
+Files:
+ 9aaf790df52d43e810d36c3fc5d30bca 2254 libclamunrar_0.101.2-1~ubuntu0.18.04.1.dsc
+ c8052a500894d5fda896fd8f2a5124b1 487968 libclamunrar_0.101.2.orig.tar.xz
+ 5ff87cfb7af4da832dbac962611f7529 6716 libclamunrar_0.101.2-1~ubuntu0.18.04.1.debian.tar.xz
+Checksums-Sha1:
+ 7c8ce31dbb835d29a11c46ddea467b911705cc66 2254 libclamunrar_0.101.2-1~ubuntu0.18.04.1.dsc
+ 6f660fc27166a75b0e336b82769b242bf0471374 487968 libclamunrar_0.101.2.orig.tar.xz
+ 91e43045598ce1b4746be0040e051c6d1ddc7a77 6716 libclamunrar_0.101.2-1~ubuntu0.18.04.1.debian.tar.xz
+Checksums-Sha256:
+ 5c1729c3efeb04f0141e58735fab2a92e72af1adbefaf9ce19ee8e562d046431 2254 libclamunrar_0.101.2-1~ubuntu0.18.04.1.dsc
+ 754d0ac5d71e748a021e459969378eb204b9a239530903dcdfa8479df2e0b8a2 487968 libclamunrar_0.101.2.orig.tar.xz
+ 9719881815fa9bef56320c63da094cffd3ef8ca8ead1424634cae8dc07d726c8 6716 libclamunrar_0.101.2-1~ubuntu0.18.04.1.debian.tar.xz
+Autobuild: yes
+
+Package: linux-restricted-modules-oem-osp1
+Format: 3.0 (native)
+Binary: linux-modules-nvidia-390-5.0.0-1043-oem-osp1, linux-modules-nvidia-390-oem-osp1, linux-modules-nvidia-418-5.0.0-1043-oem-osp1, linux-modules-nvidia-418-oem-osp1
+Architecture: amd64
+Version: 5.0.0-1043.48
+Priority: optional
+Section: multiverse/utils
+Maintainer: Canonical Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9), lsb-release, python3, python3-apt, cpio, dkms, wget, gawk, linux-headers-5.0.0-1043-oem-osp1 (>= 5.0.0-1043.48), linux-buildinfo-5.0.0-1043-oem-osp1 (>= 5.0.0-1043.48)
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux-restricted-modules-oem-osp1/+git/bionic
+Directory: pool/multiverse/l/linux-restricted-modules-oem-osp1
+Package-List:
+ linux-modules-nvidia-390-5.0.0-1043-oem-osp1 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-390-oem-osp1 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-5.0.0-1043-oem-osp1 deb kernel optional arch=amd64 profile=!stage1
+ linux-modules-nvidia-418-oem-osp1 deb kernel optional arch=amd64 profile=!stage1
+Files:
+ d5cd6224a7e51ae1476de49aabfbaa0e 2288 linux-restricted-modules-oem-osp1_5.0.0-1043.48.dsc
+ 5a98c6fab8736711db4d33e2a476641e 17976 linux-restricted-modules-oem-osp1_5.0.0-1043.48.tar.xz
+Checksums-Sha1:
+ 2e0d9d5cae4c26946d886e2add2bf68ecd71f3b3 2288 linux-restricted-modules-oem-osp1_5.0.0-1043.48.dsc
+ e5e562bbd35d272471f6d9021806878c2cc026cc 17976 linux-restricted-modules-oem-osp1_5.0.0-1043.48.tar.xz
+Checksums-Sha256:
+ 112ec912c42b92013019dd263369ec45f15badec7c7bf2943511fc9633f1f106 2288 linux-restricted-modules-oem-osp1_5.0.0-1043.48.dsc
+ cd25b63b98886536e404879c675c6f4458b3b8ec3c256d66bba42ae6a75a023c 17976 linux-restricted-modules-oem-osp1_5.0.0-1043.48.tar.xz
+
+Package: virtualbox
+Format: 3.0 (quilt)
+Binary: virtualbox-qt, virtualbox, virtualbox-dkms, virtualbox-source, virtualbox-guest-dkms, virtualbox-guest-source, virtualbox-guest-x11, virtualbox-guest-utils
+Architecture: amd64 i386 all
+Version: 5.2.18-dfsg-2~ubuntu18.04.5
+Priority: optional
+Section: multiverse/misc
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Debian Virtualbox Team  <team+debian-virtualbox@tracker.debian.org>
+Uploaders: Ritesh Raj Sarraf <rrs@debian.org>, Gianfranco Costamagna <locutusofborg@debian.org>
+Standards-Version: 4.2.0.1
+Build-Depends: bzip2, debhelper (>= 10), default-jdk, jaxws, dh-python, dh-systemd (>= 1.5), dkms (>= 2.1.1.1), docbook-xml, docbook-xsl, dpkg-dev (>= 1.15.6~), g++-multilib, genisoimage, gsoap (>= 2.8.16), iasl, imagemagick, kbuild (>= 1:0.1.9998svn3098~), libasound2-dev, libcap-dev, libcurl4-gnutls-dev, libdevmapper-dev, libdrm-dev, libegl1-mesa-dev, libgl1-mesa-dev, libglu1-mesa-dev, libidl-dev, libopus-dev, libpam0g-dev, libpixman-1-dev, libpng-dev, libpulse-dev, libqt5x11extras5-dev, libqt5opengl5-dev, qttools5-dev-tools, libsdl1.2-dev, libssl-dev, libvncserver-dev, libvpx-dev, libx11-dev, libxcomposite-dev, libxcursor-dev, libxdamage-dev, libxext-dev, libxi-dev, libxinerama-dev, libxml2-dev, libxml2-utils, libxmu-dev, libxrandr-dev, libxrender-dev, libxslt1-dev, libxt-dev, lsb-release, lynx, makeself, module-assistant, python3-dev, texlive-fonts-extra, texlive-fonts-recommended, texlive-latex-extra, texlive-latex-recommended, uuid-dev, x11proto-gl-dev, x11proto-xf86dri-dev, xserver-xorg-dev, xsltproc, yasm (>= 0.7.0), zlib1g-dev
+Homepage: https://www.virtualbox.org
+Vcs-Browser: https://salsa.debian.org/pkg-virtualbox-team/virtualbox
+Vcs-Git: https://salsa.debian.org/pkg-virtualbox-team/virtualbox.git
+Directory: pool/multiverse/v/virtualbox
+Package-List:
+ virtualbox deb contrib/misc optional arch=amd64,i386
+ virtualbox-dkms deb contrib/kernel optional arch=all
+ virtualbox-guest-dkms deb contrib/kernel optional arch=all
+ virtualbox-guest-source deb contrib/kernel optional arch=all
+ virtualbox-guest-utils deb contrib/misc optional arch=amd64,i386
+ virtualbox-guest-x11 deb contrib/x11 optional arch=amd64,i386
+ virtualbox-qt deb contrib/misc optional arch=amd64,i386
+ virtualbox-source deb contrib/kernel optional arch=all
+Files:
+ d4787dba6d55027b277ee293a1952788 3805 virtualbox_5.2.18-dfsg-2~ubuntu18.04.5.dsc
+ fcc681a48356b541fd32dca2329a5a24 54898048 virtualbox_5.2.18-dfsg.orig.tar.xz
+ 833ca6b882811c49ff487a6162e53e9c 86512 virtualbox_5.2.18-dfsg-2~ubuntu18.04.5.debian.tar.xz
+Checksums-Sha1:
+ 8ba15361587fcb0718f76037a42ed8405b8c222d 3805 virtualbox_5.2.18-dfsg-2~ubuntu18.04.5.dsc
+ ebb01bfd86dc251e02b56c485c72bcfb6473a20f 54898048 virtualbox_5.2.18-dfsg.orig.tar.xz
+ 2064233731f8bbf4a239e8d7656c700281c0a0e9 86512 virtualbox_5.2.18-dfsg-2~ubuntu18.04.5.debian.tar.xz
+Checksums-Sha256:
+ f18ec8e96108f7b5579b90bc2cbba95637576793b42fba040111b506a28d119d 3805 virtualbox_5.2.18-dfsg-2~ubuntu18.04.5.dsc
+ 130a7f0ffa16939a1402a38b3922fd74bff01b24547500254fbafdc26db06ab1 54898048 virtualbox_5.2.18-dfsg.orig.tar.xz
+ 21019e0dd1a58c330a01b488fbfe1f28e279ce9f8d07bb5e13f0d4d834038a8c 86512 virtualbox_5.2.18-dfsg-2~ubuntu18.04.5.debian.tar.xz
+
