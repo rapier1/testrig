@@ -156,7 +156,6 @@
 /usr/share/man
 /usr/share/man/man1/aa-enabled.1.gz
 /usr/share/man/man1/aa-exec.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/apparmor.d.5.gz
 /usr/share/man/man5/apparmor.vim.5.gz
 /usr/share/man/man5/subdomain.conf.5.gz

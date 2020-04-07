@@ -128,19 +128,6 @@ sub getIPs {
    my $interface;
    my %IPs;
 
-   # Currently doing this because the kernel isn't starting networking services on boot
-   # I have no idea why but I'll resolve it shortly
-   #print "\nStarting network services all interfaces\n";
-   #foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
-   #   $interface = $1 if /^(\S+?):?\s/;
-   #   next unless defined $interface;
-   #   if ($interface eq "lo") {
-   #	  next;
-   #     }
-   #   my $command = "/sbin/dhclient $interface";
-   #   runSystem($command, 0, 1);      
-   #}
-
    foreach ( qx{ (LC_ALL=C /opt/bin/ifconfig -a 2>&1) } ) {
       $interface = $1 if /^(\S+?):?\s/;
       next unless defined $interface;
@@ -154,7 +141,6 @@ sub getIPs {
    my $num_interfaces = keys %IPs;
 
    print "\nInterfaces found: $num_interfaces\n";
-   #print Dumper(%IPs);
 
    if ($num_interfaces == 1) {
        my $key;
@@ -172,7 +158,7 @@ sub getIPs {
 
    foreach my $key (sort keys %IPs) {
        $IFarray[$i] = $key;
-       print "$i)\t$key\t\t$IPs{$key}{IP}";
+       print "$i) $key\t$IPs{$key}{IP}";
        if ($key eq $default) {
 	   $IP = $IPs{$key}{IP};
 	   print "   <-- default ";
@@ -181,7 +167,7 @@ sub getIPs {
        $i++;
    }
  USERENTRY: 
-   print "\nEnter the number of the interface you would like to test (enter for default): ";
+   print "\nNumber of the interface you would like to test (enter for default): ";
    eval{ # give the user 10 seconds to answer
        local $SIG{ALRM} = sub { die "No user input. Using default.\n" };
 	alarm 10;
@@ -987,7 +973,7 @@ sub testDublin {
     
     my $filepath = "/tmp/results/" . $uuid . "-" . $currentRunNum . "-dublin-traceroute.json";
     my $command = "/opt/usr/bin/dublin-traceroute $target --output-file $filepath";
-
+    
     # Make sure ntpd is up to date
     syncClock();
 
@@ -1005,9 +991,9 @@ sub testDublin {
 # in case the networking didn't come up correctly explicitly
 # get the default interface and apply dhclient
 # my $default_interface = getDefault;
-# print "\nOpening default interface ($default_interface)\n";
-# my $command = "/sbin/dhclient $default_interface";
-# runSystem($command, 0, 1);
+print "\nConfiguring network interfaces via dhcp\n";
+my $command = "/sbin/dhclient";
+runSystem($command, 0, 1);
 
 # OKAY the above doesn't work because router won't get the default interface if
 # the interafce isn't up and doesn't have an ip address. We need to get a full list of
@@ -1029,7 +1015,7 @@ mountEncfs($password); #mount the encfs filesystem
 # in order to ensure that we get all the library paths found in /opt
 
 print "\nLoading application libraries\n";
-my $command = "/sbin/ldconfig";
+$command = "/sbin/ldconfig";
 runSystem($command, 0, 1);
 
 # if we have multiple interafces which one should we test on

@@ -108,7 +108,6 @@
 /usr/share/initramfs-tools/scripts/init-top
 /usr/share/initramfs-tools/scripts/init-top/udev
 /usr/share/man
-/usr/share/man/man5
 /usr/share/man/man5/systemd.link.5.gz
 /usr/share/man/man5/udev.conf.5.gz
 /usr/share/man/man7

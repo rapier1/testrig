@@ -116,7 +116,7 @@ function getWebFieldsFromRecord($record)
 
 /* Example usage of the above functions and classes */
 
-$result = runPSLocate("128.182.1.60", 3);	// Execute ps_locate with parameters: ip="128.182.1.60" and count=3
+$result = runPSLocate("151.101.201.67", 3);	// Execute ps_locate with parameters: ip="128.182.1.60" and count=3
 if($result !== -1){	// Result will be -1 if an error occurs, otherwise result will be an array of records
     $myHosts = getWebFieldsFromRecord($result);	// Return an array of PerfSonarHost objects
     //echo json_encode($myHosts);	// print to screen

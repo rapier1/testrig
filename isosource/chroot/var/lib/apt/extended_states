@@ -170,10 +170,6 @@ Package: libgssapi3-heimdal
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libqmi-proxy
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libpolkit-gobject-1-0
 Architecture: amd64
 Auto-Installed: 1
@@ -187,14 +183,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: libusb-1.0-0
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libldb1
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python-tdb
 Architecture: amd64
 Auto-Installed: 1
 
@@ -226,10 +214,6 @@ Package: libpopt0
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libcups2
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libwind0-heimdal
 Architecture: amd64
 Auto-Installed: 1
@@ -250,10 +234,6 @@ Package: iw
 Architecture: amd64
 Auto-Installed: 1
 
-Package: python-samba
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libsasl2-modules-db
 Architecture: amd64
 Auto-Installed: 1
@@ -266,15 +246,7 @@ Package: libldap-2.4-2
 Architecture: amd64
 Auto-Installed: 1
 
-Package: finalrd
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libnl-genl-3-200
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libwbclient0
 Architecture: amd64
 Auto-Installed: 1
 
@@ -287,10 +259,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: libpsl5
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python2.7-minimal
 Architecture: amd64
 Auto-Installed: 1
 
@@ -322,14 +290,6 @@ Package: bind9-host
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libavahi-common-data
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libqmi-glib5
-Architecture: amd64
-Auto-Installed: 1
-
 Package: powermgmt-base
 Architecture: amd64
 Auto-Installed: 1
@@ -338,31 +298,11 @@ Package: pptp-linux
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libavahi-common3
-Architecture: amd64
-Auto-Installed: 1
-
-Package: sudo
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libpython2.7
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python2.7
-Architecture: amd64
-Auto-Installed: 1
-
 Package: dnsmasq-base
 Architecture: amd64
 Auto-Installed: 1
 
 Package: libheimbase1-heimdal
-Architecture: amd64
-Auto-Installed: 1
-
-Package: linux-base
 Architecture: amd64
 Auto-Installed: 1
 
@@ -406,71 +346,11 @@ Package: libsasl2-2
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libklibc
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libpipeline1
-Architecture: amd64
-Auto-Installed: 1
-
 Package: isc-dhcp-common
 Architecture: amd64
 Auto-Installed: 1
 
-Package: python
-Architecture: amd64
-Auto-Installed: 1
-
-Package: initramfs-tools-bin
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libgudev-1.0-0
-Architecture: amd64
-Auto-Installed: 1
-
-Package: kmod
-Architecture: amd64
-Auto-Installed: 1
-
-Package: cifs-utils
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libtalloc2
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python-talloc
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libplymouth4
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libndp0
-Architecture: amd64
-Auto-Installed: 1
-
-Package: localechooser-data
-Architecture: amd64
-Auto-Installed: 1
-
-Package: samba-libs
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python-crypto
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libpython-stdlib
-Architecture: amd64
-Auto-Installed: 1
-
-Package: user-setup
 Architecture: amd64
 Auto-Installed: 1
 
@@ -522,10 +402,6 @@ Package: libfuse2
 Architecture: amd64
 Auto-Installed: 1
 
-Package: samba-common
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libcap2-bin
 Architecture: amd64
 Auto-Installed: 1
@@ -546,15 +422,7 @@ Package: liblwres160
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libntfs-3g88
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libhcrypto4-heimdal
-Architecture: amd64
-Auto-Installed: 1
-
-Package: ucf
 Architecture: amd64
 Auto-Installed: 1
 
@@ -574,15 +442,7 @@ Package: distro-info-data
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libmbim-proxy
-Architecture: amd64
-Auto-Installed: 1
-
 Package: wpasupplicant
-Architecture: amd64
-Auto-Installed: 1
-
-Package: usb-modeswitch-data
 Architecture: amd64
 Auto-Installed: 1
 
@@ -590,23 +450,11 @@ Package: libpolkit-backend-1-0
 Architecture: amd64
 Auto-Installed: 1
 
-Package: eject
-Architecture: amd64
-Auto-Installed: 1
-
 Package: iproute2
 Architecture: amd64
 Auto-Installed: 1
 
-Package: samba-common-bin
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libdns-export1100
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libtdb1
 Architecture: amd64
 Auto-Installed: 1
 
@@ -619,10 +467,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: lsb-release
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libpython2.7-minimal
 Architecture: amd64
 Auto-Installed: 1
 
@@ -639,10 +483,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: libfreetype6
-Architecture: amd64
-Auto-Installed: 1
-
-Package: modemmanager
 Architecture: amd64
 Auto-Installed: 1
 
@@ -666,10 +506,6 @@ Package: crda
 Architecture: amd64
 Auto-Installed: 1
 
-Package: usb-modeswitch
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libbind9-160
 Architecture: amd64
 Auto-Installed: 1
@@ -679,10 +515,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: libpci3
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python-ldb
 Architecture: amd64
 Auto-Installed: 1
 
@@ -702,35 +534,11 @@ Package: gettext-base
 Architecture: amd64
 Auto-Installed: 1
 
-Package: libpython2.7-stdlib
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libavahi-client3
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libhx509-5-heimdal
 Architecture: amd64
 Auto-Installed: 1
 
 Package: isc-dhcp-client
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libtevent0
-Architecture: amd64
-Auto-Installed: 1
-
-Package: klibc-utils
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libmbim-glib4
-Architecture: amd64
-Auto-Installed: 1
-
-Package: python-minimal
 Architecture: amd64
 Auto-Installed: 1
 
@@ -743,14 +551,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: libcurl3-gnutls
-Architecture: amd64
-Auto-Installed: 1
-
-Package: initramfs-tools-core
-Architecture: amd64
-Auto-Installed: 1
-
-Package: initramfs-tools
 Architecture: amd64
 Auto-Installed: 1
 
@@ -770,10 +570,6 @@ Package: libaccountsservice0
 Architecture: amd64
 Auto-Installed: 1
 
-Package: busybox-initramfs
-Architecture: amd64
-Auto-Installed: 1
-
 Package: libslang2
 Architecture: amd64
 Auto-Installed: 1
@@ -783,18 +579,6 @@ Architecture: amd64
 Auto-Installed: 1
 
 Package: libgpm2
-Architecture: amd64
-Auto-Installed: 1
-
-Package: linux-libc-dev
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libc6-dev
-Architecture: amd64
-Auto-Installed: 1
-
-Package: binutils
 Architecture: amd64
 Auto-Installed: 1
 
@@ -810,35 +594,11 @@ Package: libperl5.26
 Architecture: amd64
 Auto-Installed: 1
 
-Package: binutils-x86-64-linux-gnu
-Architecture: amd64
-Auto-Installed: 1
-
-Package: binutils-common
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libc-dev-bin
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libbinutils
-Architecture: amd64
-Auto-Installed: 1
-
 Package: perl
 Architecture: amd64
 Auto-Installed: 1
 
 Package: libgdbm-compat4
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libgcrypt20-dev
-Architecture: amd64
-Auto-Installed: 1
-
-Package: libgpg-error-dev
 Architecture: amd64
 Auto-Installed: 1
 

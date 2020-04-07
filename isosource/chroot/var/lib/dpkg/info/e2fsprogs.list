@@ -33,7 +33,6 @@
 /usr/share/man
 /usr/share/man/man1/chattr.1.gz
 /usr/share/man/man1/lsattr.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/e2fsck.conf.5.gz
 /usr/share/man/man5/ext4.5.gz
 /usr/share/man/man5/mke2fs.conf.5.gz

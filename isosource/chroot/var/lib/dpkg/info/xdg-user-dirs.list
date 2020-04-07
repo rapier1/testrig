@@ -374,7 +374,6 @@
 /usr/share/man
 /usr/share/man/man1/xdg-user-dir.1.gz
 /usr/share/man/man1/xdg-user-dirs-update.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/user-dirs.conf.5.gz
 /usr/share/man/man5/user-dirs.defaults.5.gz
 /usr/share/man/man5/user-dirs.dirs.5.gz

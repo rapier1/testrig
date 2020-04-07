@@ -1,5 +1,0 @@
-d5899c7d0ac5aba1473f0d533e5b76cc  lib/systemd/system/finalrd.service
-f215e81a58628b2775bad65749e62796  usr/bin/finalrd
-3b516431e7ecb473f76d38bdece8420e  usr/share/doc/finalrd/changelog.gz
-aff956506a64f1942e92aeeb6edb1b16  usr/share/doc/finalrd/copyright
-3af02d04c60a7ed7b26a341e45020ba5  usr/share/man/man1/finalrd.1.gz

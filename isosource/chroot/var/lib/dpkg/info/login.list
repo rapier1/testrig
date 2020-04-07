@@ -62,7 +62,6 @@
 /usr/share/man/fr/man1/newgrp.1.gz
 /usr/share/man/fr/man1/sg.1.gz
 /usr/share/man/fr/man1/su.1.gz
-/usr/share/man/fr/man5
 /usr/share/man/fr/man5/faillog.5.gz
 /usr/share/man/fr/man5/login.defs.5.gz
 /usr/share/man/fr/man8/faillog.8.gz
@@ -112,7 +111,6 @@
 /usr/share/man/man1/newgrp.1.gz
 /usr/share/man/man1/sg.1.gz
 /usr/share/man/man1/su.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/faillog.5.gz
 /usr/share/man/man5/login.defs.5.gz
 /usr/share/man/man8/faillog.8.gz

@@ -139,3 +139,5 @@ update-alternatives 2020-03-27 20:30:04: run with --quiet --install /usr/bin/rlo
 update-alternatives 2020-03-27 20:30:04: link group rlogin updated to point to /usr/bin/slogin
 update-alternatives 2020-03-27 20:30:04: run with --quiet --install /usr/bin/rcp rcp /usr/bin/scp 20 --slave /usr/share/man/man1/rcp.1.gz rcp.1.gz /usr/share/man/man1/scp.1.gz
 update-alternatives 2020-03-27 20:30:04: link group rcp updated to point to /usr/bin/scp
+update-alternatives 2020-04-01 20:21:12: run with --remove idmap-plugin /usr/lib/x86_64-linux-gnu/cifs-utils/idmapwb.so
+update-alternatives 2020-04-01 20:21:12: link group idmap-plugin fully removed

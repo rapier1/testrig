@@ -26,9 +26,6 @@ Basics
 Compression
 * Gzip: (gzip).                 General (de)compression of files (lzw).
 
-Editors
-* nano: (nano).                 Small and friendly text editor.
-
 GNU organization
 * Maintaining Findutils: (find-maint).
                                 Maintaining GNU findutils

@@ -437,7 +437,6 @@
 /usr/share/man/man1/systemd-tty-ask-password-agent.1.gz
 /usr/share/man/man1/systemd.1.gz
 /usr/share/man/man1/timedatectl.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/binfmt.d.5.gz
 /usr/share/man/man5/dnssec-trust-anchors.d.5.gz
 /usr/share/man/man5/environment.d.5.gz

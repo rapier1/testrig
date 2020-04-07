@@ -2420,3 +2420,169 @@ Preparing to unpack .../deborphan_1.7.28.8ubuntu2_amd64.deb ...
 Unpacking deborphan (1.7.28.8ubuntu2) ...
 Setting up deborphan (1.7.28.8ubuntu2) ...
 Log ended: 2020-03-28  02:32:53
+
+Log started: 2020-04-01  19:50:53
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17375 files and directories currently installed.)
+Removing binutils (2.30-21ubuntu1~18.04.2) ...
+Log ended: 2020-04-01  19:50:53
+
+Log started: 2020-04-01  19:51:09
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17347 files and directories currently installed.)
+Removing binutils-x86-64-linux-gnu (2.30-21ubuntu1~18.04.2) ...
+Removing libbinutils:amd64 (2.30-21ubuntu1~18.04.2) ...
+Removing binutils-common:amd64 (2.30-21ubuntu1~18.04.2) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  19:51:09
+
+Log started: 2020-04-01  20:04:41
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17058 files and directories currently installed.)
+Removing modemmanager (1.10.0-1~ubuntu18.04.2) ...
+Created symlink /run/systemd/system/ModemManager.service → /dev/null.
+Running in chroot, ignoring request: stop
+Running in chroot, ignoring request: daemon-reload
+Running in chroot, ignoring request: daemon-reload
+Processing triggers for dbus (1.12.2-1ubuntu1.1) ...
+Log ended: 2020-04-01  20:04:41
+
+Log started: 2020-04-01  20:04:52
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 16985 files and directories currently installed.)
+Removing libqmi-proxy (1.22.0-1.2~ubuntu18.04.1) ...
+Removing libqmi-glib5:amd64 (1.22.0-1.2~ubuntu18.04.1) ...
+Removing libmbim-proxy (1.18.0-1~ubuntu18.04.1) ...
+Removing libmbim-glib4:amd64 (1.18.0-1~ubuntu18.04.1) ...
+Removing libgudev-1.0-0:amd64 (1:232-2) ...
+Removing usb-modeswitch (2.5.2+repack0-2ubuntu1) ...
+Removing libpipeline1:amd64 (1.5.0-1) ...
+Removing usb-modeswitch-data (20170806-2) ...
+[1mdpkg:[0m [1;33mwarning:[0m while removing usb-modeswitch-data, directory '/etc/usb_modeswitch.d' not empty so not removed
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  20:04:52
+
+Log started: 2020-04-01  20:12:50
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 16921 files and directories currently installed.)
+Removing samba-common-bin (2:4.7.6+dfsg~ubuntu-0ubuntu2.15) ...
+[1mdpkg:[0m [1;33mwarning:[0m while removing samba-common-bin, directory '/etc/samba/tls' not empty so not removed
+Removing python-samba (2:4.7.6+dfsg~ubuntu-0ubuntu2.15) ...
+Removing python-ldb:amd64 (2:1.2.3-1ubuntu0.1) ...
+Removing python-crypto (2.6.1-8ubuntu2) ...
+Removing python-tdb (1.3.15-2) ...
+Removing python (2.7.15~rc1-1) ...
+Removing python2.7 (2.7.17-1~18.04) ...
+Processing triggers for mime-support (3.60ubuntu1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  20:12:50
+
+Log started: 2020-04-01  20:13:07
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 16394 files and directories currently installed.)
+Removing samba-libs:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15) ...
+Removing libcups2:amd64 (2.2.7-1ubuntu2.7) ...
+Removing libavahi-client3:amd64 (0.7-3.1ubuntu1.2) ...
+Removing libavahi-common3:amd64 (0.7-3.1ubuntu1.2) ...
+Removing libavahi-common-data:amd64 (0.7-3.1ubuntu1.2) ...
+Removing libldb1:amd64 (2:1.2.3-1ubuntu0.1) ...
+Removing libpython-stdlib:amd64 (2.7.15~rc1-1) ...
+Removing python-talloc (2.1.10-2ubuntu1) ...
+Removing libpython2.7:amd64 (2.7.17-1~18.04) ...
+Removing libpython2.7-stdlib:amd64 (2.7.17-1~18.04) ...
+Removing python-minimal (2.7.15~rc1-1) ...
+Removing python2.7-minimal (2.7.17-1~18.04) ...
+Unlinking and removing bytecode for runtime python2.7
+Removing libpython2.7-minimal:amd64 (2.7.17-1~18.04) ...
+Removing libtdb1:amd64 (1.3.15-2) ...
+Removing libtevent0:amd64 (0.9.34-1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  20:13:07
+
+Log started: 2020-04-01  20:21:12
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15438 files and directories currently installed.)
+Removing lupin-casper (0.57build1) ...
+Removing casper (1.394.3) ...
+Running in chroot, ignoring request: daemon-reload
+Running in chroot, ignoring request: daemon-reload
+Removing cifs-utils (2:6.8-1) ...
+Removing samba-common (2:4.7.6+dfsg~ubuntu-0ubuntu2.15) ...
+Log ended: 2020-04-01  20:21:12
+
+Log started: 2020-04-01  20:21:25
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15326 files and directories currently installed.)
+Removing initramfs-tools (0.130ubuntu3.9) ...
+Removing finalrd (3~ubuntu18.04.0) ...
+Running in chroot, ignoring request: stop
+Running in chroot, ignoring request: daemon-reload
+Running in chroot, ignoring request: daemon-reload
+Removing initramfs-tools-core (0.130ubuntu3.9) ...
+Removing busybox-initramfs (1:1.27.2-2ubuntu3.2) ...
+Removing eject (2.1.5+deb1+cvs20081104-13.2) ...
+Removing initramfs-tools-bin (0.130ubuntu3.9) ...
+Removing klibc-utils (2.0.4-9ubuntu2) ...
+Removing 'diversion of /usr/share/initramfs-tools/hooks/klibc to /usr/share/initramfs-tools/hooks/klibc^i-t by klibc-utils'
+Removing kmod (24-1ubuntu3.2) ...
+Running in chroot, ignoring request: daemon-reload
+Removing libklibc (2.0.4-9ubuntu2) ...
+Removing libplymouth4:amd64 (0.9.3-1ubuntu7.18.04.2) ...
+Removing libtalloc2:amd64 (2.1.10-2ubuntu1) ...
+Removing libwbclient0:amd64 (2:4.7.6+dfsg~ubuntu-0ubuntu2.15) ...
+Removing linux-base (4.5ubuntu1) ...
+Removing localechooser-data (2.71ubuntu3) ...
+Removing sudo (1.8.21p2-3ubuntu1.2) ...
+You have asked that the sudo package be removed,
+but no root password has been set.
+Without sudo, you may not be able to gain administrative privileges.
+
+If you would prefer to access the root account with su(1)
+or by logging in directly,
+you must set a root password with "sudo passwd".
+
+If you have arranged other means to access the root account,
+and you are sure this is what you want,
+you may bypass this check by setting an environment variable 
+(export SUDO_FORCE_REMOVE=yes).
+
+Refusing to remove sudo.
+[1mdpkg:[0m error processing package sudo (--remove):
+ installed sudo package pre-removal script subprocess returned error exit status 1
+Removing ucf (3.0038) ...
+Removing user-setup (1.63ubuntu5) ...
+Errors were encountered while processing:
+ sudo
+Log ended: 2020-04-01  20:21:25
+
+Log started: 2020-04-01  20:22:43
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15087 files and directories currently installed.)
+Removing ntfs-3g (1:2017.3.23-2ubuntu0.18.04.2) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  20:22:43
+
+Log started: 2020-04-01  20:22:51
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15017 files and directories currently installed.)
+Removing libntfs-3g88 (1:2017.3.23-2ubuntu0.18.04.2) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  20:22:51
+
+Log started: 2020-04-01  20:32:19
+Selecting previously unselected package kmod.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15012 files and directories currently installed.)
+Preparing to unpack .../kmod_24-1ubuntu3.2_amd64.deb ...
+Unpacking kmod (24-1ubuntu3.2) ...
+Setting up kmod (24-1ubuntu3.2) ...
+Running in chroot, ignoring request: daemon-reload
+Processing triggers for ureadahead (0.100.0-21) ...
+Processing triggers for systemd (237-3ubuntu10.39) ...
+Running in chroot, ignoring request: daemon-reload
+Log ended: 2020-04-01  20:32:19
+
+Log started: 2020-04-01  20:42:25
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15039 files and directories currently installed.)
+Removing libssh2-1-dev:amd64 (1.8.0-1) ...
+Removing libgcrypt20-dev (1.8.1-4ubuntu1.2) ...
+Removing zlib1g-dev:amd64 (1:1.2.11.dfsg-0ubuntu2) ...
+Removing libc6-dev:amd64 (2.27-3ubuntu1) ...
+Log ended: 2020-04-01  20:42:25
+
+Log started: 2020-04-01  20:42:32
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 14242 files and directories currently installed.)
+Removing libc-dev-bin (2.27-3ubuntu1) ...
+Removing libgpg-error-dev (1.27-6) ...
+Removing linux-libc-dev:amd64 (4.15.0-91.92) ...
+Processing triggers for install-info (6.5.0.dfsg.1-2) ...
+Log ended: 2020-04-01  20:42:32

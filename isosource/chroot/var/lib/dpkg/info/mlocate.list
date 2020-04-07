@@ -17,7 +17,6 @@
 /usr/share/doc/mlocate/copyright
 /usr/share/man
 /usr/share/man/man1/mlocate.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/mlocate.db.5.gz
 /usr/share/man/man5/updatedb.conf.5.gz
 /usr/share/man/man8/updatedb.mlocate.8.gz

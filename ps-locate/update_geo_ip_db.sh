@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "[$(date)] Begin GeoLite2 IP DB  update.."
 cd ./geolocate
-wget -O new.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz > /dev/null 2>&1
+wget -O new.mmdb.gz 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=wc6VOHv0pLzAKjGF&suffix=tar.gz' > /dev/null 2>&1
 if [ "$?" = "0" ]; then
 	echo "[$(date)] download success"
 else

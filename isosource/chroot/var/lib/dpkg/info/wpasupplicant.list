@@ -61,7 +61,6 @@
 /usr/share/lintian/overrides
 /usr/share/lintian/overrides/wpasupplicant
 /usr/share/man
-/usr/share/man/man5
 /usr/share/man/man5/wpa_supplicant.conf.5.gz
 /usr/share/man/man8/wpa_action.8.gz
 /usr/share/man/man8/wpa_background.8.gz

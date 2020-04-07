@@ -224,7 +224,6 @@
 /usr/share/man/es/man8/apt-cache.8.gz
 /usr/share/man/es/man8/apt-cdrom.8.gz
 /usr/share/man/es/man8/apt-config.8.gz
-/usr/share/man/fr/man5
 /usr/share/man/fr/man5/apt.conf.5.gz
 /usr/share/man/fr/man5/apt_preferences.5.gz
 /usr/share/man/fr/man5/sources.list.5.gz
@@ -267,7 +266,6 @@
 /usr/share/man/man1/apt-transport-http.1.gz
 /usr/share/man/man1/apt-transport-https.1.gz
 /usr/share/man/man1/apt-transport-mirror.1.gz
-/usr/share/man/man5
 /usr/share/man/man5/apt.conf.5.gz
 /usr/share/man/man5/apt_auth.conf.5.gz
 /usr/share/man/man5/apt_preferences.5.gz
