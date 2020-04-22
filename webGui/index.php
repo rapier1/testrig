@@ -67,79 +67,61 @@
 
 </head>
 <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md">
+        <div class="navbar-brand">
+            Testrig 2.0
+        </div>
+        <div class="container"> <!-- used for spacing the tab link towards the center -->
+            <div id="navbar" class="collapse navbar-collapse">
+		<ul class="nav navbar-nav">
+		    <li class="nav-item">
+			<a id="menu-home" class="nav-link"
+			   href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a>
+		    </li>
+		    <li class="nav-item">
+			<a id="menu-faq" class="nav-link"
+			   href="https://<?php echo $_SERVER['SERVER_NAME']?>/login.php">Login</a>
+		    </li>
+                </ul>
+	    </div> <!-- end class container div -->
+    </nav>
+    <!-- END NAVIGATION BAR -->
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				  <span class="sr-only">Toggle navigation</span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.php">Testrig 2.0</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-				  <li><a id="menu-home" href="https://<?php echo $_SERVER['SERVER_NAME']?>/main.php">Home</a></li>
-				  <li><a id="menu-faq" href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-                                    <li class="navbar-btn"><?php print $navLoginLogoutButton ?></li>
-                                    <li class="navbar-btn"><button id="signup" onClick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/signup.php'"  type="button" class="btn btn-sm btn-primary">Sign Up</button></li>
-                                </ul>
-			</div><!--/.nav-collapse -->
-		</div> <!-- END nav container -->
-	</nav>
-
-
-
-
-
-
-<div id="container-main" class="container">
-  <div class="jumbotron">
-  <div class="row">
-    <h4 class="text-center">
-    Welcome to TestRig 2.0 - a software as a service offering provided by the Pittsburgh Supercomputing Center made possible by a grant from the National Science Foundation. TestRig 2.0 is designed to be a straightforward way to collect valuable network diagnostic information using dynamically generated bootable live ISOs. These can easily be burned to a CD or the user may download a self extracting application that will create a bootable thumb drive. 
-    </h4>
-  </div><!-- end row -->
-  </div>
-  <div class="main-panels">
-  <div class="row">
-    <div class="col-md-6">
-      <h4 class="text-center">Why TestRig 2.0?<br><br>
-
-Providing support to end users experiencing network performance issues is often a time consuming and involved process. From the initial problem report to resolution it can take days, if not weeks, to gather the necessary diagnostic information, implement suggested fixes, and then re-evaluate performance. Much of this time is spent in the data gathering phase, being that the necessary data is often difficult for end users to collect. 
-
-To address the difficulty of gathering data the Pittsburgh Supercomputing Center's Network Research Team has developed TestRig 2.0; a dynamically generated, customizable, ISO that boots the end user’s machine into a known good environment to run a variety of tests against the perfSONAR network measurement infrastructure. These tests are run automatically and require no special knowledge on the part of the user. The results, which include iperf, tcpdump, traceroute, Web10G data, host information, and more are automatically packaged and returned to the network engineer. Valuable network diagnostic data, which used to require days to gather, can now be had within an hour.
-      </h4>
-    </div>
-    <div class="col-md-6">
-      <h4 class="text-center">How does TestRig 2.0 work?<br><br>
-
-Once your organization signs up for the TestRig 2.0 service you’ll be able to request dynamically generated ISOs. Each ISO is specifically tailored for the user you are providing support for. After entering basic information such as the user’s name, contact information, trouble ticket number, and the name of the host that you want to test you’ll be presented with a set of tests to run against the closest available perfSONAR node. The custom ISO will then be dynamically generated and a download link sent to the end user. Once the user creates bootable media with the ISO, the user will then boot their machine directly into the TestRig 2.0 environment. After agreeing to run the tests, a number of tests will be automatically run and the results stored locally. These results will then be packaged and transferred back to your organization for analysis by network engineers. 
-
-<br><br>Who is TestRig 2.0 for?<br><br>
-
-TestRig 2.0 is aimed at any size institution that needs to provide support to end users that may have difficulties running a full range of network diagnostics on their hosts. Currently the service is provided free for members of the research and education community.
-      </h4>
-    </div>
-  </div><!-- end row -->
-  </div>
-
-
-</div> <!-- END MAIN container -->
-
-
-<!-- jquery stuff -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="trjquery.js"></script>
-<!-- END jquery stuff -->
-
-
-
+    <div id="container-main" class="container">
+	<div class="container">
+	    <div class="row">
+		<p class="lead" align="center">
+		<br><b>Welcome to TestRig 2.0</b> - a software as a service offering provided by the Pittsburgh Supercomputing Center made possible by a grant from the National Science Foundation. TestRig 2.0 is designed to be a straightforward way to collect valuable network diagnostic information using dynamically generated bootable live ISOs. These can easily be burned to a CD or the user may download a self extracting application to create a bootable thumb drive. 
+		</p>
+	    </div><!-- end row -->
+	</div>
+	<div class="main-panels">
+	    <div class="row">
+		<div class="col-md-6">
+		    <class="text-left"><I>Why TestRig 2.0?</I><br>
+			
+			Providing support to end users experiencing network performance issues is often a time consuming and involved process. From the initial problem report to resolution it can take days, if not weeks, to gather the necessary diagnostic information, implement suggested fixes, and then re-evaluate performance. Much of this time is spent in the data gathering phase, being that the necessary data is often difficult for end users to collect.<br><br>
+			
+			To address the difficulty of gathering data the Pittsburgh Supercomputing Center's Network Research Team has developed TestRig 2.0; a dynamically generated, customizable, ISO that boots the end user’s machine into a known good environment to run a variety of tests against the perfSONAR network measurement infrastructure. These tests are run automatically and require no special knowledge on the part of the user. The results, which include iperf, tcpdump, traceroute, Web10G data, host information, and more are automatically packaged and returned to the network engineer. Valuable network diagnostic data, which used to require days to gather, can now be had within an hour.
+		    </p>
+		</div>
+		<div class="col-md-6">
+		    <p class="text-left"><I>How does TestRig 2.0 work?</I><br>
+			
+			Once your organization signs up for the TestRig 2.0 service you’ll be able to request dynamically generated ISOs. Each ISO is specifically tailored for the user you are providing support for. After entering basic information such as the user’s name, contact information, trouble ticket number, and the name of the host that you want to test you’ll be presented with a set of tests to run against the closest available perfSONAR node. The custom ISO will then be dynamically generated and a download link sent to the end user. Once the user creates bootable media with the ISO, the user will then boot their machine directly into the TestRig 2.0 environment. After agreeing to run the tests, a number of tests will be automatically run and the results stored locally. These results will then be packaged and transferred back to your organization for analysis by network engineers. 
+			
+			<br><br><I>Who is TestRig 2.0 for?</I><br>
+			
+			TestRig 2.0 is aimed at any size institution that needs to provide support to end users that may have difficulties running a full range of network diagnostics on their hosts. Currently the service is provided free for members of the research and education community.
+		    </p>
+		</div>
+	    </div><!-- end row -->
+	</div>
+    </div> <!-- END MAIN container -->
+    <!-- jquery stuff -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="trjquery.js"></script>
+    <!-- END jquery stuff -->
 </body>
-
 </html>

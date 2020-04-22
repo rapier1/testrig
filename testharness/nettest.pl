@@ -222,6 +222,7 @@ sub enableJumboFrames {
     if ($input =~ /y/i) {
 	my $command = "/sbin/ip link set $interface mtu 9000";
 	runSystem($command, 0, 1);
+	sleep 2;
     }
     return;
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017 The Board of Trustees of Carnegie Mellon University.
  *
- *  Authors: Chris Rapier <rapier@psc.edu> 
+ *  Authors: Chris Rapier <rapier@psc.edu>
  *          Nate Robinson <nate@psc.edu>
  *          Bryan Learn <blearn@psc.edu>
  *
@@ -11,7 +11,7 @@
  *
  *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software 
+ * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -27,17 +27,17 @@ $( "#menu-isolist" ).click(
 	$("#container-admin").addClass('hidden');
     });
 
-$( "#menu-geniso" ).click( 
-    function() 
-    { 
+$( "#menu-geniso" ).click(
+    function()
+    {
         $("#container-isolist").addClass('hidden');
         $("#container-isoform").removeClass('hidden');
         $("#container-admin").addClass('hidden');
     });
 
-$( "#menu-admin" ).click( 
-    function() 
-    { 
+$( "#menu-admin" ).click(
+    function()
+    {
         $("#container-isolist").addClass('hidden');
         $("#container-isoform").addClass('hidden');
         $("#container-admin").removeClass('hidden');
@@ -53,69 +53,100 @@ $( document ).ready(
     });
 
 
-
+// bring up information about that particular run
 $( "td" ).click(
     function()
     {
-	alert(this.innerHTML);
+	var id = this.id;
+	if (id == "uuid") {
+	    var uuid = this.innerHTML;
+	    $.ajax({
+		type: "POST",
+		url: "isoInformation.php",
+		data: {id:uuid},
+		success: function(buildPopUp) {
+		    $(successModalTitle).html('Tests Run');
+		    $(successModalText).html(buildPopUp);
+		    $(successModal).modal('show');
+		}
+	    });
+	}
     });
 
-//function to call psLocate() and build a small div containing the results. It will take in the value of 
+
+//function to call psLocate() and build a small div containing the results. It will take in the value of
 $( "#hostSearchButton" ).click(
-    
     function()
     {
-	var bwctlTools = [];
-	var nodeList = [];
+	var MAXHOSTS = 3;
 	$.ajax({
 	    type: "POST",
 	    url: 'pslocationfunction.php',
 	    data:{psLocateIP:$( "#isoTestTargetIP").val()},
-	    success:function(outputJson) 
+	    success:function(outputJson)
 	    {
 		// check output: Is it valid json? Is it an error?
 		if (isJsonString(outputJson) == true) //valid
 		{
-		    var ps = JSON.parse(outputJson);
-		    var targetHostname = ps[0].host['host-name'][1];
-		    if (typeof targetHostname === 'undefined') {
-			targetHostname = ps[0].host['host-name'][0];
-		    }
-		    //iterate through all of the services this node has available
-		    for (var i=0; i < ps[0].services.length; i++)
-		    {
-			if('bwctl-tools' in ps[0].services[i]) //is bwctl-tools in there?
-			{
-			    //need to push all bwctl-tools tests onto array for checkbox creation
-			    for (var c=0; c < ps[0].services[i]['bwctl-tools'].length; c++)
+	       	    var ps = JSON.parse(outputJson);
+		    var flag = 0;
+		    var count =0;
+		    var nodeList = [];
+		    for (var k = 0; k < ps.length; k++) {
+			// stop after the first one that gives us a list of tools
+    			if (flag == MAXHOSTS) {break;}
+
+			// get the hostname
+    			var targetHostname = ps[k].host['host-name'][1];
+    			if (typeof targetHostname === 'undefined') {
+			    targetHostname = ps[k].host['host-name'][0];
+   			}
+			
+			//iterate through all of the services this node has available
+    			for (var i=0; i < ps[k].services.length; i++)
+    			{
+			    if (flag == MAXHOSTS) {break;}
+			    if('pscheduler-tools' in ps[k].services[i]) //is pscheduler-tools in there?
 			    {
-				bwctlTools.push(ps[0].services[i]['bwctl-tools'][c]);
+				var bwctlTools = [];
+	    			if (flag == MAXHOSTS) {break;}
+	    			flag++;
+				count++;
+	    			//need to push all pscheduler-tools tests onto array for checkbox creation
+	    			for (var c=0; c < ps[k].services[i]['pscheduler-tools'].length; c++)
+	    			{
+				    var tool =  ps[k].services[i]['pscheduler-tools'][c];
+				    tool = tool.replace("bwctl", "");
+				    tool = tool.replace("iperf2", "iperf"); 
+				    bwctlTools.push(tool);
+	    			}
+				nodeList += createHostNode(bwctlTools,targetHostname, count);
+				while (bwctlTools.length > 0) { // empty the tools array explictly. 
+				    bwctlTools.pop();
+				}
 			    }
-			}
+
+    			}
 		    }//end iterate through services associated with that host
-		    
 		    //Now We have our list of bwctl-tools, make a checkbox list
-		    nodeList = createHostNode(bwctlTools,targetHostname);
-		    
 		    
 		}//end if valid json
-		
+		// add custom node
+		nodeList += customNode(count);
 		// if output is valid then use output data to populate #psPickerDiv
 		populatePsPickerForm(nodeList);
 	    }
       	});
-	
     }
-);//end 
+);//end
 
 function populatePsPickerForm(json){
     // setup fields
-    
     // populate fields
-    $('#psPickerDiv').html(json)
-    
+    $('#psPickerNoticeDiv').html('Nearby perfSonar nodes &nbsp;&nbsp;<I>Not all nodes will be accessible to the end user.</I></br>');
+    $('#psPickerDiv').html(json);
     // make div visible
-    $('#psPickerDiv').parent().parent().removeClass('hidden');
+    //$('#psPickerDiv').parent().parent().removeClass('hidden');
 }
 
 function isJsonString(str) {
@@ -127,10 +158,9 @@ function isJsonString(str) {
     return true;
 }
 
-
-function createHostNode(rawList,hostname)
+function createHostNode(rawList,hostname, nodeCount)
 {
-    var testsWeSupport = [ "iperf", "iperf-recv", "iperf3", "iperf3-recv", "nuttcp", "ping", "owamp", "tcpdump", "udp", "tracepath", "traceroute", "dublin-traceroute" ];
+    var testsWeSupport = [ "iperf", "iperf-recv", "iperf3", "iperf3-recv", "nuttcp", "ping", "owping", "tcpdump", "udp", "tracepath", "traceroute", "dublin-traceroute" ];
     //we need to always include tcpdump because it's not part of bwctl-tools, so push it onto the list of tests
     rawList.push("tcpdump");
     rawList.push("udp");
@@ -143,35 +173,54 @@ function createHostNode(rawList,hostname)
 	    rawList.push("iperf3-recv");
 	}
     }
-    rawList.sort();
+    // find intersection between tools supported by the ps node and the ones we support
+    var hostToolSet = new Set(rawList);
+    var supportedToolSet = new Set(testsWeSupport);
+    var hostTools = [...hostToolSet].filter(x => supportedToolSet.has(x));
+
+    // sort the lists for easier reading
+    hostTools.sort();
     testsWeSupport.sort();
-    var nodeList = '<div id="psNode" style="display: inline-flex" name="psNode" class="form-group col-md-3"><input type="radio" name="psNode" value="psNode1" checked><span class="col-2 label-success">' + hostname;
-    nodeList += '<ul title="Available Tests:">'
-    for (var i=0; i<rawList.length; i++)
+
+    // build the selection box for the psnode
+    var node;
+    node = '<div id="psNode' + nodeCount + '" style="display: inline;" name="psNode' + nodeCount + '" class="form-group col-md-3">';
+    node += '<input type="radio" name="psNode" value="' + nodeCount + '">';
+    node += '<span class="col-2 label-success">' + hostname;
+    
+    node += '<ul style="padding-left: 10px" title="Available Tests: ">';
+    for (var i=0; i<hostTools.length; i++)
     {
-	nodeList += '<div class="form-check"> <label class="form-check-label label-success" for="testCheckbox_list[]">';
-	nodeList += '<input data-style="button" type="checkbox" value = "' + rawList[i] + '" name="testCheckbox_list[]" checked>' + rawList[i] + '</br>';
-	nodeList += '</label></div>';
+	node += '<div class="form-check">'; 
+	node += '<label class="form-check-label label-success" for="testCheckbox_list_' + nodeCount + '[]">';
+	node += '<input data-style="button" type="checkbox" value = "' + hostTools[i] + '" name="testCheckbox_list_' + nodeCount + '[]" checked>' + hostTools[i] + '</br>';
+	node += '</label>';
+	node += '</div>';
 	
     }
-    nodeList += '<div class="hidden form-check"> <label class="form-check-label label-success" for="hiddenTestTarget"><li class="label-success"><input class="form-check-input list-group-item" data-style="button" type="checkbox" value="'+ hostname +'" name="hiddenTestTarget" checked>' + hostname  + '</li></label</div>';
-    nodeList += '</ul></span></div>';
-    //nodeList += '</span></div>';
+    node +='</ul>';
+    node += '<input type=hidden name="hiddenTestTarget_' + nodeCount + '" value="' + hostname + '">';
+    node += '</span></div>';
 
+    return node;
+}
     
-    //CUSTOM "PICK YOUR OWN TEST NODE" SECTION //////////////////////////////
-    nodeList +='<div id="psNodeCustom" style="display: inline-flex" name="psNodeCustom" class="form-group col-md-3"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
-    nodeList += '<input type="text" name="psNodeCustomTarget" id="psNodeCustomTarget" placeholder="perfSonar Node">';
-    nodeList += '<ul title="Available Tests:">'
+//CUSTOM "PICK YOUR OWN TEST NODE" SECTION //////////////////////////////
+function customNode (nodeCount)
+{
+    var testsWeSupport = [ "iperf", "iperf-recv", "iperf3", "iperf3-recv", "nuttcp", "ping", "owping", "tcpdump", "udp", "tracepath", "traceroute", "dublin-traceroute" ];
+    testsWeSupport.sort();
+    var cnode ='<div id="psNodeCustom" style="display: inline" name="psNodeCustom" class="form-group col-md-3"><input type="radio" name="psNode" value="psNodeCustom"><span class="col-2 label-success">';
+    cnode += '<input type="text" name="psNodeCustomTarget" id="psNodeCustomTarget" placeholder="perfSonar Node">';
+    cnode += '<ul style="padding-left: 10px" title="Available Tests:">'
     for (var i=0; i<testsWeSupport.length; i++)
     {
-	nodeList += '<div class="form-check"> <label class="form-check-label label-success" for="testCheckbox_listCustom[]">';
-	nodeList += '<input data-style="button" type="checkbox" value = "' + testsWeSupport[i] + '" name="testCheckbox_listCustom[]" checked>' + testsWeSupport[i] + '</br>';
-	nodeList += '</label></div>';
+	cnode += '<div class="form-check"> <label class="form-check-label label-success" for="testCheckbox_listCustom[]">';
+	cnode += '<input data-style="button" type="checkbox" value = "' + testsWeSupport[i] + '" name="testCheckbox_listCustom[]" checked>' + testsWeSupport[i] + '</br>';
+	cnode += '</label></div>';
     }
-    nodeList += '</ul></span></div>'; //NOTE: No need for hidden field, as the hostname is given to us by the user and can be passed along
-
-    
-    return nodeList;
+    cnode += '</ul></span></div>'; //NOTE: No need for hidden field, as the hostname is given to us by the user and can be passed along
+    cnode += '<input type=hidden name="nodeCount" value="' + nodeCount + '">'; // total number of nodes we are sending not including this one
+    return cnode;
     
 }

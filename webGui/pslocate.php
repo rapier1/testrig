@@ -106,7 +106,7 @@ function getWebFieldsFromRecord($record)
        $srvs = array();
        for($s=0; $s<$srvCnt; $s++){	// foreach service
           $srvs[$s] = new PerfSonarService();
-          $srvs[$s]->name = $record[$h]->services[$s]->{"service-name"}; // copy value from record
+          $srvs[$s]->name = $record[$h]->services[$s]->{"service-host"}; // copy value from record
        }
        $hosts[$h]->services = $srvs; // add services to host object
     }

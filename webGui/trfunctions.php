@@ -31,7 +31,7 @@ function scrubInput($data)
 }//END scrubInput
 
 
-function buildDiv($divID, $dbTableName, $fields)
+function buildDiv($divID, $dbTableName, $fields, $headers, $width)
 {
     //this function will arbitraily build div elements from passed-in arguments
     //	$divID will be the ID of the div created
@@ -66,28 +66,31 @@ function buildDiv($divID, $dbTableName, $fields)
     $stmnt = "SELECT " . $fieldString . " FROM " . $dbTableName . " WHERE cid = " . $_SESSION["CID"];
     $results = $dbh->query($stmnt);
     //create a div and html table with our query results
-    $newDiv = "<div id='$divID' >
-			   <table id='$htmlTableID' class='table'>
-			   <tr>";
+    $newDiv = "<div id='$divID'>\n";
+	$newDiv .= "<table id='$htmlTableID' class='table table-sm table-striped'>\n";
+    $newdiv .= "<thead>\n";
+	$newDiv .= "<tr>\n";
 		//create column headers based on $fields
 		for ($counter = 0; $counter < count($fields); $counter++) //assemble each column of the new row
             {
-                $newDiv = $newDiv . "<th>$fields[$counter]</th>";
+                $newDiv .= "\t<th width='$width[$counter]%'>$headers[$counter]</th>\n";
             }
         
-		$newDiv = $newDiv . "</tr>";
+		$newDiv .= "</tr></thead>\n";
 		//fill in the table with the results from the query
 		foreach ($results as $row) //go row-by-row through returned query
             {
-                $newRow = "<tr>";
+                $newRow = "<tr>\n";
                 for ($counter = 0; $counter < count($fields); $counter++) //assemble each column of the new row
                     {
-                        $newRow = $newRow . "<td>$row[$counter]</td>";
+                        $newRow .= "\t<td id='$fields[$counter]' width='$width[$counter]%'>$row[$counter]</td>\n";
                     }
-                $newDiv = $newDiv . $newRow . "</tr>";
+                $newRow .= "</tr>\n";
+                $newDiv .= $newRow;
             }
 		//close the table and div tags!
-        $newDiv = $newDiv . "</table></div>";
+        $newDiv .= "</table>\n";
+        $newDiv .= "</div>\n";
 
 		return $newDiv;
 }//END buildDiv
@@ -211,7 +214,7 @@ function generateISORequestForm()
                     $errFlag = 1;
                 }
             else {
-                $date = date_create($_REQUEST[isoValidToDate]);
+                $date = date_create($_REQUEST["isoValidToDate"]);
                 if ($date == false) {
                     $isoFormInputErrors["validToDate"] = "You did not enter a valid date";
                     $errFlag = 1;
@@ -237,11 +240,15 @@ function generateISORequestForm()
                     $isoFormInputErrors["email"] = "You must provide an email address";
                     $errFlag = 1;
                 }
+
             if (empty($_REQUEST["psNode"]))
-		{
-		    $isoFormInputErrors["psNodeCustomTarget"] = "You must specify a PerfSONAR Node to test against";
-		    $errFlag = 1;
-		}
+                {
+                    $isoFormInputErrors["psNodeCustomTarget"] = "You must specify a PerfSONAR Node to test against";
+                    $errFlag = 1;
+                }
+
+            $node = $_REQUEST["psNode"];
+
             if (($_REQUEST["psNode"] == "psNodeCustom") && (empty($_REQUEST["psNodeCustomTarget"])))
                 {
                     $isoFormInputErrors["psNodeTarget"] = "You must specify your custom PerfSONAR Node's IP address or Hostname";
@@ -255,7 +262,7 @@ function generateISORequestForm()
                 }
 
 
-            if (empty($_REQUEST["testCheckbox_list"]))
+            if (empty($_REQUEST["testCheckbox_list_$nodeNum"]))
                 {
                     if(empty($_REQUEST["testCheckbox_listCustom"])) //are checkboxes filled in on either node selection?
                         {
@@ -267,21 +274,21 @@ function generateISORequestForm()
             $errMsg = implode("<br>", array_filter($isoFormInputErrors));
 
             /////////////////////// CAN WE GENERATE THE ISO THEY JUST CONFIGURED? //////////////////////////////////////////////
-            #print ("<pre>");
-            #print_r($_REQUEST);
-            #print ("</pre>");
+            // print ("<pre>");
+            // print_r($_REQUEST);
+            // print ("</pre>");
             if ($errFlag != 1) //Has everything been successfully submitted?
  
                 {
-                    if ($_REQUEST["psNode"] == "psNode1") //they picked the automatically selected one
-                        {
-                            $checkedTests = $_REQUEST["testCheckbox_list"];
-                            $inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget"]);
-                        }
-                    else
+                    if ($_REQUEST["psNode"] == "psNodeCustom") //They want a custom node
                         {
                             $checkedTests = $_REQUEST["testCheckbox_listCustom"];
                             $inputs["target"] = scrubInput($_REQUEST["psNodeCustomTarget"]);
+                        }
+                    else
+                        {
+                            $checkedTests = $_REQUEST["testCheckbox_list_$node"];
+                            $inputs["target"] = scrubInput($_REQUEST["hiddenTestTarget_$node"]);
                         }
 
                     //have to assemble the tests in a csv
@@ -358,19 +365,35 @@ function generateISORequestForm()
     //we have to do this in a few steps due to the need for PHP_SELF to be in quotes for the redirection to work correctly
 	$serverURL = htmlspecialchars($_SERVER["PHP_SELF"]);
 
-	$isoForm =	'<div id="isoRequestTitle"><h1 class="text-center">Generate New ISO Image</h1></div><form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL;
-	$isoForm = $isoForm . '" method="post">
-			<small>* required fields </small>
-            <input type="hidden" name="form_src" value="isoForm" />
-			<div class="form-group">  <label for="isoTestTargetIP"> IP Address to test*:  </label>
-			<input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
-			<button type="button" class="btn btn-primary" id="hostSearchButton">Host Search</button></div>
+	$isoForm =
+           '<div id="isoRequestTitle">
+              <h3 class="text-center">Make A New ISO Image</h3>
+            </div>
+            <form role="form" id="isoRequest" class="form-horizontal" name="isoRequest" action="' . $serverURL . '" method="post">
+			<small>
+              * required fields 
+            </small>
+            <input type="hidden" name="form_src" value="isoForm">
 
-			<div class="form-group hidden"> PerfSONAR nodes near you
+			<div class="form-group">  
+              <label for="isoTestTargetIP"> 
+                IP Address to test*:  
+              </label>
+			  <input type="text" class="form-control" name="isoTestTargetIP" id="isoTestTargetIP" 
+                placeholder="Target IP address" value="'. $_REQUEST["isoTestTargetIP"] . '" >' . $isoFormInputErrors["testTargetIP"] . '
+			  <button type="button" class="btn btn-primary" id="hostSearchButton">
+                Host Search
+              </button>
+            </div>
 
-			<div id="psPickerContainer" class="container"><div id="psPickerDiv" class="row"></div></div>
-
-			</div>
+			<div class="form-group"> 
+			  <div id="psPickerContainer" class="container">
+                <div id="psPickerNoticeDiv" class=row>
+                </div>
+                <div id="psPickerDiv" class="row">
+                </div>
+              </div>
+            </div>
 
 			<div class="form-group"> <label for="isoMaxRun">Maximum # of Runs:</label>
 			<input type="text" class="form-control" name="isoMaxRun" id="isoMaxRun" value="7">' . $isoFormInputErrors["maxRun"] . '</div>
@@ -394,7 +417,7 @@ function generateISORequestForm()
 
 			<input type="text" class="form-control" name="queueName" id="queueName" placeholder="Name of RT Queue" value ="' . $_REQUEST["queueName"] . '"> <?php echo $inputErrors["queueName"]; ?> </div>';
     //finish the form
-    $isoForm = $isoForm . '<button type="submit" class="btn btn-primary">Generate New ISO</button></div></form>';
+    $isoForm = $isoForm . '<button type="submit" class="btn btn-primary">Generate New ISO</button></form>';
  
     return [$isoForm, $errFlag, $errMsg];
     
@@ -668,7 +691,8 @@ function generateAdminForm()
     }
      
     //We have to assemble to form in a funky way because php does NOT like dealing with the 'for' HTML attribute. Escape the quotes!
-    $adminForm = "<a href='#' onclick='toggle_vis(\"ud\");'>Change Account Information</a></p>";
+    $adminForm = "<div id='adminFormTitle'><h3 class='text-center'>Account Settings</h3></div>";
+    $adminForm .= "<a href='#' onclick='toggle_vis(\"ud\");'>Change Account Information</a></p>";
     $adminForm .= "<div id='ud' style='display: none;'>";
     $adminForm .= "<form id='updateContactInformation' role='form' class='form-horizontal col-8' action='$url?a=ud' method='post'>\n";
     $adminForm .= "<input type='hidden' name='form_src' value='admin' />\n";

@@ -1,10 +1,10 @@
 <?php 
 /*
- * Copyright (c) 2017 The Board of Trustees of Carnegie Mellon University.
+ * Copyright (c) 2020 The Board of Trustees of Carnegie Mellon University.
  *
  *  Authors: Chris Rapier <rapier@psc.edu> 
- *          Nate Robinson <nate@psc.edu>
- *          Bryan Learn <blearn@psc.edu>
+ *           Nate Robinson <nate@psc.edu>
+ *           Bryan Learn <blearn@psc.edu>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,177 +19,159 @@
  * limitations under the License. *
  */
 ?>
+<?php
+session_start();
+if (empty($_SESSION["username"]))
+{
+    header("Location: https://". $_SERVER['SERVER_NAME']. "/login.php");
+    die();
+}
+
+include 'trfunctions.php';
+
+//create a table from previous ISO requests where columns are these fields
+$isoRequestListFields = array("username", "useremail", "user_tt_id", "validtodate", "maxrun", "creation_timestamp", "requested_tests", "uuid");
+$isoRequestHeaders = array("User Name", "Email", "Ticket", "Valid To", "Runs", "Timestamp", "Tests", "UUID");
+$isoRequestCellWidth = array("10", "10", "5", "10", "5", "10", "25", "25");
+$isoRequestListDiv = buildDiv("isoRequestListDiv", "testParameters", $isoRequestListFields, $isoRequestHeaders, $isoRequestCellWidth);
+
+$isoFormResult = generateISORequestForm();
+$isoForm = $isoFormResult[0];
+
+$adminFormResult = generateAdminForm();
+$adminForm = $adminFormResult[0];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-			<meta charset="utf-8">
-			<meta http-equiv="X-UA-Compatible" content="IE=edge">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-			   <meta name="description" content="TestRig 2">
-			   <meta name="author" content="Pittsburgh Supercompuing Center">
-			   <link rel="icon" href="../../favicon.ico">
-	<title>TestRig 2</title>
-			<!-- Bootstrap core CSS -->
-			    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-			<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-			    <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-			<!-- Custom styles for this template -->
-			    <link href="trstylesheet.css" rel="stylesheet">
-			<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-			    <!--[if lt IE 9]>
-				<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-			    <![endif]-->
-
-
-	<?php
-		session_start();
-		if (empty($_SESSION["username"]))
-		 {
-			header("Location: https://". $_SERVER['SERVER_NAME']. "/login.php");
-			die();
-		 }
-		include 'trfunctions.php';
-
-		//create a table from previous ISO requests where columns are these fields
-		$isoRequestListFields = array("username", "useremail", "user_tt_id", "validtodate", "maxrun", "creation_timestamp", "requested_tests");
-		$isoRequestListDiv = buildDiv("isoRequestListDiv", "testParameters", $isoRequestListFields);
-
-		//$welcomeDiv = generateUserInfo();
-                $isoFormResult = generateISORequestForm();
-                $isoForm = $isoFormResult[0];
-
-		//$adminForm = generateAdminForm();
-		$adminFormResult = generateAdminForm();
-		$adminForm = $adminFormResult[0];
-	?>
-  </head>
-
-
-<body>
-    <!-- Modals for warning and error messages -->
-    <div id="successModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><p class="text-success">Success!</p></h4>
-                </div>
-                <div class="modal-body">
-                    <p id="successModalText" class="text-success">Something good happened.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>TestRig 2.0 Main</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<style>
+	 .container-main{ margin: 20px;}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="trstylesheet.css" rel="stylesheet">
+    </head>
+    <body>
+	<!-- MODALS for warning and error messages -->
+        <div id="successModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+			<h4 class="modal-title"><p id="successModalTitle" class="text-success">Success!</p></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="successModalText" class="text-success">Something good happened.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="warnModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Oops..</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="warnModalText" class="text-warning">Giving you a warning.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="errorModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Oops..</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="errorModalText" class="text-danger">Oh no an error occurred.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div id="warnModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+			<h4 class="modal-title">Oops..</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="warnModalText" class="text-warning">Giving you a warning.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				  <span class="sr-only">Toggle navigation</span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="https://<?php echo $_SERVER['SERVER_NAME']?>/index.php">Testrig 2.0</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				  <ul class="nav navbar-nav">
-				  <li><a id="menu-isolist" href="#isolist">ISO List</a></li>
-				  <li><a id="menu-geniso" href="#geniso">Generate New ISO</a></li>
-				  <li><a id="menu-admin" href="#admin">Administration</a></li>
-				  <li><a id="menu-faq" href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php">FAQ</a></li>
-				</ul>
-				<p class="navbar-right navbar-btn"><button id="logout" onClick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/logout.php'"  type="button" class="btn btn-sm btn-primary">Logout</button></p>
-			</div><!--/.nav-collapse -->
-		</div> <!-- END nav container -->
+        <div id="errorModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+			<h4 class="modal-title">Oops..</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errorModalText" class="text-danger">Oh no an error occurred.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+	<!-- EMD MODALS -->
+	
+	<!-- NAVIGATION BAR -->
+	<nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md">
+	    <div class="navbar-brand">
+		Testrig 2.0
+	    </div>
+	    <div class="container"> <!-- used for spacing the tab link towards the center -->
+		<div id="navbar" class="collapse navbar-collapse">
+		    <ul class="nav navbar-nav">
+			<li class="nav-item">
+			    <a href="#geniso" class="nav-link active" data-toggle="tab">Make ISO</a>
+			</li>
+			<li class="nav-item">
+			    <a href="#isolist" class="nav-link" data-toggle="tab">List ISOs</a>
+			</li>
+			<li class="nav-item">
+			    <a href="#admin" class="nav-link" data-toggle="tab">Account</a>
+			</li>
+			<li class="nav-item">
+			    <a id="menu-faq" href="https://<?php echo $_SERVER['SERVER_NAME']?>/faq.php"
+			       class="nav-link">FAQ</a>
+			</li>
+		    </ul>
+		</div> <!-- end class container div -->
+		<nav class="navbar-right navbar-btn ml-auto nav-item">
+		    <button id="logout" onclick="window.location='https://<?php echo $_SERVER['SERVER_NAME']?>/logout.php'"
+			    type="button" class="btn btn-sm btn-primary">Logout</button>
+		</nav>
 	</nav>
-
-<div id="container-main" class="container">
-<div class="row">
-	<div id="padding-left" class="col-4"></div>
-
-	<div id="container-isolist" class="hidden isoList">
-	<div id="isoListTitle"><h1 class="text-center">My Generated ISOs</h1></div>
-		<?php	print $isoRequestListDiv; ?>
+	<!-- END NAVIGATION BAR -->
+	
+	<!-- MAIN CONTAINER -->
+	<div class="container-main">
+	    <div class="tab-content">
+		<div class="tab-pane fade show active" id="geniso">
+		    <?php print $isoForm;?>
+		</div>
+		<div class="tab-pane fade" id="isolist">
+		    <div id="isoListTitle">
+			<h3 class="text-center">My ISOs</h3>
+		    </div>
+		    <?php print $isoRequestListDiv; ?>
+		</div>
+		
+		<div class="tab-pane fade" id="admin">
+		    <?php print $adminForm;?>
+		</div>
+	    </div>
 	</div>
-
-<?php
-if ($_REQUEST["form_src"] == "admin") {
-    $iso_hide = "hidden";
-    $admin_hide = "";
-} else {
-    $iso_hide = "";
-    $admin_hide = "hidden";
-}
-?>            
-	<div id="container-isoform" class="<?php echo $iso_hide;?> main-panels">
-		<?php	print $isoForm;?>
-	</div>
-
-	<div id="container-admin" class="<?php echo $admin_hide;?> main-panels">
-		<div id="adminFormTitle"><h1 class="text-center">Account Settings</h1></div>
-		<?php   print $adminForm; ?>
-	</div>
-
-	<div id="padding-right" class="col-4">
-	</div>
-</div>
-</div> <!-- END Main Container -->
-
-
-<!-- jquery stuff -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="trjquery.js"></script>
-<script src="trmodals.js"></script>
-<!-- Error checking for last form submit  -->
-<script>
-    <?php
-        print "modalSetFormSrc(\"".$_REQUEST['form_src']."\");";
-        print "isoFormInfo(".$isoFormResult[1].", \"".$isoFormResult[2]."\");";
-        //print "isoListInfo(".$isoFormResult[1].",".$isoFormResult[2].");";
-        print "adminFormInfo(".$adminFormResult[1].", \"".$adminFormResult[2]."\", $adminFormResult[3]);";
-    ?>
-</script>
-<!-- END jquery stuff -->
-
-
-</body>
-
+	<!-- END MAIN CONTAINER -->
+	
+	<!-- jquery stuff -->
+	<script src="trjquery.js"></script>
+	<script src="trmodals.js"></script>
+	<!-- Error checking for last form submit  -->
+	<script>
+	 <?php
+         print "modalSetFormSrc(\"".$_REQUEST['form_src']."\");";
+         print "isoFormInfo(".$isoFormResult[1].", \"".$isoFormResult[2]."\");";
+         print "adminFormInfo(".$adminFormResult[1].", \"".$adminFormResult[2]."\", $adminFormResult[3]);";
+	 ?>
+	</script>
+	<!-- END jquery stuff -->
+    </body>
 </html>

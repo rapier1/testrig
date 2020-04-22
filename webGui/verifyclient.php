@@ -79,6 +79,9 @@ function verify () {
         if (is_dir($isodir)) {
             // the iso seems to exist so load the download links
             loadDownloads($uuid);
+            notifyPickup($uuid); // I'd like this to happen *after* they choose a download option
+                                 // but for now this will work. Later it will have to be some sort of
+                                 // AJAX joy
         } else {
             // file doesn't exist
             printHeader ();
@@ -168,9 +171,8 @@ these tests from a 'known good' and clean environment this can mask the results 
 // or if there were any problems. We have the UUID so we can use that to get the necessary
 // contact data
 
-function notifyPickup () {
+function notifyPickup ($uuid) {
     include "./config.php";
-    $uuid = $_REQUEST['uuid'];
     try {
         $dbh = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
     } catch (PDOException $e) {
