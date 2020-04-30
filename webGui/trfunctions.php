@@ -80,7 +80,7 @@ function buildDiv($divID, $dbTableName, $fields, $headers, $width)
 		//fill in the table with the results from the query
 		foreach ($results as $row) //go row-by-row through returned query
             {
-                $newRow = "<tr>\n";
+                $newRow = "<tr id='isoRow'>\n";
                 for ($counter = 0; $counter < count($fields); $counter++) //assemble each column of the new row
                     {
                         $newRow .= "\t<td id='$fields[$counter]' width='$width[$counter]%'>$row[$counter]</td>\n";

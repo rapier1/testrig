@@ -198,7 +198,7 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST")
     </div> <!-- END main container -->
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="trmodals.js"></script>
 <script>

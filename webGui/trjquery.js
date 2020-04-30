@@ -57,9 +57,8 @@ $( document ).ready(
 $( "td" ).click(
     function()
     {
-	var id = this.id;
-	if (id == "uuid") {
-	    var uuid = this.innerHTML;
+	if (this.parentNode.id == "isoRow") {
+	    var uuid = this.parentNode.cells['uuid'].innerHTML;
 	    $.ajax({
 		type: "POST",
 		url: "isoInformation.php",
@@ -69,9 +68,10 @@ $( "td" ).click(
 		    $(successModalText).html(buildPopUp);
 		    $(successModal).modal('show');
 		}
-	    });
+	   });
 	}
-    });
+    }
+);
 
 
 //function to call psLocate() and build a small div containing the results. It will take in the value of

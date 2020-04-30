@@ -172,8 +172,6 @@
 			    <br><br>
 			    It’s important to note that TestRig 2.0 depends on DHCP for addressing and nameservice. The end user’s host must be in a network that can properly respond to DHCP requests.
 			</p>
-		    </div>
-		    <div class="col-md-6">
 			<br><h4>5. My end user is on a machine with multiple interfaces. How can I tell TestRig which interface to use?</h4><p>
 			    
 			    At this time this TestRig does not support multiple interfaces. The capability may be developed in the future. You may still use TestRig on multiply homed machines but only one interface will be tested. Which interface that is depends on how DHCP sets up default routes during boot.
@@ -183,6 +181,8 @@
 			    
 			    All requests for new tests and/or modifications to existing tests will be considered by the TestRig 2.0. We are always on the lookout for new ideas.
 			</p>
+		    </div>
+		    <div class="col-md-6">
 			<br><h4>7. How do I know the end user has gotten the ISO or has run TestRig?</h4><p>
 			    
 			    The account contact and, if available, trouble ticket system will receive email once the user picks up the TestRig ISO and upon successfully completing the tests. You can then retrieve the data set from the data host defined during account setup.
@@ -219,7 +219,13 @@
 			    Interpretation of the results is dependent on the experience of the network engineer. Providing detailed guides to interpreting test results is outside of the scope of this document. The TestRig team is generally not available to help with the diagnostic interpretation of these results but exceptions will be made on a case by case basis.
 			</p>
 			
-			<br><h4>13. What if my question wasn't answered here?</h4><p>
+			<br><h4>13. How do I pick the best perfSonar node?</h4>
+			Generally speaking the best perfSonar node to use is the one with the shortest path to your user. The goal is to reduce the number of hops and RTT to a minimum in order to get the best results. If your institution is hosting their own perfSonar node and the user is within that network then this would be the ideal node to use. However, when this isn't a option whatever node is closest will still provide useful results. <br><br>
+			TestRig 2.0 will automatically suggest nodes based on the hostname or ip address of the host being tested. This is based on geolocation IP address lookups. This is not guaranteed to be accurate as it depends on the quality of the geoip database (in our case MaxMind). This also dones't guarantee that it is the closest node in terms of the network path. As an alternative we suggest using ESNet's perfSonar services directory at http://stats.es.net/ServicesDirectory/. You can enter the result into the custom perfSonar node section when you generate a new ISO.<br><br>
+			<br><h4>14. Why can't my user connect to the perfSonar node I chose?</h4>
+			This generally happens when the user's host is not connected to a research and education network (R&E). A large number of perfSonar nodes are only connected to R&E networks like Internet2 and XSEDE. So a user who is making use of a commodity internet connection (such as through Comcast or Verizon) won't be able to contact those nodes. In these cases it's important that you pick a node that has commodity connectivty. 
+
+			<br><br><h4>15. What if my question wasn't answered here?</h4><p>
 			    
 			    Email support at &#116;&#101;&#115;&#116;&#114;&#105;&#103;&#064;&#112;&#115;&#099;&#046;&#101;&#100;&#117;
 			    
@@ -233,7 +239,7 @@
 	
 	
 	<!-- jquery stuff -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<script src="trjquery.js"></script>
 	<!-- END jquery stuff -->
     </body>
